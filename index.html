@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silicyte</title>
+<meta name="description" content="Silicyte builds AI models that predict how human cells respond to genetic perturbations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7; --ink: #15171a; --muted: #5d636b; --line: #e4e1da; --accent: #2f6f5e; --accent-soft: #e6f0ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1113; --ink: #ecebe7; --muted: #9aa0a8; --line: #24272b; --accent: #7cc4ad; --accent-soft: #16241f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 Inter, system-ui, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 28px 0; display: flex; align-items: center; gap: 10px; }
+  .mark { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--accent) 0 30%, transparent 31%), var(--accent-soft); border: 1.5px solid var(--accent); }
+  .name { font: 600 20px/1 Fraunces, Georgia, serif; letter-spacing: .01em; }
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
+  h1 { font: 500 clamp(34px, 6vw, 52px)/1.1 Fraunces, Georgia, serif; margin: 0 0 20px; letter-spacing: -.01em; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 600px; margin: 0; }
+  section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  h2 { font: 600 13px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 18px; }
+  p { margin: 0 0 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .grid h3 { font: 600 17px/1.3 Fraunces, Georgia, serif; margin: 0 0 6px; }
+  .grid p { color: var(--muted); font-size: 15px; }
+  a { color: var(--accent); }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><span class="mark" aria-hidden="true"></span><span class="name">Silicyte</span></header>
+
+  <div class="hero">
+    <h1>Run the experiment in silico first.</h1>
+    <p class="lede">Silicyte builds AI models that predict how human cells respond when a gene is knocked down, so drug-discovery teams can rank targets before they spend a lab cycle on them.</p>
+  </div>
+
+  <section>
+    <h2>The problem</h2>
+    <p>A genome-wide CRISPR screen measures the effect of thousands of genetic perturbations, but each one is slow and expensive, and it only covers the cell types that were actually run. Most cell lines and most target combinations will never be screened in the lab.</p>
+  </section>
+
+  <section>
+    <h2>What we build</h2>
+    <div class="grid">
+      <div><h3>Virtual cell models</h3><p>Models that take a cell line's unperturbed state and predict its single-cell transcriptomic response to a gene knockdown.</p></div>
+      <div><h3>Transfer across cell types</h3><p>Learning from public Perturb-seq atlases so a prediction can reach a cell line that was never screened.</p></div>
+      <div><h3>Measured, not claimed</h3><p>Every model is scored on held-out perturbations with pre-registered tests before we trust it.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where we are</h2>
+    <p>Silicyte is an early-stage company founded in 2026 in Bloomington, Indiana. Our models are currently being developed and benchmarked in the Arc Institute Virtual Cell Challenge.</p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p><a href="mailto:hello@silicyte.com">hello@silicyte.com</a></p>
+  </section>
+
+  <footer>&copy; 2026 Silicyte</footer>
+</div>
+</body>
+</html>
