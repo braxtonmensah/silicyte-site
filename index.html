@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=202610141239">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 36px; }
   .next a { background: var(--paper); padding: 26px 24px; text-decoration: none; color: var(--ink); display: block; }
@@ -87,35 +87,32 @@
   <div class="panel" style="margin-top:48px">
     <div class="wrap">
       <div class="stage-grid">
-        <div class="scene-wrap" id="sceneWrap">
-          <canvas id="scene" aria-label="Rotating three-dimensional model of a Silicyte EGFR binder design bound to its target"></canvas>
-          <div class="scene-fallback">
-            <div>
-              <p style="margin:0 0 6px">Your browser has no WebGL2, so the interactive model is not shown.</p>
-              <p style="margin:0" class="num">EGFRpHA1 binder designs, 63 to 119 residues</p>
-            </div>
-          </div>
+        <div class="scene-wrap" id="memWrap">
+          <canvas id="membrane" aria-label="Live simulation of an antimicrobial peptide rupturing a bacterial membrane while leaving a human membrane intact"></canvas>
         </div>
         <div class="readout">
           <dl>
-            <dt>Model</dt><dd id="r-id">loading</dd>
-            <dt>Binder</dt><dd id="r-len">&mdash;</dd>
-            <dt>Target</dt><dd>EGFR fragment, 170 residues</dd>
-            <dt>Confidence</dt><dd id="r-plddt">&mdash;</dd>
-            <dt>Accepted</dt><dd>224 models on disk</dd>
+            <dt>Simulating</dt><dd>membrane selectivity</dd>
+            <dt>Particles</dt><dd id="m-particles">&mdash;</dd>
+            <dt>Bacterial pore</dt><dd id="m-pore">&mdash;</dd>
+            <dt>Human membrane</dt><dd id="m-human">intact</dd>
           </dl>
           <ul class="legend">
-            <li><span class="swatch" style="background:#4f9cff"></span>high confidence</li>
-            <li><span class="swatch" style="background:#65cbf3"></span>good</li>
-            <li><span class="swatch" style="background:#ffdb13"></span>uncertain</li>
-            <li><span class="swatch" style="background:#54626f"></span>target protein</li>
+            <li><span class="swatch" style="background:#78b4ff"></span>charged face</li>
+            <li><span class="swatch" style="background:#ffce5a"></span>greasy face</li>
+            <li><span class="swatch" style="background:#7d96be"></span>bacterial lipid</li>
+            <li><span class="swatch" style="background:#687488"></span>human lipid</li>
           </ul>
+          <button class="copybtn" id="m-reset" type="button" style="margin-top:14px">Run it again</button>
         </div>
       </div>
-      <p class="panel-note">A real binder we designed, shown on the human protein it was built to
-      grip. The bright chain is ours, the grey one is the target. Colour is the folding model's
-      confidence in each position, which is a prediction and not a laboratory measurement. The page
-      cycles through three of our accepted designs; the cells drifting behind are illustrative.</p>
+      <p class="panel-note">Not a decoration: a physics simulation of the mechanism our molecules
+      are designed around. The peptide's <span class="num">charged</span> face is pulled to the
+      bacterial membrane because that surface is negatively charged, while the human membrane,
+      which is neutral, barely attracts it. Once it lands, the <span class="num">greasy</span> face
+      buries itself in the lipid tails, wedges the layer apart and opens a pore. The ratio between
+      those two outcomes is called selectivity, and it is the number this company exists to
+      predict.</p>
     </div>
   </div>
 
@@ -252,7 +249,7 @@
 
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
-<script src="/assets/scene.js"></script>
+<script src="/assets/membrane.js?v=202610141239"></script>
 <script>
 (function () {
   "use strict";
@@ -272,40 +269,34 @@
     g.addEventListener("touchstart", function (e) { showTip(e.touches[0], text); setTimeout(hideTip, 2600); }, { passive: true });
   });
 
-  var wrap = document.getElementById("sceneWrap");
-  var canvas = document.getElementById("scene");
-  if (!canvas || !window.SilicyteScene) { if (wrap) wrap.classList.add("nogl"); return; }
-
-  fetch("/assets/structures.json").then(function (r) {
-    if (!r.ok) throw new Error("structures " + r.status);
-    return r.json();
-  }).then(function (data) {
-    var scene = null;
-    try { scene = window.SilicyteScene.create(canvas, data); } catch (err) { scene = null; }
-    if (!scene) { wrap.classList.add("nogl"); return; }
-    var rid = document.getElementById("r-id"), rlen = document.getElementById("r-len"),
-        rpl = document.getElementById("r-plddt"), lastId = "";
-    scene.start(function (d) {
-      if (d.id === lastId) return;
-      lastId = d.id;
-      rid.textContent = d.id;
-      rlen.textContent = d.binderLen + " residues";
-      rpl.textContent = d.meanPlddt.toFixed(1) + " of 100";
-    });
-    var panel = document.querySelector(".panel");
-    var onScroll = function () {
-      var r = panel.getBoundingClientRect();
-      var p = 1 - (r.bottom / (r.height + window.innerHeight));
-      scene.setScroll(Math.max(0, Math.min(1, p)));
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    if ("IntersectionObserver" in window && !scene.reduced) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (en) { if (en.isIntersecting) { scene.start(null); } else { scene.stop(); } });
-      }, { rootMargin: "120px" }).observe(canvas);
+  // ---------------------------------------------------------------- the membrane simulation
+  var canvas = document.getElementById("membrane");
+  if (!canvas || !window.SilicyteMembrane) return;
+  var peak = 0;
+  var view = window.SilicyteMembrane.Render(canvas, {
+    onReset: function () { peak = 0; },
+    onTick: function (sim) {
+      var pore = sim.poreWidth(0), human = sim.poreWidth(1);
+      if (pore > peak) peak = pore;
+      var p = document.getElementById("m-particles");
+      if (p) p.textContent = sim.px.length + " lipids and peptide beads";
+      var el = document.getElementById("m-pore");
+      if (el) {
+        el.textContent = peak > 34 ? "RUPTURED" : (peak > 22 ? "opening" : "intact");
+        el.style.color = peak > 34 ? "#ff8f5a" : (peak > 22 ? "#ffce5a" : "");
+      }
+      var hu = document.getElementById("m-human");
+      if (hu) hu.textContent = human > 34 ? "ruptured" : "intact";
     }
-  }).catch(function () { wrap.classList.add("nogl"); });
+  });
+  view.start();
+  var rb = document.getElementById("m-reset");
+  if (rb) rb.addEventListener("click", function () { peak = 0; view.reset(); view.start(); });
+  if ("IntersectionObserver" in window && !view.reduced) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { view.start(); } else { view.stop(); } });
+    }, { rootMargin: "100px" }).observe(canvas);
+  }
 })();
 </script>
 </body>

@@ -112,7 +112,7 @@ p { margin: 0 0 17px; }
   align-items: end; padding-block: 22px 26px;
 }
 @media (max-width: 860px) { .stage-grid { grid-template-columns: 1fr; align-items: start; } }
-#scene { display: block; width: 100%; height: clamp(300px, 44vw, 460px); touch-action: pan-y; }
+#scene, #membrane { display: block; width: 100%; height: clamp(320px, 46vw, 500px); touch-action: pan-y; }
 .scene-wrap { position: relative; }
 .scene-fallback {
   position: absolute; inset: 0; display: none; place-items: center; text-align: center;
