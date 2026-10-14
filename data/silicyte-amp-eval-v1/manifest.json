@@ -1,0 +1,95 @@
+{
+ "name": "silicyte-amp-eval",
+ "version": "1.0.0",
+ "date": "2026-10-14",
+ "identity_threshold": 0.8,
+ "folds": 5,
+ "clustering": "transitive single linkage (union-find) on Levenshtein ratio",
+ "targets": {
+  "mic": {
+   "label": "potency",
+   "n_sequences": 2904,
+   "n_clusters": 1198,
+   "largest_cluster": 48,
+   "largest_cluster_share": 0.0165,
+   "singletons": 832,
+   "fold_sizes": [
+    581,
+    581,
+    581,
+    581,
+    580
+   ],
+   "cross_fold_identity": {
+    "mean": 0.6519041430469483,
+    "p95": 0.7777777777777778,
+    "max": 0.7948717948717949,
+    "frac_above": 0.0
+   },
+   "file": "folds_mic.csv"
+  },
+  "hc": {
+   "label": "safety",
+   "n_sequences": 1238,
+   "n_clusters": 450,
+   "largest_cluster": 127,
+   "largest_cluster_share": 0.1026,
+   "singletons": 289,
+   "fold_sizes": [
+    248,
+    248,
+    248,
+    247,
+    247
+   ],
+   "cross_fold_identity": {
+    "mean": 0.6309677261162736,
+    "p95": 0.7692307692307692,
+    "max": 0.7916666666666666,
+    "frac_above": 0.0
+   },
+   "file": "folds_hc.csv"
+  }
+ },
+ "label_reliability": {
+  "method": "split-half over GRAMPA repeat measurements: split each sequence's measurements in two, take the median of each half, correlate across sequences, 200 random splits; Spearman-Brown corrected to full length",
+  "source_measurements": 29101,
+  "sequences_with_4plus_measurements": 2242,
+  "split_half_spearman": 0.7877,
+  "split_half_sd": 0.0067,
+  "full_label_reliability": 0.8812,
+  "ceiling_on_any_model": 0.9387,
+  "caveat": "GRAMPA repeats are mostly different bacteria and strains, not replicate assays of one organism, so this is the reproducibility of median activity over a sample of organisms, which is what the label is. Do not quote it as a ceiling for single-organism potency."
+ },
+ "baselines": {
+  "protocol": "pooled out-of-fold Spearman with tie correction; ridge predictions AVERAGED over a fixed penalty grid rather than selected, because at this sample size selecting the penalty on inner folds loses to averaging over it",
+  "mic": {
+   "descriptor_36": 0.4502,
+   "esm2_35m_frozen_mean": 0.4656,
+   "esm2_650m_frozen_mean": 0.4427,
+   "esm1b_650m_frozen_mean": 0.3776,
+   "ankh_base_frozen_mean": 0.387,
+   "ankh_large_frozen_mean": 0.3383,
+   "esm2_650m_finetuned_3seed": 0.5356,
+   "esm2_650m_finetuned_shuffled_label_null": -0.0228
+  },
+  "hc": {
+   "descriptor_36": 0.4074,
+   "esm2_650m_frozen_mean": 0.3502,
+   "esm2_650m_finetuned_3seed": 0.5079
+  }
+ },
+ "what_this_corrects": {
+  "defect": "the clustering in common use compares each sequence only to cluster representatives and takes the first match, so it is not single linkage",
+  "measured_leak_on_the_uncorrected_split": {
+   "mic_fraction_cross_fold_above_0.80": 0.201,
+   "hc_fraction_cross_fold_above_0.80": 0.246,
+   "families_spanning_a_fold": 0,
+   "note": "the usual check passes perfectly because it tests a different quantity than the one the guard exists to bound"
+  },
+  "accuracy_inflation_measured": {
+   "descriptor_hc50": 0.065,
+   "esm2_35m_hc50": 0.06
+  }
+ }
+}

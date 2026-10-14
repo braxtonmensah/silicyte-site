@@ -3,96 +3,310 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Silicyte | AI-designed peptide medicines</title>
-<meta name="description" content="Silicyte is an AI platform for designing de novo peptide medicines. Founded 2026, headquartered in South Jordan, Utah.">
+<title>Silicyte | AI molecular design, measured</title>
+<meta name="description" content="We crippled our own scoring model and the design loop reported a better result. Silicyte designs de novo peptides and protein binders, and builds the instruments that tell a real gain from a gamed score.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
+<link rel="canonical" href="https://silicyte.com/">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Silicyte">
+<meta property="og:description" content="We break our own scoring model on purpose. The reported improvement gets bigger. That is the problem we build instruments for.">
+<meta property="og:url" content="https://silicyte.com/">
+<meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://silicyte.com/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Silicyte">
+<meta name="twitter:description" content="We break our own scoring model on purpose. The reported improvement gets bigger.">
 <meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
-<link rel="canonical" href="https://silicyte.com/">
-<meta property="og:title" content="Silicyte">
-<meta property="og:description" content="Peptide medicines, designed from scratch by AI.">
-<meta property="og:url" content="https://silicyte.com/">
-<meta property="og:type" content="website">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Silicyte","url":"https://silicyte.com/","email":"hello@silicyte.com","foundingDate":"2026-10","description":"AI platform for designing de novo peptide medicines.","address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Silicyte","url":"https://silicyte.com/","email":"hello@silicyte.com","foundingDate":"2026-10","description":"Research company building de novo peptides and protein binders, and the measurement instruments that separate a real design gain from scoring-model exploitation.","address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 <style>
-  :root {
-    --bg: #fbfaf7; --ink: #15171a; --muted: #5d636b; --line: #e4e1da; --accent: #2f6f5e; --accent-soft: #e6f0ec;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #0f1113; --ink: #ecebe7; --muted: #9aa0a8; --line: #24272b; --accent: #7cc4ad; --accent-soft: #16241f; }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 Inter, system-ui, sans-serif; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-  header { padding: 28px 0; display: flex; align-items: center; gap: 10px; }
-  .mark { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--accent) 0 30%, transparent 31%), var(--accent-soft); border: 1.5px solid var(--accent); }
-  .name { font: 600 20px/1 Fraunces, Georgia, serif; letter-spacing: .01em; }
-  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
-  h1 { font: 500 clamp(34px, 6vw, 52px)/1.1 Fraunces, Georgia, serif; margin: 0 0 20px; letter-spacing: -.01em; }
-  .lede { font-size: 19px; color: var(--muted); max-width: 620px; margin: 0; }
-  section { padding: 48px 0; border-bottom: 1px solid var(--line); }
-  h2 { font: 600 13px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin: 0 0 18px; }
-  p { margin: 0 0 14px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 24px; }
-  .grid h3 { font: 600 17px/1.3 Fraunces, Georgia, serif; margin: 0 0 6px; }
-  .grid p { color: var(--muted); font-size: 15px; }
-  a { color: var(--accent); }
-  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+  .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 36px; }
+  .next a { background: var(--paper); padding: 26px 24px; text-decoration: none; color: var(--ink); display: block; }
+  .next a:hover { background: var(--paper-2); }
+  .next a h3 { font: 400 22px/1.25 var(--display); margin-bottom: 8px; letter-spacing: -.01em; }
+  .next a p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
+  .next a .go { font: 500 12px/1 var(--mono); color: var(--brand); letter-spacing: .06em; margin-top: 14px; display: block; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header><span class="mark" aria-hidden="true"></span><span class="name">Silicyte</span></header>
 
-  <div class="hero">
-    <h1>Peptide medicines, designed from scratch by AI.</h1>
-    <p class="lede">Silicyte is an AI platform for designing de novo peptides: molecules that have never existed in nature, built to bind a chosen target. Peptides sit between small molecules and antibodies, precise enough to hit hard targets and small enough to reach tissue that antibodies cannot.</p>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="#111827">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav>
+      <a href="/" aria-current="page">Home</a>
+      <a href="/science.html">Science</a>
+      <a href="/data.html">Data</a>
+      <a href="/demo.html">Designer</a>
+      <a href="/company.html">Company</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="padding-block:64px 0">
+    <div class="col">
+      <p class="eyebrow">In silico design, measured</p>
+      <h1>We broke our own scoring model on purpose. It started reporting <em>better</em> results.</h1>
+      <p class="lede">Silicyte designs de novo peptides and protein binders. Along the way we found
+      that the standard way of reporting an AI design loop does not measure what everyone assumes
+      it measures, and we can prove it by experiment rather than argument.</p>
+      <p class="lede">A design loop proposes molecules, scores them, keeps the best and repeats.
+      Ours reported that its molecules ended up <strong>3.5 times</strong> better. Then we crippled
+      the scoring model, giving it only a fifth of its training data, which makes it strictly worse
+      at predicting anything. The same loop then reported <strong>21 times</strong> better.</p>
+      <p class="lede small">A model that knows less cannot design better molecules. It can only be
+      easier to fool. That number was never measuring the molecules.</p>
+      <div class="actions">
+        <a class="btn" href="/demo.html">Run it yourself</a>
+        <a class="btn ghost" href="/science.html">See the evidence</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:48px">
+    <div class="wrap">
+      <div class="stage-grid">
+        <div class="scene-wrap" id="sceneWrap">
+          <canvas id="scene" aria-label="Rotating three-dimensional model of a Silicyte EGFR binder design bound to its target"></canvas>
+          <div class="scene-fallback">
+            <div>
+              <p style="margin:0 0 6px">Your browser has no WebGL2, so the interactive model is not shown.</p>
+              <p style="margin:0" class="num">EGFRpHA1 binder designs, 63 to 119 residues</p>
+            </div>
+          </div>
+        </div>
+        <div class="readout">
+          <dl>
+            <dt>Model</dt><dd id="r-id">loading</dd>
+            <dt>Binder</dt><dd id="r-len">&mdash;</dd>
+            <dt>Target</dt><dd>EGFR fragment, 170 residues</dd>
+            <dt>Confidence</dt><dd id="r-plddt">&mdash;</dd>
+            <dt>Accepted</dt><dd>224 models on disk</dd>
+          </dl>
+          <ul class="legend">
+            <li><span class="swatch" style="background:#4f9cff"></span>high confidence</li>
+            <li><span class="swatch" style="background:#65cbf3"></span>good</li>
+            <li><span class="swatch" style="background:#ffdb13"></span>uncertain</li>
+            <li><span class="swatch" style="background:#54626f"></span>target protein</li>
+          </ul>
+        </div>
+      </div>
+      <p class="panel-note">A real binder we designed, shown on the human protein it was built to
+      grip. The bright chain is ours, the grey one is the target. Colour is the folding model's
+      confidence in each position, which is a prediction and not a laboratory measurement. The page
+      cycles through three of our accepted designs; the cells drifting behind are illustrative.</p>
+    </div>
   </div>
 
   <section>
-    <h2>Why peptides, why now</h2>
-    <p>Peptides are now one of the most valuable drug classes in medicine. GLP-1 drugs are among the best-selling medicines in the world, and tumor-targeting peptides are the delivery vehicle behind radiopharmaceuticals, a field where large pharma companies have made multi-billion-dollar acquisitions. Yet most peptide discovery still starts from natural sequences and screens variants one at a time. AI can write candidates directly.</p>
-  </section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">01</span> The finding</p>
+        <h2>A worse scoring model reported a six times larger improvement.</h2>
+        <p>The theory behind these loops says the opposite should happen. A more accurate scorer
+        picks better molecules, so it should produce a bigger gain. We ran the experiment with the
+        scorer handicapped and with it intact, three independent runs each, and left the measuring
+        model untouched so both were judged on the same ruler.</p>
+      </div>
 
-  <section>
-    <h2>The platform</h2>
-    <div class="grid">
-      <div><h3>Design</h3><p>Generative models that write new peptides and protein binders sequence by sequence, shaped to the properties of molecules known to work.</p></div>
-      <div><h3>Predict</h3><p>Virtual cell models that forecast how human cells respond to a perturbation, so targets and candidates are ranked before a lab cycle is spent on them.</p></div>
-      <div><h3>Prove</h3><p>Every model is scored on held-out data with pre-registered tests, and our designs go to independent wet labs for measurement.</p></div>
+      <div class="plain">
+        <b>What a design loop is supposed to do</b>
+        <span>Find molecules that kill bacteria without harming blood cells. The loop reports how
+        much it improved that ratio. Intact scorer: <span class="num">3.5x</span>. Crippled
+        scorer: <span class="num">21x</span>. The crippled one wins by a mile, which cannot
+        happen if the number tracks molecule quality.</span>
+      </div>
+
+      <figure>
+        <div class="figbox">
+          <svg viewBox="0 0 720 408" role="img" aria-labelledby="figTitle figDesc">
+            <title id="figTitle">Reported improvement against how much training data the scorer was given</title>
+            <desc id="figDesc">With 20 percent of training families the loop reports a 21-fold
+            improvement; with all of them it reports 3.5-fold. The dashed line shows what the
+            standard theory predicts, which runs the other way.</desc>
+
+            <line class="ch-grid" x1="96" y1="317.7" x2="668" y2="317.7"/>
+            <line class="ch-grid" x1="96" y1="222.0" x2="668" y2="222.0"/>
+            <line class="ch-grid" x1="96" y1="126.2" x2="668" y2="126.2"/>
+
+            <rect x="96" y="310.1" width="572" height="23.9" fill="#6b7589" opacity="0.13"/>
+            <text class="ch-sub" x="102" y="348">loops run with scrambled rewards, all six inside this band</text>
+
+            <line x1="152.4" y1="260.8" x2="603.6" y2="213.9" stroke="#6b7589" stroke-width="1.5"
+                  stroke-dasharray="5 4" opacity="0.8"/>
+            <text class="ch-sub" x="300" y="285" fill="#6b7589">what the theory predicts: a worse scorer gains less</text>
+
+            <line x1="603.6" y1="213.9" x2="152.4" y2="65.2" stroke="#111827" stroke-width="1.5"/>
+            <text class="ch-sub" x="340" y="128" fill="#111827">what we measured</text>
+
+            <line class="ch-axis" x1="96" y1="40" x2="96" y2="356"/>
+            <line class="ch-axis" x1="96" y1="356" x2="668" y2="356"/>
+            <text class="ch-tick" x="88" y="321.7" text-anchor="end">1x</text>
+            <text class="ch-tick" x="88" y="226.0" text-anchor="end">3x</text>
+            <text class="ch-tick" x="88" y="130.2" text-anchor="end">10x</text>
+            <text class="ch-tick" x="152.4" y="374" text-anchor="middle">20%</text>
+            <text class="ch-tick" x="265.2" y="374" text-anchor="middle">40%</text>
+            <text class="ch-tick" x="378" y="374" text-anchor="middle">60%</text>
+            <text class="ch-tick" x="490.8" y="374" text-anchor="middle">80%</text>
+            <text class="ch-tick" x="603.6" y="374" text-anchor="middle">100%</text>
+            <text class="ch-lab" x="382" y="398" text-anchor="middle">How much of its training data the scoring model was given</text>
+            <text class="ch-lab" x="26" y="198" text-anchor="middle" transform="rotate(-90 26 198)">Improvement the loop reported</text>
+
+            <g class="hit" data-tip="Crippled scorer&#10;one fifth of the training data&#10;reports 21x improvement&#10;3 independent runs, job 12243941">
+              <line x1="152.4" y1="55.8" x2="152.4" y2="74.6" stroke="#c87b32" stroke-width="2"/>
+              <line x1="146" y1="55.8" x2="159" y2="55.8" stroke="#c87b32" stroke-width="2"/>
+              <line x1="146" y1="74.6" x2="159" y2="74.6" stroke="#c87b32" stroke-width="2"/>
+              <circle cx="152.4" cy="65.2" r="6.5" fill="#c87b32" stroke="#ffffff" stroke-width="2"/>
+              <text class="ch-val" x="170" y="61">21x</text>
+              <text class="ch-sub" x="170" y="77">crippled scorer</text>
+              <rect x="124" y="40" width="130" height="50" fill="transparent"/>
+            </g>
+
+            <g class="hit" data-tip="Intact scorer&#10;all of the training data&#10;reports 3.5x improvement&#10;3 independent runs, job 12243941">
+              <line x1="603.6" y1="209.9" x2="603.6" y2="217.9" stroke="#3d8ad8" stroke-width="2"/>
+              <line x1="597" y1="209.9" x2="610" y2="209.9" stroke="#3d8ad8" stroke-width="2"/>
+              <line x1="597" y1="217.9" x2="610" y2="217.9" stroke="#3d8ad8" stroke-width="2"/>
+              <circle cx="603.6" cy="213.9" r="6.5" fill="#3d8ad8" stroke="#ffffff" stroke-width="2"/>
+              <text class="ch-val" x="603.6" y="243" text-anchor="middle">3.5x</text>
+              <text class="ch-sub" x="603.6" y="259" text-anchor="middle">intact scorer</text>
+              <rect x="569" y="196" width="70" height="40" fill="transparent"/>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Error bars are one standard error over three runs per setting. The gap is
+        <span class="num">14.6</span> times larger than its own uncertainty, so this is not a fluke
+        of which random seeds we happened to use. Six control loops run with scrambled rewards all
+        stayed inside the band at the bottom, which is what tells us the machinery itself was
+        working. Full numbers on the <a href="/science.html">science page</a>.</figcaption>
+      </figure>
+
+      <div class="stats">
+        <div class="stat"><b>6x</b><span>larger improvement reported by the crippled scorer</span></div>
+        <div class="stat"><b>14.6&sigma;</b><span>how far that gap sits outside its own error bars</span></div>
+        <div class="stat"><b>0 of 6</b><span>control runs that misbehaved</span></div>
+        <div class="stat"><b>6</b><span>measurement faults found in our own pipeline and published</span></div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Where we are</h2>
-    <p>Our first de novo peptide library, designed against drug-resistant bacteria, is entered in the AMP Challenge 2027, where selected designs are synthesized and tested by an independent lab. We have also designed de novo protein binders against EGFR, a major cancer target, and our virtual cell models compete in the Arc Institute Virtual Cell Challenge. Next: tumor-targeting peptides. Silicyte was founded in October 2026 and is headquartered in South Jordan, Utah.</p>
-  </section>
-
-  <section>
-    <h2>Company</h2>
-    <div class="grid">
-      <div><h3>Founder</h3><p><a href="https://www.linkedin.com/in/braxtonmensah">Braxton Mensah</a>, Founder</p></div>
-      <div><h3>Headquarters</h3><p>South Jordan, Utah, United States</p></div>
-      <div><h3>Founded</h3><p>October 2026. Independent and bootstrapped.</p></div>
+  <section class="flush">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">02</span> Where to go next</p>
+        <h2>Three ways to check us.</h2>
+      </div>
+      <div class="next">
+        <a href="/demo.html">
+          <h3>Run the loop yourself</h3>
+          <p>Design a peptide in your browser using our real fitted model, then flip the switch
+          that cripples the scorer and watch the reported improvement climb. Ten seconds, nothing
+          leaves your machine.</p>
+          <span class="go">OPEN THE DESIGNER &rarr;</span>
+        </a>
+        <a href="/science.html">
+          <h3>Read the evidence</h3>
+          <p>Every number with its sample size and error bar, the six faults we found in our own
+          measurements, and the register of claims we have withdrawn.</p>
+          <span class="go">SEE THE SCIENCE &rarr;</span>
+        </a>
+        <a href="/company.html">
+          <h3>Work with us</h3>
+          <p>Who we are, what we have built, what we do not claim, and what we are trying to fund.</p>
+          <span class="go">ABOUT SILICYTE &rarr;</span>
+        </a>
+      </div>
     </div>
   </section>
+</main>
 
-  <section>
-    <h2>Contact</h2>
-    <p><a href="mailto:hello@silicyte.com">hello@silicyte.com</a></p>
-  </section>
+<footer>
+  <div class="wrap">
+    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance: large language models
+    are used as the research engineering layer for writing and auditing analysis code, running
+    pre-registered experiments on a university GPU allocation, and checking every reported number
+    against its source table.</p>
+    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">hello@silicyte.com</a></p>
+  </div>
+</footer>
 
-  <footer>&copy; 2026 Silicyte &middot; South Jordan, Utah &middot; <a href="mailto:hello@silicyte.com">hello@silicyte.com</a></footer>
-</div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script src="/assets/scene.js"></script>
+<script>
+(function () {
+  "use strict";
+  var tip = document.getElementById("tip");
+  function showTip(e, text) {
+    tip.textContent = text;
+    tip.classList.add("on");
+    var x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+    var y = Math.max(8, e.clientY - tip.offsetHeight - 14);
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function hideTip() { tip.classList.remove("on"); }
+  Array.prototype.forEach.call(document.querySelectorAll(".hit"), function (g) {
+    var text = g.getAttribute("data-tip").replace(/&#10;/g, "\n");
+    g.addEventListener("mousemove", function (e) { showTip(e, text); });
+    g.addEventListener("mouseleave", hideTip);
+    g.addEventListener("touchstart", function (e) { showTip(e.touches[0], text); setTimeout(hideTip, 2600); }, { passive: true });
+  });
+
+  var wrap = document.getElementById("sceneWrap");
+  var canvas = document.getElementById("scene");
+  if (!canvas || !window.SilicyteScene) { if (wrap) wrap.classList.add("nogl"); return; }
+
+  fetch("/assets/structures.json").then(function (r) {
+    if (!r.ok) throw new Error("structures " + r.status);
+    return r.json();
+  }).then(function (data) {
+    var scene = null;
+    try { scene = window.SilicyteScene.create(canvas, data); } catch (err) { scene = null; }
+    if (!scene) { wrap.classList.add("nogl"); return; }
+    var rid = document.getElementById("r-id"), rlen = document.getElementById("r-len"),
+        rpl = document.getElementById("r-plddt"), lastId = "";
+    scene.start(function (d) {
+      if (d.id === lastId) return;
+      lastId = d.id;
+      rid.textContent = d.id;
+      rlen.textContent = d.binderLen + " residues";
+      rpl.textContent = d.meanPlddt.toFixed(1) + " of 100";
+    });
+    var panel = document.querySelector(".panel");
+    var onScroll = function () {
+      var r = panel.getBoundingClientRect();
+      var p = 1 - (r.bottom / (r.height + window.innerHeight));
+      scene.setScroll(Math.max(0, Math.min(1, p)));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    if ("IntersectionObserver" in window && !scene.reduced) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting) { scene.start(null); } else { scene.stop(); } });
+      }, { rootMargin: "120px" }).observe(canvas);
+    }
+  }).catch(function () { wrap.classList.add("nogl"); });
+})();
+</script>
 </body>
 </html>

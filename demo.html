@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive peptide designer, running real fitted models | Silicyte</title>
+<meta name="description" content="Design an antimicrobial peptide in your browser with Silicyte's actual fitted models, then break the scorer on purpose and watch the reported improvement get bigger.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="canonical" href="https://silicyte.com/demo.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Silicyte Designer">
+<meta property="og:description" content="Run a real design loop in your browser, then break the scorer on purpose and watch the reported improvement get bigger.">
+<meta property="og:url" content="https://silicyte.com/demo.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .lab { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 34px; margin-top: 36px; }
+  @media (max-width: 900px) { .lab { grid-template-columns: 1fr; } }
+
+  .controls { border: 1px solid var(--line); border-radius: 5px; padding: 20px; background: var(--paper-2); align-self: start; }
+  .controls h3 { margin-bottom: 14px; }
+  .fld { margin-bottom: 18px; }
+  .fld label { display: block; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+  .fld .val { float: right; color: var(--ink); font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: 0; }
+  .fld input[type=range] { width: 100%; accent-color: var(--brand); }
+  .fld select, .fld input[type=text] {
+    width: 100%; font: 400 14.5px var(--body); padding: 9px 10px; border-radius: 4px;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+  }
+  .fld input[type=text] { font-family: var(--mono); letter-spacing: .02em; }
+  .chk { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 11px; font-size: 14px; color: var(--ink-2); }
+  .chk input { accent-color: var(--brand); margin-top: 3px; flex: none; }
+  .chk b { color: var(--ink); font-weight: 500; display: block; }
+
+  .board { min-width: 0; }
+  .verdict {
+    border: 1px solid var(--line); border-radius: 5px; padding: 22px; background: var(--paper);
+    margin-bottom: 22px;
+  }
+  .verdict .big { font: 400 clamp(22px, 2.8vw, 30px)/1.25 var(--display); margin: 0 0 10px; letter-spacing: -.01em; }
+  .verdict p { margin: 0; font-size: 15px; color: var(--ink-2); }
+  .verdict.idle .big { color: var(--ink-3); }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-bottom: 22px; }
+  @media (max-width: 560px) { .pair { grid-template-columns: 1fr; } }
+  .pair > div { background: var(--paper); padding: 16px 18px; }
+  .pair .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
+  .pair .v { font: 500 30px/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .pair .sub { font-size: 12.5px; color: var(--ink-3); margin-top: 7px; line-height: 1.45; }
+
+  .chartbox { border: 1px solid var(--line); border-radius: 5px; background: var(--paper); padding: 16px; overflow-x: auto; }
+  .chartbox svg { display: block; min-width: 460px; width: 100%; height: auto; }
+  .runbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+  .prog { font: 400 12.5px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  .winners { margin-top: 24px; }
+  .winners table { min-width: 460px; font-size: 13.5px; }
+  .winners td.seq { font-family: var(--mono); font-size: 12.5px; word-break: break-all; }
+
+  .scorebox { border: 1px solid var(--line); border-radius: 5px; padding: 20px; margin-top: 20px; background: var(--paper); }
+  .scoreout { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 16px; }
+  .scoreout div b { display: block; font: 500 19px/1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 5px; }
+  .scoreout div span { font-size: 12px; color: var(--ink-3); }
+  .warnrow { font-size: 13px; color: var(--warn); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="#111827">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/science.html">Science</a>
+      <a href="/data.html">Data</a>
+      <a href="/demo.html" aria-current="page">Designer</a>
+      <a href="/company.html">Company</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="padding-block:56px 0">
+    <div class="col">
+      <p class="eyebrow">Live designer</p>
+      <h1>Design a peptide. Then watch it get audited.</h1>
+      <p class="lede">Set what you want below and this page runs a real design loop in your browser:
+      propose candidates, score them, keep the best, breed from the winners, repeat. The scoring
+      model is <strong>our actual fitted model</strong>, the same weights that run on our cluster,
+      shipped to your browser as numbers.</p>
+      <p class="lede small">Then it reads the result twice. Once the way a design loop normally
+      reports itself, and once with an independent check that shares none of the scorer's features.
+      Those two numbers usually disagree, and the gap between them is the whole point of this
+      company.</p>
+    </div>
+
+    <div class="lab">
+      <form class="controls" id="ctl" autocomplete="off">
+        <h3>What do you want?</h3>
+
+        <div class="fld">
+          <label for="len">Peptide length <span class="val" id="lenv">12 to 26</span></label>
+          <input type="range" id="len" min="10" max="40" value="26" step="2">
+        </div>
+
+        <div class="fld">
+          <label for="goal">Goal</label>
+          <select id="goal">
+            <option value="sw">Selectivity: kill bacteria, spare blood cells</option>
+            <option value="mic">Potency only: kill bacteria hardest</option>
+            <option value="hc">Safety only: least damaging to blood cells</option>
+          </select>
+        </div>
+
+        <div class="fld">
+          <label for="gens">Generations <span class="val" id="gensv">8</span></label>
+          <input type="range" id="gens" min="3" max="14" value="8" step="1">
+        </div>
+
+        <div class="fld">
+          <label for="k">Molecules kept each round <span class="val" id="kv">40</span></label>
+          <input type="range" id="k" min="10" max="80" value="40" step="5">
+        </div>
+
+        <div style="margin:22px 0 18px;padding-top:18px;border-top:1px solid var(--line)">
+          <label style="display:block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Guard rails</label>
+          <label class="chk"><input type="checkbox" id="pin" checked>
+            <span><b>Hold composition fixed</b>Keeps the winners' charge distribution matched to
+            real antibacterial peptides. Without it, a loop improves its score by drifting
+            composition.</span></label>
+          <label class="chk"><input type="checkbox" id="nov" checked>
+            <span><b>Require novelty</b>Rejects anything too close to a known peptide, so the loop
+            cannot win by rediscovering something that already exists.</span></label>
+          <label class="chk"><input type="checkbox" id="starve">
+            <span><b>Break the scorer on purpose</b>Swaps in a scoring model we deliberately
+            starved of training data. Try it after a normal run.</span></label>
+        </div>
+
+        <button class="btn" type="submit" id="go" style="width:100%">Design</button>
+        <p class="prog" id="prog" style="margin-top:12px">Loading the model, about 140&nbsp;KB.</p>
+      </form>
+
+      <div class="board">
+        <div class="verdict idle" id="verdict">
+          <p class="big" id="vbig">Nothing has been run yet.</p>
+          <p id="vsub">Press Design. A run takes a few seconds and happens entirely on your
+          machine: no sequence you type is sent anywhere.</p>
+        </div>
+
+        <div class="pair">
+          <div>
+            <div class="lbl"><span class="swatch" style="background:#3d8ad8"></span>What the loop reports</div>
+            <div class="v" id="m-reported">&mdash;</div>
+            <div class="sub">Improvement in the kill-versus-harm ratio, measured by a model held
+            out from selection. This is the number a design paper would print.</div>
+          </div>
+          <div>
+            <div class="lbl"><span class="swatch" style="background:#c87b32"></span>Independent check</div>
+            <div class="v" id="m-indep">&mdash;</div>
+            <div class="sub">The same winners, judged by their nearest real measured peptides.
+            No shared features with the scorer, so it cannot be gamed the same way.</div>
+          </div>
+        </div>
+
+        <div class="chartbox">
+          <svg viewBox="0 0 640 300" id="chart" role="img" aria-labelledby="ctitle cdesc">
+            <title id="ctitle">Reported improvement against the independent check, by generation</title>
+            <desc id="cdesc">Two lines per run. The blue line is what the loop reports, the amber
+            line is the independent check. The grey band is the range inside which the independent
+            check cannot resolve anything, given how many molecules you kept.</desc>
+            <g id="c-static"></g>
+            <g id="c-series"></g>
+          </svg>
+        </div>
+
+        <div class="runbar">
+          <span class="prog" id="prog2"></span>
+        </div>
+
+        <div class="winners" id="winwrap" hidden>
+          <h3 style="margin-bottom:12px">Your best designs</h3>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th scope="col">Sequence</th><th scope="col">Length</th><th scope="col">Net charge</th><th scope="col">Score</th></tr></thead>
+              <tbody id="wintbody"></tbody>
+            </table>
+          </div>
+          <p class="small muted" style="margin-top:12px">These are real outputs of the loop you just
+          ran. They are computational candidates with no measured activity, and we would not call
+          them anything else.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-top:56px">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">&bull;</span> Score anything</p>
+        <h2>Paste a peptide and read it three ways.</h2>
+        <p class="muted small">Type any sequence of the twenty standard amino acids. The page runs
+        our selection model, our held-out model and the independent check on it, in your browser.</p>
+      </div>
+      <div class="scorebox col" style="max-width:46rem">
+        <div class="fld" style="margin-bottom:12px">
+          <label for="seq">Sequence</label>
+          <input type="text" id="seq" value="GIGKFLHSAKKFGKAFVGEIMNS" spellcheck="false">
+        </div>
+        <button class="btn ghost" type="button" id="scorebtn">Score it</button>
+        <div class="scoreout" id="scoreout" hidden>
+          <div><b id="s-sw">&mdash;</b><span>Our scorer: kill-versus-harm, log units</span></div>
+          <div><b id="s-meter">&mdash;</b><span>Held-out model, same quantity</span></div>
+          <div><b id="s-nn">&mdash;</b><span>Independent check</span></div>
+          <div><b id="s-q">&mdash;</b><span>Net charge</span></div>
+          <div><b id="s-near">&mdash;</b><span>Closest known peptide</span></div>
+        </div>
+        <p class="warnrow" id="s-warn" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="flush">
+    <div class="wrap col">
+      <p class="kicker"><span class="n">&bull;</span> What you are looking at</p>
+      <h2>Why the two numbers disagree.</h2>
+      <p>A design loop has one obvious way to make its score go up, and it is not the way you want.
+      Instead of finding better molecules, it can find the places where its own scoring model is
+      wrong, and pile into them. The score rises, the molecules do not improve, and nothing in the
+      loop's own output can tell the difference.</p>
+      <p>That is why the <b>Break the scorer on purpose</b> switch exists. It swaps in a model we
+      starved of 80% of its training families, which is strictly worse at predicting anything. If
+      the reported improvement measured molecule quality, a worse scorer would have to report
+      less. On our cluster it reported <strong>more</strong>, by a wide margin, and you can
+      reproduce that here in about ten seconds.</p>
+      <p class="small muted">Honest about the differences from our cluster runs: this page uses a
+      simple composition-based generator rather than our trained one, keeps tens of molecules
+      instead of hundreds, and runs the instance-based meter against a trimmed bank so it fits in a
+      browser. The models are real and so is the direction of the effect. The exact magnitudes on
+      our cluster are on the <a href="/science.html">science page</a>, with their error bars.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. Everything on this page
+    runs locally in your browser; no sequence you enter is transmitted.</p>
+    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
+  </div>
+</footer>
+
+<script src="/assets/designer.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.SilicyteDesigner, M = null, busy = false;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------------------------------------------------------------- chart
+  var PAD = { l: 52, r: 16, t: 18, b: 40 }, W = 640, H = 300;
+  function px(i, n) { return PAD.l + (n <= 1 ? 0 : (i / (n - 1)) * (W - PAD.l - PAD.r)); }
+  function py(v, lo, hi) {
+    var t = (v - lo) / Math.max(1e-9, hi - lo);
+    return H - PAD.b - t * (H - PAD.t - PAD.b);
+  }
+  function el(tag, attrs, text) {
+    var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function drawChart(rows, floor) {
+    var S = $("c-series"), St = $("c-static");
+    S.textContent = ""; St.textContent = "";
+    var n = Math.max(2, rows.length);
+    var vals = [0];
+    rows.forEach(function (r) {
+      vals.push(r.dReported);
+      if (r.dIndep !== null) vals.push(r.dIndep);
+    });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    var pad = Math.max(0.12, (hi - lo) * 0.18);
+    lo -= pad; hi += pad;
+
+    // the resolution band: below this the independent check cannot see anything
+    if (floor) {
+      St.appendChild(el("rect", {
+        x: PAD.l, y: py(floor, lo, hi), width: W - PAD.l - PAD.r,
+        height: Math.max(1, py(-floor, lo, hi) - py(floor, lo, hi)),
+        fill: "#6b7589", opacity: 0.11,
+      }));
+      St.appendChild(el("text", {
+        x: PAD.l + 7, y: py(-floor, lo, hi) - 6, class: "ch-sub",
+      }, "below here the independent check cannot resolve anything"));
+    }
+    St.appendChild(el("line", { x1: PAD.l, y1: py(0, lo, hi), x2: W - PAD.r, y2: py(0, lo, hi), class: "ch-axis" }));
+    St.appendChild(el("line", { x1: PAD.l, y1: PAD.t, x2: PAD.l, y2: H - PAD.b, class: "ch-axis" }));
+    [lo + (hi - lo) * 0.02, 0, hi - (hi - lo) * 0.02].forEach(function (v) {
+      St.appendChild(el("text", { x: PAD.l - 8, y: py(v, lo, hi) + 4, class: "ch-tick", "text-anchor": "end" },
+        (v >= 0 ? "+" : "") + v.toFixed(2)));
+    });
+    for (var g = 0; g < n; g++) {
+      if (n <= 9 || g % 2 === 0) {
+        St.appendChild(el("text", { x: px(g, n), y: H - PAD.b + 18, class: "ch-tick", "text-anchor": "middle" }, String(g)));
+      }
+    }
+    St.appendChild(el("text", { x: (PAD.l + W - PAD.r) / 2, y: H - 6, class: "ch-lab", "text-anchor": "middle" }, "Generation"));
+    St.appendChild(el("text", { x: 14, y: H / 2, class: "ch-lab", "text-anchor": "middle", transform: "rotate(-90 14 " + H / 2 + ")" }, "Change since the start"));
+
+    function line(key, colour) {
+      var d = "", any = false;
+      rows.forEach(function (r, i) {
+        var v = r[key];
+        if (v === null || v === undefined) return;
+        d += (any ? "L" : "M") + px(i, n).toFixed(1) + " " + py(v, lo, hi).toFixed(1) + " ";
+        any = true;
+      });
+      if (!any) return;
+      S.appendChild(el("path", { d: d, fill: "none", stroke: colour, "stroke-width": 2, "stroke-linejoin": "round" }));
+      rows.forEach(function (r, i) {
+        var v = r[key];
+        if (v === null || v === undefined) return;
+        S.appendChild(el("circle", { cx: px(i, n), cy: py(v, lo, hi), r: 3.2, fill: colour, stroke: "#fff", "stroke-width": 1.5 }));
+      });
+      var last = rows[rows.length - 1];
+      if (last && last[key] !== null && last[key] !== undefined) {
+        S.appendChild(el("text", {
+          x: px(rows.length - 1, n) - 6, y: py(last[key], lo, hi) - 10,
+          class: "ch-val", "text-anchor": "end", fill: colour,
+        }, (last[key] >= 0 ? "+" : "") + last[key].toFixed(3)));
+      }
+    }
+    line("dReported", "#3d8ad8");
+    line("dIndep", "#c87b32");
+  }
+
+  function fold(x) {
+    var f = Math.pow(10, x);
+    return (f >= 1 ? f.toFixed(1) + "x better" : (1 / f).toFixed(1) + "x worse");
+  }
+
+  // ---------------------------------------------------------------- run
+  function run() {
+    if (busy || !M) return;
+    busy = true;
+    $("go").disabled = true;
+
+    var hi = parseInt($("len").value, 10);
+    var opts = {
+      minLen: Math.max(8, hi - 14), maxLen: hi,
+      lib: 520, k: parseInt($("k").value, 10),
+      gens: parseInt($("gens").value, 10),
+      pin: $("pin").checked, novelty: $("nov").checked, starved: $("starve").checked,
+      goal: $("goal").value, seed: 20261014,
+    };
+    var state = D.start(opts);
+    var rows = [], base = null, baseI = null;
+    // the floor on the independent check, sd x sqrt(2/k), using the per-molecule spread we measured
+    var floor = 0.4562 * Math.sqrt(2 / opts.k);
+
+    $("verdict").className = "verdict";
+    $("vbig").textContent = "Running.";
+    $("vsub").textContent = "Generation 0 of " + opts.gens + ".";
+
+    function step() {
+      var r = D.runGeneration(state, opts);
+      state.gen++;
+      if (base === null) { base = r.reported; baseI = r.independent; }
+      r.dReported = r.reported - base;
+      r.dIndep = (r.independent === null || baseI === null) ? null : r.independent - baseI;
+      rows.push(r);
+      drawChart(rows, floor);
+      $("m-reported").textContent = (r.dReported >= 0 ? "+" : "") + r.dReported.toFixed(3);
+      $("m-indep").textContent = r.dIndep === null ? "no coverage" : (r.dIndep >= 0 ? "+" : "") + r.dIndep.toFixed(3);
+      $("prog2").textContent = "generation " + state.gen + " of " + opts.gens
+        + "  |  diversity " + r.diversity.toFixed(3)
+        + "  |  median charge " + r.medianCharge
+        + "  |  independent check covers " + Math.round(r.coverage * 100) + "% of winners";
+      $("vsub").textContent = "Generation " + state.gen + " of " + opts.gens + ".";
+
+      if (state.gen < opts.gens) {
+        setTimeout(step, 16);
+      } else {
+        finish(rows, opts, floor);
+      }
+    }
+    setTimeout(step, 16);
+  }
+
+  function finish(rows, opts, floor) {
+    busy = false;
+    $("go").disabled = false;
+    var last = rows[rows.length - 1];
+    var rep = last.dReported, ind = last.dIndep;
+
+    var head, sub;
+    if (ind === null) {
+      head = "Your loop reported " + fold(rep) + ".";
+      sub = "The independent check had no coverage: the winners drifted far enough from every "
+          + "measured peptide that nothing could judge them. That is its own finding.";
+    } else if (Math.abs(ind) < floor) {
+      head = "Your loop reported " + fold(rep) + ". The independent check saw nothing.";
+      sub = "The independent check moved " + ind.toFixed(3) + ", which is inside its own resolution "
+          + "of " + floor.toFixed(3) + " at " + opts.k + " molecules kept. So it is not evidence of "
+          + "no improvement; it is an unresolved measurement. Keep more molecules and the floor "
+          + "drops as the square root.";
+    } else if (ind < 0) {
+      head = "Your loop reported " + fold(rep) + ". The independent check says they got worse.";
+      sub = "Independent reading " + ind.toFixed(3) + ", outside its resolution floor of "
+          + floor.toFixed(3) + ". The score went up and the molecules did not.";
+    } else {
+      head = "Your loop reported " + fold(rep) + ", and the independent check agrees in direction.";
+      sub = "Independent reading +" + ind.toFixed(3) + ", above its floor of " + floor.toFixed(3)
+          + ". Worth a second seed before believing it.";
+    }
+    if (opts.starved) {
+      head = "Broken scorer: reported " + fold(rep) + ".";
+      sub = "This run used a scoring model starved of 80% of its training families, so it is "
+          + "strictly worse at predicting anything. Compare the reported number with your normal "
+          + "run. " + sub;
+    }
+    $("vbig").textContent = head;
+    $("vsub").textContent = sub;
+
+    var tb = $("wintbody");
+    tb.textContent = "";
+    last.winners.forEach(function (w) {
+      var tr = document.createElement("tr");
+      var c1 = document.createElement("td"); c1.className = "seq"; c1.textContent = w.s;
+      var c2 = document.createElement("td"); c2.className = "n"; c2.textContent = w.len;
+      var c3 = document.createElement("td"); c3.className = "n"; c3.textContent = w.charge.toFixed(1);
+      var c4 = document.createElement("td"); c4.className = "n"; c4.textContent = w.score.toFixed(3);
+      tr.appendChild(c1); tr.appendChild(c2); tr.appendChild(c3); tr.appendChild(c4);
+      tb.appendChild(tr);
+    });
+    $("winwrap").hidden = false;
+  }
+
+  // ---------------------------------------------------------------- score one
+  function scoreOne() {
+    if (!M) return;
+    var s = ($("seq").value || "").toUpperCase().replace(/[^A-Z]/g, "");
+    var bad = s.split("").filter(function (c) { return M.aa.indexOf(c) < 0; });
+    $("s-warn").hidden = true;
+    if (s.length < 5) {
+      $("s-warn").hidden = false;
+      $("s-warn").textContent = "Give it at least five amino acids.";
+      return;
+    }
+    if (bad.length) {
+      $("s-warn").hidden = false;
+      $("s-warn").textContent = "Dropped characters that are not standard amino acids: " + bad.join("");
+      s = s.split("").filter(function (c) { return M.aa.indexOf(c) >= 0; }).join("");
+    }
+    var r = D.scoreOne(s);
+    $("scoreout").hidden = false;
+    $("s-sw").textContent = r.scorerSw.toFixed(3);
+    $("s-meter").textContent = r.meterSw.toFixed(3);
+    $("s-nn").textContent = r.independentSw === null ? "no match" : r.independentSw.toFixed(3);
+    $("s-q").textContent = r.charge.toFixed(1);
+    $("s-near").textContent = (r.nearest * 100).toFixed(0) + "%";
+  }
+
+  // ---------------------------------------------------------------- wire up
+  function sync() {
+    var hi = parseInt($("len").value, 10);
+    $("lenv").textContent = Math.max(8, hi - 14) + " to " + hi;
+    $("gensv").textContent = $("gens").value;
+    $("kv").textContent = $("k").value;
+  }
+  ["len", "gens", "k"].forEach(function (id) { $(id).addEventListener("input", sync); });
+  sync();
+
+  $("ctl").addEventListener("submit", function (e) { e.preventDefault(); run(); });
+  $("scorebtn").addEventListener("click", scoreOne);
+  $("seq").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); scoreOne(); } });
+
+  fetch("/assets/models.json").then(function (r) {
+    if (!r.ok) throw new Error("models " + r.status);
+    return r.json();
+  }).then(function (blob) {
+    M = D.prepare(blob);
+    var t = D.selfTest();
+    if (!t.ok) {
+      $("prog").textContent = "Model self-check failed; numbers on this page are not trustworthy.";
+      console.warn("Silicyte self-test mismatch", t.rows);
+      return;
+    }
+    $("prog").textContent = "Model loaded and self-checked against the cluster.";
+    $("go").disabled = false;
+    scoreOne();
+  }).catch(function (err) {
+    $("prog").textContent = "Could not load the model (" + err.message + ").";
+    $("go").disabled = true;
+  });
+  $("go").disabled = true;
+})();
+</script>
+</body>
+</html>

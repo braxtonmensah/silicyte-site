@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design-loop gain is scorer exploitation, proven by intervention | Silicyte</title>
+<meta name="description" content="A deliberately starved scoring model made the reported improvement 2.4x larger (t = -14.60). Plus the resolution floor that makes most independent validation unreadable, and six measurement faults found in our own pipeline.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="canonical" href="https://silicyte.com/science.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Silicyte Science">
+<meta property="og:description" content="Every number with its error bar, in plain language first, including the ones we withdrew.">
+<meta property="og:url" content="https://silicyte.com/science.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .toc a {
+    font: 450 13.5px/1 var(--body); text-decoration: none; color: var(--ink-2);
+    border: 1px solid var(--line); border-radius: 100px; padding: 9px 14px; background: var(--paper);
+  }
+  .toc a:hover { border-color: var(--ink-3); color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="#111827">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/science.html" aria-current="page">Science</a>
+      <a href="/data.html">Data</a>
+      <a href="/demo.html">Designer</a>
+      <a href="/company.html">Company</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="padding-block:60px 0">
+    <div class="col">
+      <p class="eyebrow">Evidence</p>
+      <h1>Every number, with what it means before what it is.</h1>
+      <p class="lede">Research pages usually print the statistic and leave you to work out whether
+      it matters. Each result below says what it means in plain terms first, then gives the figure,
+      the sample size and the error, so you can check rather than trust.</p>
+      <div class="toc">
+        <a href="#intervention">The intervention</a>
+        <a href="#floor">Why checks go blind</a>
+        <a href="#noise">The wrong error bar</a>
+        <a href="#faults">Six faults in our own work</a>
+        <a href="#build">What we build</a>
+        <a href="#withdrawn">What we withdrew</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="intervention">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">01</span> The intervention</p>
+        <h2>Cripple the scorer and the loop reports a better result.</h2>
+        <p>Design loops are usually judged by how much they improve a held-out predictor. We tested
+        whether that number tracks molecule quality by changing the one thing that should control
+        it: how good the scoring model is.</p>
+        <p>We withheld 80% of the scoring model's training families, which removes whole regions of
+        chemical space rather than thinning data it already covers. The measuring model was left
+        completely alone, and the script aborts if it modifies anything other than the two
+        selection models, because handicapping the ruler would make the comparison meaningless.</p>
+      </div>
+
+      <div class="plain">
+        <b>Theory says a better scorer gains more. The measurement says the opposite, hard.</b>
+        <span>Intact scorer: the loop reported its molecules ended <span class="num">3.5x</span>
+        better at killing bacteria relative to harming blood cells. Scorer given a fifth of the
+        data: <span class="num">21x</span> better. In the units the field uses, that is
+        <span class="num">+0.5421</span> against <span class="num">+1.3182</span>, a difference of
+        <span class="num">0.7761</span> with a standard error of <span class="num">0.0531</span>,
+        which is <span class="num">14.6</span> error bars wide. Three runs each, twelve arms in one
+        allocation, job <span class="num">12243941</span>.</span>
+      </div>
+
+      <p class="col muted">A model trained on less data cannot find better molecules. It can only
+      be easier to fool. So the quantity that rose is the scoring model's error, and the loop was
+      climbing it. Six control loops run with scrambled rewards all stayed inside their
+      pre-registered band of <span class="num">&plusmn;0.11</span>, spanning
+      <span class="num">-0.0851</span> to <span class="num">+0.0396</span>, which is how we know
+      the apparatus itself was behaving.</p>
+
+      <p class="col muted small"><b>What this does not show.</b> It does not show the molecules got
+      worse, and it does not establish why the effect inverts. A plausible account is that the
+      scorer and the measuring model share a feature vocabulary, so a handicapped scorer pushes
+      harder along a direction the measuring model also likes. This experiment does not test that.
+      What it establishes is the sign and the size.</p>
+
+      <div class="actions">
+        <a class="btn ghost" href="/demo.html">Reproduce this in your browser</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="floor">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">02</span> Why the usual safeguard fails</p>
+        <h2>An independent check cannot see an effect smaller than its own blur.</h2>
+        <p>The standard defence against this problem is a second, independent metric. That only
+        works if the second metric can resolve the effect, and usually it cannot. The reason is
+        arithmetic rather than biology, and it is computable from numbers every group already has.</p>
+        <p>An independent check averages its verdict over the molecules the loop kept. Comparing
+        two such averages carries a built-in wobble that depends only on how many molecules you
+        kept and how much they vary. Keep few molecules and the check is blurry no matter how good
+        the model behind it is.</p>
+      </div>
+
+      <div class="plain">
+        <b>At 100 molecules kept, our independent check was blind to anything under a 16% change.</b>
+        <span>And the changes we were asking it about ranged from <span class="num">3%</span> better
+        to <span class="num">18%</span> worse. So six separate conclusions of "the independent check
+        did not move" were not findings at all. They were measurements taken with an instrument too
+        blurry to answer the question.</span>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Molecules kept</th>
+              <th scope="col">Smallest change the check can see</th>
+              <th scope="col">In the field's units</th>
+              <th scope="col">Runs needed to resolve a 7% effect</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="n">100</td><td class="n">16%</td><td class="n">0.0645</td><td class="n">about 18</td></tr>
+            <tr><td class="n">200</td><td class="n">11%</td><td class="n">0.0456</td><td class="n">about 9</td></tr>
+            <tr><td class="n">1,000</td><td class="n">4.8%</td><td class="n">0.0204</td><td class="n">about 2</td></tr>
+            <tr><td class="n">3,250</td><td class="n">2.6%</td><td class="n">0.0113</td><td class="n">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Predicted from the spread between
+      individual molecules, <span class="num">0.4562</span>, measured over
+      <span class="num">143</span> saved sets of winners; the predicted blur of
+      <span class="num">0.0645</span> came back as <span class="num">0.0570</span> when measured
+      directly. The fix is design rather than more runs: keep more molecules, or compare both arms
+      against one shared pool of candidates so the sampling wobble cancels out. The
+      <a href="/demo.html">designer</a> draws this blur as a grey band so you can see when your own
+      run lands inside it.</p>
+    </div>
+  </section>
+
+  <section id="noise">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">03</span> The wrong error bar</p>
+        <h2>The control is eight times noisier than the thing it controls.</h2>
+        <p>When you want to know whether a result is real, the instinct is to look at how much the
+        control run jumps around and treat that as the noise level. Here that instinct is wrong by
+        a factor of eight, and we had been making exactly that mistake.</p>
+      </div>
+
+      <div class="plain">
+        <b>Our real runs land in the same place every time. Our control runs scatter.</b>
+        <span>Repeating the real loop with fresh random seeds moved the answer by
+        <span class="num">0.0071</span>. Repeating the control moved it by
+        <span class="num">0.0570</span>. Selection is nearly deterministic, so the real loop keeps
+        finding the same molecules; the control re-draws at random every time and pays the full
+        sampling wobble from the section above. Neither one's scatter is the other's error bar.</span>
+      </div>
+
+      <p class="col muted">Putting repeats on a number that already existed, rather than running a
+      new experiment, changed what it said. Across six seeded repeats the real loop sits
+      <strong>about 14% below its own control</strong> on the independent check:
+      <span class="num">-0.0652</span> with a standard error of <span class="num">0.0201</span>,
+      which is <span class="num">3.2</span> error bars. That is the best-supported negative result
+      we have, and it is a comparison of two arms on one fixed ruler, which is the kind of
+      comparison that survives the measurement faults in the next section.</p>
+    </div>
+  </section>
+
+  <section id="faults">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">04</span> Our own faults</p>
+        <h2>Six things that were wrong in our pipeline, and passed every test we had.</h2>
+        <p>Each of these invalidated a result we had already written down. They are listed because
+        a company whose product is measurement should be judged on what it catches in its own work,
+        and because every one of them is a mistake another group can check for today.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="ix">FAULT 01</span>
+          <h3>A rule that guarded a histogram, not the thing that mattered</h3>
+          <p>We held the molecules' electric charge fixed so the loop could not cheat by drifting
+          composition. The check reported a perfect match at every round while the actual charge
+          slid by a third of a unit, because the rule worked in whole numbers and real charge is
+          continuous: <span class="num">30%</span> of real antibacterial peptides sit between the
+          integers.</p>
+        </div>
+        <div class="card">
+          <span class="ix">FAULT 02</span>
+          <h3>A control that looked healthier than the real run</h3>
+          <p>The same bug made the control arm hold its charge perfectly, because a control has no
+          pressure to drift with. A control outperforming the treatment on a safety check is the
+          signature of this bug, not reassurance.</p>
+        </div>
+        <div class="card">
+          <span class="ix">FAULT 03</span>
+          <h3>Test molecules with near-twins in training</h3>
+          <p>The routine that separates training from testing described itself as one algorithm and
+          implemented another, so <span class="num">20%</span> of supposedly held-out molecules had
+          a near-identical partner in training. The test we had, that no family spans the divide,
+          passed <span class="num">826</span> out of <span class="num">826</span>. It was testing a
+          different quantity.</p>
+        </div>
+        <div class="card">
+          <span class="ix">FAULT 04</span>
+          <h3>A diversity cap that cannot see the collapse</h3>
+          <p>We capped how similar any two molecules could be. The winners still converged on one
+          narrow family, with no single pair breaching the cap. Capping the worst pair removed
+          <span class="num">12%</span> of the problem; bounding the average removed
+          <span class="num">82%</span>.</p>
+        </div>
+        <div class="card">
+          <span class="ix">FAULT 05</span>
+          <h3>A drift measure that reported zero while drifting</h3>
+          <p>It compared the last round against the first, so a run sitting permanently off-target
+          reported no drift at all.</p>
+        </div>
+        <div class="card">
+          <span class="ix">FAULT 06</span>
+          <h3>A correlation that mishandled ties</h3>
+          <p>Our rank statistic did not correct for tied values, which biases every accuracy figure
+          we have ever quoted. All of them are being recomputed, and until that lands this page
+          quotes no absolute accuracy.</p>
+        </div>
+      </div>
+      <p class="col muted" style="margin-top:30px">The pattern connecting most of these: the guard
+      was tested, and the test passed, but nobody measured the quantity the guard exists to bound.
+      That is the check we now run first, on our own work and on anyone else's.</p>
+    </div>
+  </section>
+
+  <section id="build">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">05</span> What we build</p>
+        <h2>The audit comes out of designing molecules, not out of commenting on it.</h2>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Programme</th><th scope="col">What exists</th><th scope="col">Outside measurement</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Antimicrobial peptides, designed from scratch</td>
+              <td>A designed library submitted <span class="num">2026-09-30</span> to the AMP Challenge</td>
+              <td>Selected entries are made and tested by the organisers' laboratory</td>
+            </tr>
+            <tr>
+              <td>EGFR binders with a pH switch</td>
+              <td><span class="num">224</span> accepted two-chain models, folding confidence up to <span class="num">92.7</span> of 100</td>
+              <td>Entered in Adaptyv / ProteinBase design rounds</td>
+            </tr>
+            <tr>
+              <td>TNF-alpha binders</td>
+              <td>A designed candidate slate, scored and ranked in house</td>
+              <td>Entered in an open design round</td>
+            </tr>
+            <tr>
+              <td>Virtual cell models</td>
+              <td>Models predicting how cells respond to a genetic perturbation</td>
+              <td>Scored on the Arc Institute Virtual Cell Challenge board</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="plain">
+        <b>More data is not the bottleneck. We checked.</b>
+        <span>Adding <span class="num">42%</span> more laboratory measurements moved our scoring
+        model's accuracy by between <span class="num">-0.004</span> and
+        <span class="num">+0.007</span>, against a threshold of <span class="num">+0.02</span> we
+        had set in advance for calling it worthwhile. Going from <span class="num">983</span> to
+        <span class="num">1,353</span> training examples moved it <span class="num">+0.003</span>.
+        The limit is in the model and in how it transfers, not in the size of the dataset.</span>
+      </div>
+
+      <div class="col" style="margin-top:44px">
+        <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">So we rebuilt the scorer, and it is now 19% better at ranking</h3>
+        <p class="muted">Measured <span class="num">2026-10-14</span>. First we rebuilt the
+        evaluation itself, because the old one was leaking: new folds by true transitive clustering
+        at 80% identity, where the measured fraction of held-out molecules with a near-twin in
+        training is <span class="num">0</span>. Every number below is on those folds.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Scoring model</th><th scope="col">Ranking accuracy, potency</th><th scope="col">Ranking accuracy, safety</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hand-written descriptors, what the loop used</td><td class="n">0.4502</td><td class="n">0.4074</td></tr>
+            <tr><td>Protein language model, frozen</td><td class="n">0.4656</td><td class="n">0.3502</td></tr>
+            <tr><td><b>Protein language model, trained end to end</b></td><td class="n"><b>0.5356</b></td><td class="n"><b>0.5079</b></td></tr>
+            <tr><td>The same model on deliberately scrambled labels</td><td class="n">-0.0228</td><td class="n">&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="plain">
+        <b>The ceiling was never the model. It was the one-line formula bolted onto it.</b>
+        <span>Every accuracy number this field reports for a language model is a linear fit on
+        frozen features. Letting the same weights actually train moves potency by
+        <span class="num">+0.1192</span> and safety by <span class="num">+0.1577</span>. Safety
+        gains most, which is the opposite of what a data-volume argument predicts, because safety
+        has less than half the labels.</span>
+      </div>
+
+      <p class="col muted">The last row is the check that makes the rest meaningful. We retrained
+      the same model on labels we scrambled on purpose. It scored
+      <span class="num">-0.0228</span>, which is nothing. A model with that much capacity would
+      happily memorise its way to a good score if any answers were leaking across the fold
+      boundary, so a flat result on scrambled labels is direct evidence that they are not. We set
+      that tolerance in writing before the run.</p>
+
+      <p class="col muted">Against the ceiling in section 02, this moves us from
+      <span class="num">48%</span> to <span class="num">57%</span> of what these labels can
+      support. It is a real improvement and it is not the finish line.</p>
+    </div>
+  </section>
+
+  <section id="withdrawn" class="flush">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">06</span> Withdrawn</p>
+        <h2>Results we published and then took back.</h2>
+        <p>A programme that shows only its surviving results gives you no way to judge how many did
+        not survive. This list is kept current.</p>
+      </div>
+      <div class="ledger">
+        <div>
+          <span class="tag">Withdrawn</span>
+          <h3>Our first headline result</h3>
+          <p>We reported a large improvement in the kill-versus-harm ratio. Its own control, and
+          then the independent check, overturned it. It was the scorer effect in section 01.</p>
+        </div>
+        <div>
+          <span class="tag">Void</span>
+          <h3>Two complete runs, discarded under our own rule</h3>
+          <p>One drifted in composition, one breached its tolerance. Their results are recorded in
+          our files only so that they can never later be presented as evidence.</p>
+        </div>
+        <div>
+          <span class="tag">Withdrawn</span>
+          <h3>Accuracy figures inflated by our own leaking data split</h3>
+          <p>Overstated by as much as <span class="num">0.065</span> by fault 03. A result showing
+          a large accuracy gain from fine-tuning a bigger model is withdrawn until the clean re-run
+          finishes. We are not quoting the number until it does.</p>
+        </div>
+        <div>
+          <span class="tag">Withdrawn</span>
+          <h3>Three conclusions that did not survive repeating the run</h3>
+          <p>Including a setting we had called the best one, which lost to its alternative once we
+          ran more than one random seed, and a claimed noise level that turned out to be
+          <span class="num">5</span> to <span class="num">10</span> times too large because it
+          mixed different configurations together.</p>
+        </div>
+        <div>
+          <span class="tag">Unmeasurable</span>
+          <h3>Three quality gates we had set below the noise</h3>
+          <p>One required a run to stay within a tolerance that a control with nothing to learn
+          exceeded by six times on its own. Zero of six repeat runs passed it, including the
+          controls. The gates were mis-set, and we say so rather than claiming they were met.</p>
+        </div>
+        <div>
+          <span class="tag">Unverifiable</span>
+          <h3>One early result that cannot be rechecked</h3>
+          <p>Its values were recorded to one decimal place and its molecules were overwritten by a
+          later run. The data needed to verify it no longer exists, so it counts for nothing.</p>
+        </div>
+      </div>
+      <p class="col muted small" style="margin-top:26px">Working papers, pre-registration files and
+      run logs for every figure on this page are available on request at
+      <a href="/company.html">hello@silicyte.com</a>. Each carries its job identifiers.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. No molecule described
+    on this page has a measured potency or safety value; every activity figure is a model
+    prediction, and outside measurement comes only through challenge organisers who make and test
+    selected entries.</p>
+    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
+  </div>
+</footer>
+</body>
+</html>
