@@ -18,9 +18,9 @@
   --paper-3: #e9e6dd;      /* pressed state, active nav */
 
   /* ink */
-  --ink: #121619;          /* headings */
-  --ink-2: #3f464c;        /* body copy, 9.1:1 on paper */
-  --ink-3: #767c83;        /* captions and metadata, 4.6:1 on paper */
+  --ink: #0d1114;          /* headings */
+  --ink-2: #353c42;        /* body copy */
+  --ink-3: #5c646c;        /* captions; darkened, the old #767c83 was the grey complained about */
 
   /* lines */
   --line: #e4e1d9;
@@ -46,8 +46,8 @@
   --good: #3e6b52;
   --warn: #a8552f;
 
-  --display: "Familjen Grotesk", "Inter", "Segoe UI", system-ui, sans-serif;
-  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --display: "Clash Display", "Segoe UI", system-ui, sans-serif;
+  --body: "Satoshi", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   color-scheme: light;
 }
