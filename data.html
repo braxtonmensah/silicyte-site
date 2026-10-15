@@ -10,7 +10,7 @@
 <link rel="canonical" href="https://silicyte.com/data.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Corrected antimicrobial peptide evaluation split">
-<meta property="og:description" content="The standard AMP cross-validation split leaks 20.1% of held-out sequences. This one leaks none. Free, documented, with the audit and the measured label ceiling.">
+<meta property="og:description" content="The standard AMP cross-validation split leaks 20.1% of held-out sequences. This one leaks none. Free, documented, with the checks and the measured label ceiling.">
 <meta property="og:url" content="https://silicyte.com/data.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
@@ -22,7 +22,7 @@
   "@context": "https://schema.org/",
   "@type": "Dataset",
   "name": "Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction",
-  "description": "A corrected cross-validation split for antimicrobial peptide MIC and HC50 prediction, with the audit that shows it is clean and the label reliability that bounds what any model can score. The similarity clustering in common use documents itself as single linkage but compares each sequence only to cluster representatives, leaving 20.1 percent of held-out MIC sequences and 24.6 percent of HC50 sequences with a cross-fold neighbour above 0.80 identity, while the usual check that no family spans a fold passes 826 of 826. These folds are built by transitive single linkage at Levenshtein ratio 0.80 and the measured cross-fold fraction above threshold is 0.0000. Includes 2904 MIC and 1238 HC50 sequences with fold and cluster assignments, the leakage audit, split-half label reliability of 0.7877 implying a ceiling of 0.9387 against the pooled label, and baselines from a 36-descriptor ridge through a fine-tuned protein language model with a shuffled-label control. The release is published alongside a second measurement: the pooled activity label averages measurements against different organisms that agree with each other at a median Spearman of 0.596 over 491 organism pairs, 74.2 percent of resolvable variance is between organisms rather than within them, and the within-organism ceiling is 0.9590 to 0.9815, higher than the pooled 0.9387 that the field is judged against.",
+  "description": "A corrected cross-validation split for antimicrobial peptide MIC and HC50 prediction, with the checks that show it is clean and the label reliability that bounds what any model can score. The similarity clustering in common use documents itself as single linkage but compares each sequence only to cluster representatives, leaving 20.1 percent of held-out MIC sequences and 24.6 percent of HC50 sequences with a cross-fold neighbour above 0.80 identity, while the usual check that no family spans a fold passes 826 of 826. These folds are built by transitive single linkage at Levenshtein ratio 0.80 and the measured cross-fold fraction above threshold is 0.0000. Includes 2904 MIC and 1238 HC50 sequences with fold and cluster assignments, the leakage check, split-half label reliability of 0.7877 implying a ceiling of 0.9387 against the pooled label, and baselines from a 36-descriptor ridge through a fine-tuned protein language model with a shuffled-label control. The release is published alongside a second measurement: the pooled activity label averages measurements against different organisms that agree with each other at a median Spearman of 0.596 over 491 organism pairs, 74.2 percent of resolvable variance is between organisms rather than within them, and the within-organism ceiling is 0.9590 to 0.9815, higher than the pooled 0.9387 that the field is judged against.",
   "url": "https://silicyte.com/data.html",
   "version": "1.0.0",
   "datePublished": "2026-10-14",
@@ -73,16 +73,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610142230">
+<link rel="stylesheet" href="/assets/site.css?v=202610142320">
 <style>
-  .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px;
-        background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 30px; }
-  .dl a { background: var(--paper); padding: 22px; text-decoration: none; color: var(--ink); display: block; }
-  .dl a:hover { background: var(--paper-2); }
+  .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 40px;
+        background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 32px; }
+  .dl a { background: transparent; padding: 22px 0 26px; text-decoration: none; color: var(--ink); display: block; border-bottom: 1px solid transparent; }
+  .dl a:hover { background: transparent; border-bottom-color: var(--ink); }
   .dl a b { display: block; font: 500 15.5px/1.3 var(--body); margin-bottom: 6px; }
   .dl a span { font-size: 13px; color: var(--ink-3); font-family: var(--mono); }
-  .cite { background: var(--paper-2); border: 1px solid var(--line); border-radius: 5px;
-          padding: 16px 18px; font: 400 13.5px/1.6 var(--mono); overflow-x: auto; margin-top: 16px; }
+  .cite { background: transparent; border: 0; border-left: 2px solid var(--line-strong); border-radius: 0;
+          padding: 2px 0 2px 20px; font: 400 13.5px/1.6 var(--mono); overflow-x: auto; margin-top: 18px; }
 </style>
 </head>
 <body>
@@ -107,7 +107,7 @@
       <a href="/">Home</a>
       <a href="/science.html">Science</a>
       <a href="/data.html" aria-current="page">Data</a>
-      <a href="/audit.html">Audit</a>
+      <a href="/check.html">Check</a>
       <a href="/demo.html">Designer</a>
       <a href="/company.html">Company</a>
     </nav>
@@ -131,7 +131,7 @@
       noise is organism identity</strong>. That is section <a href="#target">03</a>.</p>
       <div class="actions">
         <a class="btn" href="/data/silicyte-amp-eval-v1.zip" download>Download the package (77 KB)</a>
-        <a class="btn ghost" href="/audit.html">Audit your own split</a>
+        <a class="btn ghost" href="/check.html">Check your own split</a>
         <a class="btn ghost" href="/data/silicyte-amp-eval-v1/README.md">Read the documentation</a>
       </div>
     </div>
@@ -176,7 +176,7 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">02</span> What you get</p>
-        <h2>Folds, the audit, the ceiling, and baselines.</h2>
+        <h2>Folds, the checks, the ceiling, and baselines.</h2>
       </div>
       <div class="dl">
         <a href="/data/silicyte-amp-eval-v1.zip" download>
@@ -189,7 +189,7 @@
           <b>HC50 folds</b><span>csv &middot; 1,238 sequences &middot; 450 clusters</span>
         </a>
         <a href="/data/silicyte-amp-eval-v1/manifest.json">
-          <b>Manifest</b><span>json &middot; audit, reliability, baselines</span>
+          <b>Manifest</b><span>json &middot; checks, reliability, baselines</span>
         </a>
       </div>
 
@@ -328,7 +328,7 @@
       <h2>Please report on these folds so numbers are comparable.</h2>
       <p>The whole point is comparability. If you publish an AMP predictor result, running it on
       this split costs nothing and makes your number mean something next to everyone else's. If you
-      think the split is wrong, the audit is in the manifest and we would rather be corrected than
+      think the split is wrong, the full check is in the manifest and we would rather be corrected than
       cited.</p>
       <div class="cite">Silicyte (2026). Silicyte AMP evaluation split v1.0.0:
 corrected similarity folds for antimicrobial peptide activity
@@ -343,11 +343,11 @@ prediction. https://silicyte.com/data.html</div>
 <footer>
   <div class="wrap">
     <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. This dataset is an
-    evaluation split and an audit; it contains no new experimental measurements, and every activity
+    evaluation split and a leak report; it contains no new experimental measurements, and every activity
     value in it comes from the public sources named above.</p>
     <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
   </div>
 </footer>
-<script src="/assets/motion.js?v=202610142230" defer></script>
+<script src="/assets/motion.js?v=202610142320" defer></script>
 </body>
 </html>

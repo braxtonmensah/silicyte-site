@@ -1,4 +1,4 @@
-/* Silicyte Audit: the checks that decide whether a reported design gain is real.
+/* Silicyte Check: the checks that decide whether a reported design gain is real.
  *
  * Everything here runs in the visitor's browser. Nothing is uploaded, which matters because the
  * people who most need this check are holding unpublished results they will not send to a stranger.
@@ -233,7 +233,7 @@
     };
   }
 
-  window.SilicyteAudit = {
+  window.SilicyteCheck = {
     parseCSV, guess, run, spearman, spearmanOrdinal, ratio, sd, rankdata,
   };
 })();

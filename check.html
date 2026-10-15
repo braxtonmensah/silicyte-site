@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check your own result | Silicyte</title>
+<meta name="description" content="Four checks that decide whether a reported design gain is real: split leakage, resolution floor, tie handling, test independence. Runs in your browser. Nothing is uploaded.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="canonical" href="https://silicyte.com/check.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Check your own result">
+<meta property="og:description" content="Drop a CSV and get four checks on whether your reported gain is real. Runs entirely in your browser; nothing is uploaded, because the people who most need this are holding unpublished results.">
+<meta property="og:url" content="https://silicyte.com/check.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610142320">
+<style>
+  .drop {
+    border: 1px dashed var(--line-strong); border-radius: 0; background: transparent;
+    padding: 34px 26px; text-align: center; margin-top: 30px; transition: background .14s, border-color .14s;
+  }
+  .drop.over { border-color: var(--brand); background: var(--brand-tint); }
+  .drop p { margin: 0 0 6px; font-size: 15.5px; }
+  .drop .sub { font: 400 13px/1.5 var(--mono); color: var(--ink-3); margin: 0; }
+  .drop .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+  .privacy {
+    display: flex; gap: 10px; align-items: flex-start; margin-top: 16px;
+    font: 400 13px/1.5 var(--body); color: var(--ink-2);
+    background: transparent; border-left: 2px solid var(--good); padding: 4px 0 4px 18px; border-radius: 0;
+  }
+  .map { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 26px; }
+  .map label { display: block; font: 500 10.5px/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+  .map select, .map input {
+    width: 100%; font: 400 14px var(--body); padding: 9px 10px; border: 1px solid var(--line-strong);
+    border-radius: 4px; background: var(--surface); color: var(--ink);
+  }
+  .checks { margin-top: 30px; display: grid; gap: 0; background: transparent; border: 0; border-top: 1px solid var(--ink); }
+  .check { background: transparent; padding: 22px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 84px 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 620px) { .check { grid-template-columns: 1fr; gap: 10px; } }
+  .verdict { font: 500 10.5px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+  .verdict.pass { color: var(--good); }
+  .verdict.fail { color: var(--warn); }
+  .verdict.skip { color: var(--ink-3); }
+  .check h3 { margin-bottom: 6px; }
+  .check p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 9px; }
+  .check p:last-child { margin-bottom: 0; }
+  .check dl { display: grid; grid-template-columns: auto 1fr; gap: 5px 16px; margin: 10px 0 0;
+              font: 400 12.5px var(--mono); font-variant-numeric: tabular-nums; }
+  .check dt { color: var(--ink-3); }
+  .check dd { margin: 0; color: var(--ink); }
+  .idle { color: var(--ink-3); font-size: 15px; font-style: italic; }
+  .price { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 44px;
+           background: transparent; border: 0; margin-top: 36px; }
+  .tier { background: transparent; padding: 24px 0 0; border-top: 1px solid var(--ink); }
+  .tier .amt { display: block; font: 500 24px/1.1 var(--mono); letter-spacing: -.02em; margin-bottom: 4px; }
+  .tier .what { display: block; font: 500 11px/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .tier p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 10px; }
+  .tier ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-2); }
+  .tier li { margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/science.html">Science</a>
+      <a href="/data.html">Data</a>
+      <a href="/check.html" aria-current="page">Check</a>
+      <a href="/demo.html">Designer</a>
+      <a href="/company.html">Company</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="padding-block:60px 0">
+    <div class="col">
+      <p class="eyebrow">The instrument</p>
+      <h1>Is your reported gain real? Four checks, in this tab.</h1>
+      <p class="lede">Each of these four is a mistake we made first, found in our own pipeline, and
+      published. They are cheap to check and expensive to miss, and three of the four pass silently
+      when they are wrong.</p>
+      <p class="lede small">Drop a CSV below. <strong>Nothing is uploaded.</strong> The file is read
+      by this page and never leaves your machine, which matters because the people who most need
+      this check are holding unpublished results they will not send to a stranger.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">01</span> Run it</p>
+        <h2>Your file, or ours.</h2>
+        <p>One row per molecule. The page guesses your columns from their names and you can correct
+        it. A sequence column and a train/test or fold column are enough for two of the four checks;
+        prediction and truth columns unlock the other two.</p>
+      </div>
+
+      <div class="drop" id="drop">
+        <p><strong>Drop a CSV here</strong></p>
+        <p class="sub">or</p>
+        <div class="row">
+          <button class="btn ghost" id="pick" type="button">Choose a file</button>
+          <button class="btn ghost" id="demoReal" type="button">Use our published MIC folds</button>
+          <button class="btn ghost" id="demoBad" type="button">Use a deliberately broken example</button>
+        </div>
+        <input type="file" id="file" accept=".csv,.tsv,text/csv" hidden>
+      </div>
+
+      <div class="privacy">
+        <span aria-hidden="true">&#10003;</span>
+        <span>This page makes no network requests after it loads. There is no upload endpoint to
+        send your file to, no analytics on this page, and the code is one readable file you
+        can inspect: <a href="/assets/check.js">check.js</a>. Read it before you trust it.</span>
+      </div>
+
+      <div id="config" hidden>
+        <div class="map">
+          <div><label for="c-seq">Sequence column</label><select id="c-seq"></select></div>
+          <div><label for="c-split">Split or fold column</label><select id="c-split"></select></div>
+          <div><label for="c-pred">Prediction column</label><select id="c-pred"></select></div>
+          <div><label for="c-truth">Measured truth column</label><select id="c-truth"></select></div>
+          <div id="holdWrap" hidden><label for="c-hold">Which fold is held out</label><select id="c-hold"></select></div>
+          <div><label for="c-ident">Identity threshold</label><input id="c-ident" type="number" min="0.5" max="1" step="0.01" value="0.80"></div>
+          <div><label for="c-eff">Gain you are reporting</label><input id="c-eff" type="number" step="0.001" placeholder="optional, e.g. 0.05"></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="run" type="button">Run the four checks</button>
+          <span class="small muted" id="loaded" style="align-self:center"></span>
+        </div>
+      </div>
+
+      <div class="checks" id="out">
+        <div class="check"><div class="verdict skip">Waiting</div>
+          <div><p class="idle">No file loaded yet. The four checks and what each one catches are
+          described below; load something and they fill in with your numbers.</p></div></div>
+      </div>
+      <p class="col muted small" style="margin-top:14px" id="note"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">02</span> What each check catches</p>
+        <h2>Why these four and not others.</h2>
+        <p>Because these are the four that got us. Every one of them passed a check we thought was
+        adequate, and every one of them changed a number we had already written down.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <colgroup><col style="width:11%"><col style="width:47%"><col style="width:42%"></colgroup>
+          <thead><tr><th scope="col">Check</th><th scope="col">The failure it catches</th><th scope="col">What it cost us</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>LEAK</b></td>
+              <td>A held-out molecule has a near-twin in training. The clustering in common use
+              documents itself as single linkage but compares each sequence only to cluster
+              <em>representatives</em>, first match wins, so transitively similar pairs land in
+              different folds.</td>
+              <td><span class="num">20.1%</span> of MIC and <span class="num">24.6%</span> of HC50 held-out
+              rows, while the standard family-overlap check passed <span class="num">826 of 826</span></td>
+            </tr>
+            <tr>
+              <td><b>FLOOR</b></td>
+              <td>The reported effect is smaller than the resolution of the instrument that read it.
+              A gain measured over <em>k</em> kept molecules carries an irreducible floor of
+              sd&middot;&radic;(2/k).</td>
+              <td>six of our own &ldquo;the independent metric did not move&rdquo; readings sat below their
+              own instrument's resolution</td>
+            </tr>
+            <tr>
+              <td><b>TIES</b></td>
+              <td>The rank correlation is not tie-corrected. <code>argsort(argsort(x))</code> is an
+              ordinal rank, and it biases every correlation once the target has repeated values,
+              which activity labels always do.</td>
+              <td>every Spearman in one of our lanes needed recomputing</td>
+            </tr>
+            <tr>
+              <td><b>SPLIT</b></td>
+              <td>The same molecule appears on both sides, by string identity, before similarity is
+              even considered. The cheapest possible defect and the easiest to acquire when two
+              databases are merged.</td>
+              <td>one public compilation already contained <span class="num">100%</span> of another, which is
+              how a &ldquo;new data source&rdquo; turns out to be the old one</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="plain">
+        <b>The leak does not flatter all models equally, which is the dangerous part.</b>
+        <span>A large model can memorise a near-twin's label where a 36-feature linear model cannot,
+        so the leak inflates exactly the models people are most excited about. Measured inflation on
+        our own data reaches <span class="num">+0.065</span> on the safety axis. If you are comparing
+        a protein language model against a simple baseline on a leaky split, the comparison is not
+        measuring what you think.</span>
+      </div>
+
+      <p class="col muted small" style="margin-top:20px">A pass here is not a certificate. These
+      four are necessary and nowhere near sufficient: they say nothing about whether your target is
+      well specified, and on that point see the <a href="/data.html">data page</a>, where we measure
+      that <span class="num">74.2%</span> of the variance in the standard antimicrobial target is
+      which bacterium was tested rather than anything about the peptide.</p>
+    </div>
+  </section>
+
+  <section class="flush">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">03</span> Working with us</p>
+        <h2>What we do for money.</h2>
+        <p>The checks above are free and always will be, because an instrument nobody runs measures
+        nothing. Two things are not free, and we are stating prices rather than asking you to
+        enquire.</p>
+      </div>
+
+      <div class="price">
+        <div class="tier">
+          <span class="amt">Free</span>
+          <span class="what">This page</span>
+          <p>The four checks, in your browser, on your own unpublished data, with nothing uploaded
+          and no account.</p>
+          <ul>
+            <li>Leakage, resolution floor, tie handling, split independence</li>
+            <li>Our corrected folds and the full leak report, <a href="/data.html">CC BY 4.0</a></li>
+            <li>The source, one readable file</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <span class="amt">$5,000&ndash;15,000</span>
+          <span class="what">Full review, fixed fee</span>
+          <p>We go through a specific result end to end: the split, the folds, the controls, the metric,
+          and whether the gain you reported survives all four. Scope and price agreed before we
+          start.</p>
+          <ul>
+            <li>A written report naming each defect and its measured size</li>
+            <li>Corrected folds for your dataset, yours to keep and publish</li>
+            <li>A re-measured headline number, whichever way it goes</li>
+            <li>We will say in writing if we find nothing</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <span class="amt">In development</span>
+          <span class="what">Hosted evaluation</span>
+          <p>Submit a model, get scored against held-out labels you do not hold, on corrected splits
+          and per-organism targets, on every commit. A benchmark whose test set is public is
+          memorised within a year, so part of ours is withheld by design.</p>
+          <ul>
+            <li>Not available yet, and we will not pretend otherwise</li>
+            <li>Email if you want to be the first one and shape it</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col" style="margin-top:40px">
+        <h2 class="h-sm" style="font:500 26px/1.2 var(--display);margin-bottom:14px">Two things worth saying plainly</h2>
+        <p class="muted">We have no laboratory and no experimental result of our own. Every number on
+        this site is computational, and these are computational checks. It can tell you your
+        reported gain is an artifact. It cannot tell you your molecule works.</p>
+        <p class="muted">And we would rather be corrected than cited. If a check here is wrong, the
+        source is one file and the argument is in the open. Send it.</p>
+        <div class="copyrow">
+          <code id="email">hello@silicyte.com</code>
+          <button class="copybtn" id="copyEmail" type="button">Copy address</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance: large language models
+    are used as the research engineering layer for writing and auditing analysis code, running
+    pre-registered experiments on a university GPU allocation, and checking every reported number
+    against its source table. Several of the corrections behind these four checks were produced by
+    one model auditing another's code.</p>
+    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
+  </div>
+</footer>
+
+<script src="/assets/check.js?v=202610142130"></script>
+<script>
+(function () {
+  "use strict";
+  var A = window.SilicyteCheck;
+  var el = function (id) { return document.getElementById(id); };
+  var state = { header: [], rows: [], name: "" };
+
+  // ---------------------------------------------------------------- loading
+  function load(text, name) {
+    var p = A.parseCSV(text);
+    if (!p.rows.length) { el("note").textContent = "That file parsed to zero rows."; return; }
+    state.header = p.header; state.rows = p.rows; state.name = name;
+
+    var g = A.guess(p.header);
+    ["seq", "split", "pred", "truth"].forEach(function (k) {
+      var sel = el("c-" + k);
+      sel.innerHTML = "";
+      var none = document.createElement("option");
+      none.value = ""; none.textContent = "(none)";
+      sel.appendChild(none);
+      p.header.forEach(function (h) {
+        var o = document.createElement("option");
+        o.value = h; o.textContent = h;
+        if (h === g[k]) o.selected = true;
+        sel.appendChild(o);
+      });
+    });
+    el("config").hidden = false;
+    el("loaded").textContent = name + " · " + p.rows.length.toLocaleString() +
+      " rows · " + p.header.length + " columns";
+    refreshHoldout();
+    el("note").textContent = "";
+  }
+
+  /* A fold column with more than two levels is the common case, and the checks need one held-out
+     side. So offer the choice rather than silently treating fold 1 as the test set. */
+  function refreshHoldout() {
+    var col = el("c-split").value;
+    var wrap = el("holdWrap"), sel = el("c-hold");
+    if (!col) { wrap.hidden = true; return; }
+    var levels = {};
+    state.rows.forEach(function (r) { var v = String(r[col] ?? "").trim(); if (v) levels[v] = 1; });
+    var keys = Object.keys(levels).sort();
+    if (keys.length <= 2 || keys.length > 24) { wrap.hidden = true; return; }
+    sel.innerHTML = "";
+    keys.forEach(function (k, i) {
+      var o = document.createElement("option");
+      o.value = k; o.textContent = k + " held out, the rest trains";
+      if (i === 0) o.selected = true;
+      sel.appendChild(o);
+    });
+    wrap.hidden = false;
+  }
+  el("c-split").addEventListener("change", refreshHoldout);
+
+  // ---------------------------------------------------------------- rendering
+  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "—" : Number(x).toFixed(d === undefined ? 4 : d); }
+  function pct(x) { return !isFinite(x) ? "—" : (100 * x).toFixed(1) + "%"; }
+
+  function card(verdict, title, body, pairs) {
+    var cls = verdict === true ? "pass" : verdict === false ? "fail" : "skip";
+    var word = verdict === true ? "Pass" : verdict === false ? "Look" : "Skipped";
+    var d = document.createElement("div");
+    d.className = "check";
+    var v = document.createElement("div");
+    v.className = "verdict " + cls; v.textContent = word;
+    var c = document.createElement("div");
+    var h = document.createElement("h3"); h.textContent = title; c.appendChild(h);
+    var pEl = document.createElement("p"); pEl.textContent = body; c.appendChild(pEl);
+    if (pairs && pairs.length) {
+      var dl = document.createElement("dl");
+      pairs.forEach(function (kv) {
+        var dt = document.createElement("dt"); dt.textContent = kv[0];
+        var dd = document.createElement("dd"); dd.textContent = kv[1];
+        dl.appendChild(dt); dl.appendChild(dd);
+      });
+      c.appendChild(dl);
+    }
+    d.appendChild(v); d.appendChild(c);
+    return d;
+  }
+
+  function render(res) {
+    var out = el("out");
+    out.innerHTML = "";
+
+    // LEAK
+    var L = res.leak;
+    if (L.ok === null) {
+      out.appendChild(card(null, "LEAK — near-twins across the split", L.note));
+    } else {
+      out.appendChild(card(L.ok,
+        "LEAK — near-twins across the split",
+        L.ok
+          ? "At most 2% of held-out molecules have a close relative in training, which is what a split built by transitive clustering looks like."
+          : "Held-out molecules have close relatives in training. A model can score well here by recognising the relative rather than by generalising, and a large model will do that more readily than a simple one.",
+        [["above threshold", pct(L.frac)],
+         ["mean best identity", fmt(L.mean)],
+         ["95th percentile", fmt(L.p95)],
+         ["worst single pair", fmt(L.max)],
+         ["train / test rows", L.nTrain.toLocaleString() + " / " + L.nTest.toLocaleString()],
+         ["sampled for speed", L.sampled ? "yes, 420 per side" : "no, all pairs"]]));
+    }
+
+    // FLOOR
+    var F = res.floor;
+    if (F.ok === null && F.note) {
+      out.appendChild(card(null, "FLOOR — can the effect even be seen", F.note));
+    } else {
+      var pairs = [["held-out molecules (k)", String(F.k)],
+                   ["spread of predictions (sd)", fmt(F.spread)],
+                   ["resolution floor, sd·√(2/k)", fmt(F.floor)]];
+      F.kFor.forEach(function (r) { pairs.push(["floor at k = " + r.k, fmt(r.floor)]); });
+      var body;
+      if (F.reported === null) {
+        body = "This is the smallest difference your setup can resolve. Enter the gain you are reporting above and the check will tell you whether it clears its own instrument.";
+      } else if (F.ok) {
+        body = "Your reported gain of " + fmt(F.reported) + " is larger than the floor, so the instrument can see it. That does not make it real, only visible.";
+        pairs.unshift(["your reported gain", fmt(F.reported)]);
+      } else {
+        body = "Your reported gain of " + fmt(F.reported) + " is below the resolution of the measurement that produced it. A number this size is indistinguishable from the noise of which molecules happened to be kept.";
+        pairs.unshift(["your reported gain", fmt(F.reported)]);
+      }
+      out.appendChild(card(F.ok, "FLOOR — can the effect even be seen", body, pairs));
+    }
+
+    // TIES
+    var T = res.ties;
+    if (T.ok === null) {
+      out.appendChild(card(null, "TIES — is the rank statistic corrected", T.note));
+    } else {
+      out.appendChild(card(T.ok,
+        "TIES — is the rank statistic corrected",
+        T.ok
+          ? "Tie correction changes your correlation by less than 0.005 here, so an uncorrected implementation would not have misled you on this data."
+          : "Your target has repeated values, and an uncorrected ordinal rank shifts the correlation by the amount below. If any number you have published came out of argsort(argsort(x)), it needs recomputing.",
+        [["tie-corrected Spearman", fmt(T.corrected)],
+         ["uncorrected ordinal rank", fmt(T.ordinal)],
+         ["difference", fmt(T.delta)],
+         ["tied share of the target", pct(T.tieFrac)],
+         ["distinct target values", T.distinctTruth.toLocaleString() + " of " + T.n.toLocaleString()]]));
+    }
+
+    // SPLIT
+    var S = res.split;
+    out.appendChild(card(S.ok,
+      "SPLIT — exact duplicates across the split",
+      S.ok
+        ? "No molecule appears on both sides by exact string identity. This is the floor of the floor, and it is worth checking every time two sources are merged."
+        : "Identical molecules appear on both sides of the split. Similarity is not the issue here; these are the same string, and whatever your model scored on them it did not predict.",
+      [["duplicate molecules across sides", S.dupes.toLocaleString()],
+       ["train rows", S.nTrain.toLocaleString()],
+       ["test rows", S.nTest.toLocaleString()],
+       ["held-out share", pct(S.ratio)]]));
+
+    el("note").textContent = "“Look” is not a verdict on your work, it is a request that " +
+      "you check that one thing. Three of these four passed a check we thought was adequate before " +
+      "they failed this one. " + res.n.toLocaleString() + " rows read, nothing uploaded.";
+  }
+
+  // ---------------------------------------------------------------- run
+  el("run").addEventListener("click", function () {
+    var map = {
+      seq: el("c-seq").value,
+      pred: el("c-pred").value,
+      truth: el("c-truth").value,
+      split: el("c-split").value,
+    };
+    var rows = state.rows;
+    // Collapse a multi-level fold column down to one held-out side the checks can read.
+    if (!el("holdWrap").hidden && map.split) {
+      var hold = String(el("c-hold").value);
+      var src = map.split;
+      map.split = "__silicyte_split";
+      rows = rows.map(function (r) {
+        var o = Object.assign({}, r);
+        o.__silicyte_split = String(r[src] ?? "").trim() === hold ? "test" : "train";
+        return o;
+      });
+    }
+    var eff = parseFloat(el("c-eff").value);
+    var ident = parseFloat(el("c-ident").value);
+
+    el("out").innerHTML = "";
+    el("out").appendChild(card(null, "Working", "Comparing every held-out molecule against training. This runs on your processor, so a large file takes a moment."));
+    el("run").disabled = true;
+    // Yield once so the working state paints before the pairwise comparison blocks the thread.
+    setTimeout(function () {
+      try {
+        render(A.run(rows, map, { identity: isFinite(ident) ? ident : 0.80, reportedEffect: eff }));
+      } catch (e) {
+        el("out").innerHTML = "";
+        el("out").appendChild(card(false, "The check could not run", String(e && e.message || e) +
+          ". Check the column mapping above; the sequence column has to hold sequences and the split column has to say which side each row is on."));
+      }
+      el("run").disabled = false;
+    }, 30);
+  });
+
+  // ---------------------------------------------------------------- inputs
+  var drop = el("drop"), fileIn = el("file");
+  el("pick").addEventListener("click", function () { fileIn.click(); });
+  fileIn.addEventListener("change", function () {
+    var f = fileIn.files && fileIn.files[0];
+    if (f) f.text().then(function (t) { load(t, f.name); });
+  });
+  ["dragenter", "dragover"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave", "drop"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function (e) {
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) f.text().then(function (t) { load(t, f.name); });
+  });
+
+  /* Our own published folds. Two checks run on them because the file carries no predictions, and
+     the leak check should pass: the release measures cross-fold identity above 0.80 at 0.0000. */
+  el("demoReal").addEventListener("click", function () {
+    el("note").textContent = "Fetching our own published folds…";
+    fetch("/data/silicyte-amp-eval-v1/folds_mic.csv")
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
+        load(t, "folds_mic.csv (ours)");
+        el("note").textContent = "These are our published MIC folds. They carry no predictions, so " +
+          "FLOOR and TIES will skip; LEAK and SPLIT should pass, because this release measures " +
+          "cross-fold identity above 0.80 at 0.0000.";
+      })
+      .catch(function () { el("note").textContent = "Could not fetch the folds. Download them from the data page instead."; });
+  });
+
+  /* A synthetic file with all four defects present, so a visitor can see what failure looks like
+     before deciding whether to trust the page with their own data. Labelled as synthetic
+     everywhere it appears: no real measurement is in it. */
+  el("demoBad").addEventListener("click", function () {
+    var AAs = "ACDEFGHIKLMNPQRSTVWY";
+    var seed = 7;
+    function rnd() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+    function seq(n) { var s = ""; for (var i = 0; i < n; i++) s += AAs[Math.floor(rnd() * 20)]; return s; }
+    var lines = ["sequence,prediction,measured,split"];
+    var families = [];
+    for (var i = 0; i < 90; i++) families.push(seq(18 + Math.floor(rnd() * 8)));
+    function mutate(s) {
+      var a = s.split("");
+      var j = Math.floor(rnd() * a.length);
+      a[j] = AAs[Math.floor(rnd() * 20)];
+      return a.join("");
+    }
+    // The target is quantised to a 2-fold dilution grid, which is where the ties come from.
+    function label(s) {
+      var charge = 0;
+      for (var k = 0; k < s.length; k++) if ("KR".indexOf(s[k]) >= 0) charge++;
+      var v = 1.6 - 0.14 * charge + (rnd() - 0.5) * 0.5;
+      return Math.round(v / 0.301) * 0.301;
+    }
+    families.forEach(function (f, i) {
+      var tr = label(f);
+      lines.push(f + "," + (tr + (rnd() - 0.5) * 0.4).toFixed(3) + "," + tr.toFixed(3) + ",train");
+      // every family also puts a near-twin on the test side: this is the LEAK
+      var twin = mutate(f);
+      var tt = label(twin);
+      lines.push(twin + "," + (tt + (rnd() - 0.5) * 0.4).toFixed(3) + "," + tt.toFixed(3) + ",test");
+      // and a handful of exact duplicates straddle the split: this is the SPLIT failure
+      if (i % 12 === 0) lines.push(f + "," + (tr + 0.05).toFixed(3) + "," + tr.toFixed(3) + ",test");
+    });
+    load(lines.join("\n"), "synthetic-broken-example.csv");
+    el("c-eff").value = "0.02";
+    el("note").textContent = "This file is synthetic and contains no real measurements. It was " +
+      "built with all four defects present: a near-twin of every training family on the test side, " +
+      "a few exact duplicates straddling the split, a target quantised to a 2-fold dilution grid " +
+      "so it is full of ties, and a reported gain of 0.02 that is below its own resolution floor. " +
+      "Press run.";
+  });
+
+  // ---------------------------------------------------------------- email
+  var btn = el("copyEmail");
+  btn.addEventListener("click", function () {
+    var node = el("email");
+    var done = function () {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy address"; }, 1800);
+    };
+    try {
+      navigator.clipboard.writeText(node.textContent.trim()).then(done, function () {
+        btn.textContent = "Select and copy";
+      });
+    } catch (e) { btn.textContent = "Select and copy"; }
+  });
+})();
+</script>
+<script src="/assets/motion.js?v=202610142320" defer></script>
+</body>
+</html>

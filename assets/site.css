@@ -189,7 +189,11 @@ figcaption { font-size: 13.5px; color: var(--ink-3); margin-top: 12px; max-width
 .ch-tick { font: 400 11.5px var(--mono); fill: var(--ink-3); font-variant-numeric: tabular-nums; }
 .ch-lab { font: 450 12.5px var(--body); fill: var(--ink-2); }
 .ch-val { font: 500 13px var(--mono); fill: var(--ink); font-variant-numeric: tabular-nums; }
-.ch-sub { font: 400 11.5px var(--mono); fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+/* Prose on a chart is prose: it wears the body face. Only the numbers are mono, so the figures
+   line up in a column and the labels stop reading like a log file. */
+.ch-sub { font: 450 13px var(--body); fill: var(--ink-3); }
+.ch-note { font: 400 12.5px var(--body); fill: var(--ink-3); }
+.ch-leg text { font: 450 13px var(--body); fill: var(--ink-2); }
 .hit { cursor: default; }
 .tip {
   position: fixed; z-index: 60; pointer-events: none; opacity: 0; transition: opacity .12s;
@@ -434,3 +438,103 @@ tbody tr:hover { background: var(--brand-tint); }
   .hud .live i { animation: none; }
   .next a:hover, .dl a:hover, .filmhero .btn:hover { transform: none; }
 }
+/* ================================================================ DE-BOXING, 2026-10-14 PM
+   Every element on this site was a bordered rectangle: tables in a frame, stat tiles in a grid of
+   hairlines, link cards in a bordered grid, figures in a box, callouts in a filled box. Stacked
+   down a long page that reads as a form, not as a document, and it is why the page looked boxy
+   and administrative.
+
+   The fix is editorial rather than decorative. Structure comes from alignment, whitespace and a
+   single rule where a boundary genuinely exists, and the frames come off. Nothing here changes
+   what any element says; it changes how much furniture is drawn around it.
+*/
+
+/* tables: a rule under the head, hairlines between rows, no frame around the whole thing */
+.tbl-wrap { border: 0; border-radius: 0; background: transparent; box-shadow: none; margin-top: 30px; }
+table { font-size: 15.5px; }
+thead th {
+  background: transparent; border-bottom: 1.5px solid var(--ink); color: var(--ink-3);
+  padding: 0 18px 10px 0; letter-spacing: .09em;
+}
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
+td { padding: 14px 18px 14px 0; border-bottom: 1px solid var(--line); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: transparent; }
+tbody tr:hover td { color: var(--ink); }
+
+/* stat rows: numbers in the clear, separated by space and one rule each, not by a grid of boxes */
+.stats {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none; gap: 0 40px;
+  border-top: 1.5px solid var(--ink); padding-top: 0; margin-top: 40px;
+}
+.stat { background: transparent; padding: 20px 0 0; }
+.stat::after { height: 1.5px; top: -1.5px; }
+.stat b { font-size: 34px; letter-spacing: -.03em; }
+.stat span { font-size: 13.5px; max-width: 22ch; }
+
+/* link lists: whitespace and a hover rule, no card frames */
+.next, .dl {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none; gap: 0 40px;
+  border-top: 1px solid var(--line);
+}
+.next a, .dl a {
+  background: transparent; padding: 26px 0 30px; border-top: 0;
+  border-bottom: 1px solid transparent;
+}
+.next a:hover, .dl a:hover { background: transparent; border-bottom-color: var(--ink); transform: none; }
+.next a h3 { font-size: 21px; }
+.dl a b { font-size: 16px; }
+
+/* figures: the chart is the frame */
+.figbox { border: 0; border-radius: 0; background: transparent; box-shadow: none; padding: 8px 0 0; }
+figcaption { margin-top: 18px; }
+
+/* callouts: a rule, not a filled box */
+.plain {
+  background: transparent; border-left: 2px solid var(--ink); border-radius: 0;
+  padding: 4px 0 4px 22px; margin: 30px 0;
+}
+.plain b { font-size: 21px; }
+.cite { background: transparent; border: 0; border-left: 2px solid var(--line-strong);
+        border-radius: 0; padding: 4px 0 4px 20px; box-shadow: none; }
+
+/* the ledger and the price tiers keep their separation, lose their frame */
+.ledger, .price, .checks {
+  border: 0; border-radius: 0; box-shadow: none; background: transparent;
+  border-top: 1px solid var(--line);
+}
+.ledger > div, .tier, .check {
+  background: transparent; border-bottom: 1px solid var(--line); padding: 26px 0;
+}
+.ledger > div:last-child, .check:last-child { border-bottom: 1px solid var(--line); }
+.price { display: grid; gap: 0 48px; }
+.tier { border-bottom: 0; border-top: 1px solid var(--line); padding: 26px 0 0; }
+.drop { background: transparent; border-radius: 0; border-width: 1px; }
+
+/* one weight of rule reads as deliberate; three read as an accident */
+section { border-bottom: 0; }
+section + section { border-top: 1px solid var(--line); }
+section.sunken + section, section + section.sunken { border-top: 0; }
+.ch-val.big { font: 500 26px var(--display); fill: var(--ink); letter-spacing: -.02em; }
+.plain span { font-size: 16px; color: var(--ink-2); }
+.plain b { margin-bottom: 9px; }
+
+/* ---------------------------------------------------------------- type weight pass
+   With the frames gone the page had nothing left holding it together but the type, and the type
+   was set for a boxed layout: small, grey and low-contrast, which is readable inside a card and
+   anaemic on open paper. Secondary text moves up one step in size and one step in contrast. */
+.muted { color: var(--ink-2); }
+.small { font-size: 16px; }
+.col p { font-size: 17.5px; }
+table { font-size: 16px; }
+td { color: var(--ink-2); }
+td:first-child { color: var(--ink); font-weight: 500; }
+figcaption { font-size: 14.5px; color: var(--ink-2); max-width: 46rem; }
+.stat span { color: var(--ink-2); }
+.check p { font-size: 15.5px; }
+.tier p, .tier ul { font-size: 15.5px; }
+.tier .amt { font: 500 25px/1.1 var(--display); letter-spacing: -.02em; }
+.next a p { font-size: 15.5px; }
+.panel-note { font-size: 13.5px; }
+.privacy { font-size: 14px; }

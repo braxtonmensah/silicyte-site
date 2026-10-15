@@ -65,6 +65,26 @@
 
     targets.forEach(function (t) { io.observe(t); });
 
+    /* Failsafe. The observer is the normal path, but an element that is hidden and waiting on a
+     * callback is one missed callback away from being content nobody can read: a stalled observer,
+     * a browser that throttles a backgrounded tab, a printed page, a crawler that never scrolls.
+     * So everything reveals unconditionally after four seconds whether or not it was ever seen.
+     * Motion is an enhancement and it is never allowed to become a precondition for the text. */
+    setTimeout(function () {
+      targets.forEach(function (t) {
+        if (!t.classList.contains("in")) { t.classList.add("in"); io.unobserve(t); }
+      });
+      Array.prototype.forEach.call(document.querySelectorAll(".stat"), function (s) {
+        s.classList.add("in");
+      });
+    }, 4000);
+
+    window.addEventListener("beforeprint", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function (t) {
+        t.classList.add("in");
+      });
+    });
+
     // Stat tiles that were already on screen still get their rule and their count.
     Array.prototype.forEach.call(document.querySelectorAll(".stats"), function (grid) {
       if (grid.classList.contains("reveal")) return;
