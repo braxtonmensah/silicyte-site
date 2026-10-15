@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interactive peptide designer, running real fitted models | Silicyte</title>
-<meta name="description" content="Design an antimicrobial peptide in your browser with our actual fitted models, then break the scorer on purpose and watch the reported improvement grow.">
+<title>Run the pipeline on a peptide | Silicyte</title>
+<meta name="description" content="Paste a peptide and watch the four steps we actually run: read its geometry, search every labelled relative we hold, decide whether a prediction is even allowed, then show what those relatives measured organism by organism.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/demo.html">
 <meta property="og:site_name" content="Silicyte">
-<meta property="og:title" content="Silicyte Designer">
-<meta property="og:description" content="Run a real design loop in your browser, then break the scorer on purpose and watch the reported improvement get bigger.">
+<meta property="og:title" content="Run the pipeline on a peptide">
+<meta property="og:description" content="Four steps, in your browser, on public data: read the molecule, search its labelled relatives, decide whether a prediction is allowed, and see what one peptide actually measures across ten organisms.">
 <meta property="og:url" content="https://silicyte.com/demo.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
@@ -21,54 +21,55 @@
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=202610142345">
 <style>
-  .lab { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 34px; margin-top: 36px; }
-  @media (max-width: 900px) { .lab { grid-template-columns: 1fr; } }
-
-  .controls { border: 1px solid var(--line); border-radius: 5px; padding: 20px; background: var(--paper-2); align-self: start; }
-  .controls h3 { margin-bottom: 14px; }
-  .fld { margin-bottom: 18px; }
-  .fld label { display: block; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
-  .fld .val { float: right; color: var(--ink); font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: 0; }
-  .fld input[type=range] { width: 100%; accent-color: var(--brand); }
-  .fld select, .fld input[type=text] {
-    width: 100%; font: 400 14.5px var(--body); padding: 9px 10px; border-radius: 4px;
-    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+  .seqbox {
+    width: 100%; font: 450 17px/1.6 var(--mono); letter-spacing: .04em;
+    padding: 16px 0; border: 0; border-bottom: 2px solid var(--ink); background: transparent;
+    color: var(--ink); resize: none; overflow: hidden;
   }
-  .fld input[type=text] { font-family: var(--mono); letter-spacing: .02em; }
-  .chk { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 11px; font-size: 14px; color: var(--ink-2); }
-  .chk input { accent-color: var(--brand); margin-top: 3px; flex: none; }
-  .chk b { color: var(--ink); font-weight: 500; display: block; }
-
-  .board { min-width: 0; }
-  .verdict {
-    border: 1px solid var(--line); border-radius: 5px; padding: 22px; background: var(--paper);
-    margin-bottom: 22px;
+  .seqbox:focus { outline: none; border-bottom-color: var(--brand); }
+  .seqbox::placeholder { color: var(--ink-3); letter-spacing: .04em; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .preset {
+    font: 450 13px var(--body); padding: 7px 12px; border: 1px solid var(--line-strong);
+    background: transparent; color: var(--ink-2); cursor: pointer; border-radius: 0;
   }
-  .verdict .big { font: 400 clamp(22px, 2.8vw, 30px)/1.25 var(--display); margin: 0 0 10px; letter-spacing: -.01em; }
-  .verdict p { margin: 0; font-size: 15px; color: var(--ink-2); }
-  .verdict.idle .big { color: var(--ink-3); }
+  .preset:hover { border-color: var(--ink); color: var(--ink); }
+  .seqerr { color: var(--warn); font-size: 14px; margin-top: 10px; min-height: 1.2em; }
 
-  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-bottom: 22px; }
-  @media (max-width: 560px) { .pair { grid-template-columns: 1fr; } }
-  .pair > div { background: var(--paper); padding: 16px 18px; }
-  .pair .lbl { font: 500 10.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
-  .pair .v { font: 500 30px/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
-  .pair .sub { font-size: 12.5px; color: var(--ink-3); margin-top: 7px; line-height: 1.45; }
+  /* the stage rail */
+  .stage { display: grid; grid-template-columns: 112px 1fr; gap: 28px; padding: 34px 0;
+           border-top: 1px solid var(--line); opacity: .32; transition: opacity .5s; }
+  .stage.live, .stage.done { opacity: 1; }
+  .stage-no { font: 500 11px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+              color: var(--ink-3); padding-top: 5px; }
+  .stage.live .stage-no { color: var(--brand); }
+  .stage h2 { font: 500 clamp(22px,2.4vw,30px)/1.2 var(--display); letter-spacing: -.02em; margin: 0 0 10px; }
+  .stage p { font-size: 16px; color: var(--ink-2); margin: 0 0 14px; max-width: 46rem; }
+  @media (max-width: 760px) { .stage { grid-template-columns: 1fr; gap: 10px; } }
 
-  .chartbox { border: 1px solid var(--line); border-radius: 5px; background: var(--paper); padding: 16px; overflow-x: auto; }
-  .chartbox svg { display: block; min-width: 460px; width: 100%; height: auto; }
-  .runbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-  .prog { font: 400 12.5px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .bar { height: 3px; background: var(--paper-3); overflow: hidden; margin: 18px 0 8px; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--brand); transition: width .12s linear; }
+  .barlab { font: 400 12.5px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
 
-  .winners { margin-top: 24px; }
-  .winners table { min-width: 460px; font-size: 13.5px; }
-  .winners td.seq { font-family: var(--mono); font-size: 12.5px; word-break: break-all; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px,1fr)); gap: 22px 32px; margin-top: 8px; }
+  .metrics div b { display: block; font: 500 26px/1.1 var(--display); letter-spacing: -.02em; color: var(--ink); }
+  .metrics div span { font-size: 12.5px; color: var(--ink-3); display: block; margin-top: 3px; }
 
-  .scorebox { border: 1px solid var(--line); border-radius: 5px; padding: 20px; margin-top: 20px; background: var(--paper); }
-  .scoreout { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 16px; }
-  .scoreout div b { display: block; font: 500 19px/1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 5px; }
-  .scoreout div span { font-size: 12px; color: var(--ink-3); }
-  .warnrow { font-size: 13px; color: var(--warn); margin-top: 12px; }
+  .wheelwrap { display: grid; grid-template-columns: minmax(0,300px) 1fr; gap: 32px; align-items: start; margin-top: 10px; }
+  @media (max-width: 680px) { .wheelwrap { grid-template-columns: 1fr; } }
+  .wheelwrap svg { width: 100%; height: auto; display: block; }
+
+  .nearest { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 6px; }
+  .nearest th { font: 500 11px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+                color: var(--ink-3); text-align: left; padding: 0 16px 9px 0; border-bottom: 1.5px solid var(--ink); }
+  .nearest td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .nearest td.seq { font-family: var(--mono); font-size: 13px; word-break: break-all; color: var(--ink-2); }
+  .nearest td.id { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .verdict-box { border-left: 2px solid var(--ink); padding: 4px 0 4px 22px; margin-top: 4px; }
+  .verdict-box.warn { border-left-color: var(--warn); }
+  .verdict-box.ok { border-left-color: var(--good); }
+  .verdict-box b { display: block; font: 500 21px/1.3 var(--display); margin-bottom: 7px; }
 </style>
 </head>
 <body>
@@ -94,429 +95,411 @@
       <a href="/science.html">Science</a>
       <a href="/data.html">Data</a>
       <a href="/check.html">Check</a>
-      <a href="/demo.html" aria-current="page">Designer</a>
+      <a href="/demo.html" aria-current="page">Try it</a>
       <a href="/company.html">Company</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <div class="wrap" style="padding-block:56px 0">
+  <div class="wrap" style="padding-block:58px 0">
     <div class="col">
-      <p class="eyebrow">Live designer</p>
-      <h1>Design a peptide. Then watch the gain get taken apart.</h1>
-      <p class="lede">Set what you want below and this page runs a real design loop in your browser:
-      propose candidates, score them, keep the best, breed from the winners, repeat. The scoring
-      model is <strong>our actual fitted model</strong>, the same weights that run on our cluster,
-      shipped to your browser as numbers.</p>
-      <p class="lede small">Then it reads the result twice. Once the way a design loop normally
-      reports itself, and once with an independent check that shares none of the scorer's features.
-      Those two numbers usually disagree, and the gap between them is the whole point of this
-      company.</p>
-    </div>
+      <p class="eyebrow">Try it</p>
+      <h1>Give it a peptide. Watch what we actually do with it.</h1>
+      <p class="lede">Four steps, in this tab, on public data. The last one is the argument this
+      company is built on, and it is the step everybody else skips.</p>
 
-    <div class="lab">
-      <form class="controls" id="ctl" autocomplete="off">
-        <h2 class="h-sm">What do you want?</h2>
-
-        <div class="fld">
-          <label for="len">Peptide length <span class="val" id="lenv">12 to 26</span></label>
-          <input type="range" id="len" min="10" max="40" value="26" step="2">
-        </div>
-
-        <div class="fld">
-          <label for="goal">Goal</label>
-          <select id="goal">
-            <option value="sw">Selectivity: kill bacteria, spare blood cells</option>
-            <option value="mic">Potency only: kill bacteria hardest</option>
-            <option value="hc">Safety only: least damaging to blood cells</option>
-          </select>
-        </div>
-
-        <div class="fld">
-          <label for="gens">Generations <span class="val" id="gensv">8</span></label>
-          <input type="range" id="gens" min="3" max="14" value="8" step="1">
-        </div>
-
-        <div class="fld">
-          <label for="k">Molecules kept each round <span class="val" id="kv">40</span></label>
-          <input type="range" id="k" min="10" max="80" value="40" step="5">
-        </div>
-
-        <div style="margin:22px 0 18px;padding-top:18px;border-top:1px solid var(--line)">
-          <label style="display:block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">Guard rails</label>
-          <label class="chk"><input type="checkbox" id="pin" checked>
-            <span><b>Hold composition fixed</b>Keeps the winners' charge distribution matched to
-            real antibacterial peptides. Without it, a loop improves its score by drifting
-            composition.</span></label>
-          <label class="chk"><input type="checkbox" id="nov" checked>
-            <span><b>Require novelty</b>Rejects anything too close to a known peptide, so the loop
-            cannot win by rediscovering something that already exists.</span></label>
-          <label class="chk"><input type="checkbox" id="starve">
-            <span><b>Break the scorer on purpose</b>Swaps in a scoring model we deliberately
-            starved of training data. Try it after a normal run.</span></label>
-        </div>
-
-        <button class="btn" type="submit" id="go" style="width:100%">Design</button>
-        <p class="prog" id="prog" style="margin-top:12px">Loading the model, about 140&nbsp;KB.</p>
-      </form>
-
-      <div class="board">
-        <div class="verdict idle" id="verdict">
-          <p class="big" id="vbig">Nothing has been run yet.</p>
-          <p id="vsub">Press Design. A run takes a few seconds and happens entirely on your
-          machine: no sequence you type is sent anywhere.</p>
-        </div>
-
-        <div class="pair">
-          <div>
-            <div class="lbl"><span class="swatch" style="background:#3d8ad8"></span>What the loop reports</div>
-            <div class="v" id="m-reported">&mdash;</div>
-            <div class="sub">Improvement in the kill-versus-harm ratio, measured by a model held
-            out from selection. This is the number a design paper would print.</div>
-          </div>
-          <div>
-            <div class="lbl"><span class="swatch" style="background:#c87b32"></span>Independent check</div>
-            <div class="v" id="m-indep">&mdash;</div>
-            <div class="sub">The same winners, judged by their nearest real measured peptides.
-            No shared features with the scorer, so it cannot be gamed the same way.</div>
-          </div>
-        </div>
-
-        <div class="chartbox">
-          <svg viewBox="0 0 640 300" id="chart" role="img" aria-labelledby="ctitle cdesc">
-            <title id="ctitle">Reported improvement against the independent check, by generation</title>
-            <desc id="cdesc">Two lines per run. The blue line is what the loop reports, the amber
-            line is the independent check. The grey band is the range inside which the independent
-            check cannot resolve anything, given how many molecules you kept.</desc>
-            <g id="c-static"></g>
-            <g id="c-series"></g>
-          </svg>
-        </div>
-
-        <div class="runbar">
-          <span class="prog" id="prog2"></span>
-        </div>
-
-        <div class="winners" id="winwrap" hidden>
-          <h2 class="h-sm" style="margin-bottom:12px">Your best designs</h2>
-          <div class="tbl-wrap">
-            <table>
-              <thead><tr><th scope="col">Sequence</th><th scope="col">Length</th><th scope="col">Net charge</th><th scope="col">Score</th></tr></thead>
-              <tbody id="wintbody"></tbody>
-            </table>
-          </div>
-          <p class="small muted" style="margin-top:12px">These are real outputs of the loop you just
-          ran. They are computational candidates with no measured activity, and we would not call
-          them anything else.</p>
-        </div>
+      <label for="seq" style="display:block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:34px">Peptide sequence</label>
+      <textarea id="seq" class="seqbox" rows="2" spellcheck="false" autocomplete="off"
+        placeholder="GIGKFLHSAKKFGKAFVGEIMNS"></textarea>
+      <div class="seqerr" id="seqerr"></div>
+      <div class="presets" id="presets"></div>
+      <div class="actions">
+        <button class="btn" id="run" type="button">Run the pipeline</button>
       </div>
     </div>
   </div>
 
-  <section style="padding-top:56px">
-    <div class="wrap">
-      <div class="col">
-        <p class="kicker"><span class="n">&bull;</span> Score anything</p>
-        <h2>Paste a peptide and read it three ways.</h2>
-        <p class="muted small">Type any sequence of the twenty standard amino acids. The page runs
-        our selection model, our held-out model and the independent check on it, in your browser.</p>
-      </div>
-      <div class="scorebox col" style="max-width:46rem">
-        <div class="fld" style="margin-bottom:12px">
-          <label for="seq">Sequence</label>
-          <input type="text" id="seq" value="GIGKFLHSAKKFGKAFVGEIMNS" spellcheck="false">
+  <section class="flush">
+    <div class="wrap" style="max-width:62rem">
+
+      <div class="stage" id="s1">
+        <div class="stage-no">Step 01<br>Read</div>
+        <div>
+          <h2>What the molecule is.</h2>
+          <p>Length, net charge, and the hydrophobic moment: how strongly the greasy residues fall
+          on one face when the chain is wound as a helix. That lopsidedness is the mechanism the
+          film on the home page is showing, and it is computed here from the sequence alone.</p>
+          <div id="s1out"></div>
         </div>
-        <button class="btn ghost" type="button" id="scorebtn">Score it</button>
-        <div class="scoreout" id="scoreout" hidden>
-          <div><b id="s-sw">&mdash;</b><span>Our scorer: kill-versus-harm, log units</span></div>
-          <div><b id="s-meter">&mdash;</b><span>Held-out model, same quantity</span></div>
-          <div><b id="s-nn">&mdash;</b><span>Independent check</span></div>
-          <div><b id="s-q">&mdash;</b><span>Net charge</span></div>
-          <div><b id="s-near">&mdash;</b><span>Closest known peptide</span></div>
-        </div>
-        <p class="warnrow" id="s-warn" hidden></p>
       </div>
+
+      <div class="stage" id="s2">
+        <div class="stage-no">Step 02<br>Search</div>
+        <div>
+          <h2>Who it is related to.</h2>
+          <p>Every labelled peptide we hold, scored by sequence identity against yours. This is the
+          step that decides whether a prediction is worth anything, and the step whose absence we
+          found in the standard evaluation.</p>
+          <div id="s2out"></div>
+        </div>
+      </div>
+
+      <div class="stage" id="s3">
+        <div class="stage-no">Step 03<br>Domain</div>
+        <div>
+          <h2>Whether we are allowed to predict.</h2>
+          <p>Our own fitted model will return a number for any string you give it. Whether that
+          number means anything depends entirely on step 02, so the verdict comes before the
+          number, not after it.</p>
+          <div id="s3out"></div>
+        </div>
+      </div>
+
+      <div class="stage" id="s4">
+        <div class="stage-no">Step 04<br>Spread</div>
+        <div>
+          <h2>Why one peptide is not one number.</h2>
+          <p>Here is what the nearest labelled relative actually measured, organism by organism, in
+          the public record. Across the whole set the median peptide's MIC moves
+          <span class="num">6.1x</span> between organisms, and
+          <span class="num">74.2%</span> of the variance everyone models as noise is this.</p>
+          <div id="s4out"></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <section class="flush">
     <div class="wrap col">
-      <p class="kicker"><span class="n">&bull;</span> What you are looking at</p>
-      <h2>Why the two numbers disagree.</h2>
-      <p>A design loop has one obvious way to make its score go up, and it is not the way you want.
-      Instead of finding better molecules, it can find the places where its own scoring model is
-      wrong, and pile into them. The score rises, the molecules do not improve, and nothing in the
-      loop's own output can tell the difference.</p>
-      <p>That is why the <b>Break the scorer on purpose</b> switch exists. It swaps in a model we
-      starved of 80% of its training families, which is strictly worse at predicting anything. If
-      the reported improvement measured molecule quality, a worse scorer would have to report
-      less. On our cluster it reported <strong>more</strong>, by a wide margin, and you can
-      reproduce that here in about ten seconds.</p>
-      <p class="small muted">Honest about the differences from our cluster runs: this page uses a
-      simple composition-based generator rather than our trained one, keeps tens of molecules
-      instead of hundreds, and runs the instance-based meter against a trimmed bank so it fits in a
-      browser. The models are real and so is the direction of the effect. The exact magnitudes on
-      our cluster are on the <a href="/science.html">science page</a>, with their error bars.</p>
+      <p class="kicker"><span class="n">&bull;</span> What this is</p>
+      <h2>And what it is not.</h2>
+      <p class="muted">The model is the real one: ridge weights fitted on our cluster and shipped
+      in <a href="/assets/models.json">models.json</a>, averaged over a penalty grid rather than
+      selected on inner folds. Its measured out-of-fold accuracy on leak-free folds is Spearman
+      <span class="num">0.4502</span> for the descriptor set and <span class="num">0.5356</span>
+      fine-tuned, against a label whose own reproducibility caps any model at
+      <span class="num">0.9387</span>. Those numbers, and the folds, are on the
+      <a href="/data.html">data page</a>.</p>
+      <p class="muted">The measured values come from GRAMPA, unmodified peptides in micromolar
+      only, reduced to a median per peptide and organism. It is public data and you should cite it
+      rather than us. Nothing here is uploaded and nothing here is a wet-lab result: we have no
+      laboratory, and a predicted MIC is not a measured one.</p>
+      <div class="actions">
+        <a class="btn ghost" href="/check.html">Check your own result instead</a>
+        <a class="btn ghost" href="/data.html">Take the corrected folds</a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. Everything on this page
-    runs locally in your browser; no sequence you enter is transmitted.</p>
+    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance: large language models
+    are used as the research engineering layer for writing and auditing analysis code, running
+    pre-registered experiments on a university GPU allocation, and checking every reported number
+    against its source table.</p>
     <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
   </div>
 </footer>
 
-<script src="/assets/designer.js?v=202610141239"></script>
+<script src="/assets/run.js?v=202610150010"></script>
+<script src="/assets/designer.js?v=202610142230"></script>
 <script>
 (function () {
   "use strict";
-  var D = window.SilicyteDesigner, M = null, busy = false;
-  var $ = function (id) { return document.getElementById(id); };
+  var R = window.SilicyteRun, D = window.SilicyteDesigner;
+  var el = function (id) { return document.getElementById(id); };
+  var DATA = null, MODELS = null;
 
-  // ---------------------------------------------------------------- chart
-  var PAD = { l: 52, r: 16, t: 18, b: 40 }, W = 640, H = 300;
-  function px(i, n) { return PAD.l + (n <= 1 ? 0 : (i / (n - 1)) * (W - PAD.l - PAD.r)); }
-  function py(v, lo, hi) {
-    var t = (v - lo) / Math.max(1e-9, hi - lo);
-    return H - PAD.b - t * (H - PAD.t - PAD.b);
+  var PRESETS = [
+    ["Magainin 2", "GIGKFLHSAKKFGKAFVGEIMNS", "a frog AMP, heavily measured"],
+    ["Melittin", "GIGAVLKVLTTGLPALISWIKRKRQQ", "bee venom, potent and not selective"],
+    ["LL-37 core", "KRIVQRIKDFLRNLVPRTES", "the human cathelicidin fragment"],
+    ["Magainin 2, shuffled", "KGAFMGKLHIFGKSAVGNIEKA", "same residues, no helical face"],
+  ];
+
+  // ---------------------------------------------------------------- helpers
+  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "—" : Number(x).toFixed(d); }
+  function uM(log10) { var v = Math.pow(10, log10);
+    return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2); }
+  function stage(id, state) {
+    var s = el(id);
+    s.classList.remove("live", "done");
+    if (state) s.classList.add(state);
   }
-  function el(tag, attrs, text) {
-    var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
-    for (var k in attrs) e.setAttribute(k, attrs[k]);
-    if (text !== undefined) e.textContent = text;
-    return e;
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  // ---------------------------------------------------------------- step 1: the wheel
+  function wheel(seq) {
+    var N = Math.min(seq.length, 22);        // a wheel past ~2 turns is unreadable, so it stops
+    var cx = 150, cy = 150, R0 = 112;
+    var parts = ['<svg viewBox="0 0 300 300" role="img" aria-label="Helical wheel: residues placed every 100 degrees, coloured by hydrophobicity">'];
+    var pts = [];
+    for (var i = 0; i < N; i++) {
+      var a = (i * 100 - 90) * Math.PI / 180;
+      var rr = R0 - Math.floor(i / 18) * 26;
+      pts.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]);
+    }
+    parts.push('<path d="M' + pts.map(function (p) { return p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" L") +
+               '" fill="none" stroke="var(--line-strong)" stroke-width="1.2"/>');
+    for (i = 0; i < N; i++) {
+      var c = seq[i], e = R.EIS[c];
+      // one hue for greasy, one for charged, grey between: the wheel exists to show whether the
+      // greasy ones bunch on one side, so nothing else gets a colour
+      var fill = e > 0.4 ? "#c87b32" : e < -0.6 ? "#3d8ad8" : "var(--ink-3)";
+      var ink = e > 0.4 || e < -0.6 ? "#fff" : "var(--surface)";
+      parts.push('<g class="res" style="opacity:0"><circle cx="' + pts[i][0].toFixed(1) + '" cy="' + pts[i][1].toFixed(1) +
+        '" r="15" fill="' + fill + '"/><text x="' + pts[i][0].toFixed(1) + '" y="' + (pts[i][1] + 5).toFixed(1) +
+        '" text-anchor="middle" style="font:500 14px var(--body);fill:' + ink + '">' + c + '</text>' +
+        '<title>' + (i + 1) + ' ' + (R.NAMES[c] || c) + ', Eisenberg ' + e.toFixed(2) + '</title></g>');
+    }
+    parts.push("</svg>");
+    return parts.join("");
   }
-  function drawChart(rows, floor) {
-    var S = $("c-series"), St = $("c-static");
-    S.textContent = ""; St.textContent = "";
-    var n = Math.max(2, rows.length);
-    var vals = [0];
-    rows.forEach(function (r) {
-      vals.push(r.dReported);
-      if (r.dIndep !== null) vals.push(r.dIndep);
+
+  function step1(seq) {
+    var d = R.describe(seq);
+    el("s1out").innerHTML =
+      '<div class="wheelwrap"><div>' + wheel(seq) + '</div><div class="metrics">' +
+      '<div><b>' + d.n + '</b><span>residues</span></div>' +
+      '<div><b>' + (d.charge > 0 ? "+" : "") + fmt(d.charge, 1) + '</b><span>net charge at pH 7</span></div>' +
+      '<div><b>' + fmt(d.moment, 2) + '</b><span>hydrophobic moment</span></div>' +
+      '<div><b>' + Math.round(d.hydrophobicFrac * 100) + '%</b><span>hydrophobic residues</span></div>' +
+      '</div></div>' +
+      '<p class="small muted" style="margin-top:18px">' +
+      (d.moment > 0.35
+        ? "A moment above 0.35 means the greasy residues really do bunch on one face. That is the amphipathic arrangement the mechanism needs."
+        : "A moment this low means the greasy residues are scattered round the helix rather than gathered on one face, which is not the arrangement the membrane mechanism needs.") +
+      (d.charge >= 2
+        ? " The positive charge is what pulls it to an anionic bacterial surface in the first place."
+        : " With little or no positive charge there is not much pulling it to an anionic surface.") +
+      '</p>';
+    // draw the residues on, one per frame, so the wheel is built rather than pasted
+    var gs = el("s1out").querySelectorAll(".res"), k = 0;
+    (function tick() {
+      if (k >= gs.length) return;
+      gs[k].style.transition = "opacity .3s"; gs[k].style.opacity = "1"; k++;
+      setTimeout(tick, 34);
+    })();
+  }
+
+  // ---------------------------------------------------------------- step 2: the search
+  function step2(seq) {
+    return new Promise(function (resolve) {
+      var seqs = DATA.sequences, n = seqs.length;
+      var best = [], hist = new Array(20).fill(0), i = 0;
+      el("s2out").innerHTML =
+        '<div class="bar"><i id="pbar"></i></div><div class="barlab" id="plab">0 / ' + n.toLocaleString() + '</div>' +
+        '<div id="histwrap" style="margin-top:22px"></div><div id="nearwrap"></div>';
+
+      function chunk() {
+        var end = Math.min(n, i + 420);
+        for (; i < end; i++) {
+          var r = R.ratio(seq, seqs[i]);
+          hist[Math.min(19, Math.floor(r * 20))]++;
+          if (best.length < 5 || r > best[best.length - 1].r) {
+            best.push({ r: r, i: i });
+            best.sort(function (a, b) { return b.r - a.r; });
+            if (best.length > 5) best.length = 5;
+          }
+        }
+        el("pbar").style.width = (100 * i / n).toFixed(1) + "%";
+        el("plab").textContent = i.toLocaleString() + " / " + n.toLocaleString() + " labelled peptides compared";
+        drawHist(hist, n);
+        if (i < n) requestAnimationFrame(chunk);
+        else { drawNearest(best); resolve(best); }
+      }
+      requestAnimationFrame(chunk);
     });
-    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
-    var pad = Math.max(0.12, (hi - lo) * 0.18);
-    lo -= pad; hi += pad;
-
-    // the resolution band: below this the independent check cannot see anything
-    if (floor) {
-      St.appendChild(el("rect", {
-        x: PAD.l, y: py(floor, lo, hi), width: W - PAD.l - PAD.r,
-        height: Math.max(1, py(-floor, lo, hi) - py(floor, lo, hi)),
-        fill: "var(--ink-3)", opacity: 0.11,
-      }));
-      St.appendChild(el("text", {
-        x: PAD.l + 7, y: py(-floor, lo, hi) - 6, class: "ch-sub",
-      }, "below here the independent check cannot resolve anything"));
-    }
-    St.appendChild(el("line", { x1: PAD.l, y1: py(0, lo, hi), x2: W - PAD.r, y2: py(0, lo, hi), class: "ch-axis" }));
-    St.appendChild(el("line", { x1: PAD.l, y1: PAD.t, x2: PAD.l, y2: H - PAD.b, class: "ch-axis" }));
-    [lo + (hi - lo) * 0.02, 0, hi - (hi - lo) * 0.02].forEach(function (v) {
-      St.appendChild(el("text", { x: PAD.l - 8, y: py(v, lo, hi) + 4, class: "ch-tick", "text-anchor": "end" },
-        (v >= 0 ? "+" : "") + v.toFixed(2)));
-    });
-    for (var g = 0; g < n; g++) {
-      if (n <= 9 || g % 2 === 0) {
-        St.appendChild(el("text", { x: px(g, n), y: H - PAD.b + 18, class: "ch-tick", "text-anchor": "middle" }, String(g)));
-      }
-    }
-    St.appendChild(el("text", { x: (PAD.l + W - PAD.r) / 2, y: H - 6, class: "ch-lab", "text-anchor": "middle" }, "Generation"));
-    St.appendChild(el("text", { x: 14, y: H / 2, class: "ch-lab", "text-anchor": "middle", transform: "rotate(-90 14 " + H / 2 + ")" }, "Change since the start"));
-
-    function line(key, colour) {
-      var d = "", any = false;
-      rows.forEach(function (r, i) {
-        var v = r[key];
-        if (v === null || v === undefined) return;
-        d += (any ? "L" : "M") + px(i, n).toFixed(1) + " " + py(v, lo, hi).toFixed(1) + " ";
-        any = true;
-      });
-      if (!any) return;
-      S.appendChild(el("path", { d: d, fill: "none", stroke: colour, "stroke-width": 2, "stroke-linejoin": "round" }));
-      rows.forEach(function (r, i) {
-        var v = r[key];
-        if (v === null || v === undefined) return;
-        S.appendChild(el("circle", { cx: px(i, n), cy: py(v, lo, hi), r: 3.2, fill: colour, stroke: "#fff", "stroke-width": 1.5 }));
-      });
-      var last = rows[rows.length - 1];
-      if (last && last[key] !== null && last[key] !== undefined) {
-        S.appendChild(el("text", {
-          x: px(rows.length - 1, n) - 6, y: py(last[key], lo, hi) - 10,
-          class: "ch-val", "text-anchor": "end", fill: colour,
-        }, (last[key] >= 0 ? "+" : "") + last[key].toFixed(3)));
-      }
-    }
-    line("dReported", "#3d8ad8");
-    line("dIndep", "#c87b32");
   }
 
-  function fold(x) {
-    var f = Math.pow(10, x);
-    return (f >= 1 ? f.toFixed(1) + "x better" : (1 / f).toFixed(1) + "x worse");
-  }
-
-  // ---------------------------------------------------------------- run
-  function run() {
-    if (busy || !M) return;
-    busy = true;
-    $("go").disabled = true;
-
-    var hi = parseInt($("len").value, 10);
-    var opts = {
-      minLen: Math.max(8, hi - 14), maxLen: hi,
-      lib: 520, k: parseInt($("k").value, 10),
-      gens: parseInt($("gens").value, 10),
-      pin: $("pin").checked, novelty: $("nov").checked, starved: $("starve").checked,
-      goal: $("goal").value, seed: 20261014,
-    };
-    var state = D.start(opts);
-    var rows = [], base = null, baseI = null;
-    // the floor on the independent check, sd x sqrt(2/k), using the per-molecule spread we measured
-    var floor = 0.4562 * Math.sqrt(2 / opts.k);
-
-    $("verdict").className = "verdict";
-    $("vbig").textContent = "Running.";
-    $("vsub").textContent = "Generation 0 of " + opts.gens + ".";
-
-    function step() {
-      var r = D.runGeneration(state, opts);
-      state.gen++;
-      if (base === null) { base = r.reported; baseI = r.independent; }
-      r.dReported = r.reported - base;
-      r.dIndep = (r.independent === null || baseI === null) ? null : r.independent - baseI;
-      rows.push(r);
-      drawChart(rows, floor);
-      $("m-reported").textContent = (r.dReported >= 0 ? "+" : "") + r.dReported.toFixed(3);
-      $("m-indep").textContent = r.dIndep === null ? "no coverage" : (r.dIndep >= 0 ? "+" : "") + r.dIndep.toFixed(3);
-      $("prog2").textContent = "generation " + state.gen + " of " + opts.gens
-        + "  |  diversity " + r.diversity.toFixed(3)
-        + "  |  median charge " + r.medianCharge
-        + "  |  independent check covers " + Math.round(r.coverage * 100) + "% of winners";
-      $("vsub").textContent = "Generation " + state.gen + " of " + opts.gens + ".";
-
-      if (state.gen < opts.gens) {
-        setTimeout(step, 16);
-      } else {
-        finish(rows, opts, floor);
-      }
+  function drawHist(hist, n) {
+    // TOP is headroom. Without it the tallest bar reaches the viewBox edge and the threshold
+    // label sits on top of it; the label also has to be anchored to the left of its own rule or
+    // it runs off the right edge once the rule is at 80% of the width.
+    var max = Math.max.apply(null, hist) || 1, w = 700, TOP = 26, h = 128, bw = w / 20;
+    var base = TOP + h;
+    var s = ['<svg viewBox="0 0 ' + w + ' ' + (base + 34) + '" style="width:100%;height:auto" role="img" aria-label="Distribution of sequence identity between your peptide and every labelled peptide">'];
+    for (var k = 0; k < 20; k++) {
+      var bh = (hist[k] / max) * h;
+      // 0.80 is the threshold the corrected folds are built on, so bars past it are coloured
+      s.push('<rect x="' + (k * bw + 1.5).toFixed(1) + '" y="' + (base - bh).toFixed(1) +
+             '" width="' + (bw - 3).toFixed(1) + '" height="' + bh.toFixed(1) +
+             '" fill="' + (k >= 16 ? "#c87b32" : "var(--ink-3)") + '" opacity="' + (k >= 16 ? 1 : 0.5) + '"/>');
     }
-    setTimeout(step, 16);
+    s.push('<line x1="0" y1="' + base + '" x2="' + w + '" y2="' + base + '" stroke="var(--line-strong)"/>');
+    s.push('<line x1="' + (16 * bw) + '" y1="' + (TOP - 14) + '" x2="' + (16 * bw) + '" y2="' + base + '" stroke="#c87b32" stroke-dasharray="4 4"/>');
+    s.push('<text x="' + (16 * bw - 9) + '" y="' + (TOP - 6) + '" text-anchor="end" style="font:450 12px var(--body);fill:#c87b32">0.80, where our folds hold out</text>');
+    s.push('<text x="0" y="' + (base + 22) + '" style="font:400 11.5px var(--mono);fill:var(--ink-3)">0.0</text>');
+    s.push('<text x="' + (w / 2) + '" y="' + (base + 22) + '" text-anchor="middle" style="font:450 12px var(--body);fill:var(--ink-3)">sequence identity to your peptide</text>');
+    s.push('<text x="' + w + '" y="' + (base + 22) + '" text-anchor="end" style="font:400 11.5px var(--mono);fill:var(--ink-3)">1.0</text>');
+    s.push("</svg>");
+    el("histwrap").innerHTML = s.join("");
+  }
+  function drawNearest(best) {
+    var orgs = DATA.organisms;
+    var rows = best.map(function (b) {
+      var v = DATA.mic[b.i];
+      var measured = [];
+      for (var k = 0; k < orgs.length; k++) if (v[k] !== null) measured.push(orgs[k] + " " + uM(v[k]));
+      return '<tr><td class="id">' + b.r.toFixed(3) + '</td><td class="seq">' + DATA.sequences[b.i] +
+             '</td><td>' + (measured.length ? measured.slice(0, 3).join(" &middot; ") +
+             (measured.length > 3 ? " &middot; +" + (measured.length - 3) + " more" : "") : "—") + '</td></tr>';
+    }).join("");
+    el("nearwrap").innerHTML =
+      '<table class="nearest"><thead><tr><th>Identity</th><th>Labelled peptide</th><th>Measured MIC, &micro;M</th></tr></thead><tbody>' +
+      rows + '</tbody></table>';
   }
 
-  function finish(rows, opts, floor) {
-    busy = false;
-    $("go").disabled = false;
-    var last = rows[rows.length - 1];
-    var rep = last.dReported, ind = last.dIndep;
-
-    var head, sub;
-    if (ind === null) {
-      head = "Your loop reported " + fold(rep) + ".";
-      sub = "The independent check had no coverage: the winners drifted far enough from every "
-          + "measured peptide that nothing could judge them. That is its own finding.";
-    } else if (Math.abs(ind) < floor) {
-      head = "Your loop reported " + fold(rep) + ". The independent check saw nothing.";
-      sub = "The independent check moved " + ind.toFixed(3) + ", which is inside its own resolution "
-          + "of " + floor.toFixed(3) + " at " + opts.k + " molecules kept. So it is not evidence of "
-          + "no improvement; it is an unresolved measurement. Keep more molecules and the floor "
-          + "drops as the square root.";
-    } else if (ind < 0) {
-      head = "Your loop reported " + fold(rep) + ". The independent check says they got worse.";
-      sub = "Independent reading " + ind.toFixed(3) + ", outside its resolution floor of "
-          + floor.toFixed(3) + ". The score went up and the molecules did not.";
+  // ---------------------------------------------------------------- step 3: the verdict
+  function step3(seq, best) {
+    var top = best[0].r;
+    var sc = null;
+    try { sc = D.scoreOne(seq); } catch (e) { sc = null; }
+    var cls, title, body;
+    if (top >= 0.98) {
+      cls = "warn"; title = "This peptide is already in the labelled set.";
+      body = "Any model trained on this data has seen it. A prediction here measures memory, not generalisation, and the number below is not evidence of anything.";
+    } else if (top >= 0.80) {
+      cls = "warn"; title = "A near-twin of this peptide is in the training data.";
+      body = "At " + top.toFixed(2) + " identity this sits above the threshold our corrected folds hold out on. A model can score well here by recognising the relative. This is exactly the case that inflates published accuracy by up to 0.065, and the split in common use would have let it through.";
+    } else if (top >= 0.40) {
+      cls = "ok"; title = "In domain.";
+      body = "The closest labelled relative is " + top.toFixed(2) + " identical, which is close enough for the model to have learned something relevant and far enough that it is not simply recalling it.";
     } else {
-      head = "Your loop reported " + fold(rep) + ", and the independent check agrees in direction.";
-      sub = "Independent reading +" + ind.toFixed(3) + ", above its floor of " + floor.toFixed(3)
-          + ". Worth a second seed before believing it.";
+      cls = ""; title = "Out of domain. We do not know how accurate we are here.";
+      body = "The closest labelled relative is only " + top.toFixed(2) + " identical. Below 0.40 identity our held-out sample is about five peptides, so our accuracy in this region is unmeasured rather than measured-and-good. The model will still return a number. Treat it as a guess.";
     }
-    if (opts.starved) {
-      head = "Broken scorer: reported " + fold(rep) + ".";
-      sub = "This run used a scoring model starved of 80% of its training families, so it is "
-          + "strictly worse at predicting anything. Compare the reported number with your normal "
-          + "run. " + sub;
-    }
-    $("vbig").textContent = head;
-    $("vsub").textContent = sub;
+    el("s3out").innerHTML =
+      '<div class="verdict-box ' + cls + '"><b>' + title + '</b><p style="margin:0">' + body + '</p></div>' +
+      (sc ? '<div class="metrics" style="margin-top:26px">' +
+        '<div><b>' + uM(sc.logMic) + '</b><span>predicted MIC, &micro;M</span></div>' +
+        '<div><b>&plusmn;' + fmt(Math.pow(10, sc.logMic + sc.logMicSd) - Math.pow(10, sc.logMic), 1) + '</b><span>spread across the ensemble</span></div>' +
+        '<div><b>' + uM(sc.logHc) + '</b><span>predicted HC50, &micro;M</span></div>' +
+        '<div><b>' + fmt(sc.logHc - sc.logMic, 2) + '</b><span>log selectivity window</span></div>' +
+        '</div><p class="small muted" style="margin-top:14px">From the fitted ridge ensemble in ' +
+        'models.json. Its out-of-fold Spearman on leak-free folds is <span class="num">0.4502</span>. ' +
+        'A rank correlation of 0.45 orders peptides loosely; it does not pin a concentration, and the ' +
+        'spread above is the ensemble disagreeing with itself, not an experimental error bar.</p>' : "");
+  }
 
-    var tb = $("wintbody");
-    tb.textContent = "";
-    last.winners.forEach(function (w) {
-      var tr = document.createElement("tr");
-      var c1 = document.createElement("td"); c1.className = "seq"; c1.textContent = w.s;
-      var c2 = document.createElement("td"); c2.className = "n"; c2.textContent = w.len;
-      var c3 = document.createElement("td"); c3.className = "n"; c3.textContent = w.charge.toFixed(1);
-      var c4 = document.createElement("td"); c4.className = "n"; c4.textContent = w.score.toFixed(3);
-      tr.appendChild(c1); tr.appendChild(c2); tr.appendChild(c3); tr.appendChild(c4);
-      tb.appendChild(tr);
+  // ---------------------------------------------------------------- step 4: the spread
+  function step4(best) {
+    // the nearest relative that was actually measured against two or more organisms
+    var pick = null;
+    for (var b = 0; b < best.length; b++) {
+      var v = DATA.mic[best[b].i];
+      if (v.filter(function (x) { return x !== null; }).length >= 2) { pick = best[b]; break; }
+    }
+    if (!pick) {
+      el("s4out").innerHTML = '<p class="muted">None of the five nearest relatives was measured ' +
+        'against more than one organism, so there is no spread to show for this peptide. That is ' +
+        'itself the point: most of the public record is one number per peptide.</p>';
+      return;
+    }
+    var v = DATA.mic[pick.i], orgs = DATA.organisms;
+    var pts = [];
+    for (var k = 0; k < orgs.length; k++) if (v[k] !== null) pts.push({ org: orgs[k], val: v[k] });
+    pts.sort(function (a, b2) { return a.val - b2.val; });
+    var lo = pts[0].val, hi = pts[pts.length - 1].val, fold = Math.pow(10, hi - lo);
+    var pad = Math.max(0.25, (hi - lo) * 0.12), x0 = lo - pad, x1 = hi + pad;
+    var W = 700, L = 168, Rr = 24, rowH = 30, H = pts.length * rowH + 48;
+    var X = function (val) { return L + (val - x0) / (x1 - x0) * (W - L - Rr); };
+
+    var s = ['<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto" role="img" aria-label="Measured MIC of one peptide against each organism">'];
+    s.push('<line x1="' + X(lo).toFixed(1) + '" y1="18" x2="' + X(hi).toFixed(1) +
+           '" y2="18" stroke="var(--line-strong)" stroke-width="1"/>');
+    s.push('<text x="' + ((X(lo) + X(hi)) / 2).toFixed(1) + '" y="12" text-anchor="middle" style="font:450 12.5px var(--body);fill:var(--ink-2)">' +
+           fold.toFixed(1) + 'x between the weakest and the strongest</text>');
+    pts.forEach(function (p, i) {
+      var y = 40 + i * rowH;
+      s.push('<text x="' + (L - 14) + '" y="' + (y + 4) + '" text-anchor="end" style="font:450 13px var(--body);fill:var(--ink-2)">' + p.org + '</text>');
+      s.push('<line x1="' + L + '" y1="' + y + '" x2="' + (W - Rr) + '" y2="' + y + '" stroke="var(--line)" stroke-width="1"/>');
+      s.push('<circle class="orgdot" style="opacity:0" cx="' + X(p.val).toFixed(1) + '" cy="' + y +
+             '" r="6.5" fill="#3d8ad8" stroke="var(--paper)" stroke-width="2"><title>' + p.org + ': ' + uM(p.val) + ' µM</title></circle>');
+      s.push('<text x="' + (X(p.val) + 13).toFixed(1) + '" y="' + (y + 4) +
+             '" style="font:400 12px var(--mono);fill:var(--ink)">' + uM(p.val) + '</text>');
     });
-    $("winwrap").hidden = false;
+    s.push('<text x="' + L + '" y="' + (H - 6) + '" style="font:450 12px var(--body);fill:var(--ink-3)">more potent</text>');
+    s.push('<text x="' + (W - Rr) + '" y="' + (H - 6) + '" text-anchor="end" style="font:450 12px var(--body);fill:var(--ink-3)">less potent &rarr; MIC in &micro;M</text>');
+    s.push("</svg>");
+
+    el("s4out").innerHTML =
+      '<p class="small muted" style="margin-bottom:14px">Nearest relative measured against two or ' +
+      'more organisms, at <span class="num">' + pick.r.toFixed(3) + '</span> identity: ' +
+      '<span class="num" style="word-break:break-all">' + DATA.sequences[pick.i] + '</span></p>' +
+      s.join("") +
+      '<p class="small muted" style="margin-top:16px">Every public predictor, and every benchmark ' +
+      'built on these compilations, is trained to predict the <em>average</em> of the dots above. ' +
+      'Those dots agree with each other at a median Spearman of <span class="num">0.596</span> ' +
+      'across <span class="num">491</span> organism pairs. Averaging them produces a target that ' +
+      'is nobody’s answer, and the residual gets called label noise. That is the measurement ' +
+      'on the <a href="/data.html">data page</a>, and it is the one we think matters most.</p>';
+
+    var dots = el("s4out").querySelectorAll(".orgdot"), k2 = 0;
+    (function tick() {
+      if (k2 >= dots.length) return;
+      dots[k2].style.transition = "opacity .35s"; dots[k2].style.opacity = "1"; k2++;
+      setTimeout(tick, 90);
+    })();
   }
 
-  // ---------------------------------------------------------------- score one
-  function scoreOne() {
-    if (!M) return;
-    var s = ($("seq").value || "").toUpperCase().replace(/[^A-Z]/g, "");
-    var bad = s.split("").filter(function (c) { return M.aa.indexOf(c) < 0; });
-    $("s-warn").hidden = true;
-    if (s.length < 5) {
-      $("s-warn").hidden = false;
-      $("s-warn").textContent = "Give it at least five amino acids.";
-      return;
+  // ---------------------------------------------------------------- orchestration
+  var running = false;
+  async function runAll() {
+    if (running) return;
+    var seq = R.clean(el("seq").value || el("seq").placeholder);
+    if (seq.length < 5) { el("seqerr").textContent = "That needs to be at least 5 standard amino acids."; return; }
+    if (seq.length > 60) { el("seqerr").textContent = "Keep it under 60 residues; longer chains are outside what this data covers."; return; }
+    el("seqerr").textContent = "";
+    running = true;
+    el("run").disabled = true;
+    el("run").textContent = "Running…";
+
+    try {
+      if (!DATA) {
+        el("s2out").innerHTML = '<p class="muted">Loading the labelled set…</p>';
+        stage("s2", "live");
+        var r = await fetch("/assets/demo-data.json");
+        DATA = await r.json();
+      }
+      if (!MODELS) {
+        var m = await fetch("/assets/models.json");
+        MODELS = await m.json();
+        D.prepare(MODELS);
+      }
+
+      stage("s1", "live"); step1(seq); await sleep(900); stage("s1", "done");
+      stage("s2", "live"); var best = await step2(seq); await sleep(350); stage("s2", "done");
+      stage("s3", "live"); step3(seq, best); await sleep(750); stage("s3", "done");
+      stage("s4", "live"); step4(best); stage("s4", "done");
+      el("s1").scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      el("seqerr").textContent = "Something failed partway through: " + (e && e.message || e);
     }
-    if (bad.length) {
-      $("s-warn").hidden = false;
-      $("s-warn").textContent = "Dropped characters that are not standard amino acids: " + bad.join("");
-      s = s.split("").filter(function (c) { return M.aa.indexOf(c) >= 0; }).join("");
-    }
-    var r = D.scoreOne(s);
-    $("scoreout").hidden = false;
-    $("s-sw").textContent = r.scorerSw.toFixed(3);
-    $("s-meter").textContent = r.meterSw.toFixed(3);
-    $("s-nn").textContent = r.independentSw === null ? "no match" : r.independentSw.toFixed(3);
-    $("s-q").textContent = r.charge.toFixed(1);
-    $("s-near").textContent = (r.nearest * 100).toFixed(0) + "%";
+    el("run").disabled = false;
+    el("run").textContent = "Run the pipeline";
+    running = false;
   }
 
-  // ---------------------------------------------------------------- wire up
-  function sync() {
-    var hi = parseInt($("len").value, 10);
-    $("lenv").textContent = Math.max(8, hi - 14) + " to " + hi;
-    $("gensv").textContent = $("gens").value;
-    $("kv").textContent = $("k").value;
-  }
-  ["len", "gens", "k"].forEach(function (id) { $(id).addEventListener("input", sync); });
-  sync();
-
-  $("ctl").addEventListener("submit", function (e) { e.preventDefault(); run(); });
-  $("scorebtn").addEventListener("click", scoreOne);
-  $("seq").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); scoreOne(); } });
-
-  fetch("/assets/models.json").then(function (r) {
-    if (!r.ok) throw new Error("models " + r.status);
-    return r.json();
-  }).then(function (blob) {
-    M = D.prepare(blob);
-    var t = D.selfTest();
-    if (!t.ok) {
-      $("prog").textContent = "Model self-check failed; numbers on this page are not trustworthy.";
-      console.warn("Silicyte self-test mismatch", t.rows);
-      return;
-    }
-    $("prog").textContent = "Model loaded and self-checked against the cluster.";
-    $("go").disabled = false;
-    scoreOne();
-  }).catch(function (err) {
-    $("prog").textContent = "Could not load the model (" + err.message + ").";
-    $("go").disabled = true;
+  // ---------------------------------------------------------------- wiring
+  el("presets").innerHTML = PRESETS.map(function (p, i) {
+    return '<button class="preset" type="button" data-i="' + i + '" title="' + p[2] + '">' + p[0] + '</button>';
+  }).join("");
+  el("presets").addEventListener("click", function (e) {
+    var b = e.target.closest(".preset");
+    if (!b) return;
+    el("seq").value = PRESETS[+b.dataset.i][1];
+    el("seqerr").textContent = "";
   });
-  $("go").disabled = true;
+  el("run").addEventListener("click", runAll);
+  el("seq").addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) runAll();
+  });
 })();
 </script>
-<script src="/assets/motion.js?v=202610142320" defer></script>
+<script src="/assets/motion.js?v=202610142345" defer></script>
 </body>
 </html>
