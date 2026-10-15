@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Design-loop gain is scorer exploitation, proven by intervention | Silicyte</title>
-<meta name="description" content="A deliberately starved scoring model made the reported improvement 2.4x larger (t = -14.60). Plus the resolution floor that makes most independent validation unreadable, and six measurement faults found in our own pipeline.">
+<meta name="description" content="A starved scoring model made the reported improvement 2.4x larger (t = -14.60). Every number here carries its error bar, including the ones we withdrew.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/science.html">
@@ -15,11 +15,46 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Silicyte Science">
+<meta name="twitter:description" content="Every number with its error bar, in plain language first, including the ones we withdrew.">
 <meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "ScholarlyArticle",
+  "headline": "Design-loop gain is scorer exploitation, proven by intervention",
+  "description": "Starving a design loop's scoring model of four fifths of its training data made the loop report a 2.4x LARGER improvement (difference 0.7761, SE 0.0531, t = -14.60), with all six scrambled-reward controls inside band. A model that knows less cannot design better molecules, so the reported gain was not measuring the molecules. Also reports the resolution floor that makes most independent validation of these loops unreadable, and six measurement faults found in our own pipeline.",
+  "url": "https://silicyte.com/science.html",
+  "datePublished": "2026-10-14",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "keywords": [
+    "peptide design", "protein design", "antimicrobial peptides", "design loop",
+    "reward hacking", "scorer exploitation", "measurement artifact", "data leakage",
+    "cross-validation", "protein language model", "machine learning evaluation"
+  ],
+  "author": {
+    "@type": "Organization",
+    "name": "Silicyte",
+    "url": "https://silicyte.com/",
+    "email": "hello@silicyte.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Silicyte",
+    "url": "https://silicyte.com/"
+  },
+  "citation": {
+    "@type": "Dataset",
+    "name": "Silicyte AMP evaluation split v1.0.0",
+    "url": "https://silicyte.com/data.html"
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610141239">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610141658">
 <style>
   .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
   .toc a {
@@ -35,7 +70,7 @@
   <div class="wrap top-in">
     <a class="brandmark" href="/" aria-label="Silicyte home">
       <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
-        <g fill="#111827">
+        <g fill="var(--ink)">
           <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
           <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
           <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
@@ -43,7 +78,7 @@
           <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
           <circle cx="15.25" cy="8.85" r="2.6"/>
         </g>
-        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
       </svg>
       <b>Silicyte</b>
     </a>
@@ -51,6 +86,7 @@
       <a href="/">Home</a>
       <a href="/science.html" aria-current="page">Science</a>
       <a href="/data.html">Data</a>
+      <a href="/audit.html">Audit</a>
       <a href="/demo.html">Designer</a>
       <a href="/company.html">Company</a>
     </nav>

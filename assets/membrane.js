@@ -232,15 +232,79 @@
     }
   };
 
-  /** Pore detection: the largest lateral gap between consecutive heads of the upper membrane. */
+  /* Pore detection: the widest LATERAL ABSENCE of tail material in the membrane core.
+   *
+   * A pore is a lateral absence, so it has to be measured as one. The metric this replaces kept
+   * only the heads currently above the membrane midline and called the largest horizontal gap
+   * between the survivors a pore, which conflates vertical displacement with lateral absence: as a
+   * wave passes, heads dip below the midline and drop out of the list, and two dipped neighbours
+   * triple the gap to their neighbours with no pore present at all. Both membranes undulate, so it
+   * fired on the human membrane routinely and the page printed "Human membrane: ruptured" under a
+   * caption about selectivity, which is the opposite of what this simulation exists to show.
+   *
+   * Occupancy fixes that. Each tail bead covers half a lipid spacing either side, so an intact
+   * sheet is continuously covered and reads exactly 0 however far it is bending; the only way to
+   * uncover a run of bins is for lipids to move apart in x, which is what a pore is.
+   */
   Sim.prototype.poreWidth = function (m) {
     const [s, e] = this.memSpan[m];
-    const xs = [];
-    for (let i = s; i < e; i++) if (this.kind[i] === HEAD && this.py[i] < this.memY[m]) xs.push(this.px[i]);
-    xs.sort((a, b) => a - b);
-    let worst = 0;
-    for (let i = 1; i < xs.length; i++) worst = Math.max(worst, xs[i] - xs[i - 1]);
-    return worst;
+    const gap = this.w / this.o.lipids;
+    const r = gap * 0.55;                                 // coverage per tail bead, slight overlap
+    const bw = Math.max(1, gap * 0.25);                   // bin width
+    const nb = Math.max(8, Math.ceil(this.w / bw));
+
+    // Centre the core band on the membrane itself rather than on its starting height. The sheet
+    // sags and drifts, and a band pinned to the initial y would empty out under a slow drift and
+    // report the whole frame as a pore, which is the same class of bug one level up.
+    const ys = [];
+    for (let i = s; i < e; i++) if (this.kind[i] === TAIL) ys.push(this.py[i]);
+    if (!ys.length) return 0;
+    ys.sort((a, b) => a - b);
+    const mid = ys[ys.length >> 1], slab = 18;
+
+    const occ = new Uint8Array(nb);
+    for (let i = s; i < e; i++) {
+      if (this.kind[i] !== TAIL) continue;
+      if (Math.abs(this.py[i] - mid) > slab) continue;    // material that has left the bilayer
+      const a = Math.max(0, Math.floor((this.px[i] - r) / bw));
+      const b = Math.min(nb - 1, Math.floor((this.px[i] + r) / bw));
+      for (let k = a; k <= b; k++) occ[k] = 1;
+    }
+
+    // The sheet is pinned at both ends, so the frame edge is not a pore.
+    const k0 = Math.ceil(gap / bw), k1 = nb - 1 - Math.ceil(gap / bw);
+    let worst = 0, run = 0;
+    for (let k = k0; k <= k1; k++) {
+      if (occ[k]) run = 0;
+      else { run++; if (run > worst) worst = run; }
+    }
+    return worst * bw;
+  };
+
+  /* Peptides currently in contact with a membrane, counted as distinct chains with at least one
+   * bead inside the band from the head groups to the midplane.
+   *
+   * This is the quantity the model can honestly report, and the reason the readout leads with it
+   * rather than with a rupture. A lasting pore is impossible here BY CONSTRUCTION: step() tethers
+   * every lipid harmonically to its own lattice site, so the sheet springs back to shape and any
+   * lateral absence is transient. Over a full run the contact preference measures about 1.5x
+   * toward the anionic surface, and peptides do reach the neutral one, so the panel says that
+   * instead of claiming selectivity it cannot show.
+   */
+  Sim.prototype.contacts = function (m) {
+    const [s, e] = this.memSpan[m];
+    const ys = [];
+    for (let i = s; i < e; i++) if (this.kind[i] === TAIL) ys.push(this.py[i]);
+    if (!ys.length) return 0;
+    ys.sort((a, b) => a - b);
+    const mid = ys[ys.length >> 1];
+    const seen = {};
+    let n = 0;
+    for (let i = this.pepStart; i < this.px.length; i++) {
+      if (Math.abs(this.py[i] - mid) > 16) continue;
+      if (!seen[this.grp[i]]) { seen[this.grp[i]] = 1; n++; }
+    }
+    return n;
   };
 
   function mulberry(a) {
