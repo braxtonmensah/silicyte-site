@@ -631,9 +631,9 @@ figcaption { font-size: 15px; }
   --brand-tint: #16213d;
 }
 .band-brand {
-  background: linear-gradient(145deg, #2e3bbd 0%, #3f49cf 48%, #5560e0 100%);
+  background: linear-gradient(145deg, #242c99 0%, #2e3bbd 48%, #3f49cf 100%);
   color: #fff;
-  --ink: #ffffff; --ink-2: #dfe3fb; --ink-3: #b6bdf2;
+  --ink: #ffffff; --ink-2: #dfe3fb; --ink-3: #ccd3f7;
   --line: rgba(255, 255, 255, .22); --line-strong: rgba(255, 255, 255, .42);
   --surface: transparent; --paper-2: rgba(255, 255, 255, .08); --brand-tint: rgba(255, 255, 255, .14);
 }
@@ -756,3 +756,24 @@ strong, b { font-weight: 700; }
 .band-brand .next a:hover, .band-ink .next a:hover { border-bottom-color: #fff; }
 .band-brand .kicker, .band-ink .kicker { color: var(--ink-2); }
 .band-brand .rail p, .band-ink .rail p { color: var(--ink-2); }
+/* ================================================================ ACCESSIBILITY + TYPE FIXES
+   Four issues found while a second session extracted a design system from this stylesheet. All
+   four were reproduced here with measurements before being changed.
+
+   WORD SPACES. Clash Display at display tracking (-0.035em hero, -0.028em h2) renders a word
+   space at 0.20 of an n-width, against a normal 0.25 to 0.32, so "Four ways to check us." closed
+   up into something close to one word. Negative tracking pulls the spaces in along with the
+   letters; word-spacing puts only the spaces back, which is the correct lever.
+
+   FOCUS RING. The ring was var(--brand) everywhere, which measures 2.21:1 on the ink band and
+   1.26:1 on the brand band, both under the 3:1 a focus indicator needs. It now follows a --focus
+   token that each ground sets for itself, exactly as every other ink does here. */
+:root { --focus: var(--brand); }
+.band-ink, .band-brand, .filmhero { --focus: #ffffff; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+h1, h2, .band h2, .filmhero h1, .next a h3, .stat b { word-spacing: 0.06em; }
+.filmhero h1 { word-spacing: 0.07em; }
+/* The masthead is transparent over the film until you scroll past it, so while it is there its
+   focus ring has to behave like the hero's, not like the paper page underneath. */
+body.has-hero:not(.scrolled) .top { --focus: #ffffff; }
