@@ -43,8 +43,11 @@
     this.rng = mulberry(20261014);
 
     const W = this.w, H = this.h;
-    // two membranes: bacterial (upper, anionic) and human (lower, neutral)
-    this.memY = [H * 0.40, H * 0.78];
+    // Two membranes: bacterial (upper, anionic) and human (lower, neutral). They sit in the upper
+    // half because the hero's headline occupies the lower one, and a full-bleed canvas with its
+    // subject centred would put the sheets directly behind the type. The peptides fall in from
+    // above the frame, so the band above the first sheet is their runway and is meant to be open.
+    this.memY = [H * 0.26, H * 0.52];
     this.memAnionic = [true, false];
     this.memSpan = [];
 
@@ -330,20 +333,30 @@
         W = nw; H = nh;
         canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        // Lipid spacing is held at ~9px so the lateral bond rest length, and therefore the
+        // membrane's stiffness, does not change with the viewport. Peptide count scales with
+        // width instead, because a wide frame with six peptides in it reads as empty.
         sim = new Sim(W, H, { lipids: Math.max(34, Math.round(W / 9)),
-                              peptides: W < 520 ? 4 : 6 });
+                              peptides: Math.max(4, Math.min(14, Math.round(W / 155))) });
       }
     }
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
 
-      // membrane labels
-      ctx.font = "500 10px ui-monospace, monospace";
-      ctx.fillStyle = "rgba(147,161,184,.75)";
-      ctx.fillText("BACTERIAL MEMBRANE   negatively charged surface", 12, sim.memY[0] - 30);
-      ctx.fillStyle = "rgba(147,161,184,.45)";
-      ctx.fillText("HUMAN CELL MEMBRANE   neutral surface", 12, sim.memY[1] - 30);
+      // Membrane labels, aligned to the page's own text column rather than to the canvas edge.
+      // The canvas is full-bleed in the hero, so a flat 12px inset would hang them off the side
+      // of the screen instead of lining them up with the headline.
+      // On a wide hero the canvas is masked out of the left column so the headline can live
+      // there, so the labels have to sit inside the part that is actually painted or they are
+      // invisible and sitting on top of the type at the same time.
+      const big = W > 860;
+      const gutter = big ? W * 0.47 : Math.max(20, (W - 1152) / 2 + 20);
+      ctx.font = (big ? "500 11.5px " : "500 10px ") + "ui-monospace, monospace";
+      ctx.fillStyle = "rgba(160,186,224,.82)";
+      ctx.fillText("BACTERIAL MEMBRANE   negatively charged surface", gutter, sim.memY[0] - 34);
+      ctx.fillStyle = "rgba(147,161,184,.42)";
+      ctx.fillText("HUMAN CELL MEMBRANE   neutral surface", gutter, sim.memY[1] - 34);
 
       // lipid tails first (the greasy core)
       ctx.lineCap = "round";

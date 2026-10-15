@@ -146,7 +146,9 @@ p { margin: 0 0 17px; }
   align-items: end; padding-block: 22px 26px;
 }
 @media (max-width: 860px) { .stage-grid { grid-template-columns: 1fr; align-items: start; } }
-#scene, #membrane { display: block; width: 100%; height: clamp(320px, 46vw, 500px); touch-action: pan-y; }
+/* The hero canvas is full-bleed (.film) and sized by its own rules; this fixed height is for
+   any canvas that still sits inside a bounded stage. */
+#scene, #membrane:not(.film) { display: block; width: 100%; height: clamp(320px, 46vw, 500px); touch-action: pan-y; }
 .scene-wrap { position: relative; }
 .scene-fallback {
   position: absolute; inset: 0; display: none; place-items: center; text-align: center;
@@ -249,4 +251,186 @@ footer p { margin: 0 0 9px; max-width: 46rem; }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   html { scroll-behavior: auto; }
+}
+
+/* ================================================================ VISUAL LAYER, 2026-10-14 PM
+   The page read as dead and the reason was structural, not decorative: the hero was type alone on
+   flat paper, the simulation sat in a separate dark slab that was 60% empty, and every section
+   below was the same width, the same weight and the same colour as the one before it. Three fixes,
+   in the order they matter.
+
+   1. ONE FOCAL POINT. The hero and the simulation were two weak moments; they are now one strong
+      one. The film is the ground, the headline sits on it, and the readout is a HUD on the glass
+      instead of a terminal column beside it.
+   2. DEPTH BY LAYERING, not by blur. A scrim, a hairline grid and a single accent bloom, all in
+      CSS, stacked with z-index. Rendering a heavyweight 3D asset to fake depth costs the page more
+      than it buys.
+   3. MOTION THAT IS SUBTLE AND SCROLL-TRIGGERED. Content arrives rather than appearing, numbers
+      count up once, controls respond to the pointer. Every bit of it is off under
+      prefers-reduced-motion, because motion as decoration is the failure mode here.
+*/
+
+/* ---------------------------------------------------------------- the film hero */
+.filmhero {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: #070c11; color: var(--panel-fg);
+  min-height: min(94vh, 900px);
+  display: grid; grid-template-rows: 1fr auto;
+}
+.filmhero .film {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  /* the film is the ground, so it is never the thing the eye lands on */
+  opacity: .92; filter: saturate(1.05) contrast(1.04);
+  /* The subject and the headline were occupying the same pixels: the membranes ran straight
+     through the type and the canvas labels landed on top of it. Masking the canvas out of the
+     left column fixes that at every width without moving the simulation, and it reads as
+     deliberate framing rather than as a fade. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 26%, #000 62%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 26%, #000 62%, #000 100%);
+}
+@media (max-width: 860px) {
+  /* Narrow: the type is full width, so the simulation moves above it instead of beside it. */
+  .filmhero .film {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 34%, transparent 62%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 34%, transparent 62%);
+  }
+}
+/* the scrim: dark at the bottom where the type is, open at the top where the peptides enter */
+.filmhero::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(110% 80% at 14% 14%, rgba(21, 54, 204, .26), transparent 62%),
+    radial-gradient(90% 70% at 88% 92%, rgba(200, 123, 50, .13), transparent 60%),
+    linear-gradient(to right, rgba(7, 12, 17, .92) 0%, rgba(7, 12, 17, .72) 38%, rgba(7, 12, 17, 0) 72%),
+    linear-gradient(to bottom, rgba(7, 12, 17, .50) 0%, rgba(7, 12, 17, .10) 24%,
+                    rgba(7, 12, 17, .42) 64%, rgba(7, 12, 17, .90) 100%);
+}
+/* a hairline grid, the cheapest honest depth cue there is */
+.filmhero::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .5;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .030) 1px, transparent 1px);
+  background-size: clamp(64px, 7vw, 108px) clamp(64px, 7vw, 108px);
+  mask-image: radial-gradient(130% 100% at 50% 0%, #000 30%, transparent 78%);
+}
+.filmhero > * { position: relative; z-index: 2; }
+
+.hero-in { padding-block: clamp(76px, 11vh, 132px) clamp(26px, 4vh, 44px); align-self: end; }
+.filmhero .eyebrow { color: #8fb4ff; }
+.filmhero h1 {
+  font: 500 clamp(34px, 4.9vw, 68px)/1.0 var(--display); letter-spacing: -0.035em;
+  color: #fff; margin: 0 0 20px; max-width: 16ch;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, .6);
+}
+@media (min-width: 861px) { .filmhero .hero-in > * { max-width: 56%; } }
+.filmhero h1 em { font-style: italic; color: #cfe0ff; }
+.filmhero .lede { color: #c3cedb; max-width: 46ch; font-size: clamp(17px, 1.5vw, 21px); }
+.filmhero .lede strong { color: #fff; }
+
+/* The primary action is the single most prominent thing on the screen, and on a dark ground that
+   means it is the only white block. */
+.filmhero .btn {
+  background: #fff; border-color: #fff; color: #0b1116; font-weight: 600;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .42);
+  transition: transform .18s cubic-bezier(.2, .7, .2, 1), box-shadow .18s, background .18s;
+}
+.filmhero .btn:hover { background: #fff; color: var(--brand-deep); transform: translateY(-2px);
+                       box-shadow: 0 16px 44px rgba(0, 0, 0, .5); }
+.filmhero .btn.ghost {
+  background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .45); color: #f2f6fb;
+  backdrop-filter: blur(6px); box-shadow: none;
+}
+.filmhero .btn.ghost:hover { background: rgba(255, 255, 255, .13); border-color: #fff; color: #fff; transform: translateY(-2px); }
+
+/* ---------------------------------------------------------------- the HUD on the glass */
+.hud {
+  border-top: 1px solid rgba(255, 255, 255, .10);
+  background: linear-gradient(to bottom, rgba(10, 16, 22, .30), rgba(10, 16, 22, .72));
+  backdrop-filter: blur(14px) saturate(1.3);
+}
+.hud-in {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 9px 22px;
+  padding-block: 13px; font-family: var(--mono); font-size: 12px;
+}
+.hud .cell { display: flex; align-items: baseline; gap: 9px; min-width: 0; }
+.hud .cell b {
+  font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: #7f8e9f; white-space: nowrap;
+}
+.hud .cell span { color: #e7edf4; font-variant-numeric: tabular-nums; }
+.hud .live { display: inline-flex; align-items: center; gap: 7px; color: #8fb4ff; }
+.hud .live i {
+  width: 6px; height: 6px; border-radius: 50%; background: #5b8cf5; display: block;
+  box-shadow: 0 0 0 0 rgba(91, 140, 245, .7); animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(91, 140, 245, .55); }
+  70%  { box-shadow: 0 0 0 9px rgba(91, 140, 245, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(91, 140, 245, 0); }
+}
+.hud .swatches { display: flex; gap: 6px 16px; flex-wrap: wrap; margin-left: auto; }
+.hud .swatches li { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #9aa7b6; list-style: none; }
+.hud .swatches { margin-block: 0; padding: 0; }
+.hud .copybtn {
+  background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .22); color: #dbe3ec;
+}
+.hud .copybtn:hover { background: rgba(255, 255, 255, .14); border-color: #fff; color: #fff; }
+@media (max-width: 760px) {
+  .hud .swatches { margin-left: 0; }
+  .filmhero { min-height: auto; }
+  .hero-in { padding-block: 84px 28px; }
+}
+
+/* ---------------------------------------------------------------- scroll reveal */
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .68s cubic-bezier(.2, .7, .2, 1), transform .68s cubic-bezier(.2, .7, .2, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .07s; }
+.reveal.d2 { transition-delay: .14s; }
+.reveal.d3 { transition-delay: .21s; }
+
+/* ---------------------------------------------------------------- depth on the light ground */
+section { position: relative; }
+/* alternating weight, so a long page stops reading as one undifferentiated column */
+section.sunken { background: linear-gradient(180deg, var(--paper-2), var(--paper) 86%); }
+section.sunken::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(to right, transparent, var(--line-strong) 22%, var(--line-strong) 78%, transparent);
+}
+.stats { box-shadow: 0 1px 2px rgba(18, 22, 25, .04), 0 12px 32px -18px rgba(18, 22, 25, .28); }
+.stat { position: relative; transition: background .2s; }
+.stat::after {
+  content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 2px;
+  background: var(--brand); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+}
+.stat.in::after { transform: scaleX(1); }
+.stat b { color: var(--ink); }
+.tbl-wrap { box-shadow: 0 1px 2px rgba(18, 22, 25, .04), 0 14px 36px -22px rgba(18, 22, 25, .3); }
+tbody tr { transition: background .14s; }
+tbody tr:hover { background: var(--brand-tint); }
+.figbox { box-shadow: 0 1px 2px rgba(18, 22, 25, .04), 0 18px 44px -26px rgba(18, 22, 25, .34); }
+.next, .dl, .price, .ledger {
+  box-shadow: 0 1px 2px rgba(18, 22, 25, .04), 0 16px 40px -24px rgba(18, 22, 25, .3);
+}
+.next a, .dl a { position: relative; transition: background .18s, transform .18s; }
+.next a:hover, .dl a:hover { transform: translateY(-2px); }
+.next a .go { transition: transform .22s cubic-bezier(.2, .7, .2, 1); }
+.next a:hover .go { transform: translateX(5px); }
+
+/* the one accent the light sections are allowed */
+.kicker span.n {
+  color: var(--brand); font-weight: 500;
+  padding: 2px 7px; border-radius: 3px; background: var(--brand-tint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .stat::after { transform: scaleX(1); }
+  .hud .live i { animation: none; }
+  .next a:hover, .dl a:hover, .filmhero .btn:hover { transform: none; }
 }

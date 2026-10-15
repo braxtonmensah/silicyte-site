@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610141658">
+<link rel="stylesheet" href="/assets/site.css?v=202610142230">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 36px; }
   .next a { background: var(--paper); padding: 26px 24px; text-decoration: none; color: var(--ink); display: block; }
@@ -65,8 +65,9 @@
 </header>
 
 <main>
-  <div class="wrap" style="padding-block:64px 0">
-    <div class="col center">
+  <section class="filmhero">
+    <canvas class="film" id="membrane" aria-label="Live simulation of antimicrobial peptides choosing between a bacterial membrane and a human one"></canvas>
+    <div class="wrap hero-in">
       <p class="eyebrow">In silico design, measured</p>
       <h1>We broke our own scoring model on purpose. It started reporting <em>better</em> results.</h1>
       <p class="lede">Silicyte designs de novo peptides and protein binders, and builds the
@@ -76,46 +77,47 @@
         <a class="btn ghost" href="/science.html">See the evidence</a>
       </div>
     </div>
-  </div>
 
-  <div class="panel" style="margin-top:48px">
-    <div class="wrap">
-      <div class="stage-grid">
-        <div class="scene-wrap" id="memWrap">
-          <canvas id="membrane" aria-label="Live simulation of an antimicrobial peptide rupturing a bacterial membrane while leaving a human membrane intact"></canvas>
-        </div>
-        <div class="readout">
-          <dl>
-            <dt>Simulating</dt><dd>membrane selectivity</dd>
-            <dt>Peptides in contact</dt><dd id="m-contact">&mdash;</dd>
-            <dt>Preference, this run</dt><dd id="m-pref">&mdash;</dd>
-            <dt>Widest lipid gap</dt><dd id="m-pore">&mdash;</dd>
-            <dt>Elapsed</dt><dd id="m-clock">&mdash;</dd>
-          </dl>
-          <ul class="legend">
-            <li><span class="swatch" style="background:#78b4ff"></span>charged face</li>
-            <li><span class="swatch" style="background:#ffce5a"></span>greasy face</li>
-            <li><span class="swatch" style="background:#7d96be"></span>bacterial lipid</li>
-            <li><span class="swatch" style="background:#687488"></span>human lipid</li>
-          </ul>
-          <button class="copybtn" id="m-reset" type="button" style="margin-top:14px">Run it again</button>
-        </div>
+    <div class="hud">
+      <div class="wrap hud-in">
+        <span class="live"><i></i>LIVE SIMULATION</span>
+        <span class="cell"><b>In contact</b><span id="m-contact">&mdash;</span></span>
+        <span class="cell"><b>Preference</b><span id="m-pref">&mdash;</span></span>
+        <span class="cell"><b>Widest lipid gap</b><span id="m-pore">&mdash;</span></span>
+        <span class="cell"><b>t</b><span id="m-clock">&mdash;</span></span>
+        <ul class="swatches">
+          <li><span class="swatch" style="background:#78b4ff"></span>charged face</li>
+          <li><span class="swatch" style="background:#ffce5a"></span>greasy face</li>
+          <li><span class="swatch" style="background:#7d96be"></span>bacterial lipid</li>
+          <li><span class="swatch" style="background:#687488"></span>human lipid</li>
+        </ul>
+        <button class="copybtn" id="m-reset" type="button">Run it again</button>
       </div>
-      <p class="panel-note">A physics simulation rather than a decoration, and bounded like
-      everything else here. The peptide's <span class="num">charged</span> face is pulled hardest
-      to the bacterial membrane because that surface is negatively charged, while the neutral human
-      surface pulls more weakly. Over a full run that comes out at about
-      <span class="num">1.5x</span> more contact, a preference and not an absolute one: peptides do
-      reach the human membrane, and you will see them land on it. In a real cell the
-      <span class="num">greasy</span> face then buries itself in the lipid tails and past a local
-      threshold opens a pore. <strong>This model does not show that step.</strong> Every lipid is
-      tethered to its own lattice site, so the sheet springs back and the widest gap it reaches is
-      a few pixels where a pore would need roughly thirty. The readout prints that gap in pixels
-      so you can check the claim against the thing making it. Selectivity is the ratio between the
-      two outcomes, and it is the number this company exists to predict, measured in
-      <a href="/science.html">the science</a> rather than here.</p>
     </div>
-  </div>
+  </section>
+
+  <section class="sunken">
+    <div class="wrap">
+      <div class="col reveal">
+        <p class="kicker"><span class="n">00</span> What you are looking at</p>
+        <h2 class="h-sm" style="font:500 clamp(24px,2.8vw,34px)/1.2 var(--display);letter-spacing:-.02em;margin-bottom:16px">
+        A physics simulation, not a decoration, and bounded like everything else here.</h2>
+        <p class="muted">The peptide's <span class="num">charged</span> face is pulled hardest to
+        the bacterial membrane because that surface is negatively charged, while the neutral human
+        surface pulls more weakly. Over a full run that comes out at about
+        <span class="num">1.5x</span> more contact, a preference and not an absolute one: peptides
+        do reach the human membrane, and you will see them land on it.</p>
+        <p class="muted">In a real cell the <span class="num">greasy</span> face then buries itself
+        in the lipid tails and past a local threshold opens a pore. <strong>This model does not
+        show that step.</strong> Every lipid is tethered to its own lattice site, so the sheet
+        springs back and the widest gap it reaches is a few pixels where a pore would need roughly
+        thirty. The readout above prints that gap in pixels so you can check the claim against the
+        thing making it. Selectivity is the ratio between the two outcomes, it is the number this
+        company exists to predict, and it is measured in <a href="/science.html">the science</a>
+        rather than here.</p>
+      </div>
+    </div>
+  </section>
 
   <section>
     <div class="wrap">
@@ -257,7 +259,7 @@
 
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
-<script src="/assets/membrane.js?v=202610141611"></script>
+<script src="/assets/membrane.js?v=202610142230"></script>
 <script>
 (function () {
   "use strict";
@@ -325,5 +327,6 @@
   }
 })();
 </script>
+<script src="/assets/motion.js?v=202610142230" defer></script>
 </body>
 </html>
