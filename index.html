@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Silicyte | AI molecular design, measured</title>
-<meta name="description" content="We crippled our own scoring model and the design loop reported a better result. Silicyte designs de novo peptides and protein binders, and builds the instruments that tell a real gain from a gamed score.">
+<meta name="description" content="We crippled our own scoring model and the design loop reported a better result. Silicyte designs peptides and binders, and measures which gains are real.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
@@ -24,8 +24,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Silicyte","url":"https://silicyte.com/","email":"hello@silicyte.com","foundingDate":"2026-10","description":"Research company building de novo peptides and protein binders, and the measurement instruments that separate a real design gain from scoring-model exploitation.","address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610141239">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610141658">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 36px; }
   .next a { background: var(--paper); padding: 26px 24px; text-decoration: none; color: var(--ink); display: block; }
@@ -41,7 +41,7 @@
   <div class="wrap top-in">
     <a class="brandmark" href="/" aria-label="Silicyte home">
       <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
-        <g fill="#111827">
+        <g fill="var(--ink)">
           <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
           <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
           <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
@@ -49,7 +49,7 @@
           <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
           <circle cx="15.25" cy="8.85" r="2.6"/>
         </g>
-        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
       </svg>
       <b>Silicyte</b>
     </a>
@@ -57,6 +57,7 @@
       <a href="/" aria-current="page">Home</a>
       <a href="/science.html">Science</a>
       <a href="/data.html">Data</a>
+      <a href="/audit.html">Audit</a>
       <a href="/demo.html">Designer</a>
       <a href="/company.html">Company</a>
     </nav>
@@ -65,20 +66,13 @@
 
 <main>
   <div class="wrap" style="padding-block:64px 0">
-    <div class="col">
+    <div class="col center">
       <p class="eyebrow">In silico design, measured</p>
       <h1>We broke our own scoring model on purpose. It started reporting <em>better</em> results.</h1>
-      <p class="lede">Silicyte designs de novo peptides and protein binders. Along the way we found
-      that the standard way of reporting an AI design loop does not measure what everyone assumes
-      it measures, and we can prove it by experiment rather than argument.</p>
-      <p class="lede">A design loop proposes molecules, scores them, keeps the best and repeats.
-      Ours reported that its molecules ended up <strong>3.5 times</strong> better. Then we crippled
-      the scoring model, giving it only a fifth of its training data, which makes it strictly worse
-      at predicting anything. The same loop then reported <strong>21 times</strong> better.</p>
-      <p class="lede small">A model that knows less cannot design better molecules. It can only be
-      easier to fool. That number was never measuring the molecules.</p>
+      <p class="lede">Silicyte designs de novo peptides and protein binders, and builds the
+      instruments that tell a real gain from a gamed score.</p>
       <div class="actions">
-        <a class="btn" href="/demo.html">Run it yourself</a>
+        <a class="btn" href="/audit.html">Audit your own result</a>
         <a class="btn ghost" href="/science.html">See the evidence</a>
       </div>
     </div>
@@ -93,9 +87,10 @@
         <div class="readout">
           <dl>
             <dt>Simulating</dt><dd>membrane selectivity</dd>
-            <dt>Particles</dt><dd id="m-particles">&mdash;</dd>
-            <dt>Bacterial pore</dt><dd id="m-pore">&mdash;</dd>
-            <dt>Human membrane</dt><dd id="m-human">intact</dd>
+            <dt>Peptides in contact</dt><dd id="m-contact">&mdash;</dd>
+            <dt>Preference, this run</dt><dd id="m-pref">&mdash;</dd>
+            <dt>Widest lipid gap</dt><dd id="m-pore">&mdash;</dd>
+            <dt>Elapsed</dt><dd id="m-clock">&mdash;</dd>
           </dl>
           <ul class="legend">
             <li><span class="swatch" style="background:#78b4ff"></span>charged face</li>
@@ -106,13 +101,19 @@
           <button class="copybtn" id="m-reset" type="button" style="margin-top:14px">Run it again</button>
         </div>
       </div>
-      <p class="panel-note">Not a decoration: a physics simulation of the mechanism our molecules
-      are designed around. The peptide's <span class="num">charged</span> face is pulled to the
-      bacterial membrane because that surface is negatively charged, while the human membrane,
-      which is neutral, barely attracts it. Once it lands, the <span class="num">greasy</span> face
-      buries itself in the lipid tails, wedges the layer apart and opens a pore. The ratio between
-      those two outcomes is called selectivity, and it is the number this company exists to
-      predict.</p>
+      <p class="panel-note">A physics simulation rather than a decoration, and bounded like
+      everything else here. The peptide's <span class="num">charged</span> face is pulled hardest
+      to the bacterial membrane because that surface is negatively charged, while the neutral human
+      surface pulls more weakly. Over a full run that comes out at about
+      <span class="num">1.5x</span> more contact, a preference and not an absolute one: peptides do
+      reach the human membrane, and you will see them land on it. In a real cell the
+      <span class="num">greasy</span> face then buries itself in the lipid tails and past a local
+      threshold opens a pore. <strong>This model does not show that step.</strong> Every lipid is
+      tethered to its own lattice site, so the sheet springs back and the widest gap it reaches is
+      a few pixels where a pore would need roughly thirty. The readout prints that gap in pixels
+      so you can check the claim against the thing making it. Selectivity is the ratio between the
+      two outcomes, and it is the number this company exists to predict, measured in
+      <a href="/science.html">the science</a> rather than here.</p>
     </div>
   </div>
 
@@ -147,15 +148,15 @@
             <line class="ch-grid" x1="96" y1="222.0" x2="668" y2="222.0"/>
             <line class="ch-grid" x1="96" y1="126.2" x2="668" y2="126.2"/>
 
-            <rect x="96" y="310.1" width="572" height="23.9" fill="#6b7589" opacity="0.13"/>
+            <rect x="96" y="310.1" width="572" height="23.9" fill="var(--ink-3)" opacity="0.13"/>
             <text class="ch-sub" x="102" y="348">loops run with scrambled rewards, all six inside this band</text>
 
-            <line x1="152.4" y1="260.8" x2="603.6" y2="213.9" stroke="#6b7589" stroke-width="1.5"
+            <line x1="152.4" y1="260.8" x2="603.6" y2="213.9" stroke="var(--ink-3)" stroke-width="1.5"
                   stroke-dasharray="5 4" opacity="0.8"/>
-            <text class="ch-sub" x="300" y="285" fill="#6b7589">what the theory predicts: a worse scorer gains less</text>
+            <text class="ch-sub" x="300" y="285" fill="var(--ink-3)">what the theory predicts: a worse scorer gains less</text>
 
-            <line x1="603.6" y1="213.9" x2="152.4" y2="65.2" stroke="#111827" stroke-width="1.5"/>
-            <text class="ch-sub" x="340" y="128" fill="#111827">what we measured</text>
+            <line x1="603.6" y1="213.9" x2="152.4" y2="65.2" stroke="var(--ink)" stroke-width="1.5"/>
+            <text class="ch-sub" x="340" y="128" fill="var(--ink)">what we measured</text>
 
             <line class="ch-axis" x1="96" y1="40" x2="96" y2="356"/>
             <line class="ch-axis" x1="96" y1="356" x2="668" y2="356"/>
@@ -174,7 +175,7 @@
               <line x1="152.4" y1="55.8" x2="152.4" y2="74.6" stroke="#c87b32" stroke-width="2"/>
               <line x1="146" y1="55.8" x2="159" y2="55.8" stroke="#c87b32" stroke-width="2"/>
               <line x1="146" y1="74.6" x2="159" y2="74.6" stroke="#c87b32" stroke-width="2"/>
-              <circle cx="152.4" cy="65.2" r="6.5" fill="#c87b32" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="152.4" cy="65.2" r="6.5" fill="#c87b32" stroke="var(--surface)" stroke-width="2"/>
               <text class="ch-val" x="170" y="61">21x</text>
               <text class="ch-sub" x="170" y="77">crippled scorer</text>
               <rect x="124" y="40" width="130" height="50" fill="transparent"/>
@@ -184,7 +185,7 @@
               <line x1="603.6" y1="209.9" x2="603.6" y2="217.9" stroke="#3d8ad8" stroke-width="2"/>
               <line x1="597" y1="209.9" x2="610" y2="209.9" stroke="#3d8ad8" stroke-width="2"/>
               <line x1="597" y1="217.9" x2="610" y2="217.9" stroke="#3d8ad8" stroke-width="2"/>
-              <circle cx="603.6" cy="213.9" r="6.5" fill="#3d8ad8" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="603.6" cy="213.9" r="6.5" fill="#3d8ad8" stroke="var(--surface)" stroke-width="2"/>
               <text class="ch-val" x="603.6" y="243" text-anchor="middle">3.5x</text>
               <text class="ch-sub" x="603.6" y="259" text-anchor="middle">intact scorer</text>
               <rect x="569" y="196" width="70" height="40" fill="transparent"/>
@@ -211,9 +212,16 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">02</span> Where to go next</p>
-        <h2>Three ways to check us.</h2>
+        <h2>Four ways to check us.</h2>
       </div>
       <div class="next">
+        <a href="/audit.html">
+          <h3>Audit your own result</h3>
+          <p>The four checks we failed first, on your data, in this tab. Leakage, resolution floor,
+          tie handling, split independence. Nothing is uploaded, which is the point: the people who
+          need this are holding results they will not send to a stranger.</p>
+          <span class="go">RUN THE AUDIT &rarr;</span>
+        </a>
         <a href="/demo.html">
           <h3>Run the loop yourself</h3>
           <p>Design a peptide in your browser using our real fitted model, then flip the switch
@@ -249,7 +257,7 @@
 
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
-<script src="/assets/membrane.js?v=202610141239"></script>
+<script src="/assets/membrane.js?v=202610141611"></script>
 <script>
 (function () {
   "use strict";
@@ -272,26 +280,44 @@
   // ---------------------------------------------------------------- the membrane simulation
   var canvas = document.getElementById("membrane");
   if (!canvas || !window.SilicyteMembrane) return;
-  var peak = 0;
+  // The panel reports contact, which this model measures, and a lipid gap in pixels with the
+  // threshold stated, instead of a rupture verdict. The readout it replaces printed "ruptured"
+  // for the HUMAN membrane: it called the largest gap between heads above the midline a pore, so
+  // an undulating sheet manufactured one, and a latch with no persistence requirement made a
+  // single bad frame permanent. Measured over a full run with the corrected metric, neither
+  // membrane opens a pore and the contact preference is about 1.5x, so that is what it says.
+  var state = { fB: 0, fH: 0 };
+  function put(id, text) {
+    var el = document.getElementById(id);
+    if (el && el.textContent !== text) el.textContent = text;
+  }
   var view = window.SilicyteMembrane.Render(canvas, {
-    onReset: function () { peak = 0; },
+    onReset: function () { state.fB = 0; state.fH = 0; },
     onTick: function (sim) {
-      var pore = sim.poreWidth(0), human = sim.poreWidth(1);
-      if (pore > peak) peak = pore;
-      var p = document.getElementById("m-particles");
-      if (p) p.textContent = sim.px.length + " lipids and peptide beads";
-      var el = document.getElementById("m-pore");
-      if (el) {
-        el.textContent = peak > 34 ? "RUPTURED" : (peak > 22 ? "opening" : "intact");
-        el.style.color = peak > 34 ? "#ff8f5a" : (peak > 22 ? "#ffce5a" : "");
+      var cb = sim.contacts(0), ch = sim.contacts(1);
+      state.fB += cb; state.fH += ch;
+
+      put("m-contact", "bacterial " + cb + "  ·  human " + ch);
+
+      var pref;
+      if (!state.fB && !state.fH) pref = "no contact yet";
+      else if (!state.fH) pref = "bacterial only so far";
+      else if (!state.fB) pref = "human only so far";
+      else {
+        var r = state.fB / state.fH;
+        pref = (r >= 1 ? r.toFixed(1) + "x toward bacterial"
+                       : (1 / r).toFixed(1) + "x toward human");
       }
-      var hu = document.getElementById("m-human");
-      if (hu) hu.textContent = human > 34 ? "ruptured" : "intact";
+      put("m-pref", pref);
+
+      put("m-pore", "bacterial " + Math.round(sim.poreWidth(0)) + " px  ·  human "
+                    + Math.round(sim.poreWidth(1)) + " px");
+      put("m-clock", "t = " + Math.round(sim.t));
     }
   });
   view.start();
   var rb = document.getElementById("m-reset");
-  if (rb) rb.addEventListener("click", function () { peak = 0; view.reset(); view.start(); });
+  if (rb) rb.addEventListener("click", function () { state.fB = 0; state.fH = 0; view.reset(); view.start(); });
   if ("IntersectionObserver" in window && !view.reduced) {
     new IntersectionObserver(function (es) {
       es.forEach(function (en) { if (en.isIntersecting) { view.start(); } else { view.stop(); } });

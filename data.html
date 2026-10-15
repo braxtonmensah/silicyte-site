@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Corrected antimicrobial peptide evaluation split | Silicyte open data</title>
-<meta name="description" content="Free download: corrected cross-validation folds for antimicrobial peptide MIC and HC50 prediction. The clustering in common use leaks 20.1% of held-out sequences; these folds leak 0.0000. Includes the leakage audit, measured label reliability (ceiling 0.9387) and baselines.">
+<meta name="description" content="Free corrected cross-validation folds for antimicrobial peptide MIC and HC50. The split in common use leaks 20.1% of held-out sequences; these leak none. Plus the measurement that matters more: 74.2% of the variance in the standard activity label is which organism was tested.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/data.html">
@@ -22,7 +22,7 @@
   "@context": "https://schema.org/",
   "@type": "Dataset",
   "name": "Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction",
-  "description": "A corrected cross-validation split for antimicrobial peptide MIC and HC50 prediction, with the audit that shows it is clean and the label reliability that bounds what any model can score. The similarity clustering in common use documents itself as single linkage but compares each sequence only to cluster representatives, leaving 20.1 percent of held-out MIC sequences and 24.6 percent of HC50 sequences with a cross-fold neighbour above 0.80 identity, while the usual check that no family spans a fold passes 826 of 826. These folds are built by transitive single linkage at Levenshtein ratio 0.80 and the measured cross-fold fraction above threshold is 0.0000. Includes 2904 MIC and 1238 HC50 sequences with fold and cluster assignments, the leakage audit, split-half label reliability of 0.7877 implying a ceiling of 0.9387 on any model, and baselines from a 36-descriptor ridge through a fine-tuned protein language model with a shuffled-label control.",
+  "description": "A corrected cross-validation split for antimicrobial peptide MIC and HC50 prediction, with the audit that shows it is clean and the label reliability that bounds what any model can score. The similarity clustering in common use documents itself as single linkage but compares each sequence only to cluster representatives, leaving 20.1 percent of held-out MIC sequences and 24.6 percent of HC50 sequences with a cross-fold neighbour above 0.80 identity, while the usual check that no family spans a fold passes 826 of 826. These folds are built by transitive single linkage at Levenshtein ratio 0.80 and the measured cross-fold fraction above threshold is 0.0000. Includes 2904 MIC and 1238 HC50 sequences with fold and cluster assignments, the leakage audit, split-half label reliability of 0.7877 implying a ceiling of 0.9387 against the pooled label, and baselines from a 36-descriptor ridge through a fine-tuned protein language model with a shuffled-label control. The release is published alongside a second measurement: the pooled activity label averages measurements against different organisms that agree with each other at a median Spearman of 0.596 over 491 organism pairs, 74.2 percent of resolvable variance is between organisms rather than within them, and the within-organism ceiling is 0.9590 to 0.9815, higher than the pooled 0.9387 that the field is judged against.",
   "url": "https://silicyte.com/data.html",
   "version": "1.0.0",
   "datePublished": "2026-10-14",
@@ -31,7 +31,9 @@
   "keywords": [
     "antimicrobial peptides", "AMP", "minimum inhibitory concentration", "MIC", "haemolysis",
     "HC50", "cross-validation", "data leakage", "similarity clustering", "single linkage",
-    "benchmark", "protein language model", "peptide design", "machine learning evaluation"
+    "benchmark", "protein language model", "peptide design", "machine learning evaluation",
+    "label noise", "measurement reliability", "species-aware prediction", "variance decomposition",
+    "target specification", "GRAMPA"
   ],
   "creator": {
     "@type": "Organization",
@@ -70,8 +72,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610141239">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610141658">
 <style>
   .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px;
         background: var(--line); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-top: 30px; }
@@ -89,7 +91,7 @@
   <div class="wrap top-in">
     <a class="brandmark" href="/" aria-label="Silicyte home">
       <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
-        <g fill="#111827">
+        <g fill="var(--ink)">
           <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
           <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
           <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
@@ -97,7 +99,7 @@
           <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
           <circle cx="15.25" cy="8.85" r="2.6"/>
         </g>
-        <circle cx="39.15" cy="32.75" r="3.5" fill="#2563eb"/>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
       </svg>
       <b>Silicyte</b>
     </a>
@@ -105,6 +107,7 @@
       <a href="/">Home</a>
       <a href="/science.html">Science</a>
       <a href="/data.html" aria-current="page">Data</a>
+      <a href="/audit.html">Audit</a>
       <a href="/demo.html">Designer</a>
       <a href="/company.html">Company</a>
     </nav>
@@ -122,8 +125,13 @@
       near-identical partner sitting in the training set.</strong></p>
       <p class="lede small">We found it in our own pipeline, rebuilt the split properly, and are
       publishing the corrected one so results can be compared. Free, documented, no sign-up.</p>
+      <p class="lede small">Then we found the larger problem, and it is not the split. The activity
+      label everyone predicts averages measurements against different bacteria that agree with each
+      other at <strong>Spearman 0.596</strong>, and <strong>74.2% of the variance being modelled as
+      noise is organism identity</strong>. That is section <a href="#target">03</a>.</p>
       <div class="actions">
         <a class="btn" href="/data/silicyte-amp-eval-v1.zip" download>Download the package (77 KB)</a>
+        <a class="btn ghost" href="/audit.html">Audit your own split</a>
         <a class="btn ghost" href="/data/silicyte-amp-eval-v1/README.md">Read the documentation</a>
       </div>
     </div>
@@ -189,14 +197,18 @@
         <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">The ceiling, measured rather than assumed</h3>
         <p class="muted small">A model cannot track a noisy label better than the label tracks
         itself. From repeat measurements of the same peptides: split-half agreement
-        <span class="num">0.7877</span> (sd <span class="num">0.0067</span>), full-label reliability
-        <span class="num">0.8812</span>, so the ceiling on any model scored against these labels is
-        <span class="num">0.9387</span>. Worth knowing before you celebrate a 0.52, and worth
-        knowing before you conclude a task is saturated.</p>
-        <p class="muted small">The caveat travels with the number: these repeats are mostly
-        different bacterial species, not replicate assays of one organism, so it is the
-        reproducibility of median activity across a panel, which is what the label is. It is the
-        wrong ceiling to quote for single-organism potency.</p>
+        <span class="num">0.7877</span> (sd <span class="num">0.0067</span>, 200 random splits over
+        peptides with four or more measurements), full-label reliability
+        <span class="num">0.8812</span> after Spearman-Brown, so the ceiling against
+        <em>this pooled label</em> is <span class="num">0.9387</span>. Worth knowing before you
+        celebrate a 0.52, and worth knowing before you conclude a task is saturated.</p>
+        <p class="muted small">That number carries a caveat we understated until we measured it.
+        These repeats are mostly different bacterial species rather than replicate assays of one
+        organism, so <strong>0.9387 charges between-organism variation to noise</strong>. Per
+        organism the ceiling is higher, <span class="num">0.9590</span> to
+        <span class="num">0.9815</span>, and three quarters of the gap is one factor. That is
+        section <a href="#target">03</a>, and it is the more important of the two findings on this
+        page.</p>
       </div>
 
       <div class="tbl-wrap">
@@ -220,9 +232,99 @@
     </div>
   </section>
 
+  <section id="target">
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">03</span> The target</p>
+        <h2>Three quarters of what the field calls label noise is which bacterium it was.</h2>
+        <p>The split being broken is the smaller problem. The standard compilations give each
+        peptide one activity number that averages measurements against <em>different bacteria</em>,
+        and those measurements agree with each other at a median Spearman of
+        <span class="num">0.596</span>.</p>
+        <p>We spent weeks training models to predict that average and calling the residual label
+        noise. It is not noise. Measured on <span class="num">51,345</span> public GRAMPA
+        measurements over <span class="num">6,760</span> sequences and <span class="num">76</span>
+        organisms, with no model fitted and nothing downloaded:
+        <strong><span class="num">74.2%</span> of the resolvable variance is between organisms,
+        not within them.</strong></p>
+      </div>
+
+      <div class="plain">
+        <b>The same peptide is a different drug against a different bug.</b>
+        <span>Over <span class="num">6,002</span> sequences measured against two or more organisms,
+        the median spread of one peptide's own MIC across organisms is <span class="num">6.1x</span>
+        in concentration, and the 90th percentile is <span class="num">63.5x</span>. Averaging that
+        into a single training label discards the thing anyone developing an antimicrobial actually
+        needs to know, because nobody wants the MIC against bacteria in general.</span>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Organism pair</th><th scope="col">Shared peptides</th><th scope="col">Spearman between them</th></tr></thead>
+          <tbody>
+            <tr><td>E. coli vs S. aureus</td><td class="n">4,064</td><td class="n">+0.644</td></tr>
+            <tr><td>E. coli vs P. aeruginosa</td><td class="n">2,547</td><td class="n">+0.762</td></tr>
+            <tr><td>S. aureus vs P. aeruginosa</td><td class="n">2,510</td><td class="n">+0.629</td></tr>
+            <tr><td>S. aureus vs C. albicans</td><td class="n">1,693</td><td class="n">+0.646</td></tr>
+            <tr><td>E. coli vs B. subtilis</td><td class="n">1,519</td><td class="n">+0.635</td></tr>
+            <tr><td><b>all 491 pairs sharing 30+ peptides</b></td><td class="n">&mdash;</td><td class="n"><b>median +0.596</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">These are not small-sample artifacts.
+      E. coli and S. aureus share four thousand peptides and still agree at 0.644.</p>
+
+      <div class="col" style="margin-top:44px">
+        <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">So the pooled ceiling is an understatement</h3>
+        <p class="muted small">Computed exactly as the <span class="num">0.9387</span> pooled figure
+        was, but within one organism at a time. Every one of them is higher, which is the signature
+        of a target that pools across a real factor rather than a noisy one.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Target</th><th scope="col">Replicated peptides</th><th scope="col">Split-half</th><th scope="col">Ceiling on any model</th></tr></thead>
+          <tbody>
+            <tr><td>pooled across organisms, the standard target</td><td class="n">&mdash;</td><td class="n">0.7877</td><td class="n">0.9387</td></tr>
+            <tr><td>E. coli only</td><td class="n">2,099</td><td class="n">+0.857</td><td class="n"><b>0.9608</b></td></tr>
+            <tr><td>S. aureus only</td><td class="n">2,100</td><td class="n">+0.851</td><td class="n"><b>0.9590</b></td></tr>
+            <tr><td>P. aeruginosa only</td><td class="n">1,035</td><td class="n">+0.833</td><td class="n">0.9535</td></tr>
+            <tr><td>B. subtilis only</td><td class="n">520</td><td class="n">+0.892</td><td class="n"><b>0.9711</b></td></tr>
+            <tr><td>M. luteus only</td><td class="n">238</td><td class="n">+0.929</td><td class="n"><b>0.9815</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col" style="margin-top:36px">
+        <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">What this does and does not establish</h3>
+        <p class="muted small"><strong>It does explain two things we could not explain.</strong> Why
+        adding 42% more labels moved our accuracy by <span class="num">-0.004</span>: the extra
+        labels were more measurements of the same incoherent average. And why five model classes
+        spanning a 40-fold capacity range all land inside a <span class="num">0.09</span>-wide band:
+        a model cannot be rewarded for telling E. coli from S. aureus when the target has averaged
+        them together. The conclusion that protein language models are no better than 36 descriptors
+        here was drawn entirely against the pooled label and needs re-testing against a coherent
+        one.</p>
+        <p class="muted small"><strong>It does not establish that a per-organism model scores
+        better.</strong> That is a separate experiment, it is running, and it can fail. Organism is
+        also only the most visible condition: medium, inoculum and ionic strength are still pooled
+        inside every per-organism figure above, so even 0.96 is probably a floor. The within-organism
+        repeats come from different papers, which is why those ceilings are not 1.0. And nothing here
+        is wet-lab validated, because we have no laboratory. Prior work on species-aware prediction
+        exists and we are not claiming the idea: LLAMP, AMP0 and GGN-ABPMIC all predict per-organism
+        activity. What is ours is the variance decomposition and the ceiling comparison.</p>
+        <p class="muted small">Every number in this section comes from a file that has been public
+        for years and is reproducible in an afternoon. Version 2 of this release will carry
+        per-organism folds and per-organism ceilings for the five organisms above, plus the
+        <span class="num">3,856</span> usable GRAMPA sequences that are not in the standard panel,
+        which more than doubles the labelled set without downloading anything.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="flush">
     <div class="wrap col">
-      <p class="kicker"><span class="n">03</span> Using it</p>
+      <p class="kicker"><span class="n">04</span> Using it</p>
       <h2>Please report on these folds so numbers are comparable.</h2>
       <p>The whole point is comparability. If you publish an AMP predictor result, running it on
       this split costs nothing and makes your number mean something next to everyone else's. If you
