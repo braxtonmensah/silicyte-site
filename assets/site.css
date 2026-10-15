@@ -543,3 +543,23 @@ figcaption { font-size: 14.5px; color: var(--ink-2); max-width: 46rem; }
 .next a p { font-size: 15.5px; }
 .panel-note { font-size: 13.5px; }
 .privacy { font-size: 14px; }
+/* ---------------------------------------------------------------- narrow screens
+   Two things only show up on a phone. The masthead wraps its six nav items onto a second line,
+   so it is roughly twice as tall as it is on a desktop and the hero's top padding was letting the
+   headline slide underneath it. And the figure carries a min-width so its labels never collide,
+   which is right, but it needs to be allowed to scroll rather than be crushed. */
+@media (max-width: 700px) {
+  .top-in { padding-block: 10px; }
+  .top nav { gap: 2px; }
+  .top nav a { padding: 6px 7px; font-size: 13px; }
+  .hero-in { padding-block: 132px 26px; }
+  .filmhero h1 { font-size: clamp(31px, 8.4vw, 44px); }
+  .filmhero .lede { font-size: 16.5px; }
+  .figbox { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .figbox svg { min-width: 520px; }
+  figcaption { font-size: 13.5px; }
+  .stage-no { padding-top: 0; }
+  section { padding-block: 48px; }
+  .stats { gap: 0 24px; }
+  .stat b { font-size: 29px; }
+}
