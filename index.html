@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610150040">
+<link rel="stylesheet" href="/assets/site.css?v=202610150230">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 44px; background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 38px; }
   .next a { background: transparent; padding: 24px 0 30px; text-decoration: none; color: var(--ink); display: block; border-bottom: 1px solid transparent; }
@@ -121,82 +121,97 @@
       </div>
 
       <figure>
-        <div class="figbox">
-          <svg viewBox="0 0 760 470" role="img" aria-labelledby="figTitle figDesc">
+        <div class="figbox dark">
+          <svg viewBox="0 0 900 560" role="img" aria-labelledby="figTitle figDesc">
             <title id="figTitle">Reported improvement against how much training data the scoring model was given</title>
             <desc id="figDesc">Two conditions were run. With one fifth of the training families the
             loop reported a 21-fold improvement; with all of them it reported 3.5-fold. The dashed
-            reference runs the other way, which is the direction the standard theory predicts. Six
-            control loops run on scrambled rewards all stayed inside a narrow band around 1-fold.</desc>
+            reference runs the other way, which is the direction the standard theory predicts, and
+            the wedge between the two lines is the disagreement. Six control loops run on scrambled
+            rewards all stayed inside a narrow band around 1-fold.</desc>
 
-            <g class="ch-leg">
-              <line x1="180" y1="26" x2="206" y2="26" stroke="var(--ink)" stroke-width="2.5"/>
-              <circle cx="193" cy="26" r="4.5" fill="var(--ink)"/>
-              <text x="214" y="30">What we measured</text>
-              <line x1="372" y1="26" x2="398" y2="26" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="6 4"/>
-              <text x="406" y="30">The direction the theory predicts</text>
+            <rect x="0" y="0" width="900" height="560" fill="#0d1319"/>
+
+            <g font-family="Inter, system-ui, sans-serif">
+              <line x1="160" y1="44" x2="192" y2="44" stroke="#fff" stroke-width="3"/>
+              <circle cx="176" cy="44" r="5.5" fill="#fff"/>
+              <text x="204" y="49" font-size="15" font-weight="450" fill="#e8eef5">What we measured</text>
+              <line x1="392" y1="44" x2="424" y2="44" stroke="#8c99a8" stroke-width="2.5" stroke-dasharray="7 5"/>
+              <text x="436" y="49" font-size="15" font-weight="450" fill="#8c99a8">The direction the theory predicts</text>
             </g>
 
-            <line class="ch-grid" x1="180" y1="96" x2="620" y2="96"/>
-            <line class="ch-grid" x1="180" y1="183.2" x2="620" y2="183.2"/>
-            <line class="ch-grid" x1="180" y1="278.8" x2="620" y2="278.8"/>
-            <line class="ch-grid" x1="180" y1="366" x2="620" y2="366"/>
+            <!-- The controls, drawn first so the 1x gridline reads on top of them. The band is the
+                 range they actually landed in, 0.82x to 1.10x, not a decorative strip. -->
+            <rect x="170" y="418" width="580" height="22" fill="#ffffff" fill-opacity="0.07"/>
+            <text x="170" y="407" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#7f8d9c">Six loops run on scrambled rewards: every one landed in this band</text>
 
-            <text class="ch-note" x="180" y="344">Six loops run on scrambled rewards: every one inside this band</text>
-            <rect x="180" y="351.5" width="440" height="27.4" fill="var(--ink-3)" opacity="0.12" rx="2"/>
+            <g stroke="#ffffff" stroke-opacity="0.08" stroke-width="1">
+              <line x1="160" y1="165" x2="760" y2="165"/>
+              <line x1="160" y1="249" x2="760" y2="249"/>
+              <line x1="160" y1="341" x2="760" y2="341"/>
+              <line x1="160" y1="425" x2="760" y2="425"/>
+            </g>
 
-            <!-- Anchored at the intact arm and extrapolated back, because that is what the claim
-                 is: starve this same scorer and it should report LESS than 3.5x, not more. -->
-            <line x1="240" y1="320" x2="560" y2="266.5" stroke="var(--ink-3)" stroke-width="2"
-                  stroke-dasharray="6 4" opacity="0.9"/>
+            <!-- The wedge IS the finding: both lines leave the same measured point at 100% and go
+                 opposite ways as the scorer is starved. -->
+            <path d="M260 192.3 L690 329.2 L260 378 Z" fill="#c87b32" fill-opacity="0.13"/>
 
-            <line x1="240" y1="124.3" x2="560" y2="266.5" stroke="var(--ink)" stroke-width="2.5"/>
+            <line x1="260" y1="378" x2="690" y2="329.2" stroke="#8c99a8" stroke-width="2.5" stroke-dasharray="7 5"/>
+            <line x1="260" y1="192.3" x2="690" y2="329.2" stroke="#ffffff" stroke-width="3"/>
 
-            <line class="ch-axis" x1="180" y1="88" x2="180" y2="388"/>
-            <text class="ch-tick" x="170" y="100" text-anchor="end">30x</text>
-            <text class="ch-tick" x="170" y="187.2" text-anchor="end">10x</text>
-            <text class="ch-tick" x="170" y="282.8" text-anchor="end">3x</text>
-            <text class="ch-tick" x="170" y="370" text-anchor="end">1x</text>
+            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" fill="#8c99a8">
+              <text x="145" y="170" text-anchor="end">30x</text>
+              <text x="145" y="254" text-anchor="end">10x</text>
+              <text x="145" y="346" text-anchor="end">3x</text>
+              <text x="145" y="430" text-anchor="end">1x</text>
+              <text x="260" y="498" text-anchor="middle">20%</text>
+              <text x="690" y="498" text-anchor="middle">100%</text>
+            </g>
+            <line x1="160" y1="155" x2="160" y2="470" stroke="#ffffff" stroke-opacity="0.22"/>
+            <line x1="160" y1="470" x2="760" y2="470" stroke="#ffffff" stroke-opacity="0.22"/>
+            <line x1="260" y1="470" x2="260" y2="479" stroke="#ffffff" stroke-opacity="0.35"/>
+            <line x1="690" y1="470" x2="690" y2="479" stroke="#ffffff" stroke-opacity="0.35"/>
 
-            <!-- Only two conditions were ever run, so only two positions are marked. An earlier
-                 version printed ticks at 40, 60 and 80 per cent, which implied a dose-response
-                 curve we never measured. -->
-            <line class="ch-axis" x1="180" y1="388" x2="620" y2="388" opacity="0.55"/>
-            <line class="ch-axis" x1="240" y1="388" x2="240" y2="395"/>
-            <line class="ch-axis" x1="560" y1="388" x2="560" y2="395"/>
-            <text class="ch-tick" x="240" y="412" text-anchor="middle">20%</text>
-            <text class="ch-tick" x="560" y="412" text-anchor="middle">100%</text>
-            <text class="ch-lab" x="400" y="446" text-anchor="middle">Share of the training families the scoring model was given</text>
-            <text class="ch-lab" x="26" y="230" text-anchor="middle" transform="rotate(-90 26 230)">Improvement the loop reported</text>
+            <text x="460" y="536" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+                  font-size="15" fill="#a7b3c0">Share of the training families the scoring model was given</text>
+            <text x="44" y="300" text-anchor="middle" transform="rotate(-90 44 300)"
+                  font-family="Inter, system-ui, sans-serif" font-size="15" fill="#a7b3c0">Improvement the loop reported</text>
 
             <!-- Labels sit on the clear side of the slope: above the left endpoint, below the
-                 right one. The line descends to the right, so nothing can run through them. -->
+                 right one. The line falls to the right, so nothing can run through them. The error
+                 bar caps are drawn wider than the marker on purpose, because the standard error
+                 here is smaller than the dot and would otherwise be invisible inside it. -->
             <g class="hit" data-tip="Crippled scorer&#10;one fifth of the training families&#10;reports 21x improvement&#10;3 independent runs, job 12243941">
-              <text class="ch-sub" x="240" y="84" text-anchor="middle">crippled scorer</text>
-              <text class="ch-val big" x="240" y="112" text-anchor="middle">21x</text>
-              <line x1="240" y1="117.4" x2="240" y2="131.2" stroke="#c87b32" stroke-width="2.5"/>
-              <line x1="233" y1="117.4" x2="247" y2="117.4" stroke="#c87b32" stroke-width="2.5"/>
-              <line x1="233" y1="131.2" x2="247" y2="131.2" stroke="#c87b32" stroke-width="2.5"/>
-              <circle cx="240" cy="124.3" r="7.5" fill="#c87b32" stroke="var(--surface)" stroke-width="2.5"/>
-              <rect x="170" y="66" width="140" height="78" fill="transparent"/>
+              <text x="260" y="96" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+                    font-size="15" fill="#d0a87e">crippled scorer</text>
+              <text x="260" y="136" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
+                    font-size="40" font-weight="500" letter-spacing="-0.02em" fill="#ffffff">21x</text>
+              <line x1="260" y1="185.7" x2="260" y2="198.9" stroke="#c87b32" stroke-width="2.5"/>
+              <line x1="249" y1="185.7" x2="271" y2="185.7" stroke="#c87b32" stroke-width="2.5"/>
+              <line x1="249" y1="198.9" x2="271" y2="198.9" stroke="#c87b32" stroke-width="2.5"/>
+              <circle cx="260" cy="192.3" r="7" fill="#c87b32" stroke="#0d1319" stroke-width="2.5"/>
+              <rect x="180" y="74" width="160" height="136" fill="transparent"/>
             </g>
 
             <g class="hit" data-tip="Intact scorer&#10;all of the training families&#10;reports 3.5x improvement&#10;3 independent runs, job 12243941">
-              <circle cx="560" cy="266.5" r="7.5" fill="#3d8ad8" stroke="var(--surface)" stroke-width="2.5"/>
-              <line x1="560" y1="259.6" x2="560" y2="273.4" stroke="#3d8ad8" stroke-width="2.5"/>
-              <line x1="553" y1="259.6" x2="567" y2="259.6" stroke="#3d8ad8" stroke-width="2.5"/>
-              <line x1="553" y1="273.4" x2="567" y2="273.4" stroke="#3d8ad8" stroke-width="2.5"/>
-              <text class="ch-val big" x="560" y="304" text-anchor="middle">3.5x</text>
-              <text class="ch-sub" x="560" y="324" text-anchor="middle">intact scorer</text>
-              <rect x="495" y="252" width="130" height="80" fill="transparent"/>
+              <line x1="690" y1="322.6" x2="690" y2="335.8" stroke="#3d8ad8" stroke-width="2.5"/>
+              <line x1="679" y1="322.6" x2="701" y2="322.6" stroke="#3d8ad8" stroke-width="2.5"/>
+              <line x1="679" y1="335.8" x2="701" y2="335.8" stroke="#3d8ad8" stroke-width="2.5"/>
+              <circle cx="690" cy="329.2" r="7" fill="#3d8ad8" stroke="#0d1319" stroke-width="2.5"/>
+              <text x="690" y="378" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
+                    font-size="40" font-weight="500" letter-spacing="-0.02em" fill="#ffffff">3.5x</text>
+              <text x="690" y="400" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
+                    font-size="15" fill="#8fb6dd">intact scorer</text>
+              <rect x="608" y="312" width="164" height="98" fill="transparent"/>
             </g>
           </svg>
         </div>
-        <figcaption>Error bars are one standard error per arm, over three independent runs each.
-        The gap between the two is <span class="num">14.6</span> times its own uncertainty, so it is
-        not a fluke of which random seeds we happened to use. The six scrambled-reward controls
-        stayed in the band at the bottom, which is what tells us the machinery itself was working.
-        Full numbers on the <a href="/science.html">science page</a>.</figcaption>
+        <figcaption>Error bars are one standard error per arm, over three independent runs each;
+        the caps are drawn wider than the markers because the error is smaller than the dot. The
+        gap between the two arms is <span class="num">14.6</span> times its own uncertainty, so it
+        is not a fluke of which random seeds we happened to use. Only these two conditions were
+        run, so only these two points are marked. Full numbers on the
+        <a href="/science.html">science page</a>.</figcaption>
       </figure>
 
       <div class="stats">

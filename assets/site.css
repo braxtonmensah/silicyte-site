@@ -563,3 +563,27 @@ figcaption { font-size: 14.5px; color: var(--ink-2); max-width: 46rem; }
   .stats { gap: 0 24px; }
   .stat b { font-size: 29px; }
 }
+/* ---------------------------------------------------------------- the dark figure
+   The chart read as an export rather than a designed object: a hairline on paper, tick labels at
+   eleven pixels, and the subject floating in the middle of a lot of nothing. Putting it on its own
+   dark ground makes it a thing on the page instead of a thing in the page, echoes the hero, and
+   gives the white trend line and the two series colours something to sit against. The type inside
+   it is set at reading sizes, not chart-library sizes. */
+.figbox.dark {
+  background: #0d1319; padding: 0; overflow: hidden;
+  box-shadow: 0 2px 4px rgba(13, 19, 25, .10), 0 26px 56px -28px rgba(13, 19, 25, .55);
+}
+.figbox.dark svg { min-width: 560px; display: block; }
+
+/* ---------------------------------------------------------------- reading sizes
+   Secondary text was set for a boxed layout and reads small on open paper. One more step up. */
+.col p { font-size: 18px; }
+.small, .muted.small, p.small { font-size: 16.5px; }
+table { font-size: 16.5px; }
+figcaption { font-size: 15px; }
+.card p { font-size: 16px; }
+.ledger p { font-size: 16px; }
+.plain span { font-size: 17px; }
+.stat span { font-size: 14px; }
+.next a p, .tier p, .tier ul { font-size: 16px; }
+.toc a { font-size: 14.5px; }

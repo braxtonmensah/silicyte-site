@@ -73,7 +73,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610150040">
+<link rel="stylesheet" href="/assets/site.css?v=202610150230">
 <style>
   .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 40px;
         background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 32px; }
@@ -124,11 +124,10 @@
       what its own documentation says, and <strong>20.1% of supposedly held-out molecules have a
       near-identical partner sitting in the training set.</strong></p>
       <p class="lede small">We found it in our own pipeline, rebuilt the split properly, and are
-      publishing the corrected one so results can be compared. Free, documented, no sign-up.</p>
-      <p class="lede small">Then we found the larger problem, and it is not the split. The activity
-      label everyone predicts averages measurements against different bacteria that agree with each
-      other at <strong>Spearman 0.596</strong>, and <strong>74.2% of the variance being modelled as
-      noise is organism identity</strong>. That is section <a href="#target">03</a>.</p>
+      publishing the corrected one so results can be compared. Free, documented, no sign-up. Then
+      we found the larger problem, and it is not the split: the activity label everyone predicts
+      averages measurements against different bacteria that agree with each other at
+      <strong>Spearman 0.596</strong>. That is section <a href="#target">03</a>.</p>
       <div class="actions">
         <a class="btn" href="/data/silicyte-amp-eval-v1.zip" download>Download the package (77 KB)</a>
         <a class="btn ghost" href="/check.html">Check your own split</a>
@@ -196,19 +195,16 @@
       <div class="col" style="margin-top:44px">
         <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">The ceiling, measured rather than assumed</h3>
         <p class="muted small">A model cannot track a noisy label better than the label tracks
-        itself. From repeat measurements of the same peptides: split-half agreement
-        <span class="num">0.7877</span> (sd <span class="num">0.0067</span>, 200 random splits over
-        peptides with four or more measurements), full-label reliability
-        <span class="num">0.8812</span> after Spearman-Brown, so the ceiling against
-        <em>this pooled label</em> is <span class="num">0.9387</span>. Worth knowing before you
-        celebrate a 0.52, and worth knowing before you conclude a task is saturated.</p>
-        <p class="muted small">That number carries a caveat we understated until we measured it.
-        These repeats are mostly different bacterial species rather than replicate assays of one
-        organism, so <strong>0.9387 charges between-organism variation to noise</strong>. Per
-        organism the ceiling is higher, <span class="num">0.9590</span> to
-        <span class="num">0.9815</span>, and three quarters of the gap is one factor. That is
-        section <a href="#target">03</a>, and it is the more important of the two findings on this
-        page.</p>
+        itself. Split-half agreement over repeat measurements of the same peptides is
+        <span class="num">0.7877</span> (sd <span class="num">0.0067</span>, 200 random splits,
+        peptides with four or more measurements), which is <span class="num">0.8812</span> after
+        Spearman-Brown, so the ceiling against <em>this pooled label</em> is
+        <span class="num">0.9387</span>.</p>
+        <p class="muted small">It carries a caveat we understated until we measured it. Those
+        repeats are mostly different bacterial species rather than replicate assays of one organism,
+        so <strong>0.9387 charges between-organism variation to noise</strong>. Per organism the
+        ceiling is higher, <span class="num">0.9590</span> to <span class="num">0.9815</span>.
+        See section <a href="#target">03</a>, which is the more important of the two findings here.</p>
       </div>
 
       <div class="tbl-wrap">
@@ -226,9 +222,8 @@
       </div>
       <p class="col muted small" style="margin-top:14px">Pooled out-of-fold Spearman, tie-corrected.
       Ridge predictions are averaged over a fixed penalty grid rather than selected on inner folds,
-      because at this sample size selecting the penalty loses to averaging over it; selecting it
-      cost us <span class="num">0.038</span> on MIC before we caught it. The shuffled-label row is
-      the control that makes the rest meaningful.</p>
+      because selecting it at this sample size cost us <span class="num">0.038</span> on MIC before
+      we caught it. The shuffled-label row is the control that makes the rest meaningful.</p>
     </div>
   </section>
 
@@ -297,27 +292,20 @@
 
       <div class="col" style="margin-top:36px">
         <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">What this does and does not establish</h3>
-        <p class="muted small"><strong>It does explain two things we could not explain.</strong> Why
-        adding 42% more labels moved our accuracy by <span class="num">-0.004</span>: the extra
-        labels were more measurements of the same incoherent average. And why five model classes
-        spanning a 40-fold capacity range all land inside a <span class="num">0.09</span>-wide band:
-        a model cannot be rewarded for telling E. coli from S. aureus when the target has averaged
-        them together. The conclusion that protein language models are no better than 36 descriptors
-        here was drawn entirely against the pooled label and needs re-testing against a coherent
-        one.</p>
+        <p class="muted small"><strong>It explains two things we could not.</strong> Why adding 42%
+        more labels moved our accuracy by <span class="num">-0.004</span>: the extra labels were
+        more measurements of the same incoherent average. And why five model classes spanning a
+        40-fold capacity range all land inside a <span class="num">0.09</span>-wide band: a model
+        cannot be rewarded for telling E. coli from S. aureus when the target has averaged them
+        together. The conclusion that protein language models beat nothing here was drawn entirely
+        against the pooled label and needs re-testing against a coherent one.</p>
         <p class="muted small"><strong>It does not establish that a per-organism model scores
         better.</strong> That is a separate experiment, it is running, and it can fail. Organism is
-        also only the most visible condition: medium, inoculum and ionic strength are still pooled
-        inside every per-organism figure above, so even 0.96 is probably a floor. The within-organism
-        repeats come from different papers, which is why those ceilings are not 1.0. And nothing here
-        is wet-lab validated, because we have no laboratory. Prior work on species-aware prediction
-        exists and we are not claiming the idea: LLAMP, AMP0 and GGN-ABPMIC all predict per-organism
-        activity. What is ours is the variance decomposition and the ceiling comparison.</p>
-        <p class="muted small">Every number in this section comes from a file that has been public
-        for years and is reproducible in an afternoon. Version 2 of this release will carry
-        per-organism folds and per-organism ceilings for the five organisms above, plus the
-        <span class="num">3,856</span> usable GRAMPA sequences that are not in the standard panel,
-        which more than doubles the labelled set without downloading anything.</p>
+        also only the most visible condition, so even 0.96 is probably a floor; the within-organism
+        repeats come from different papers, which is why those ceilings are not 1.0; and nothing
+        here is wet-lab validated, because we have no laboratory. Species-aware prediction is not
+        our idea either, and LLAMP, AMP0 and GGN-ABPMIC all do it. What is ours is the variance
+        decomposition and the ceiling comparison, from a file that has been public for years.</p>
       </div>
     </div>
   </section>

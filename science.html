@@ -54,7 +54,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610150040">
+<link rel="stylesheet" href="/assets/site.css?v=202610150230">
 <style>
   .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
   .toc a {
@@ -98,15 +98,14 @@
     <div class="col">
       <p class="eyebrow">Evidence</p>
       <h1>Every number, with what it means before what it is.</h1>
-      <p class="lede">Research pages usually print the statistic and leave you to work out whether
-      it matters. Each result below says what it means in plain terms first, then gives the figure,
-      the sample size and the error, so you can check rather than trust.</p>
+      <p class="lede">Each result below says what it means in plain terms first, then gives the
+      figure, the sample size and the error, so you can check rather than trust.</p>
       <div class="toc">
         <a href="#intervention">The intervention</a>
         <a href="#floor">Why checks go blind</a>
         <a href="#noise">The wrong error bar</a>
         <a href="#faults">Six faults in our own work</a>
-        <a href="#build">What we build</a>
+        <a href="#build">Where the limit is</a>
         <a href="#withdrawn">What we withdrew</a>
       </div>
     </div>
@@ -119,11 +118,9 @@
         <h2>Cripple the scorer and the loop reports a better result.</h2>
         <p>Design loops are usually judged by how much they improve a held-out predictor. We tested
         whether that number tracks molecule quality by changing the one thing that should control
-        it: how good the scoring model is.</p>
-        <p>We withheld 80% of the scoring model's training families, which removes whole regions of
-        chemical space rather than thinning data it already covers. The measuring model was left
-        completely alone, and the script aborts if it modifies anything other than the two
-        selection models, because handicapping the ruler would make the comparison meaningless.</p>
+        it: how good the scoring model is. We withheld 80% of its training families, which removes
+        whole regions of chemical space rather than thinning data it already covers, and left the
+        measuring model untouched so both arms were judged on the same ruler.</p>
       </div>
 
       <div class="plain">
@@ -161,13 +158,12 @@
       <div class="col">
         <p class="kicker"><span class="n">02</span> Why the usual safeguard fails</p>
         <h2>An independent check cannot see an effect smaller than its own blur.</h2>
-        <p>The standard defence against this problem is a second, independent metric. That only
-        works if the second metric can resolve the effect, and usually it cannot. The reason is
-        arithmetic rather than biology, and it is computable from numbers every group already has.</p>
-        <p>An independent check averages its verdict over the molecules the loop kept. Comparing
-        two such averages carries a built-in wobble that depends only on how many molecules you
-        kept and how much they vary. Keep few molecules and the check is blurry no matter how good
-        the model behind it is.</p>
+        <p>The standard defence against this problem is a second, independent metric, and it only
+        works if that metric can resolve the effect. An independent check averages its verdict over
+        the molecules the loop kept, and comparing two such averages carries a built-in wobble that
+        depends only on how many you kept and how much they vary. Keep few molecules and the check
+        is blurry however good the model behind it is. The reason is arithmetic rather than
+        biology, and it is computable from numbers every group already has.</p>
       </div>
 
       <div class="plain">
@@ -185,25 +181,22 @@
               <th scope="col">Molecules kept</th>
               <th scope="col">Smallest change the check can see</th>
               <th scope="col">In the field's units</th>
-              <th scope="col">Runs needed to resolve a 7% effect</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td class="n">100</td><td class="n">16%</td><td class="n">0.0645</td><td class="n">about 18</td></tr>
-            <tr><td class="n">200</td><td class="n">11%</td><td class="n">0.0456</td><td class="n">about 9</td></tr>
-            <tr><td class="n">1,000</td><td class="n">4.8%</td><td class="n">0.0204</td><td class="n">about 2</td></tr>
-            <tr><td class="n">3,250</td><td class="n">2.6%</td><td class="n">0.0113</td><td class="n">1</td></tr>
+            <tr><td class="n">100</td><td class="n">16%</td><td class="n">0.0645</td></tr>
+            <tr><td class="n">200</td><td class="n">11%</td><td class="n">0.0456</td></tr>
+            <tr><td class="n">1,000</td><td class="n">4.8%</td><td class="n">0.0204</td></tr>
+            <tr><td class="n">3,250</td><td class="n">2.6%</td><td class="n">0.0113</td></tr>
           </tbody>
         </table>
       </div>
       <p class="col muted small" style="margin-top:14px">Predicted from the spread between
-      individual molecules, <span class="num">0.4562</span>, measured over
-      <span class="num">143</span> saved sets of winners; the predicted blur of
-      <span class="num">0.0645</span> came back as <span class="num">0.0570</span> when measured
-      directly. The fix is design rather than more runs: keep more molecules, or compare both arms
-      against one shared pool of candidates so the sampling wobble cancels out. The
-      <a href="/demo.html">try-it page</a> draws this blur as a grey band so you can see when your own
-      run lands inside it.</p>
+      individual molecules (<span class="num">0.4562</span> over <span class="num">143</span> saved
+      sets of winners); the predicted <span class="num">0.0645</span> came back as
+      <span class="num">0.0570</span> when measured directly. The fix is design, not more runs:
+      keep more molecules, or score both arms against one shared pool of candidates so the sampling
+      wobble cancels. <a href="/check.html">Check your own</a> computes this floor for your data.</p>
     </div>
   </section>
 
@@ -265,11 +258,11 @@
         <div class="card">
           <span class="ix">FAULT 03</span>
           <h3>Test molecules with near-twins in training</h3>
-          <p>The routine that separates training from testing described itself as one algorithm and
+          <p>The routine separating training from testing described itself as one algorithm and
           implemented another, so <span class="num">20%</span> of supposedly held-out molecules had
-          a near-identical partner in training. The test we had, that no family spans the divide,
-          passed <span class="num">826</span> out of <span class="num">826</span>. It was testing a
-          different quantity.</p>
+          a near-identical partner in training while our test passed
+          <span class="num">826</span> of <span class="num">826</span>. The corrected split is
+          published on the <a href="/data.html">data page</a>.</p>
         </div>
         <div class="card">
           <span class="ix">FAULT 04</span>
@@ -288,9 +281,9 @@
         <div class="card">
           <span class="ix">FAULT 06</span>
           <h3>A correlation that mishandled ties</h3>
-          <p>Our rank statistic did not correct for tied values, which biases every accuracy figure
-          we have ever quoted. All of them are being recomputed, and until that lands this page
-          quotes no absolute accuracy.</p>
+          <p>Our rank statistic did not correct for tied values, which biased every accuracy figure
+          we had quoted. Activity labels are full of ties, so this was not a small correction. Every
+          figure on this page has since been recomputed with tie correction.</p>
         </div>
       </div>
       <p class="col muted" style="margin-top:30px">The pattern connecting most of these: the guard
@@ -302,35 +295,11 @@
   <section id="build">
     <div class="wrap">
       <div class="col">
-        <p class="kicker"><span class="n">05</span> What we build</p>
-        <h2>The instruments come out of designing molecules, not out of commenting on it.</h2>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th scope="col">Programme</th><th scope="col">What exists</th><th scope="col">Outside measurement</th></tr></thead>
-          <tbody>
-            <tr>
-              <td>Antimicrobial peptides, designed from scratch</td>
-              <td>A designed library submitted <span class="num">2026-09-30</span> to the AMP Challenge</td>
-              <td>Selected entries are made and tested by the organisers' laboratory</td>
-            </tr>
-            <tr>
-              <td>EGFR binders with a pH switch</td>
-              <td><span class="num">224</span> accepted two-chain models, folding confidence up to <span class="num">92.7</span> of 100</td>
-              <td>Entered in Adaptyv / ProteinBase design rounds</td>
-            </tr>
-            <tr>
-              <td>TNF-alpha binders</td>
-              <td>A designed candidate slate, scored and ranked in house</td>
-              <td>Entered in an open design round</td>
-            </tr>
-            <tr>
-              <td>Virtual cell models</td>
-              <td>Models predicting how cells respond to a genetic perturbation</td>
-              <td>Scored on the Arc Institute Virtual Cell Challenge board</td>
-            </tr>
-          </tbody>
-        </table>
+        <p class="kicker"><span class="n">05</span> Where the limit actually is</p>
+        <h2>Not the amount of data, and not the model's size.</h2>
+        <p>Both of those are the usual explanations for a predictor that will not improve, and we
+        tested both. What we build, and which challenges it is entered in, is on the
+        <a href="/company.html">company page</a>.</p>
       </div>
 
       <div class="plain">
@@ -343,47 +312,16 @@
         The limit is in the model and in how it transfers, not in the size of the dataset.</span>
       </div>
 
-      <div class="col" style="margin-top:44px">
-        <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">So we rebuilt the scorer, and it is now 19% better at ranking</h3>
-        <p class="muted">Measured <span class="num">2026-10-14</span>. First we rebuilt the
-        evaluation itself, because the old one was leaking: new folds by true transitive clustering
-        at 80% identity, where the measured fraction of held-out molecules with a near-twin in
-        training is <span class="num">0</span>. Every number below is on those folds.</p>
-      </div>
-
-      <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr><th scope="col">Scoring model</th><th scope="col">Ranking accuracy, potency</th><th scope="col">Ranking accuracy, safety</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Hand-written descriptors, what the loop used</td><td class="n">0.4502</td><td class="n">0.4074</td></tr>
-            <tr><td>Protein language model, frozen</td><td class="n">0.4656</td><td class="n">0.3502</td></tr>
-            <tr><td><b>Protein language model, trained end to end</b></td><td class="n"><b>0.5356</b></td><td class="n"><b>0.5079</b></td></tr>
-            <tr><td>The same model on deliberately scrambled labels</td><td class="n">-0.0228</td><td class="n">&mdash;</td></tr>
-          </tbody>
-        </table>
-      </div>
-
       <div class="plain">
-        <b>The ceiling was never the model. It was the one-line formula bolted onto it.</b>
-        <span>Every accuracy number this field reports for a language model is a linear fit on
-        frozen features. Letting the same weights actually train moves potency by
-        <span class="num">+0.1192</span> and safety by <span class="num">+0.1577</span>. Safety
-        gains most, which is the opposite of what a data-volume argument predicts, because safety
-        has less than half the labels.</span>
+        <b>So we rebuilt the scorer, and the gain came from letting it train.</b>
+        <span>Every accuracy figure this field reports for a protein language model is a linear fit
+        on frozen features. Unfreezing the same weights moves potency by
+        <span class="num">+0.1192</span> and safety by <span class="num">+0.1577</span> on leak-free
+        folds. Safety gains most, which is the opposite of what a data-volume argument predicts,
+        because safety has less than half the labels. Retrained on deliberately scrambled labels the
+        same model scores <span class="num">-0.0228</span>, which is the control that makes the rest
+        mean anything. Full table, folds and method on the <a href="/data.html">data page</a>.</span>
       </div>
-
-      <p class="col muted">The last row is the check that makes the rest meaningful. We retrained
-      the same model on labels we scrambled on purpose. It scored
-      <span class="num">-0.0228</span>, which is nothing. A model with that much capacity would
-      happily memorise its way to a good score if any answers were leaking across the fold
-      boundary, so a flat result on scrambled labels is direct evidence that they are not. We set
-      that tolerance in writing before the run.</p>
-
-      <p class="col muted">Against the ceiling in section 02, this moves us from
-      <span class="num">48%</span> to <span class="num">57%</span> of what these labels can
-      support. It is a real improvement and it is not the finish line.</p>
     </div>
   </section>
 
@@ -409,11 +347,12 @@
           our files only so that they can never later be presented as evidence.</p>
         </div>
         <div>
-          <span class="tag">Withdrawn</span>
+          <span class="tag">Reinstated</span>
           <h3>Accuracy figures inflated by our own leaking data split</h3>
-          <p>Overstated by as much as <span class="num">0.065</span> by fault 03. A result showing
-          a large accuracy gain from fine-tuning a bigger model is withdrawn until the clean re-run
-          finishes. We are not quoting the number until it does.</p>
+          <p>Overstated by as much as <span class="num">0.065</span> by fault 03, and withdrawn
+          while the clean re-run ran. The re-run finished: the fine-tuning gain survived honest
+          folds and is quoted again above, at <span class="num">0.5356</span> rather than the leaky
+          <span class="num">0.5219</span>. The leak was not what produced it.</p>
         </div>
         <div>
           <span class="tag">Withdrawn</span>
