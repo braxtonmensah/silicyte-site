@@ -625,7 +625,7 @@ figcaption { font-size: 15px; }
 .band + .band { border-top: 0; }
 .band-ink {
   background: #0b1016; color: #e7edf4;
-  --ink: #f2f6fa; --ink-2: #b2bfcc; --ink-3: #7f8d9c;
+  --ink: #f4f8fc; --ink-2: #c6d2de; --ink-3: #95a4b3;
   --line: #1e2630; --line-strong: #323d49; --surface: #0f151c;
   --paper: #0b1016; --paper-2: #121923; --paper-3: #1a222d;
   --brand-tint: #16213d;
@@ -730,3 +730,29 @@ body.has-hero.scrolled .top nav a[aria-current="page"] { color: var(--ink); back
    behind the bar, and the hero's own top padding already leaves room for the type. */
 body.has-hero .filmhero { margin-top: calc(-1 * var(--header-h, 59px)); }
 body.has-hero .hero-in { padding-top: calc(var(--header-h, 59px) + clamp(76px, 11vh, 132px)); }
+/* ---------------------------------------------------------------- the new faces
+   Clash Display and Satoshi, from Fontshare. Inter plus a grey secondary tier is the default
+   look of every AI product page on the internet, which is precisely why it reads as generic.
+   Clash is narrower and more opinionated at display size; Satoshi has more character than Inter
+   at text size without costing legibility. Mono stays Plex because tabular figures have a job.
+
+   Clash runs a little tighter and taller than Familjen did, so the display sizes and tracking are
+   re-tuned rather than inherited. */
+h1, h2, h3, .h-sm, .stat b, .plain b, .tier .amt, .next a h3 { font-family: var(--display); }
+.filmhero h1 { letter-spacing: -0.035em; font-weight: 600; }
+h2 { letter-spacing: -0.025em; font-weight: 600; }
+.band h2 { font-weight: 600; letter-spacing: -0.028em; }
+h3, .h-sm, .next a h3 { font-weight: 600; letter-spacing: -0.012em; }
+.stat b { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; }
+body { font-weight: 400; letter-spacing: -0.003em; }
+.lede { font-weight: 400; }
+strong, b { font-weight: 700; }
+/* The card links inherited the brand blue, which on the indigo band is blue on blue and all but
+   invisible. On a coloured band every accent has to come from the band's own ink scale. */
+.band-brand .next a .go, .band-ink .next a .go { color: #fff; }
+.band-brand .next a, .band-ink .next a { color: #fff; }
+.band-brand .next a p, .band-ink .next a p { color: var(--ink-2); }
+.band-brand .next, .band-ink .next { border-top-color: var(--line-strong); }
+.band-brand .next a:hover, .band-ink .next a:hover { border-bottom-color: #fff; }
+.band-brand .kicker, .band-ink .kicker { color: var(--ink-2); }
+.band-brand .rail p, .band-ink .rail p { color: var(--ink-2); }
