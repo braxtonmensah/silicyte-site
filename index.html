@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610142320">
+<link rel="stylesheet" href="/assets/site.css?v=202610142345">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 44px; background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 38px; }
   .next a { background: transparent; padding: 24px 0 30px; text-decoration: none; color: var(--ink); display: block; border-bottom: 1px solid transparent; }
@@ -66,7 +66,9 @@
 
 <main>
   <section class="filmhero">
-    <canvas class="film" id="membrane" aria-label="Live simulation of antimicrobial peptides choosing between a bacterial membrane and a human one"></canvas>
+    <video class="film" id="film" muted loop playsinline preload="none"
+           poster="/assets/hero/poster.jpg"
+           aria-label="A recorded run of our membrane simulation: peptides embed in the bacterial membrane and sit on the surface of the human one"></video>
     <div class="wrap hero-in">
       <p class="eyebrow">In silico design, measured</p>
       <h1>We broke our own scoring model on purpose. It started reporting <em>better</em> results.</h1>
@@ -86,19 +88,15 @@
         <p class="kicker"><span class="n">00</span> What you are looking at</p>
         <h2 class="h-sm" style="font:500 clamp(24px,2.8vw,34px)/1.2 var(--display);letter-spacing:-.02em;margin-bottom:16px">
         A physics simulation, not a decoration, and bounded like everything else here.</h2>
-        <p class="muted">The peptide's <span class="num">charged</span> face is pulled hardest to
-        the bacterial membrane because that surface is negatively charged, while the neutral human
-        surface pulls more weakly. Over a full run that comes out at about
-        <span class="num">1.5x</span> more contact, a preference and not an absolute one: peptides
-        do reach the human membrane, and you will see them land on it.</p>
-        <p class="muted">In a real cell the <span class="num">greasy</span> face then buries itself
-        in the lipid tails and past a local threshold opens a pore. <strong>This model does not
-        show that step.</strong> Every lipid is tethered to its own lattice site, so the sheet
-        springs back and the widest gap it reaches is a few pixels where a pore would need roughly
-        thirty. The readout above prints that gap in pixels so you can check the claim against the
-        thing making it. Selectivity is the ratio between the two outcomes, it is the number this
-        company exists to predict, and it is measured in <a href="/science.html">the science</a>
-        rather than here.</p>
+        <p class="muted">Two membranes, the same peptides, and the peptides choose. The bacterial
+        surface is negatively charged and the human one is not, so the peptide's charged face is
+        pulled harder to the first. By the end of the run they are buried in the bacterial sheet
+        and still sitting on top of the human one.</p>
+        <p class="muted"><strong>It is a simulation we wrote, not a measurement, and it stops short
+        of the step that actually kills the cell.</strong> Every lipid here is tethered to its own
+        lattice site, so the sheet springs back and no pore ever opens. Selectivity, the ratio
+        between those two outcomes, is the number this company exists to predict, and it is
+        measured in <a href="/science.html">the science</a>, not here.</p>
       </div>
     </div>
   </section>
@@ -259,10 +257,10 @@
 
 <div class="tip" id="tip" role="status" aria-live="polite"></div>
 
-<script src="/assets/membrane.js?v=202610142230"></script>
 <script>
 (function () {
   "use strict";
+  // ---------------------------------------------------------------- chart tooltips
   var tip = document.getElementById("tip");
   function showTip(e, text) {
     tip.textContent = text;
@@ -279,51 +277,33 @@
     g.addEventListener("touchstart", function (e) { showTip(e.touches[0], text); setTimeout(hideTip, 2600); }, { passive: true });
   });
 
-  // ---------------------------------------------------------------- the membrane simulation
-  var canvas = document.getElementById("membrane");
-  if (!canvas || !window.SilicyteMembrane) return;
-  // The panel reports contact, which this model measures, and a lipid gap in pixels with the
-  // threshold stated, instead of a rupture verdict. The readout it replaces printed "ruptured"
-  // for the HUMAN membrane: it called the largest gap between heads above the midline a pore, so
-  // an undulating sheet manufactured one, and a latch with no persistence requirement made a
-  // single bad frame permanent. Measured over a full run with the corrected metric, neither
-  // membrane opens a pore and the contact preference is about 1.5x, so that is what it says.
-  var state = { fB: 0, fH: 0 };
-  function put(id, text) {
-    var el = document.getElementById(id);
-    if (el && el.textContent !== text) el.textContent = text;
-  }
-  var view = window.SilicyteMembrane.Render(canvas, {
-    onReset: function () { state.fB = 0; state.fH = 0; },
-    onTick: function (sim) {
-      var cb = sim.contacts(0), ch = sim.contacts(1);
-      state.fB += cb; state.fH += ch;
+  // ---------------------------------------------------------------- the hero film
+  // The film is an enhancement and it is attached, never assumed. The element ships with a poster
+  // and no source, so a phone, a metered connection, a visitor who asked for less motion, or a
+  // browser with scripting off all get a still frame of the same run and the page is complete.
+  // Nothing in the layout depends on the video arriving.
+  var film = document.getElementById("film");
+  if (!film) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var conn = navigator.connection || {};
+  var thrifty = conn.saveData === true || /^(slow-2g|2g|3g)$/.test(conn.effectiveType || "");
+  if (reduce || thrifty || window.innerWidth < 860) return;
 
-      put("m-contact", "bacterial " + cb + "  ·  human " + ch);
+  var src = document.createElement("source");
+  src.src = "/assets/hero/selectivity.mp4";
+  src.type = "video/mp4";
+  film.appendChild(src);
+  film.preload = "auto";
+  film.load();
+  var play = function () { var p = film.play(); if (p && p.catch) p.catch(function () {}); };
+  if (film.readyState >= 2) play(); else film.addEventListener("canplay", play, { once: true });
 
-      var pref;
-      if (!state.fB && !state.fH) pref = "no contact yet";
-      else if (!state.fH) pref = "bacterial only so far";
-      else if (!state.fB) pref = "human only so far";
-      else {
-        var r = state.fB / state.fH;
-        pref = (r >= 1 ? r.toFixed(1) + "x toward bacterial"
-                       : (1 / r).toFixed(1) + "x toward human");
-      }
-      put("m-pref", pref);
-
-      put("m-pore", "bacterial " + Math.round(sim.poreWidth(0)) + " px  ·  human "
-                    + Math.round(sim.poreWidth(1)) + " px");
-      put("m-clock", "t = " + Math.round(sim.t));
-    }
-  });
-  view.start();
-  var rb = document.getElementById("m-reset");
-  if (rb) rb.addEventListener("click", function () { state.fB = 0; state.fH = 0; view.reset(); view.start(); });
-  if ("IntersectionObserver" in window && !view.reduced) {
+  // Stop decoding while it is off screen. A looping background video that keeps running under
+  // three screens of text is pure battery cost for something nobody is looking at.
+  if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) { view.start(); } else { view.stop(); } });
-    }, { rootMargin: "100px" }).observe(canvas);
+      es.forEach(function (en) { if (en.isIntersecting) play(); else film.pause(); });
+    }, { threshold: 0.05 }).observe(film);
   }
 })();
 </script>

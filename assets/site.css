@@ -283,7 +283,12 @@ footer p { margin: 0 0 9px; max-width: 46rem; }
 }
 .filmhero .film {
   position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%; height: 100%; display: block;
+  /* contain, not cover. The film is a 2:1 frame holding two membranes with a gap between them,
+     and cover crops that composition down to abstract texture. The letterboxing is invisible
+     because the film's own background and the hero's are the same near-black. */
+  object-fit: contain; object-position: center;
+  background: #070c11;
   /* the film is the ground, so it is never the thing the eye lands on */
   opacity: .92; filter: saturate(1.05) contrast(1.04);
   /* The subject and the headline were occupying the same pixels: the membranes ran straight
