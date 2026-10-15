@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..600;1,400&family=Inter:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610150230">
+<link rel="stylesheet" href="/assets/site.css?v=202610150600">
 <style>
   .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 44px; background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 38px; }
   .next a { background: transparent; padding: 24px 0 30px; text-decoration: none; color: var(--ink); display: block; border-bottom: 1px solid transparent; }
@@ -71,151 +71,119 @@
            aria-label="A recorded run of our membrane simulation: peptides embed in the bacterial membrane and sit on the surface of the human one"></video>
     <div class="wrap hero-in">
       <p class="eyebrow">In silico design, measured</p>
-      <h1>We broke our own scoring model on purpose. It started reporting <em>better</em> results.</h1>
-      <p class="lede">Silicyte designs de novo peptides and protein binders, and builds the
-      instruments that tell a real gain from a gamed score.</p>
+      <h1>A worse model reported better results.</h1>
+      <p class="lede">We design peptides and binders, and build the instruments that tell a real
+      gain from a gamed score.</p>
       <div class="actions">
         <a class="btn" href="/check.html">Check your own result</a>
-        <a class="btn ghost" href="/science.html">See the evidence</a>
-      </div>
-    </div>
-
-  </section>
-
-  <section class="sunken">
-    <div class="wrap">
-      <div class="col reveal">
-        <p class="kicker"><span class="n">00</span> What you are looking at</p>
-        <h2 class="h-sm" style="font:500 clamp(24px,2.8vw,34px)/1.2 var(--display);letter-spacing:-.02em;margin-bottom:16px">
-        A recorded run of our own simulation, bounded like everything else here.</h2>
-        <p class="muted">Two membranes, the same peptides, and the peptides choose. The bacterial
-        surface is negatively charged and the human one is not, so the peptide's charged face is
-        pulled harder to the first. By the end of the run they are buried in the bacterial sheet
-        and still sitting on top of the human one.</p>
-        <p class="muted"><strong>It is a simulation we wrote, not a measurement, and it stops short
-        of the step that actually kills the cell.</strong> Every lipid here is tethered to its own
-        lattice site, so the sheet springs back and no pore ever opens. Selectivity, the ratio
-        between those two outcomes, is the number this company exists to predict, and it is
-        measured in <a href="/science.html">the science</a>, not here.</p>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="band band-ink">
     <div class="wrap">
-      <div class="col">
-        <p class="kicker"><span class="n">01</span> The finding</p>
-        <h2>A worse scoring model reported a six times larger improvement.</h2>
-        <p>The theory behind these loops says the opposite should happen. A more accurate scorer
-        picks better molecules, so it should produce a bigger gain. We ran the experiment with the
-        scorer handicapped and with it intact, three independent runs each, and left the measuring
-        model untouched so both were judged on the same ruler.</p>
-      </div>
-
-      <div class="plain">
-        <b>What a design loop is supposed to do</b>
-        <span>Find molecules that kill bacteria without harming blood cells. The loop reports how
-        much it improved that ratio. Intact scorer: <span class="num">3.5x</span>. Crippled
-        scorer: <span class="num">21x</span>. The crippled one wins by a mile, which cannot
-        happen if the number tracks molecule quality.</span>
-      </div>
-
-      <figure>
-        <div class="figbox dark">
-          <svg viewBox="0 0 900 560" role="img" aria-labelledby="figTitle figDesc">
-            <title id="figTitle">Reported improvement against how much training data the scoring model was given</title>
-            <desc id="figDesc">Two conditions were run. With one fifth of the training families the
-            loop reported a 21-fold improvement; with all of them it reported 3.5-fold. The dashed
-            reference runs the other way, which is the direction the standard theory predicts, and
-            the wedge between the two lines is the disagreement. Six control loops run on scrambled
-            rewards all stayed inside a narrow band around 1-fold.</desc>
-
-            <rect x="0" y="0" width="900" height="560" fill="#0d1319"/>
-
-            <g font-family="Inter, system-ui, sans-serif">
-              <line x1="160" y1="44" x2="192" y2="44" stroke="#fff" stroke-width="3"/>
-              <circle cx="176" cy="44" r="5.5" fill="#fff"/>
-              <text x="204" y="49" font-size="15" font-weight="450" fill="#e8eef5">What we measured</text>
-              <line x1="392" y1="44" x2="424" y2="44" stroke="#8c99a8" stroke-width="2.5" stroke-dasharray="7 5"/>
-              <text x="436" y="49" font-size="15" font-weight="450" fill="#8c99a8">The direction the theory predicts</text>
-            </g>
-
-            <!-- The controls, drawn first so the 1x gridline reads on top of them. The band is the
-                 range they actually landed in, 0.82x to 1.10x, not a decorative strip. -->
-            <rect x="170" y="418" width="580" height="22" fill="#ffffff" fill-opacity="0.07"/>
-            <text x="170" y="407" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#7f8d9c">Six loops run on scrambled rewards: every one landed in this band</text>
-
-            <g stroke="#ffffff" stroke-opacity="0.08" stroke-width="1">
-              <line x1="160" y1="165" x2="760" y2="165"/>
-              <line x1="160" y1="249" x2="760" y2="249"/>
-              <line x1="160" y1="341" x2="760" y2="341"/>
-              <line x1="160" y1="425" x2="760" y2="425"/>
-            </g>
-
-            <!-- The wedge IS the finding: both lines leave the same measured point at 100% and go
-                 opposite ways as the scorer is starved. -->
-            <path d="M260 192.3 L690 329.2 L260 378 Z" fill="#c87b32" fill-opacity="0.13"/>
-
-            <line x1="260" y1="378" x2="690" y2="329.2" stroke="#8c99a8" stroke-width="2.5" stroke-dasharray="7 5"/>
-            <line x1="260" y1="192.3" x2="690" y2="329.2" stroke="#ffffff" stroke-width="3"/>
-
-            <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" fill="#8c99a8">
-              <text x="145" y="170" text-anchor="end">30x</text>
-              <text x="145" y="254" text-anchor="end">10x</text>
-              <text x="145" y="346" text-anchor="end">3x</text>
-              <text x="145" y="430" text-anchor="end">1x</text>
-              <text x="260" y="498" text-anchor="middle">20%</text>
-              <text x="690" y="498" text-anchor="middle">100%</text>
-            </g>
-            <line x1="160" y1="155" x2="160" y2="470" stroke="#ffffff" stroke-opacity="0.22"/>
-            <line x1="160" y1="470" x2="760" y2="470" stroke="#ffffff" stroke-opacity="0.22"/>
-            <line x1="260" y1="470" x2="260" y2="479" stroke="#ffffff" stroke-opacity="0.35"/>
-            <line x1="690" y1="470" x2="690" y2="479" stroke="#ffffff" stroke-opacity="0.35"/>
-
-            <text x="460" y="536" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
-                  font-size="15" fill="#a7b3c0">Share of the training families the scoring model was given</text>
-            <text x="44" y="300" text-anchor="middle" transform="rotate(-90 44 300)"
-                  font-family="Inter, system-ui, sans-serif" font-size="15" fill="#a7b3c0">Improvement the loop reported</text>
-
-            <!-- Labels sit on the clear side of the slope: above the left endpoint, below the
-                 right one. The line falls to the right, so nothing can run through them. The error
-                 bar caps are drawn wider than the marker on purpose, because the standard error
-                 here is smaller than the dot and would otherwise be invisible inside it. -->
-            <g class="hit" data-tip="Crippled scorer&#10;one fifth of the training families&#10;reports 21x improvement&#10;3 independent runs, job 12243941">
-              <text x="260" y="96" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
-                    font-size="15" fill="#d0a87e">crippled scorer</text>
-              <text x="260" y="136" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
-                    font-size="40" font-weight="500" letter-spacing="-0.02em" fill="#ffffff">21x</text>
-              <line x1="260" y1="185.7" x2="260" y2="198.9" stroke="#c87b32" stroke-width="2.5"/>
-              <line x1="249" y1="185.7" x2="271" y2="185.7" stroke="#c87b32" stroke-width="2.5"/>
-              <line x1="249" y1="198.9" x2="271" y2="198.9" stroke="#c87b32" stroke-width="2.5"/>
-              <circle cx="260" cy="192.3" r="7" fill="#c87b32" stroke="#0d1319" stroke-width="2.5"/>
-              <rect x="180" y="74" width="160" height="136" fill="transparent"/>
-            </g>
-
-            <g class="hit" data-tip="Intact scorer&#10;all of the training families&#10;reports 3.5x improvement&#10;3 independent runs, job 12243941">
-              <line x1="690" y1="322.6" x2="690" y2="335.8" stroke="#3d8ad8" stroke-width="2.5"/>
-              <line x1="679" y1="322.6" x2="701" y2="322.6" stroke="#3d8ad8" stroke-width="2.5"/>
-              <line x1="679" y1="335.8" x2="701" y2="335.8" stroke="#3d8ad8" stroke-width="2.5"/>
-              <circle cx="690" cy="329.2" r="7" fill="#3d8ad8" stroke="#0d1319" stroke-width="2.5"/>
-              <text x="690" y="378" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
-                    font-size="40" font-weight="500" letter-spacing="-0.02em" fill="#ffffff">3.5x</text>
-              <text x="690" y="400" text-anchor="middle" font-family="Inter, system-ui, sans-serif"
-                    font-size="15" fill="#8fb6dd">intact scorer</text>
-              <rect x="608" y="312" width="164" height="98" fill="transparent"/>
-            </g>
-          </svg>
+      <div class="split">
+        <div class="rail">
+          <p class="kicker"><span class="n">01</span> The finding</p>
+          <p>Three independent runs per arm, twelve arms in one allocation, job 12243941.</p>
         </div>
-        <figcaption>Error bars are one standard error per arm, over three independent runs each;
-        the caps are drawn wider than the markers because the error is smaller than the dot. The
-        gap between the two arms is <span class="num">14.6</span> times its own uncertainty, so it
-        is not a fluke of which random seeds we happened to use. Only these two conditions were
-        run, so only these two points are marked. Full numbers on the
-        <a href="/science.html">science page</a>.</figcaption>
-      </figure>
+        <div class="body">
+          <h2>We starved our own scoring model. It reported six times the improvement.</h2>
+          <p>A design loop is judged by how much it improves a held-out predictor. The theory is
+          that a better scorer picks better molecules and so reports a bigger gain. We changed the
+          one thing that should control that number, and it moved the wrong way.</p>
+        </div>
+      </div>
+
+      <div class="figbleed">
+        <figure style="margin:0">
+          <div class="figbox dark">
+            <svg id="scorerFig" viewBox="0 0 1200 520" role="img" aria-labelledby="figTitle figDesc">
+              <title id="figTitle">What each scorer reported, against what the theory says it should report</title>
+              <desc id="figDesc">With all of its training data the loop reported a 3.5-fold
+              improvement. Starved of four fifths of that data it reported 21-fold. The standard
+              theory says the starved scorer should land at or below the intact one, marked by the
+              dashed line at the height of the first bar. The measured result is six times above
+              it.</desc>
+
+              <g class="fx fx-grid">
+                <g stroke="currentColor" stroke-opacity="0.09" stroke-width="1">
+                  <line x1="290" y1="119.2" x2="1000" y2="119.2"/>
+                  <line x1="290" y1="193.1" x2="1000" y2="193.1"/>
+                  <line x1="290" y1="267" x2="1000" y2="267"/>
+                  <line x1="290" y1="340.9" x2="1000" y2="340.9"/>
+                </g>
+                <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" fill="currentColor" opacity="0.5">
+                  <text x="276" y="124.2" text-anchor="end">20x</text>
+                  <text x="276" y="198.1" text-anchor="end">15x</text>
+                  <text x="276" y="272" text-anchor="end">10x</text>
+                  <text x="276" y="345.9" text-anchor="end">5x</text>
+                  <text x="276" y="405" text-anchor="end">1x</text>
+                </g>
+                <line x1="290" y1="400" x2="1000" y2="400" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.5"/>
+                <text x="290" y="486" font-family="Inter, system-ui, sans-serif" font-size="14"
+                      fill="currentColor" opacity="0.45">1x means the loop reported no improvement at all</text>
+              </g>
+
+              <g class="fx fx-bar1">
+                <rect x="375" y="363.1" width="150" height="36.9" fill="#3d8ad8"/>
+              </g>
+              <g class="fx fx-lab1" font-family="Inter, system-ui, sans-serif">
+                <line x1="450" y1="358.5" x2="450" y2="367.3" stroke="#9fc8ec" stroke-width="2"/>
+                <line x1="438" y1="358.5" x2="462" y2="358.5" stroke="#9fc8ec" stroke-width="2"/>
+                <line x1="438" y1="367.3" x2="462" y2="367.3" stroke="#9fc8ec" stroke-width="2"/>
+                <text id="n1" x="450" y="345" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
+                      font-size="44" font-weight="500" letter-spacing="-0.03em" fill="currentColor"
+                      data-count="3.5" data-dec="1">3.5x</text>
+                <text x="450" y="434" text-anchor="middle" font-size="17" font-weight="500" fill="#9fc8ec">Intact scorer</text>
+                <text x="450" y="457" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.5">all of its training families</text>
+              </g>
+
+              <g class="fx fx-ghost">
+                <line x1="525" y1="363.1" x2="960" y2="363.1" stroke="currentColor" stroke-opacity="0.55"
+                      stroke-width="2" stroke-dasharray="9 7"/>
+              </g>
+              <g class="fx fx-ghostlab" font-family="Inter, system-ui, sans-serif">
+                <text x="733" y="337" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.62">theory says a worse scorer</text>
+                <text x="733" y="355" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.62">should land at or below here</text>
+              </g>
+
+              <g class="fx fx-bar2">
+                <rect x="745" y="104.4" width="150" height="295.6" fill="#c87b32"/>
+              </g>
+              <g class="fx fx-lab2" font-family="Inter, system-ui, sans-serif">
+                <line x1="820" y1="76.3" x2="820" y2="130.1" stroke="#eab883" stroke-width="2"/>
+                <line x1="808" y1="76.3" x2="832" y2="76.3" stroke="#eab883" stroke-width="2"/>
+                <line x1="808" y1="130.1" x2="832" y2="130.1" stroke="#eab883" stroke-width="2"/>
+                <text id="n2" x="820" y="62" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif"
+                      font-size="44" font-weight="500" letter-spacing="-0.03em" fill="currentColor"
+                      data-count="21" data-dec="0">21x</text>
+                <text x="820" y="434" text-anchor="middle" font-size="17" font-weight="500" fill="#eab883">Starved scorer</text>
+                <text x="820" y="457" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.5">one fifth of them</text>
+              </g>
+
+              <g class="fx fx-gap">
+                <line x1="925" y1="104.4" x2="925" y2="363.1" stroke="#eab883" stroke-width="1.5"/>
+                <line x1="918" y1="104.4" x2="932" y2="104.4" stroke="#eab883" stroke-width="1.5"/>
+                <line x1="918" y1="363.1" x2="932" y2="363.1" stroke="#eab883" stroke-width="1.5"/>
+                <text x="944" y="228" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="34"
+                      font-weight="500" letter-spacing="-0.02em" fill="currentColor">6x</text>
+                <text x="944" y="252" font-family="Inter, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.6">above where the</text>
+                <text x="944" y="270" font-family="Inter, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.6">theory puts it</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption>Error bars are one standard error, drawn asymmetric because the measurement is
+          made in log units and shown here as fold-change. The difference between the arms is
+          <span class="num">14.6</span> times its own uncertainty. A model trained on less data
+          cannot find better molecules, so what rose is the scorer's error, not the quality of the
+          molecules. Six control loops on scrambled rewards all stayed inside their registered
+          band. Full numbers on the <a href="/science.html">science page</a>.</figcaption>
+        </figure>
+      </div>
 
       <div class="stats">
-        <div class="stat"><b>6x</b><span>larger improvement reported by the crippled scorer</span></div>
+        <div class="stat"><b>6x</b><span>larger improvement reported by the starved scorer</span></div>
         <div class="stat"><b>14.6&sigma;</b><span>how far that gap sits outside its own error bars</span></div>
         <div class="stat"><b>0 of 6</b><span>control runs that misbehaved</span></div>
         <div class="stat"><b>6</b><span>measurement faults found in our own pipeline and published</span></div>
@@ -223,25 +191,50 @@
     </div>
   </section>
 
-  <section class="flush">
+  <section class="band">
     <div class="wrap">
-      <div class="col">
-        <p class="kicker"><span class="n">02</span> Where to go next</p>
-        <h2>Four ways to check us.</h2>
+      <div class="split">
+        <div class="rail">
+          <p class="kicker"><span class="n">02</span> The film</p>
+          <p>Above: a recorded run of our own membrane simulation.</p>
+        </div>
+        <div class="body">
+          <h2>Two membranes, the same peptides, and the peptides choose.</h2>
+          <p class="muted">The bacterial surface is negatively charged and the human one is not, so
+          the peptide's charged face is pulled harder to the first. By the end of the run they are
+          buried in the bacterial sheet and still sitting on top of the human one.</p>
+          <p class="muted"><strong>It is a simulation we wrote, not a measurement, and it stops
+          short of the step that actually kills the cell.</strong> Every lipid is tethered to its
+          own lattice site, so the sheet springs back and no pore ever opens. Selectivity, the ratio
+          between those two outcomes, is the number this company exists to predict, and it is
+          measured in <a href="/science.html">the science</a>, not here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-brand">
+    <div class="wrap">
+      <div class="split">
+        <div class="rail">
+          <p class="kicker"><span class="n">03</span> Where to go next</p>
+        </div>
+        <div class="body">
+          <h2>Four ways to check us.</h2>
+        </div>
       </div>
       <div class="next">
         <a href="/check.html">
           <h3>Check your own result</h3>
-          <p>The four checks we failed first, on your data, in this tab. Leakage, resolution floor,
-          tie handling, split independence. Nothing is uploaded, which is the point: the people who
-          need this are holding results they will not send to a stranger.</p>
+          <p>The four checks we failed first, on your data, in this tab. Nothing is uploaded, which
+          is the point: the people who need this are holding results they will not send to a
+          stranger.</p>
           <span class="go">RUN THE CHECK &rarr;</span>
         </a>
         <a href="/demo.html">
           <h3>Run it on a peptide</h3>
-          <p>Design a peptide in your browser using our real fitted model, then flip the switch
-          that cripples the scorer and watch the reported improvement climb. Ten seconds, nothing
-          leaves your machine.</p>
+          <p>Paste a peptide and watch the four steps we actually run, ending with what that
+          molecule measures against ten different bacteria rather than on average.</p>
           <span class="go">RUN THE PIPELINE &rarr;</span>
         </a>
         <a href="/science.html">
@@ -252,7 +245,8 @@
         </a>
         <a href="/company.html">
           <h3>Work with us</h3>
-          <p>Who we are, what we have built, what we do not claim, and what we are trying to fund.</p>
+          <p>Who we are, what we have built, what we do not claim, and what we are trying to
+          fund.</p>
           <span class="go">ABOUT SILICYTE &rarr;</span>
         </a>
       </div>
@@ -292,6 +286,52 @@
     g.addEventListener("touchstart", function (e) { showTip(e.touches[0], text); setTimeout(hideTip, 2600); }, { passive: true });
   });
 
+  // ---------------------------------------------------------------- the chart, staged
+  // The figure rests in its finished state. It is only armed (hidden) if it is below the fold
+  // and motion is allowed, so a reader who lands with it already on screen, or who asked for
+  // reduced motion, or whose browser never runs this, sees the complete chart and not a gap.
+  var fig = document.getElementById("scorerFig");
+  var noMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (fig && !noMotion && "IntersectionObserver" in window) {
+    var r = fig.getBoundingClientRect();
+    if (r.top > (window.innerHeight || 800) * 0.75) {
+      fig.classList.add("armed");
+      var seen = false;
+      new IntersectionObserver(function (es, obs) {
+        es.forEach(function (en) {
+          if (!en.isIntersecting || seen) return;
+          seen = true;
+          fig.classList.add("play");
+          obs.disconnect();
+          // The two headline numbers count while their own bar grows, so the number and the
+          // height arrive together rather than one explaining the other after the fact.
+          countTo(document.getElementById("n1"), 250, 650);
+          countTo(document.getElementById("n2"), 2000, 1050);
+        });
+      }, { threshold: 0.3 }).observe(fig);
+    }
+  }
+
+  function countTo(el, delay, dur) {
+    if (!el) return;
+    var target = parseFloat(el.getAttribute("data-count"));
+    var dec = parseInt(el.getAttribute("data-dec"), 10) || 0;
+    var final = el.textContent;
+    if (!isFinite(target)) return;
+    el.textContent = (0).toFixed(dec) + "x";
+    setTimeout(function () {
+      var t0 = 0;
+      (function step(now) {
+        if (!t0) t0 = now;
+        var p = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * e).toFixed(dec) + "x";
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = final;
+      })(performance.now());
+    }, delay);
+  }
+
   // ---------------------------------------------------------------- the hero film
   // The film is an enhancement and it is attached, never assumed. The element ships with a poster
   // and no source, so a phone, a metered connection, a visitor who asked for less motion, or a
@@ -322,6 +362,6 @@
   }
 })();
 </script>
-<script src="/assets/motion.js?v=202610142320" defer></script>
+<script src="/assets/motion.js?v=202610150600" defer></script>
 </body>
 </html>

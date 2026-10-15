@@ -587,3 +587,146 @@ figcaption { font-size: 15px; }
 .stat span { font-size: 14px; }
 .next a p, .tier p, .tier ul { font-size: 16px; }
 .toc a { font-size: 14.5px; }
+/* ================================================================ PAGE ARCHITECTURE, 2026-10-15
+   Measured off the four closest comparables (EvolutionaryScale, Isomorphic, Cradle, Chai) rather
+   than argued from taste; the numbers are in design-lab/REFERENCES.md. Every one of them does
+   five things this page did not: a three-to-seven word headline that is the largest object on the
+   screen, one call to action, a ground that is never white, one large subject bleeding past its
+   container with the type over it, and almost no prose above the fold.
+
+   The deeper problem was structural. The body was a single centred 40rem column of prose running
+   four thousand pixels on one unchanging paper ground, which is literally a sheet of paper. The
+   fix is alternating full-bleed bands and asymmetric layouts, so the eye gets a new composition
+   every screen or two. */
+
+/* ---------------------------------------------------------------- the hero, rescaled */
+.filmhero h1 {
+  font: 500 clamp(44px, 8.6vw, 132px)/0.92 var(--display);
+  letter-spacing: -0.045em; color: #fff; margin: 0 0 26px; max-width: none;
+  text-shadow: 0 2px 60px rgba(0, 0, 0, .5);
+}
+/* The headline now runs the full measure and the film sits behind it, the way the references do,
+   so the old rule that kept hero content in a 56% column has to go. */
+@media (min-width: 861px) { .filmhero .hero-in > * { max-width: none; } }
+.filmhero .lede { max-width: 38ch; font-size: clamp(17px, 1.4vw, 20px); }
+.filmhero .film {
+  -webkit-mask-image: none; mask-image: none;
+  object-fit: cover; opacity: .82;
+}
+.filmhero::before {
+  background:
+    radial-gradient(130% 100% at 50% 34%, rgba(7, 12, 17, .10), rgba(7, 12, 17, .78) 76%),
+    linear-gradient(to bottom, rgba(7, 12, 17, .72) 0%, rgba(7, 12, 17, .18) 30%,
+                    rgba(7, 12, 17, .55) 70%, rgba(7, 12, 17, .95) 100%);
+}
+
+/* ---------------------------------------------------------------- full-bleed bands */
+.band { padding-block: clamp(72px, 9vw, 132px); border: 0; position: relative; }
+.band + .band { border-top: 0; }
+.band-ink {
+  background: #0b1016; color: #e7edf4;
+  --ink: #f2f6fa; --ink-2: #b2bfcc; --ink-3: #7f8d9c;
+  --line: #1e2630; --line-strong: #323d49; --surface: #0f151c;
+  --paper: #0b1016; --paper-2: #121923; --paper-3: #1a222d;
+  --brand-tint: #16213d;
+}
+.band-brand {
+  background: linear-gradient(145deg, #2e3bbd 0%, #3f49cf 48%, #5560e0 100%);
+  color: #fff;
+  --ink: #ffffff; --ink-2: #dfe3fb; --ink-3: #b6bdf2;
+  --line: rgba(255, 255, 255, .22); --line-strong: rgba(255, 255, 255, .42);
+  --surface: transparent; --paper-2: rgba(255, 255, 255, .08); --brand-tint: rgba(255, 255, 255, .14);
+}
+.band-ink a, .band-brand a { color: #fff; text-decoration-color: rgba(255, 255, 255, .5); }
+.band-ink .btn, .band-brand .btn { background: #fff; border-color: #fff; color: #0b1016; }
+.band-ink .btn.ghost, .band-brand .btn.ghost {
+  background: transparent; color: #fff; border-color: rgba(255, 255, 255, .45);
+}
+.band-ink .btn.ghost:hover, .band-brand .btn.ghost:hover { background: rgba(255, 255, 255, .14); }
+.band-brand .kicker span.n, .band-ink .kicker span.n { background: rgba(255, 255, 255, .16); color: #fff; }
+
+/* ---------------------------------------------------------------- asymmetric split
+   A label rail on the left that stays put while its content scrolls past, instead of another
+   centred paragraph. This is the single biggest change to how the page reads. */
+.split { display: grid; grid-template-columns: minmax(170px, 230px) minmax(0, 1fr); gap: clamp(28px, 5vw, 76px); }
+.split > .rail { position: sticky; top: 92px; align-self: start; }
+.split .rail .kicker { margin-bottom: 14px; }
+.split .rail p { font-size: 15px; color: var(--ink-3); margin: 0; }
+.split > .body { min-width: 0; max-width: 46rem; }
+.split > .body > h2 { margin-top: 0; }
+@media (max-width: 860px) {
+  .split { grid-template-columns: 1fr; gap: 18px; }
+  .split > .rail { position: static; }
+}
+
+/* a headline that is allowed to be big inside a band */
+.band h2 { font: 500 clamp(30px, 4.2vw, 56px)/1.06 var(--display); letter-spacing: -0.035em; }
+
+/* ---------------------------------------------------------------- the figure, full bleed */
+.figbleed { margin-top: clamp(34px, 5vw, 60px); }
+.figbleed .figbox.dark { background: transparent; box-shadow: none; }
+.figbleed svg { width: 100%; height: auto; display: block; }
+/* ---------------------------------------------------------------- the chart, staged
+   A static picture is not motion design. The figure plays as a short sequence with a punchline:
+   the honest arm grows, the theory's ceiling draws itself across, and then the starved arm shoots
+   straight past it. The order is the argument.
+
+   Everything rests in its FINISHED state. The .armed class is added by script only when the
+   figure is below the fold and motion is allowed, and it is what hides the parts; .play runs
+   them. So if the script never runs, or the browser skips the animation, the reader gets the
+   complete chart rather than an empty box. */
+#scorerFig .fx { transform-box: fill-box; }
+#scorerFig.armed .fx { opacity: 0; }
+#scorerFig.armed .fx-bar1 rect,
+#scorerFig.armed .fx-bar2 rect { transform: scaleY(0); transform-origin: 50% 100%; }
+#scorerFig.armed .fx-ghost { transform: scaleX(0); transform-origin: 0% 50%; }
+#scorerFig.armed .fx-gap { transform: scaleX(0); transform-origin: 0% 50%; }
+
+#scorerFig.play .fx { animation: fxIn .5s cubic-bezier(.2,.7,.2,1) both; }
+#scorerFig.play .fx-grid   { animation-delay: 0s; }
+#scorerFig.play .fx-bar1   { animation-delay: .25s; }
+#scorerFig.play .fx-bar1 rect { animation: fxGrow .65s cubic-bezier(.2,.75,.25,1) .25s both; transform-origin: 50% 100%; }
+#scorerFig.play .fx-lab1   { animation-delay: .75s; }
+/* The line draws itself left to right by unwiping the group, so its dash pattern stays a
+   dash pattern. Animating stroke-dashoffset would have required the dasharray to be the whole
+   path length, which renders solid. */
+#scorerFig.play .fx-ghost  { animation: fxWipeX .7s cubic-bezier(.4,0,.2,1) 1.15s both; transform-origin: 0% 50%; }
+#scorerFig.play .fx-ghostlab { animation-delay: 1.65s; }
+/* the punchline: slower, so the eye follows it all the way past the dashed line */
+#scorerFig.play .fx-bar2   { animation-delay: 2s; }
+#scorerFig.play .fx-bar2 rect { animation: fxGrow 1.05s cubic-bezier(.16,.84,.3,1) 2s both; transform-origin: 50% 100%; }
+#scorerFig.play .fx-lab2   { animation-delay: 2.7s; }
+#scorerFig.play .fx-gap    { animation: fxWipe .55s cubic-bezier(.2,.7,.2,1) 3.15s both; transform-origin: 0% 50%; }
+
+@keyframes fxIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fxGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes fxWipeX { from { opacity: 1; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
+@keyframes fxWipe { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
+/* ---------------------------------------------------------------- masthead over a dark hero
+   A paper masthead sitting on a black hero draws a hard seam straight across the top of the page.
+   On a page that opens with the film, the bar starts transparent and over the artwork, the way
+   the reference sites do, and only takes on its surface once the reader has scrolled past. */
+body.has-hero .top {
+  background: transparent; border-bottom-color: transparent; backdrop-filter: none;
+  transition: background .25s, border-color .25s, backdrop-filter .25s;
+}
+body.has-hero .top .brandmark b { color: #fff; }
+body.has-hero .top .brandmark svg g { fill: #fff; }
+body.has-hero .top nav a { color: rgba(255, 255, 255, .78); }
+body.has-hero .top nav a:hover { color: #fff; background: rgba(255, 255, 255, .12); }
+body.has-hero .top nav a[aria-current="page"] { color: #fff; background: rgba(255, 255, 255, .16); }
+body.has-hero.scrolled .top {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  border-bottom-color: var(--line); backdrop-filter: saturate(1.4) blur(10px);
+}
+body.has-hero.scrolled .top .brandmark b { color: var(--ink); }
+body.has-hero.scrolled .top .brandmark svg g { fill: var(--ink); }
+body.has-hero.scrolled .top nav a { color: var(--ink-2); }
+body.has-hero.scrolled .top nav a:hover { color: var(--brand-deep); background: var(--paper-2); }
+body.has-hero.scrolled .top nav a[aria-current="page"] { color: var(--ink); background: var(--paper-3); }
+/* The masthead is transparent over the hero, which means the body's paper ground was showing
+   through it: a sticky header still occupies its space in flow, so the hero began underneath it
+   rather than behind it. Pulling the hero up by the header's measured height puts the artwork
+   behind the bar, and the hero's own top padding already leaves room for the type. */
+body.has-hero .filmhero { margin-top: calc(-1 * var(--header-h, 59px)); }
+body.has-hero .hero-in { padding-top: calc(var(--header-h, 59px) + clamp(76px, 11vh, 132px)); }

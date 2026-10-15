@@ -121,3 +121,37 @@
     requestAnimationFrame(tick);
   }
 })();
+
+/* The masthead over a dark hero. Separate from the reveal work above because it must run even
+   under prefers-reduced-motion: it is a colour state, not an animation, and leaving the bar
+   white-on-white over the film would make the nav unreadable. */
+(function () {
+  "use strict";
+  function init() {
+    var hero = document.querySelector(".filmhero");
+    if (!hero) return;
+    document.body.classList.add("has-hero");
+    // Publish the real header height so the hero can be pulled up behind it rather than starting
+    // below it. Hard-coding this would break the moment the nav wraps to a second line.
+    var bar = document.querySelector(".top");
+    var setH = function () {
+      if (bar) document.documentElement.style.setProperty("--header-h", bar.offsetHeight + "px");
+    };
+    setH();
+    window.addEventListener("resize", setH);
+    var mark = function () {
+      // Measure live. At DOMContentLoaded the hero can still report a height of zero, and
+      // "scrollY > 0 - 80" is true, which flipped the bar straight into its scrolled state and
+      // left white text on a white background until the first scroll.
+      var h = hero.getBoundingClientRect().height;
+      if (h < 100) h = window.innerHeight || 800;
+      document.body.classList.toggle("scrolled", window.scrollY > h - 80);
+    };
+    mark();
+    window.addEventListener("scroll", mark, { passive: true });
+    window.addEventListener("resize", mark);
+    window.addEventListener("load", mark);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
