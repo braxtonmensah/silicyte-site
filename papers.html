@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Papers and releases | Silicyte</title>
-<meta name="description" content="Silicyte papers, data releases and research notes, including measured leakage in two third-party published peptide benchmarks: 65.29% of LRGB Peptides-func test rows carry a 0.80 twin in training, and 16.71% of AMP Scanner v2 positives against 0.00% of its negatives.">
+<meta name="description" content="Measured leakage in three third-party published peptide benchmarks. PepBenchmark's own default 30%-identity split still leaves 29.97% to 48.56% of test rows with a close relative in training; LRGB Peptides-func leaves 65.29%; AMP Scanner v2 gives 16.71% on its 90%-filtered positives against 0.00% on its 40%-filtered negatives.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="canonical" href="https://silicyte.com/papers.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Papers and releases | Silicyte">
-<meta property="og:description" content="Silicyte papers, data releases and research notes, including measured leakage in two third-party published peptide benchmarks: 65.29% of LRGB Peptides-func test rows carry a 0.80 twin in training, and 16.71% of AMP Scanner v2 positives against 0.00% of its negatives.">
+<meta property="og:description" content="Measured leakage in three third-party published peptide benchmarks. PepBenchmark's own default 30%-identity split still leaves 29.97% to 48.56% of test rows with a close relative in training; LRGB Peptides-func leaves 65.29%; AMP Scanner v2 gives 16.71% on its 90%-filtered positives against 0.00% on its 40%-filtered negatives.">
 <meta property="og:url" content="https://silicyte.com/papers.html">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -93,8 +93,8 @@
         <h2>The leakage defect is not ours alone.</h2>
         <p>Every leakage figure we had published came from our own pipeline on one dataset family,
         so the claim that this is a field problem rested on a single case, and that case was us.
-        On <span class="num">2026-10-17</span> we ran our own check against two third-party
-        published splits. Both were downloaded fresh and hashed. For the LRGB benchmark both MD5s
+        On <span class="num">2026-10-17</span> we ran our own check against three third-party
+        published benchmarks. Both were downloaded fresh and hashed. For the LRGB benchmark both MD5s
         match the values hard-coded in its official loader, so this is exactly reproducible rather
         than approximately.</p>
       </div>
@@ -135,10 +135,68 @@
         specifically rather than accuracy uniformly.</span>
       </div>
 
+
+      <h3 style="margin-top:42px">When the control is applied, it does not reach zero.</h3>
+      <p class="col">The two rows above show a benchmark with no homology control at all.
+      <b>PepBenchmark</b> (ICLR 2026) is the harder case: it deduplicates during cleaning and its
+      stated default split is a k-mer split followed by MMseqs2 clustering at
+      <span class="num">30%</span> sequence identity. We measured every strategy it ships, five
+      seeds each.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">PepBenchmark split strategy</th>
+            <th scope="col">E. coli MIC</th>
+            <th scope="col">Haemolysis HC50</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Random split</td><td class="n">66.54%</td><td class="n">77.42%</td></tr>
+            <tr><td>MMseqs2, 30% identity</td><td class="n">29.16%</td><td class="n">48.56%</td></tr>
+            <tr><td>CD-HIT</td><td class="n">19.11%</td><td class="n">30.52%</td></tr>
+            <tr style="background:var(--brand-tint)"><td><b>Hybrid, the paper's default</b></td>
+                <td class="n"><b>29.97%</b></td><td class="n"><b>48.56%</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Test rows retaining a Levenshtein twin of
+      at least 0.80 in training, mean over 5 seeds. n = 321 and 194 test rows. Exact sequence
+      overlap is <span class="num">0.00%</span> on every dataset, every strategy and every seed:
+      their deduplication works at the exact level, and our duplicate check correctly finds
+      nothing. Files pulled from the published HuggingFace dataset and hashed, 2026-10-17.</p>
+
+      <div class="plain">
+        <b>The controls move in the right direction and never arrive.</b>
+        <span>Going from a random split to a <span class="num">30%</span>-identity MMseqs2 split
+        removes between half and two thirds of the contamination, and leaves
+        <span class="num">29.97%</span> and <span class="num">48.56%</span> behind. This is a
+        different claim from the one above it. A benchmark with no homology control shows that
+        people forget. A benchmark that ships the fix as its default shows that the standard
+        representative-based tools do not deliver the separation the paper claims, because they
+        under-merge on transitive chains of similarity.</span>
+      </div>
+
+      <div class="col" style="margin-top:28px">
+        <h3>Why AMP Scanner v2 reached 0.00% and this does not</h3>
+        <p class="muted">The two are not contradictory, and the distinction matters. AMP Scanner
+        applied CD-HIT at <span class="num">40%</span> to the pool <em>before</em> splitting, which
+        removes redundant sequences outright, so nothing similar survives anywhere. PepBenchmark
+        clusters and assigns whole clusters to splits, which separates only to the extent the
+        clustering merges everything it should. Redundancy reduction and homology-aware splitting
+        are different operations and they fail differently.</p>
+
+        <h3 style="margin-top:24px">A second defect, found by inspection rather than by the check</h3>
+        <p class="muted">In the same release, <code>kmer_split.json</code> and
+        <code>random_split.json</code> are byte-different files with different checksums, but their
+        train and test index sets are <b>identical across all five seeds on both datasets</b>. The
+        k-mer motif split has silently collapsed into the random split. We report this because we
+        found it, not because our checks caught it; they did not.</p>
+      </div>
+
       <div class="col" style="margin-top:30px">
         <h3>What this does not establish</h3>
         <p class="muted">We have not retrained anything on corrected versions of these splits, so
-        we have not measured what the leakage is worth in accuracy on either benchmark. A
+        we have not measured what the leakage is worth in accuracy on any of these benchmarks. A
         contamination rate is not an inflation. The only inflation figure we have measured is our
         own, <span class="num">+0.065</span> on HC50, and it does not transfer to somebody
         else&rsquo;s model.</p>
