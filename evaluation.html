@@ -17,14 +17,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://silicyte.com/brand/leakage-og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://silicyte.com/evaluation.html#service","url":"https://silicyte.com/evaluation.html","name":"Model Evaluation Sprint","serviceType":"Retrospective machine-learning model evaluation","provider":{"@id":"https://silicyte.com/#organization"},"areaServed":"Worldwide","description":"A fixed-scope, ten-business-day retrospective evaluation of whether a reported model improvement survives a reproducible evaluation on the customer's existing experimental data. Covers train/test overlap, label and condition handling, ties, selection procedures and a corrected comparison against an agreed baseline. Computational only; not prospective laboratory validation.","offers":{"@type":"Offer","price":"2500","priceCurrency":"USD","description":"Fixed-fee pilot for one endpoint, one pipeline and one agreed data snapshot. Scope and feasibility are confirmed on a scoping call before any commitment."}}</script>
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610171345">
-<link rel="stylesheet" href="/assets/refine.css?v=202610171345">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171410">
+<link rel="stylesheet" href="/assets/refine.css?v=202610171410">
 <link rel="alternate" type="text/markdown" href="/evaluation.md" title="Plain markdown mirror">
 </head>
 <body class="interior-page offer-page">
@@ -66,8 +63,8 @@
     <p class="lede">Before a reported gain decides your next experimental round, find out whether it holds up under a reproducible evaluation on the data you already have.</p>
     <p>A fixed-scope, ten-business-day retrospective review of one endpoint, one pipeline and one agreed data snapshot. You get a reproduction of your reported metric, a check of what crosses your split, a corrected comparison against a baseline you choose, and a short memo on which claims survive.</p>
     <div class="offer-ctas">
-      <a class="btn" href="mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call">Request a scoping call <span aria-hidden="true">&rarr;</span></a>
-      <a class="text-link" href="/check.html">Or run the free overlap checker first <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn" href="#split-audit">Get a $99 Split Audit today <span aria-hidden="true">&darr;</span></a>
+      <a class="text-link" href="mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call">Scope the full sprint <span aria-hidden="true">&rarr;</span></a>
     </div>
   </div><aside class="page-context offer-facts" aria-label="Sprint at a glance">
     <p class="context-label">At a glance</p>
@@ -80,6 +77,24 @@
     </dl>
     <p class="offer-fine">Scope and feasibility are confirmed on a free scoping call before any commitment. If the checks your question needs are not possible with the inputs available, we say so before you pay.</p>
   </aside></div>
+
+  <section class="audit-tier" id="split-audit"><div class="wrap">
+    <div class="tier-card">
+      <div class="tier-head">
+        <p class="tier-name">Split Audit</p>
+        <p class="tier-price">$99 <span>same day</span></p>
+      </div>
+      <p class="tier-pitch">Send us your train and test split. Before the day is out you get a report on how many of your test rows have a near-duplicate in training, measured with the same instrument behind our audit of thirteen published benchmarks.</p>
+      <ul class="tier-list">
+        <li>Exact-duplicate rate and the share of test rows with a training sequence at Levenshtein ratio 0.80 or above</li>
+        <li>The specific test rows that leak, with their nearest training neighbour</li>
+        <li>A plain-language verdict on whether your held-out score can be read as held out</li>
+      </ul>
+      <p class="tier-terms"><strong>Pay on delivery.</strong> You pay only after the report is in your inbox. Sequences only; send them in any table format. Your data is not kept, reused or published.</p>
+      <a class="btn" href="mailto:hello@silicyte.com?subject=Split%20Audit%20(%2499)&amp;body=Attached%20is%20my%20train%2Ftest%20split.%20Endpoint%3A%20%0AHow%20the%20split%20was%20built%3A%20">Send your split <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <p class="tier-or">Need more than the overlap number? The full sprint below reproduces your metric, reviews labels and selection, and re-scores against a fair baseline.</p>
+  </div></section>
 
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">01</span> When teams use it</p>

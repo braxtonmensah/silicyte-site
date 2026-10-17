@@ -20,7 +20,7 @@ Before a reported gain decides your next experimental round, find out whether it
 
 A fixed-scope, ten-business-day retrospective review of one endpoint, one pipeline and one agreed data snapshot. You get a reproduction of your reported metric, a check of what crosses your split, a corrected comparison against a baseline you choose, and a short memo on which claims survive.
 
-[Request a scoping call →](mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call) [Or run the free overlap checker first →](/check.html)
+Get a $99 Split Audit today ↓ [Scope the full sprint →](mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call)
 
 At a glance
 
@@ -35,6 +35,24 @@ EndpointsPeptide activity and toxicity first
 MethodComputational only. No laboratory work.
 
 Scope and feasibility are confirmed on a free scoping call before any commitment. If the checks your question needs are not possible with the inputs available, we say so before you pay.
+
+Split Audit
+
+$99 same day
+
+Send us your train and test split. Before the day is out you get a report on how many of your test rows have a near-duplicate in training, measured with the same instrument behind our audit of thirteen published benchmarks.
+
+- Exact-duplicate rate and the share of test rows with a training sequence at Levenshtein ratio 0.80 or above
+
+- The specific test rows that leak, with their nearest training neighbour
+
+- A plain-language verdict on whether your held-out score can be read as held out
+
+**Pay on delivery.** You pay only after the report is in your inbox. Sequences only; send them in any table format. Your data is not kept, reused or published.
+
+[Send your split →](mailto:hello@silicyte.com?subject=Split%20Audit%20(%2499)&body=Attached%20is%20my%20train%2Ftest%20split.%20Endpoint%3A%20%0AHow%20the%20split%20was%20built%3A%20)
+
+Need more than the overlap number? The full sprint below reproduces your metric, reviews labels and selection, and re-scores against a fair baseline.
 
 01 When teams use it
 

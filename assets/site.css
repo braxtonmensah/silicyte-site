@@ -46,8 +46,14 @@
   --good: #3e6b52;
   --warn: #a8552f;
 
-  --display: "Clash Display", "Segoe UI", system-ui, sans-serif;
-  --body: "Satoshi", "Segoe UI", system-ui, sans-serif;
+  /* Type. Serif for reading, sans for interface, mono only for data.
+     Clash Display + Satoshi was the default pairing of generated startup pages, and for a company
+     whose product is rigour it read as generated. Newsreader is a screen-tuned text serif with
+     optical sizes, so the same family serves 64px headlines and 18px body. IBM Plex Sans and Plex
+     Mono are one engineered superfamily: interface labels and numbers share proportions. */
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Newsreader", Georgia, "Times New Roman", serif;
+  --ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   color-scheme: light;
 }

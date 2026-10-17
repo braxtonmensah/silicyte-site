@@ -286,3 +286,74 @@ body.has-hero:not(.scrolled) .top nav a.cta:hover { background: var(--brand-tint
 @media (max-width: 720px) {
   .offer-facts dl > div { grid-template-columns: 1fr; gap: .15rem; }
 }
+
+/* ===========================================================================
+   De-templating, 2026-10-17.
+   Rule: serif for reading, sans for interface, mono only for data.
+   The uppercase letter-spaced mono labels and the "01 / 02 / 03" kickers were
+   the signature of generated landing pages. Labels are now sentence case in
+   the interface sans; numbering is removed; mono is kept for numbers, code and
+   identifiers only.
+   =========================================================================== */
+html { font-optical-sizing: auto; }
+body { font-feature-settings: "kern", "liga"; letter-spacing: 0; }
+
+h1 { letter-spacing: -0.012em; font-weight: 500; }
+h2 { letter-spacing: -0.008em; font-weight: 500; }
+h3 { letter-spacing: 0; font-weight: 600; }
+.home-page h2 { letter-spacing: -0.008em; }
+
+/* Interface: navigation, buttons, controls */
+.top nav a, .btn, button, .copybtn, .leakfig-toggle, .text-link { font-family: var(--ui); }
+.btn { font-weight: 500; letter-spacing: 0; }
+.top nav a { font-size: 14.5px; }
+
+/* Labels: sentence case, interface sans, normal tracking */
+.eyebrow, .kicker, thead th, .ledger .tag, .facts dt, .card .ix, .hud .cell b,
+.context-label, .offer-facts dt, .leakfig-toggle, .tier-name {
+  font-family: var(--ui); text-transform: none; letter-spacing: 0;
+}
+.eyebrow { font-size: 14px; font-weight: 500; color: var(--brand-deep); margin-bottom: 14px; }
+.band-ink .eyebrow { color: #a9c3ee; }
+.kicker { font-size: 14px; font-weight: 500; }
+.kicker .n { display: none; }            /* no "01 / 02 / 03" numbering */
+thead th { font-size: 13px; font-weight: 600; }
+.ledger .tag { font-size: 12.5px; font-weight: 500; }
+.facts dt, .offer-facts dt { font-size: 13px; font-weight: 500; }
+.card .ix { font-size: 13px; font-weight: 500; }
+
+/* Homepage hero: stat labels in the sans, the numbers themselves in tabular
+   serif figures, which read as measured values rather than terminal output. */
+.evidence dt {
+  font: 500 12.5px/1.4 var(--ui); text-transform: none; letter-spacing: 0; max-width: 20ch;
+}
+.evidence dd b {
+  font: 500 30px/1 var(--display); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em;
+}
+.focus-number { display: none; }          /* "01 / Design" index labels */
+.hero-detail, .molecular-art figcaption {
+  font-family: var(--ui); letter-spacing: 0;
+}
+.hero-detail { font-size: 13px; }
+
+/* Data stays mono: values, ticks, code, table numerals, benchmark identifiers */
+.num, td.n, code, .leakfig-val, .ch-tick, .ch-val, .readout { font-family: var(--mono); }
+
+/* ---------------------------------------------------------------------------
+   The $99 Split Audit tier card on /evaluation.html
+   --------------------------------------------------------------------------- */
+.audit-tier { padding-block: 0 clamp(2.5rem, 5vw, 4rem); border-bottom: 0; }
+.tier-card {
+  max-width: 46rem; margin-inline: auto;
+  border: 1px solid var(--ink); border-radius: 6px; background: var(--surface);
+  padding: clamp(1.4rem, 3vw, 2.1rem);
+}
+.tier-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.tier-name { margin: 0; font-size: 15px; font-weight: 600; color: var(--brand-deep); }
+.tier-price { margin: 0; font: 500 2.6rem/1 var(--display); color: var(--ink); font-variant-numeric: lining-nums; }
+.tier-price span { font: 500 14px/1 var(--ui); color: var(--ink-3); margin-left: .35rem; }
+.tier-pitch { margin: 1rem 0 .4rem; font-size: 19px; color: var(--ink); }
+.tier-list { margin: .6rem 0 1rem; padding-left: 1.1rem; color: var(--ink-2); }
+.tier-list li { margin: .3rem 0; }
+.tier-terms { font-size: 15px; color: var(--ink-2); margin: 0 0 1.25rem; }
+.tier-or { max-width: 46rem; margin: 1.1rem auto 0; font-size: 15px; color: var(--ink-3); }
