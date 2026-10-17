@@ -94,7 +94,7 @@
         <p>Every leakage figure we had published came from our own pipeline on one dataset family,
         so the claim that this is a field problem rested on a single case, and that case was us.
         On <span class="num">2026-10-17</span> we ran our own check against three third-party
-        published benchmarks. Both were downloaded fresh and hashed. For the LRGB benchmark both MD5s
+        published benchmarks. All were downloaded fresh and hashed. For the LRGB benchmark both MD5s
         match the values hard-coded in its official loader, so this is exactly reproducible rather
         than approximately.</p>
       </div>
@@ -137,7 +137,8 @@
 
 
       <h3 style="margin-top:42px">When the control is applied, it does not reach zero.</h3>
-      <p class="col">The two rows above show a benchmark with no homology control at all.
+      <p class="col">The table above covers one benchmark with no homology control and one
+      that reduced redundancy before splitting.
       <b>PepBenchmark</b> (ICLR 2026) is the harder case: it deduplicates during cleaning and its
       stated default split is a k-mer split followed by MMseqs2 clustering at
       <span class="num">30%</span> sequence identity. We measured every strategy it ships, five
