@@ -82,6 +82,16 @@ A contamination rate is not an inflation. Silicyte has not retrained models on c
 of third-party splits, so it does not claim a figure for what leakage is worth in reported accuracy
 on anyone else's model. Its own +0.065 inflation figure is its own and does not transfer.
 
+## Free tool: check your own split
+
+- [Split Audit](https://silicyte.com/audit.html): upload a train/test split and get the exact
+  fraction of test rows carrying a training sequence at Levenshtein ratio 0.80 or above. The
+  comparison is complete, not sampled, and runs entirely in the visitor's browser, so sequences
+  are never uploaded. The leak rate is free. For $99 it also returns every leaking row with its
+  nearest training neighbour and a corrected split rebuilt by transitive single linkage, which is
+  re-measured at 0.00% leakage before it is handed over. A contamination rate is not a score
+  inflation: no retraining is performed, so it does not say by how much any number is overstated.
+
 ## Working with Silicyte
 
 - [Model Evaluation Sprint](https://silicyte.com/evaluation.html): a fixed-scope, ten-business-day

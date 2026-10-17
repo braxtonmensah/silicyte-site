@@ -22,11 +22,11 @@ We design peptides and protein binders, and we measure whether the score that ra
 
 Starved scorer vs intact [**t = -14.60**](/science.html)
 
-Leaked held-out rows, standard split [**20.1%**](/data.html)
+Leaked held‑out rows, standard split [**20.1%**](/data.html)
 
 Same measure, our rebuilt folds [**0.0000**](/data.html)
 
-Shuffled-label control [**−0.0228**](/science.html)
+Shuffled‑label control [**−0.0228**](/science.html)
 
 Every figure above links to the run that produced it. Computational results only; we operate no laboratory and claim no experimental result.
 

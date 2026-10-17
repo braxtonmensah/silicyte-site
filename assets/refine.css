@@ -4,7 +4,6 @@
   --ink: #142533; --ink-2: #425663; --ink-3: #5c6d77;
   --line: #dce2e3; --line-strong: #b7c6ce;
   --brand: #285f80; --brand-deep: #214f6b; --brand-tint: #e4eff4;
-  --display: "Satoshi", "Segoe UI", system-ui, sans-serif;
   --focus: #397da1;
 }
 html { scroll-behavior: auto; }
@@ -357,3 +356,63 @@ thead th { font-size: 13px; font-weight: 600; }
 .tier-list li { margin: .3rem 0; }
 .tier-terms { font-size: 15px; color: var(--ink-2); margin: 0 0 1.25rem; }
 .tier-or { max-width: 46rem; margin: 1.1rem auto 0; font-size: 15px; color: var(--ink-3); }
+
+/* ---------------------------------------------------------------------------
+   Split Audit (/audit.html). The product surface.
+   --------------------------------------------------------------------------- */
+.au-drop {
+  border: 2px dashed var(--line-strong); border-radius: 8px; background: var(--surface);
+  padding: clamp(2rem, 6vw, 3.5rem) 1.5rem; text-align: center; transition: border-color .15s, background .15s;
+}
+.au-drop.is-over { border-color: var(--brand); background: var(--brand-tint); }
+.au-dropmain { margin: 0; font-size: 1.15rem; color: var(--ink); }
+.au-dropsub { margin: .6rem 0 0; font-size: .92rem; color: var(--ink-3); }
+.au-link {
+  background: none; border: 0; padding: 0; cursor: pointer; font: inherit;
+  color: var(--brand); text-decoration: underline; text-underline-offset: 2px;
+}
+.au-format { margin-top: 1.1rem; font-size: .93rem; color: var(--ink-2); }
+.au-format summary { cursor: pointer; color: var(--brand-deep); font-family: var(--ui); }
+.au-format pre {
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 4px;
+  padding: .8rem 1rem; overflow-x: auto; font-size: .85rem;
+}
+
+.au-status { margin-top: 1.25rem; font-size: .96rem; color: var(--ink-2); }
+.au-status.is-err { color: var(--warn); }
+.au-bar { height: 6px; background: var(--paper-3); border-radius: 999px; overflow: hidden; margin-bottom: .6rem; }
+.au-bar i { display: block; height: 100%; width: 0; background: var(--brand); transition: width .12s linear; }
+
+.au-head { margin-top: 2rem; padding: 1.5rem 0 1.25rem; border-top: 3px solid var(--ink); }
+.au-head.is-leak { border-top-color: var(--warn); }
+.au-head.is-clean { border-top-color: var(--good); }
+.au-rate {
+  margin: 0; font: 500 clamp(3rem, 9vw, 5rem)/1 var(--display);
+  letter-spacing: -0.02em; font-variant-numeric: lining-nums tabular-nums;
+}
+.au-head.is-leak .au-rate { color: var(--warn); }
+.au-head.is-clean .au-rate { color: var(--good); }
+.au-ratelab { margin: .5rem 0 0; max-width: 34rem; color: var(--ink-2); }
+
+.au-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: .95rem; }
+.au-table th, .au-table td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--line); }
+.au-table tbody th { font-weight: 400; color: var(--ink-2); }
+.au-table .n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.au-find thead th { font-family: var(--ui); font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.au-find code { font-size: .85em; }
+.au-verdict { margin-top: 1.5rem; max-width: 46rem; }
+.au-h3 { margin-top: 2rem; }
+.au-more { font-size: .92rem; color: var(--ink-3); margin-top: .6rem; }
+
+.au-buy {
+  margin-top: 2.5rem; padding: clamp(1.4rem, 3vw, 2rem);
+  border: 1px solid var(--ink); border-radius: 6px; background: var(--surface);
+}
+.au-buy h3 { margin-top: 0; }
+.au-buy ul { padding-left: 1.1rem; color: var(--ink-2); }
+.au-buy ul li { margin: .3rem 0; }
+.au-dl { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1rem 0; }
+.au-fine { font-size: .88rem; color: var(--ink-3); margin: 1rem 0 0; }
+.au-warn { font-size: .92rem; color: var(--warn); margin: .8rem 0 0; }
+
+.audit-page main h3 { margin-top: 1.6rem; }

@@ -48,9 +48,9 @@ Send us your train and test split. Before the day is out you get a report on how
 
 - A plain-language verdict on whether your held-out score can be read as held out
 
-**Pay on delivery.** You pay only after the report is in your inbox. Sequences only; send them in any table format. Your data is not kept, reused or published.
+**Run it yourself, right now, in your browser.** The leak rate is free and your sequences never leave your machine: nothing is uploaded. The $99 unlocks the row-level findings and the corrected split.
 
-[Send your split →](mailto:hello@silicyte.com?subject=Split%20Audit%20(%2499)&body=Attached%20is%20my%20train%2Ftest%20split.%20Endpoint%3A%20%0AHow%20the%20split%20was%20built%3A%20)
+[Run the audit →](/audit.html)
 
 Need more than the overlap number? The full sprint below reproduces your metric, reviews labels and selection, and re-scores against a fair baseline.
 

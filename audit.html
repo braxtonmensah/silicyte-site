@@ -2,10 +2,107 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Moved to /check.html</title>
-<link rel="canonical" href="https://silicyte.com/check.html">
-<meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="0; url=/check.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Split Audit: find train/test leakage in your own data | Silicyte</title>
+<meta name="description" content="Upload a train/test split and find out how many test rows have a near-duplicate in training. Runs entirely in your browser; your sequences are never uploaded. The leak rate is free. The row-level findings and a corrected split are $99.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="canonical" href="https://silicyte.com/audit.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Split Audit: find train/test leakage in your own data">
+<meta property="og:description" content="Upload a train/test split, get the leak rate free, in your browser. Your sequences never leave your machine.">
+<meta property="og:url" content="https://silicyte.com/audit.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://silicyte.com/audit.html#app","name":"Silicyte Split Audit","applicationCategory":"DeveloperApplication","operatingSystem":"Any browser","url":"https://silicyte.com/audit.html","description":"Measures the fraction of test rows that carry a near-duplicate in training, using python-Levenshtein ratio at a 0.80 threshold, entirely in the browser. Produces row-level findings and a corrected split rebuilt by transitive single linkage.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Leak rate"},{"@type":"Offer","price":"99","priceCurrency":"USD","name":"Row-level findings and corrected split"}],"publisher":{"@id":"https://silicyte.com/#organization"}},{"@type":"FAQPage","@id":"https://silicyte.com/audit.html#faq","mainEntity":[{"@type":"Question","name":"Is my data uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison runs in your browser using JavaScript on your own machine. The file is read locally and the sequences are never sent to any server. You can confirm this by opening your browser's network tab while the audit runs, or by disconnecting from the network before loading the file."}},{"@type":"Question","name":"What counts as leakage here?","acceptedAnswer":{"@type":"Answer","text":"A test row is counted as leaking when some training row reaches a python-Levenshtein ratio of 0.80 or above against it. The ratio is (lensum minus indel distance) divided by lensum. Every test row is compared against every training row, with no sampling."}},{"@type":"Question","name":"Does a clean result mean my evaluation is sound?","acceptedAnswer":{"@type":"Answer","text":"No. A clean result is a statement about sequence similarity only. It does not establish that model selection, hyperparameter choice or threshold tuning were independent of the test set, and it does not measure leakage through shared assay batches, duplicated measurements under different identifiers, or metadata."}},{"@type":"Question","name":"Does a 65% contamination rate mean the reported accuracy is 65 points too high?","acceptedAnswer":{"@type":"Answer","text":"No. A contamination rate is not a score inflation. Establishing how much a reported number is overstated requires retraining on a corrected split and comparing, which this audit does not do."}}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171410">
+<link rel="stylesheet" href="/assets/refine.css?v=202610171410">
+<link rel="alternate" type="text/markdown" href="/audit.md" title="Plain markdown mirror">
 </head>
-<body><p>This page is now at <a href="/check.html">/check.html</a>.</p></body>
+<body class="interior-page audit-page">
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/science.html">Research</a>
+      <a href="/papers.html">Papers</a>
+      <a href="/reference.html">Reference</a>
+      <a href="/data.html">Data</a>
+      <a href="/audit.html" aria-current="page">Audit</a>
+      <a href="/company.html">About</a>
+      <a class="cta" href="/evaluation.html">Work with us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-intro"><div class="col">
+    <p class="eyebrow">Split Audit</p>
+    <h1>How much of your test set<br>is already in training?</h1>
+    <p class="lede">Drop in a train/test split. You get the exact fraction of test rows that carry a near-duplicate in training, measured with the same instrument that found 65.29% in a NeurIPS benchmark.</p>
+    <p><strong>Your data never leaves this page.</strong> The comparison runs in your browser on your own machine. Nothing is uploaded, and you can verify that by watching your network tab or by disconnecting before you load the file.</p>
+  </div></div>
+
+  <section class="flush"><div class="wrap">
+    <div class="au-drop" id="drop">
+      <input type="file" id="file" accept=".csv,.tsv,.txt,.fa,.fasta" hidden>
+      <p class="au-dropmain">Drop your split here, or <button type="button" class="au-link" id="browse">choose a file</button></p>
+      <p class="au-dropsub">CSV or TSV with a sequence column and a split column, or two FASTA files concatenated. Up to about 20,000 rows.</p>
+    </div>
+
+    <details class="au-format">
+      <summary>What the file needs to contain</summary>
+      <p>A sequence column named any of <code>sequence</code>, <code>seq</code>, <code>peptide</code>, <code>smiles</code> or <code>text</code>, and a split column named <code>split</code>, <code>set</code>, <code>fold</code> or <code>partition</code> whose values look like <code>train</code> and <code>test</code> (<code>val</code> and <code>valid</code> are treated as test). An <code>id</code> or <code>name</code> column is used if present. Example:</p>
+      <pre><code>id,sequence,split
+p001,GIGKFLHSAKKFGKAFVGEIMNS,train
+p002,KWKLFKKIEKVGQNIRDGIIKAGPAVAVVGQATQIAK,train
+p003,GIGKFLHSAKKFGKAFVGEIMNT,test</code></pre>
+      <p>FASTA works too: headers containing <code>train</code> or <code>test</code> set the split.</p>
+    </details>
+
+    <div id="status" class="au-status" hidden></div>
+    <div id="results" hidden></div>
+  </div></section>
+
+  <section id="faq"><div class="wrap"><div class="col">
+    <p class="kicker">Questions</p>
+    <h2>What this measures, and what it does not.</h2>
+    <h3>Is my data uploaded anywhere?</h3>
+    <p>No. The comparison runs in your browser. The file is read locally and the sequences are never sent to any server. Open your network tab while it runs, or disconnect before loading the file, and you will see the audit still completes.</p>
+    <h3>What counts as leakage?</h3>
+    <p>A test row counts as leaking when some training row reaches a Levenshtein ratio of 0.80 or above against it, where the ratio is (lensum minus indel distance) divided by lensum. Every test row is compared against every training row. Nothing is sampled.</p>
+    <h3>Does a clean result mean my evaluation is sound?</h3>
+    <p>No, and this matters. A clean result is a statement about sequence similarity only. It does not establish that model selection, hyperparameter choice or threshold tuning were independent of the test set, and it does not see leakage through shared assay batches, the same measurement under two identifiers, or metadata. Silicyte's own pipeline passed a family-overlap check 826 times out of 826 while 20.1% of its held-out rows kept a near-twin.</p>
+    <h3>If 65% of my test set leaks, is my accuracy 65 points too high?</h3>
+    <p>No. A contamination rate is not a score inflation. Finding out how much a number is overstated means retraining on the corrected split and comparing, which this audit does not do. Anyone quoting a contamination rate as an inflation is quoting something that was not measured.</p>
+  </div></div></section>
+</main>
+
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evaluation.html">Services</a> &middot; <a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+
+<script src="/assets/audit.js?v=202610171410"></script>
+<script src="/assets/audit-ui.js?v=202610171410"></script>
+<script>window.goatcounter={no_onload:false};</script>
+<script data-goatcounter="https://silicyte.goatcounter.com/count"
+        data-goatcounter-settings='{"allow_local":false}'
+        async src="//gc.zgo.at/count.js"></script>
+</body>
 </html>
