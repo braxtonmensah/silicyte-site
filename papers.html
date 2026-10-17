@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Papers and releases | Silicyte</title>
+<meta name="description" content="Silicyte papers, data releases and research notes, including measured leakage in two third-party published peptide benchmarks: 65.29% of LRGB Peptides-func test rows carry a 0.80 twin in training, and 16.71% of AMP Scanner v2 positives against 0.00% of its negatives.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="canonical" href="https://silicyte.com/papers.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Papers and releases | Silicyte">
+<meta property="og:description" content="Silicyte papers, data releases and research notes, including measured leakage in two third-party published peptide benchmarks: 65.29% of LRGB Peptides-func test rows carry a 0.80 twin in training, and 16.71% of AMP Scanner v2 positives against 0.00% of its negatives.">
+<meta property="og:url" content="https://silicyte.com/papers.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610170700">
+<link rel="stylesheet" href="/assets/refine.css?v=202610170700">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/science.html">Research</a>
+      <a href="/papers.html" aria-current="page">Papers</a>
+      <a href="/data.html">Data</a>
+      <a href="/check.html">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap page-intro">
+    <div class="col">
+      <p class="eyebrow">Papers and releases</p>
+      <h1>What we have published, and what it can be checked against.</h1>
+      <p class="lede">Each entry links to the artifact a sceptical reader would actually open: the
+      PDF, the evidence archive, the dataset. Where something does not exist yet, the row says so
+      rather than leaving it out.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="col"><p class="kicker"><span class="n">01</span> Paper</p></div>
+      <div class="ledger">
+        <div>
+          <span class="tag">Draft &middot; 2026-10-17</span>
+          <h3><a href="/papers/design-loops.html">Design loops climb their scorer&rsquo;s error: an
+          intervention-based audit for in silico molecular design</a></h3>
+          <p>Braxton Mensah. Degrading a design loop&rsquo;s selection model on purpose, by
+          withholding <span class="num">80%</span> of its training families while leaving the
+          evaluation model untouched, made the reported gain <span class="num">2.4</span> times
+          larger: <span class="num">+1.3182</span> against <span class="num">+0.5421</span>,
+          difference <span class="num">-0.7761</span>, SE <span class="num">0.0531</span>,
+          <span class="num">t = -14.60</span>. A model that knows less cannot design better
+          molecules, so what the loop climbs is the scorer&rsquo;s error. 12 pages. Not peer
+          reviewed and not posted to a preprint server.</p>
+          <p class="small" style="margin-top:10px">
+            <a href="/papers/design-loops.html">Abstract</a> &middot;
+            <a href="/papers/Mensah_DesignLoops_preprint.pdf">PDF</a> &middot;
+            <a href="https://github.com/braxtonmensah/silicyte-design-loops">Evidence archive</a>
+            &middot; DOI pending</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">02</span> Research note</p>
+        <h2>The leakage defect is not ours alone.</h2>
+        <p>Every leakage figure we had published came from our own pipeline on one dataset family,
+        so the claim that this is a field problem rested on a single case, and that case was us.
+        On <span class="num">2026-10-17</span> we ran our own check against two third-party
+        published splits. Both were downloaded fresh and hashed. For the LRGB benchmark both MD5s
+        match the values hard-coded in its official loader, so this is exactly reproducible rather
+        than approximately.</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Published split</th>
+            <th scope="col">Homology control applied</th>
+            <th scope="col">Exact overlap</th>
+            <th scope="col">Twin &ge; 0.80</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b>LRGB Peptides-func</b><br><span class="small muted">NeurIPS 2022</span></td>
+                <td>None. Stratified random split.</td>
+                <td class="n">7.72%</td><td class="n">65.29%</td></tr>
+            <tr><td><b>AMP Scanner v2</b>, positives<br><span class="small muted">Bioinformatics 2018</span></td>
+                <td>CD-HIT, 90% identity</td>
+                <td class="n">0.00%</td><td class="n">16.71%</td></tr>
+            <tr><td><b>AMP Scanner v2</b>, negatives<br><span class="small muted">same paper, same tool</span></td>
+                <td>CD-HIT, 40% identity</td>
+                <td class="n">0.00%</td><td class="n">0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Twin = Levenshtein ratio of at least 0.80
+      against any training sequence. LRGB: n = 2,331 test rows against 10,873 train, and
+      <span class="num">66.24%</span> of test rows also sit in a 0.80 single-linkage cluster that
+      holds a training member. AMP Scanner v2: n = 712 per class per side. Measured 2026-10-17.</p>
+
+      <div class="plain">
+        <b>The third row is why the first two are believable.</b>
+        <span>AMP Scanner v2 filtered its positives at <span class="num">90%</span> identity and
+        its negatives at <span class="num">40%</span>: same paper, same tool, same pipeline. Our
+        check returns a sixth of the test set on one and exactly zero on the other. A check that
+        fired on both would be a false-positive generator. It also localises the damage, because
+        the contamination sits entirely on the positive class, so it inflates sensitivity
+        specifically rather than accuracy uniformly.</span>
+      </div>
+
+      <div class="col" style="margin-top:30px">
+        <h3>What this does not establish</h3>
+        <p class="muted">We have not retrained anything on corrected versions of these splits, so
+        we have not measured what the leakage is worth in accuracy on either benchmark. A
+        contamination rate is not an inflation. The only inflation figure we have measured is our
+        own, <span class="num">+0.065</span> on HC50, and it does not transfer to somebody
+        else&rsquo;s model.</p>
+        <p class="muted">For LRGB, of the <span class="num">180</span> test rows that share a
+        primary sequence with training, only <span class="num">30</span> are the identical
+        molecule by SMILES. For a sequence model all 180 are leakage; for the graph models LRGB
+        actually benchmarks, the other 150 differ in stereochemistry or modification and are
+        near-leakage. We state it as a shared primary sequence, never as duplicate molecules.</p>
+        <p class="muted">We redistribute neither dataset. LRGB Peptides-func is CC BY-NC 4.0,
+        inherited from SATPdb; AMP Scanner v2 states no licence and its positives derive from
+        APD3. We report measurements and link to their own download pages.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="flush">
+    <div class="wrap"><div class="col">
+      <p class="kicker"><span class="n">03</span> Data</p>
+      <h2>Corrected evaluation folds.</h2>
+      <p>Rebuilt antimicrobial peptide MIC and HC50 folds using true transitive single linkage at
+      <span class="num">0.80</span>, released under CC BY 4.0 with the leakage audit and the
+      baselines. The standard split leaks <span class="num">20.1%</span> of its held-out rows; the
+      same measure on ours is <span class="num">0.0000</span>.</p>
+      <div class="actions">
+        <a class="btn" href="/data.html">Open the dataset <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div></div>
+  </section>
+</main>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+</body>
+</html>
