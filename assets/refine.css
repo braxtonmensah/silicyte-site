@@ -36,6 +36,9 @@ body { font-size: 17px; letter-spacing: 0; }
 .page-context > div { display: grid; gap: 12px; }
 .page-context span, .page-context a { font-size: 13px; color: #4c6575; line-height: 1.5; }
 .page-context a { color: #244f6c; text-decoration: none; }
+.source-note { font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--ink-2); }
+.source-note summary { cursor: pointer; color: var(--brand-deep); font-weight: 500; }
+.interior-page .source-note p { font-size: 13px; margin: 14px 0 0; line-height: 1.7; }
 .interior-page section { padding-block: 52px; border: 0; }
 .interior-page section + section { border-top: 1px solid #dce2e3; }
 .interior-page main > section:nth-of-type(even) { background: #eef1ef; }

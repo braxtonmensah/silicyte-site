@@ -30,3 +30,17 @@ The README's request to cite a DOI was premature: the release supplies no DOI. C
 ## Browser checker limitations
 
 The checker supports unmodified peptides using the 20 standard amino acids. It does not support SMILES, arbitrary sample identifiers or modified residues. Large similarity searches are sampled; finding no close relatives in a sample is inconclusive. Exact sequence-overlap checks do not reconstruct model-selection history. Prediction spread is descriptive and is not a universal test of significance or experimental resolution. Constant predictions or labels make rank correlation undefined.
+
+## Label definitions and source metadata
+
+The released MIC labels are not generic single-organism MICs or a simple median over every assay. They reproduce a panel-oriented aggregation: take the median log10 MIC within each species, average those species medians within each Gram class, then combine the available Gram classes with 15:5 Gram-negative:Gram-positive weighting. At least two included species are required. Recomputing from the local GRAMPA source reproduced all 2,904 released labels exactly.
+
+The selected MIC records include 2,891 YADAMP-derived measurement rows without source modification metadata, contributing to 1,114 of the 2,904 released sequences. They were not marked modified, but absence of modification metadata does not establish chemically unmodified peptides. The [GRAMPA repository documentation](https://github.com/zswitten/Antimicrobial-Peptides#data) explicitly describes this limitation of `datasource_has_modifications`. Treat sequence and chemical-form annotations separately.
+
+The released HC50 labels reproduce the named-column reading of the upstream cleaned hemolysis file: canonical sequences of length 8–50, micromolar units, 0 < log10 HC50 < 4, median per sequence. This reproduced all 1,238 labels exactly. That cleaned file does not carry modification annotations, so it does not establish the chemical form of every measurement.
+
+These are internal data-lineage checks. They do not validate the original experiments, assay comparability, calibration on new candidates or all upstream processing decisions.
+
+## Rights-review status
+
+The immutable v1 archive contains a CC BY 4.0 notice. This audit has not completed a rights review for all underlying measurements. The identified upstream repository has no license detected by GitHub; that observation does not establish every applicable permission or legal right. Do not treat Silicyte's archive notice as a grant of rights that may belong to upstream parties. Source permissions and any applicable conditions require confirmation before a new redistribution or commercial-rights promise. No legal determination is made here.

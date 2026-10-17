@@ -26,7 +26,6 @@
   "url": "https://silicyte.com/data.html",
   "version": "1.0.0",
   "datePublished": "2026-10-14",
-  "license": "https://creativecommons.org/licenses/by/4.0/",
   "isAccessibleForFree": true,
   "keywords": [
     "antimicrobial peptides", "AMP", "minimum inhibitory concentration", "MIC", "haemolysis",
@@ -87,7 +86,7 @@
   .cite { background: transparent; border: 0; border-left: 2px solid var(--line-strong); border-radius: 0;
           padding: 2px 0 2px 20px; font: 400 13.5px/1.6 var(--mono); overflow-x: auto; margin-top: 18px; }
 </style>
-<link rel="stylesheet" href="/assets/refine.css?v=202610162300">
+<link rel="stylesheet" href="/assets/refine.css?v=202610162340">
 </head>
 <body class="interior-page data-page">
 
@@ -121,7 +120,7 @@
 <main>
   <div class="wrap page-intro">
     <div class="col">
-      <p class="eyebrow">Open data &middot; CC BY 4.0</p>
+      <p class="eyebrow">Research dataset &middot; v1.0.0</p>
       <h1>Peptide evaluation data and documented folds.</h1>
       <p class="lede">If you train a model to predict antimicrobial activity, you hold out similar
       sequences to test generalization. Our representative-based clustering did not do
@@ -137,11 +136,18 @@
         <a class="btn ghost" href="/check.html">Check your own split</a>
         <a class="btn ghost" href="/data/silicyte-amp-eval-v1/README.md">Read the documentation</a>
       </div>
-      <p class="small muted" style="margin-top:18px"><strong>October 16 correction:</strong> the
-      archived v1 package overstates its reliability-derived values as model ceilings and its null
-      control as proof of independence. The ZIP is preserved unchanged. Read the
-      <a href="/data/CORRECTIONS-2026-10-16.md">corrections and verification scope</a> before using
-      its historical scores or documentation.</p>
+      <details class="source-note" style="margin-top:22px">
+        <summary>Label definitions, source metadata and release corrections</summary>
+        <p>MIC is a panel-oriented pooled label: species-level medians are averaged within Gram
+        classes, then combined with 15:5 Gram-negative:Gram-positive weighting where available.
+        It is not a single-organism assay value.</p>
+        <p>Of 2,904 MIC sequences, 1,114 include at least one source measurement without chemical-modification
+        metadata. The cleaned HC50 source also lacks modification annotations. Canonical sequence
+        letters alone do not verify chemical form.</p>
+        <p>The original v1 ZIP remains unchanged. Its reliability-derived ceiling and null-control
+        interpretations were corrected. Read the <a href="/data/CORRECTIONS-2026-10-16.md">release corrections,
+        source details and verification scope</a> before reusing its historical documentation.</p>
+      </details>
     </div>
   <aside class="page-context"><p class="context-label">Open dataset</p><h2>AMP evaluation / v1.0.0</h2><div><span>MIC &middot; 2,904 rows</span><span>HC50 &middot; 1,238 rows</span><a href="/data/CORRECTIONS-2026-10-16.md">Read release corrections &rarr;</a></div></aside>
 </div>
@@ -150,7 +156,7 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">01</span> The defect</p>
-        <h2>Every check passed. None of them measured the right thing.</h2>
+        <h2>Why the original split needed correction.</h2>
         <p>The routine builds clusters by comparing each sequence only to cluster
         <em>representatives</em> and taking the first match. Two sequences 85% identical to each
         other land in different clusters whenever each matches a different earlier representative.
@@ -325,9 +331,11 @@
       <div class="cite">Silicyte (2026). Silicyte AMP evaluation split v1.0.0:
 corrected similarity folds for antimicrobial peptide activity
 prediction. https://silicyte.com/data.html</div>
-      <p class="small muted" style="margin-top:16px">Released under CC BY 4.0. The underlying
-      measurements come from public sources (GRAMPA, DRAMP, APD, Hemolytik); please cite those as
-      well. Questions and corrections: <a href="/company.html">hello@silicyte.com</a>.</p>
+      <p class="small muted" style="margin-top:16px">The original v1 archive carries a CC BY 4.0
+      notice. Upstream measurement permissions have not been fully verified in this audit;
+      the archive notice is not a completed rights review. See the
+      <a href="/data/CORRECTIONS-2026-10-16.md">source and release corrections</a>.
+      Questions: <a href="/company.html">hello@silicyte.com</a>.</p>
     </div>
   </section>
 </main>
