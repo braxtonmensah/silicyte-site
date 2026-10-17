@@ -199,6 +199,26 @@ python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style
       <p><strong>0.80 Levenshtein is a choice,</strong> and it is the threshold the evaluations I
       work with are meant to mimic. The scripts take it as a parameter and the rates at 0.85, 0.90
       and 0.95 are in the output.</p>
+      <p><strong>PepBenchmark published redundancy rates of its own, and they are not these.</strong>
+      Its paper reports per-dataset redundancy in Appendix D.1 and Table 10, measured at
+      <span class="num">90%</span> MMseqs2 identity over the raw corpus, ranging from about
+      <span class="num">19%</span> to <span class="num">47%</span> across its datasets, and it
+      states plainly that near-duplicate peptides promote memorisation. Those figures overlap the
+      range I report almost exactly, and they are a different quantity. Theirs describes how
+      redundant the corpus is <em>before</em> a split is drawn. Mine describes what survives
+      <em>after</em> their own <span class="num">30%</span>-identity control has been applied, at a
+      different threshold, between the train and test sides specifically. The authors identified
+      the redundancy; the open question was whether their control removed it, and the answer I
+      measured is that it removes between half and two thirds. They also name a k-mer leakage
+      mechanism without quantifying it, which remains unmeasured by anyone as far as I can find.</p>
+
+      <p><strong>The existing critique of LRGB does not look at the data.</strong> T&ouml;nshoff,
+      Ritzert, Rosenbluth and Grohe (<a href="https://arxiv.org/abs/2309.00367">arXiv:2309.00367</a>,
+      TMLR 2024) re-ran the LRGB baselines and concluded the reported advantage of graph
+      transformers was substantially an artifact of hyperparameter choice, feature normalisation and
+      the link-prediction metric. That is a different and well-established finding, and it concerns
+      the models rather than the split. I am not restating it.</p>
+
       <p><strong>Related work, and a connection I have not tested.</strong> Adamczyk, Ludynia and
       Czech (<a href="https://arxiv.org/abs/2501.17901">arXiv:2501.17901</a>, also in
       <em>Bioinformatics</em> 42(5)) show that count-based molecular fingerprints with short-range
@@ -209,6 +229,15 @@ python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style
       that can recognise local motifs has a route to a good score that does not require learning the
       property. That is a hypothesis about a mechanism, it is not something I have tested, and
       testing it would mean retraining both model families on corrected splits.</p>
+
+      <p><strong>A stronger version of this argument already exists, and it is not mine.</strong>
+      Mattsson and Walters, in work covered by Derek Lowe in July 2026, show for protein-ligand
+      affinity that a ligand-only baseline carrying no protein information at all still reaches
+      r = 0.66 on one standard benchmark, and that leakage persists even at very low sequence
+      identity. If that generalises, the problem is not that 30% was the wrong threshold but that
+      sequence identity is the wrong axis to split on. My result is consistent with theirs and
+      weaker than it: I show a specific control underperforming, not that the whole approach is
+      unsound.</p>
 
       <p><strong>Homology leakage is not a new concern.</strong> It is well documented in general.
       The only thing I am adding is the measurement on these specific published splits, and the
