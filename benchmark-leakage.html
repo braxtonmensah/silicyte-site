@@ -4,25 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>65% of a NeurIPS benchmark's test set has a near-duplicate in training | Silicyte</title>
-<meta name="description" content="Measured leakage in three published peptide ML benchmarks. LRGB Peptides-func: 65.29% of test rows carry a Levenshtein twin at 0.80 in training and 7.72% share a primary sequence. AMP Scanner v2: 16.71% on its CD-HIT-90 positives against 0.00% on its CD-HIT-40 negatives. PepBenchmark's default 30%-identity split still retains 29.97% to 48.56%.">
+<meta name="description" content="I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="canonical" href="https://silicyte.com/benchmark-leakage.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="65% of a NeurIPS benchmark's test set has a near-duplicate in training">
-<meta property="og:description" content="Measured leakage in three published peptide ML benchmarks. LRGB Peptides-func: 65.29% of test rows carry a Levenshtein twin at 0.80 in training and 7.72% share a primary sequence. AMP Scanner v2: 16.71% on its CD-HIT-90 positives against 0.00% on its CD-HIT-40 negatives. PepBenchmark's default 30%-identity split still retains 29.97% to 48.56%.">
+<meta property="og:description" content="I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.">
 <meta property="og:url" content="https://silicyte.com/benchmark-leakage.html">
 <meta property="og:type" content="article">
+<meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="65% of a NeurIPS benchmark's test set has a near-duplicate in training">
-<meta name="twitter:description" content="Measured leakage in three published peptide ML benchmarks. LRGB Peptides-func: 65.29% of test rows carry a Levenshtein twin at 0.80 in training and 7.72% share a primary sequence. AMP Scanner v2: 16.71% on its CD-HIT-90 positives against 0.00% on its CD-HIT-40 negatives. PepBenchmark's default 30%-identity split still retains 29.97% to 48.56%.">
+<meta name="twitter:description" content="I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.">
+<meta name="twitter:image" content="https://silicyte.com/brand/leakage-og.png">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610170800">
-<link rel="stylesheet" href="/assets/refine.css?v=202610170800">
+<link rel="stylesheet" href="/assets/site.css?v=202610170830">
+<link rel="stylesheet" href="/assets/refine.css?v=202610170830">
 </head>
 <body class="interior-page">
 <header class="top">
@@ -58,12 +62,12 @@
     <div class="col">
       <p class="eyebrow">Measurement &middot; 2026-10-17</p>
       <h1>65% of a NeurIPS benchmark&rsquo;s test set has a near-duplicate in training.</h1>
-      <p class="lede">I measured sequence overlap between the train and test splits that three
-      published peptide machine-learning benchmarks ship. All three leak. One of them ships a
-      homology control as its documented default and still leaks.</p>
-      <p class="muted small">Everything below is reproducible from two scripts and the benchmarks&rsquo;
-      own published files. For the LRGB row, both file checksums match the values hard-coded in that
-      benchmark&rsquo;s own loader.</p>
+      <p class="lede">I measured train/test sequence overlap across six published peptide and
+      protein splits. Four leak badly, one leaks despite applying a homology control, and
+      <strong>one is clean</strong>. The difference between them is specific and worth knowing.</p>
+      <p class="muted small">Every file is downloaded from its own published location and hashed at
+      run time. For the LRGB row both checksums match the values hard-coded in that benchmark&rsquo;s
+      own loader.</p>
     </div>
   </div>
 
@@ -80,86 +84,95 @@
           <tbody>
             <tr><td><b>LRGB Peptides-func</b><br><span class="small muted">NeurIPS 2022 Datasets &amp; Benchmarks</span></td>
                 <td>None. Stratified random split.</td><td class="n">7.72%</td><td class="n">65.29%</td></tr>
-            <tr><td><b>AMP Scanner v2</b>, positive class<br><span class="small muted">Bioinformatics 2018</span></td>
-                <td>CD-HIT at 90% identity, before splitting</td><td class="n">0.00%</td><td class="n">16.71%</td></tr>
-            <tr><td><b>AMP Scanner v2</b>, negative class<br><span class="small muted">same paper, same tool, same run</span></td>
-                <td>CD-HIT at 40% identity, before splitting</td><td class="n">0.00%</td><td class="n">0.00%</td></tr>
+            <tr><td><b>AMPlify</b>, positive class<br><span class="small muted">BMC Genomics 2022</span></td>
+                <td>Not documented in the repository</td><td class="n">0.00%</td><td class="n">63.47%</td></tr>
             <tr style="background:var(--brand-tint)"><td><b>PepBenchmark</b>, <code>hybrid_split</code><br><span class="small muted">ICLR 2026, the paper&rsquo;s documented default</span></td>
-                <td>k-mer split, then MMseqs2 at 30% identity</td><td class="n">0.00%</td><td class="n">29.97% / 48.56%</td></tr>
+                <td>k-mer, then MMseqs2 at 30% identity</td><td class="n">0.00%</td><td class="n">29.97% / 48.56%</td></tr>
+            <tr><td><b>AMP Scanner v2</b>, positive class<br><span class="small muted">Bioinformatics 2018</span></td>
+                <td>CD-HIT at 90% identity, pool filtered before splitting</td><td class="n">0.00%</td><td class="n">16.71%</td></tr>
+            <tr><td><b>AMP Scanner v2</b>, negative class<br><span class="small muted">same paper, same tool, same run</span></td>
+                <td>CD-HIT at 40% identity, pool filtered before splitting</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
+            <tr><td><b>FLIP meltome</b> <code>mixed</code><br><span class="small muted">NeurIPS 2021, full-length proteins</span></td>
+                <td>MMseqs2 at <b>20%</b> identity, whole <b>clusters</b> assigned 80/20</td><td class="n">0.00%</td><td class="n"><b>0.29%</b></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="col muted small" style="margin-top:14px">&ldquo;Twin&rdquo; means a Levenshtein ratio of at
-      least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train.
-      AMP Scanner v2: 712 per class per side. PepBenchmark: mean over its five shipped seeds, on
-      <code>antimicrobial_E_coli_mic</code> and <code>hemolytic_hc50</code> respectively.</p>
+      <p class="col muted small" style="margin-top:14px">&ldquo;Twin&rdquo; means a Levenshtein ratio of
+      at least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train.
+      AMPlify: 835 against 3,338. PepBenchmark: mean over its five shipped seeds, on
+      <code>antimicrobial_E_coli_mic</code> and <code>hemolytic_hc50</code>. AMP Scanner v2: 712 per
+      class per side. FLIP meltome: 3,134 against 24,817, of which 20,206 unique.</p>
     </div>
   </section>
 
   <section>
     <div class="wrap"><div class="col">
-      <p class="kicker"><span class="n">01</span> The control</p>
-      <h2>Row three is why rows one, two and four are believable.</h2>
-      <p>AMP Scanner v2 filtered its positive class at 90% identity and its negative class at 40%,
-      in the same paper, with the same tool, in the same preprocessing run. My check returns a sixth
-      of the test set on the first and <strong>exactly zero</strong> on the second.</p>
-      <p>That matters more than any individual percentage. A check that fired on both classes would
-      be a false-positive generator and you should ignore everything else on this page. This one
-      discriminates on the threshold alone, on data I did not produce.</p>
-      <p>It also localises the damage. The contamination sits entirely on the positive class, and
-      leakage confined to positives inflates <em>sensitivity</em> specifically rather than accuracy
-      uniformly.</p>
+      <p class="kicker"><span class="n">01</span> The two clean rows</p>
+      <h2>They are why the rest of the table is believable.</h2>
+      <p>If a check reports contamination everywhere, it is a false-positive generator and you
+      should ignore it. This one returns <strong>0.00%</strong> and <strong>0.29%</strong> on two
+      splits produced by different groups, on different molecule types, neither of which I had any
+      hand in.</p>
+      <p>The AMP Scanner v2 pair is the sharpest version. One paper, one tool, one preprocessing
+      run, two classes: positives filtered at 90% identity come back at 16.71%, negatives filtered
+      at 40% come back at exactly zero. The check discriminates on the threshold alone. It also
+      localises the damage, because contamination confined to the positive class inflates
+      <em>sensitivity</em> specifically rather than accuracy uniformly.</p>
+      <p>FLIP meltome is the other, and it is the more useful one, because it shows the problem is
+      solvable rather than inherent.</p>
     </div></div>
   </section>
 
   <section>
     <div class="wrap"><div class="col">
-      <p class="kicker"><span class="n">02</span> The interesting one</p>
-      <h2>PepBenchmark applied the control. It did not reach zero.</h2>
-      <p>LRGB applies no homology control at all, so a finding there says only that it was not
-      attempted. PepBenchmark is the harder case: it deduplicates during cleaning and ships a k-mer
-      split followed by MMseqs2 clustering at 30% sequence identity as its documented default.</p>
+      <p class="kicker"><span class="n">02</span> What actually separates them</p>
+      <h2>30% identity was not enough. 20% with cluster-level assignment was.</h2>
+      <p>Both PepBenchmark and FLIP do the right thing in principle: cluster by sequence identity,
+      then assign to splits. They land 100x apart.</p>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th scope="col">PepBenchmark split</th><th scope="col">E. coli MIC</th><th scope="col">Haemolysis HC50</th></tr></thead>
+          <thead><tr><th scope="col">Benchmark</th><th scope="col">Threshold</th><th scope="col">Unit assigned to the split</th><th scope="col">Twin &ge; 0.80</th></tr></thead>
           <tbody>
-            <tr><td>random</td><td class="n">66.54%</td><td class="n">77.42%</td></tr>
-            <tr><td>MMseqs2, 30% identity</td><td class="n">29.16%</td><td class="n">48.56%</td></tr>
-            <tr><td>CD-HIT</td><td class="n">19.11%</td><td class="n">30.52%</td></tr>
-            <tr style="background:var(--brand-tint)"><td><b>hybrid (default)</b></td><td class="n"><b>29.97%</b></td><td class="n"><b>48.56%</b></td></tr>
+            <tr><td>PepBenchmark <code>hybrid_split</code></td><td class="n">30%</td><td>k-mer group, then MMseqs2</td><td class="n">29.97% / 48.56%</td></tr>
+            <tr style="background:var(--brand-tint)"><td>FLIP meltome <code>mixed</code></td><td class="n">20%</td><td>whole MMseqs2 cluster</td><td class="n"><b>0.29%</b></td></tr>
           </tbody>
         </table>
       </div>
-      <p style="margin-top:18px">The controls move in the right direction and never arrive. Exact
-      sequence overlap is 0.00% on every dataset, every strategy and every seed, so their
-      deduplication works exactly as described. The residue is near-duplication.</p>
-      <p><strong>Why.</strong> Representative-based clustering compares each sequence to cluster
-      representatives rather than to every member. On a transitive chain where A is similar to B and
-      B to C but A is not similar to C, the chain gets split, and related sequences land on opposite
-      sides. This is the same defect I found in my own pipeline first, which is how I knew to look.</p>
-      <p><strong>A second thing, found by reading rather than by the check.</strong> In the same
-      release, <code>kmer_split.json</code> and <code>random_split.json</code> are byte-different
-      files with different checksums whose train and test index sets are identical across all five
-      seeds, on both datasets. The k-mer motif split has collapsed into the random split.</p>
+      <p style="margin-top:18px">Representative-based clustering compares each sequence to cluster
+      <em>representatives</em> rather than to every member. On a transitive chain where A resembles
+      B and B resembles C but A does not resemble C, the chain gets broken and relatives land on
+      opposite sides. Lowering the threshold makes the chains harder to break, and assigning whole
+      clusters rather than looser groupings stops the break from crossing the split boundary.</p>
+      <p>This is the same defect I found in my own pipeline first: a splitter whose docstring
+      described single-linkage clustering and which actually performed greedy first-match
+      assignment. Every check I had written passed, because none of them measured the quantity the
+      guard existed to bound. That is how I knew to look here.</p>
+      <p><strong>A second thing, found by reading rather than by the check.</strong> In the
+      PepBenchmark release, <code>kmer_split.json</code> and <code>random_split.json</code> are
+      byte-different files with different checksums whose train and test index sets are identical
+      across all five seeds, on both datasets. The k-mer motif split has collapsed into the random
+      split.</p>
     </div></div>
   </section>
 
   <section>
     <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">03</span> Reproduce it</p>
-      <h2>Two scripts, no credentials.</h2>
-      <p>Both download the benchmarks&rsquo; own published files and hash them at run time.</p>
+      <h2>Three scripts, no credentials.</h2>
+      <p>Each downloads the benchmarks&rsquo; own published files and hashes them at run time.</p>
       <div class="plain"><span style="font-family:var(--mono);font-size:13px;line-height:1.9;display:block">
 git clone https://github.com/braxtonmensah/silicyte-design-loops<br>
 cd silicyte-design-loops/thirdparty<br>
 pip install rapidfuzz numpy<br>
 python verify_thirdparty.py&nbsp;&nbsp;<span style="color:var(--ink-3)"># LRGB + AMP Scanner v2</span><br>
-python verify_pepbench.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># PepBenchmark, all strategies, 5 seeds</span>
+python verify_pepbench.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># PepBenchmark, 4 strategies x 5 seeds</span><br>
+python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># AMPlify + FLIP meltome</span>
       </span></div>
       <p>LRGB data <code>701eb743e899f4d793f0e13c8fa5a1b4</code> and split
-      <code>5a0114bdadc80b94fc7ae974f13ef061</code>; both match the values hard-coded in
+      <code>5a0114bdadc80b94fc7ae974f13ef061</code>, both matching the values hard-coded in
       <code>graphgps/loader/dataset/peptides_functional.py</code>. AMP Scanner v2 zip
-      <code>c32196cca2f4ac9adf728409e4129797</code>.</p>
+      <code>c32196cca2f4ac9adf728409e4129797</code>. FLIP meltome splits.zip
+      <code>72b9257e8d6714d203c64bedaef0724e</code>.</p>
     </div></div>
   </section>
 
@@ -168,28 +181,29 @@ python verify_pepbench.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)
       <p class="kicker"><span class="n">04</span> Limits</p>
       <h2>What this does not show.</h2>
       <p><strong>A contamination rate is not an inflation.</strong> I retrained nothing on corrected
-      versions of these splits, so I have not measured what any of this is worth in reported
-      accuracy on their models. Anyone quoting these numbers as &ldquo;benchmark X is overstated by
-      Y&rdquo; is quoting something I did not measure.</p>
+      versions of these splits, so I have not measured what any of it is worth in reported accuracy.
+      Anyone quoting these as &ldquo;benchmark X is overstated by Y points&rdquo; is quoting
+      something I did not measure.</p>
       <p><strong>For LRGB, only 30 of the 180 exact matches are the same molecule.</strong> 180 test
-      rows share a primary sequence with training; 30 of those also share a SMILES. For a sequence
-      model all 180 are leakage. For the graph models LRGB is actually used to benchmark, the other
-      150 differ in stereochemistry or modification and are near-duplicates, not duplicates. I say
-      &ldquo;shares a primary sequence&rdquo; and never &ldquo;duplicate molecule&rdquo;.</p>
-      <p><strong>Redundancy reduction and homology-aware splitting are different operations.</strong>
-      AMP Scanner&rsquo;s 40% filter removed redundant sequences from the pool before splitting, so
-      nothing similar survived anywhere. PepBenchmark assigns clusters to splits. The first can reach
-      zero; the second cannot do better than its clustering. The results are not in tension.</p>
-      <p><strong>0.80 Levenshtein is a choice.</strong> It is the threshold the evaluations I work
-      with are meant to mimic. The scripts take it as a parameter, and the rates at 0.85, 0.90 and
-      0.95 are in the output.</p>
-      <p><strong>None of this is novel as a concern.</strong> Homology leakage in biological
-      benchmarks is well documented. What was missing is the measurement on these specific published
-      splits, which is all I am adding.</p>
-      <p class="muted">I found all four of these defects in my own pipeline first, including a
-      cross-validation splitter whose documentation described an algorithm it did not implement. That
-      work, and a register of the claims it forced me to withdraw, is in
-      <a href="/papers/design-loops.html">the paper</a>.</p>
+      rows share a primary sequence with training and 30 of those also share a SMILES. For a
+      sequence model all 180 are leakage; for the graph models LRGB is actually used to benchmark,
+      the other 150 differ in stereochemistry or modification and are near-duplicates rather than
+      duplicates. I say &ldquo;shares a primary sequence&rdquo; and never &ldquo;duplicate
+      molecule&rdquo;.</p>
+      <p><strong>Pool filtering and split-aware clustering are different operations.</strong> AMP
+      Scanner&rsquo;s 40% filter removed redundant sequences from the pool entirely, so nothing
+      similar survived anywhere. PepBenchmark and FLIP assign clusters to splits. The first can
+      reach zero trivially by deleting data; the second cannot do better than its clustering. The
+      rows are not in tension.</p>
+      <p><strong>0.80 Levenshtein is a choice,</strong> and it is the threshold the evaluations I
+      work with are meant to mimic. The scripts take it as a parameter and the rates at 0.85, 0.90
+      and 0.95 are in the output.</p>
+      <p><strong>Homology leakage is not a new concern.</strong> It is well documented in general.
+      The only thing I am adding is the measurement on these specific published splits, and the
+      comparison between the ones that handled it and the one that handled it well.</p>
+      <p class="muted">I found this class of defect in my own work first, along with three others,
+      and withdrew the claims that depended on them. That record is in
+      <a href="/papers/design-loops.html">the paper</a>, including the register of what I retracted.</p>
     </div></div>
   </section>
 
@@ -197,8 +211,8 @@ python verify_pepbench.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)
     <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">05</span> Your turn</p>
       <h2>Check your own evaluation table.</h2>
-      <p>The same four checks run in your browser, on a CSV, with no account and no upload. If it
-      finds nothing, that is a useful result too.</p>
+      <p>The same check runs in your browser on a CSV, with no account and no upload. If it finds
+      nothing, that is a useful result too, and two of the six rows above are exactly that.</p>
       <div class="actions">
         <a class="btn" href="/check.html">Run it on your data <span aria-hidden="true">&rarr;</span></a>
         <a class="text-link" href="https://github.com/braxtonmensah/silicyte-design-loops">Source <span aria-hidden="true">&nearr;</span></a>
