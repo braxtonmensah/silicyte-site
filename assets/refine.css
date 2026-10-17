@@ -89,7 +89,8 @@ body { font-size: 17px; letter-spacing: 0; }
 .interior-page .check { padding: 23px; border: 1px solid #d3dfe5; border-radius: 9px; background: #ffffff; gap: 22px; }
 .interior-page .check h3 { font-size: 18px; }
 .interior-page .check p { font-size: 14px; line-height: 1.7; }
-.interior-page .price { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; border: 0; }
+.interior-page .price { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; border: 0; }
+@media (max-width: 1040px) { .interior-page .price { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 .interior-page .tier { background: #ffffff; padding: 26px; border: 1px solid #d2dfe5; border-radius: 9px; }
 .interior-page .tier h3 { font-size: 22px; margin: 15px 0; }
 .interior-page .tier p { font-size: 14px; line-height: 1.7; }
