@@ -128,9 +128,9 @@
       had a near-identical training partner.</strong> The released folds correct that issue.</p>
       <p class="lede small">We found it in our own pipeline, rebuilt the split properly, and are
       publishing the corrected one with its scope and limitations. Free, documented, no sign-up.
-      We also measured a source of label heterogeneity: our pooled activity label
-      averages measurements against different bacteria that agree with each other at
-      <strong>Spearman 0.596</strong>. That is section <a href="#target">03</a>.</p>
+      A separate exploratory GRAMPA analysis found a median organism-pair agreement of
+      <strong>Spearman 0.596</strong>. That analysis and its scope are in
+      section <a href="#target">03</a>.</p>
       <div class="actions">
         <a class="btn" href="/data/silicyte-amp-eval-v1.zip" download>Download the package (77 KB)</a>
         <a class="btn ghost" href="/check.html">Check your own split</a>
@@ -179,10 +179,11 @@
       </div>
 
       <div class="plain">
-        <b>The leak does not flatter all models equally, which is the dangerous part.</b>
-        <span>A large model can memorise a near-twin's label where a 36-feature linear model cannot.
-        So the leak inflates exactly the models people are most excited about. Measured inflation
-        here reaches <span class="num">+0.065</span> on the safety axis.</span>
+        <b>Sequence overlap can affect model comparisons.</b>
+        <span>Our historical evaluation recorded score inflation of up to
+        <span class="num">0.065</span> on the safety endpoint after a split defect. The effect
+        depends on the model and procedure. Corrected splits and retraining are needed to assess
+        its impact on a particular comparison.</span>
       </div>
     </div>
   </section>
@@ -195,7 +196,7 @@
       </div>
       <div class="dl">
         <a href="/data/silicyte-amp-eval-v1.zip" download>
-          <b>Complete package</b><span>zip &middot; 77 KB &middot; everything below</span>
+          <b>v1 data archive</b><span>zip &middot; 77 KB &middot; CSVs and manifest</span>
         </a>
         <a href="/data/silicyte-amp-eval-v1/folds_mic.csv" download>
           <b>MIC folds</b><span>csv &middot; 2,904 sequences &middot; 1,198 clusters</span>
@@ -281,8 +282,9 @@
           </tbody>
         </table>
       </div>
-      <p class="col muted small" style="margin-top:14px">These are not small-sample artifacts.
-      E. coli and S. aureus share four thousand peptides and still agree at 0.644.</p>
+      <p class="col muted small" style="margin-top:14px">The E. coli / S. aureus comparison includes
+      4,064 shared peptides and a recorded correlation of 0.644. Sample size alone does not separate
+      organism effects from source, assay or selection effects.</p>
 
       <div class="col" style="margin-top:44px">
         <h3 style="font:400 22px/1.3 var(--display);margin-bottom:12px">Within-organism split-half results</h3>
@@ -295,7 +297,7 @@
         <table>
           <thead><tr><th scope="col">Target</th><th scope="col">Peptides with repeat records</th><th scope="col">Split-half</th><th scope="col">Derived value, not a ceiling</th></tr></thead>
           <tbody>
-            <tr><td>pooled across organisms, the standard target</td><td class="n">&mdash;</td><td class="n">0.7877</td><td class="n">0.9387</td></tr>
+            <tr><td>pooled across organisms in this analysis</td><td class="n">&mdash;</td><td class="n">0.7877</td><td class="n">0.9387</td></tr>
             <tr><td>E. coli only</td><td class="n">2,099</td><td class="n">+0.857</td><td class="n"><b>0.9608</b></td></tr>
             <tr><td>S. aureus only</td><td class="n">2,100</td><td class="n">+0.851</td><td class="n"><b>0.9590</b></td></tr>
             <tr><td>P. aeruginosa only</td><td class="n">1,035</td><td class="n">+0.833</td><td class="n">0.9535</td></tr>
