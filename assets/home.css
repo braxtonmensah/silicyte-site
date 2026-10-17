@@ -58,9 +58,12 @@
   /* Libre Franklin sets wider than the mono it replaced, and the nav now carries nine links plus
      the CTA, so it wrapped and left "Work with us" alone on a second row. Tighten rather than
      drop items; re-check this if another nav link is ever added. */
+  /* Measured at 760px: the nav has 583px of room (760 less the 26px wrap padding each side and
+     the 111px brandmark) and the ten links needed 611px at 13px/7px, so it wrapped. These values
+     bring it to about 520px against 544px of room, which is headroom rather than a boundary. */
   .home-page .top nav { gap: 0; }
-  .home-page .top nav a { font-size: 12.5px; padding: 7px 6px; }
-  .home-page .top nav a.cta { padding-inline: 9px; }
+  .home-page .top nav a { font-size: 12px; padding: 6px 4px; }
+  .home-page .top nav a.cta { padding-inline: 8px; }
 }
 /* The stat grid collapses to two columns at 980px but the hero used to stay two-column until
    720px, so between those widths the copy was squeezed while the artwork kept its
