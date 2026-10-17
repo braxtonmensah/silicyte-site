@@ -52,7 +52,7 @@
      optical sizes, so the same family serves 64px headlines and 18px body. IBM Plex Sans and Plex
      Mono are one engineered superfamily: interface labels and numbers share proportions. */
   --display: "Literata", Georgia, "Times New Roman", serif;
-  --body: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Literata", Georgia, "Times New Roman", serif;
   --ui: "Libre Franklin", "Segoe UI", system-ui, sans-serif;
   --mono: "Fira Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   color-scheme: light;

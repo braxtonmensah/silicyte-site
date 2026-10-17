@@ -17,9 +17,9 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://silicyte.com/audit.html#app","name":"Silicyte Split Audit","applicationCategory":"DeveloperApplication","operatingSystem":"Any browser","url":"https://silicyte.com/audit.html","description":"Measures the fraction of test rows that carry a near-duplicate in training, using python-Levenshtein ratio at a 0.80 threshold, entirely in the browser. Produces row-level findings and a corrected split rebuilt by transitive single linkage.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Leak rate"},{"@type":"Offer","price":"99","priceCurrency":"USD","name":"Row-level findings and corrected split"}],"publisher":{"@id":"https://silicyte.com/#organization"}},{"@type":"FAQPage","@id":"https://silicyte.com/audit.html#faq","mainEntity":[{"@type":"Question","name":"Is my data uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison runs in your browser using JavaScript on your own machine. The file is read locally and the sequences are never sent to any server. You can confirm this by opening your browser's network tab while the audit runs, or by disconnecting from the network before loading the file."}},{"@type":"Question","name":"What counts as leakage here?","acceptedAnswer":{"@type":"Answer","text":"A test row is counted as leaking when some training row reaches a python-Levenshtein ratio of 0.80 or above against it. The ratio is (lensum minus indel distance) divided by lensum. Every test row is compared against every training row, with no sampling."}},{"@type":"Question","name":"Does a clean result mean my evaluation is sound?","acceptedAnswer":{"@type":"Answer","text":"No. A clean result is a statement about sequence similarity only. It does not establish that model selection, hyperparameter choice or threshold tuning were independent of the test set, and it does not measure leakage through shared assay batches, duplicated measurements under different identifiers, or metadata."}},{"@type":"Question","name":"Does a 65% contamination rate mean the reported accuracy is 65 points too high?","acceptedAnswer":{"@type":"Answer","text":"No. A contamination rate is not a score inflation. Establishing how much a reported number is overstated requires retraining on a corrected split and comparing, which this audit does not do."}}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610171410">
-<link rel="stylesheet" href="/assets/refine.css?v=202610171410">
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171600">
+<link rel="stylesheet" href="/assets/refine.css?v=202610171600">
 <link rel="alternate" type="text/markdown" href="/audit.md" title="Plain markdown mirror">
 </head>
 <body class="interior-page audit-page">
@@ -98,8 +98,8 @@ p003,GIGKFLHSAKKFGKAFVGEIMNT,test</code></pre>
 
 <footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evaluation.html">Services</a> &middot; <a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
-<script src="/assets/audit.js?v=202610171410"></script>
-<script src="/assets/audit-ui.js?v=202610171410"></script>
+<script src="/assets/audit.js?v=202610171600"></script>
+<script src="/assets/audit-ui.js?v=202610171600"></script>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'
