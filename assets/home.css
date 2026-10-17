@@ -55,10 +55,12 @@
   .molecular-art img { height: 460px; }
   .molecular-copy .actions { gap: 18px; }
   .section-intro, .research-layout { gap: 40px; }
-  /* Libre Franklin sets wider than the mono it replaced, so eight links plus the CTA no longer
-     fit on one line here and the nav wrapped. Tighten it rather than drop items. */
-  .home-page .top nav { gap: 1px; }
-  .home-page .top nav a { font-size: 13px; padding: 7px; }
+  /* Libre Franklin sets wider than the mono it replaced, and the nav now carries nine links plus
+     the CTA, so it wrapped and left "Work with us" alone on a second row. Tighten rather than
+     drop items; re-check this if another nav link is ever added. */
+  .home-page .top nav { gap: 0; }
+  .home-page .top nav a { font-size: 12.5px; padding: 7px 6px; }
+  .home-page .top nav a.cta { padding-inline: 9px; }
 }
 /* The stat grid collapses to two columns at 980px but the hero used to stay two-column until
    720px, so between those widths the copy was squeezed while the artwork kept its
