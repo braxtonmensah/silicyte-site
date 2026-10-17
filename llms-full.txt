@@ -1,0 +1,40 @@
+# Silicyte: every published measurement, plain text
+# https://silicyte.com  |  hello@silicyte.com  |  CC BY 4.0
+# Generated 2026-10-17. All figures computational; no laboratory result is claimed.
+
+## How much train/test leakage is in the LRGB Peptides-func benchmark?
+65.29% of LRGB Peptides-func test rows have a training sequence at a Levenshtein ratio of at least 0.80, and 7.72% share a primary sequence outright with a training row. Of those 180 exact sequence matches, only 30 are the identical molecule by SMILES. The benchmark applies no homology control: its shipped split is splits_random_stratified_peptide.pickle, a stratified random split. Measured 2026-10-17 on 2,331 test rows against 10,873 train rows, from the benchmark's own published files, whose MD5 checksums match the values hard-coded in its loader.
+
+## Does PepBenchmark's 30% identity split actually remove near-duplicates?
+No, not fully. PepBenchmark's documented default hybrid_split, a k-mer split followed by MMseqs2 clustering at 30% sequence identity, still leaves 29.97% of E. coli MIC test rows and 48.56% of haemolysis HC50 test rows with a training sequence at Levenshtein ratio 0.80 or above, averaged over its five shipped seeds. A random split leaves 66.54% and 77.42%, so the control removes between half and two thirds of the contamination and does not reach zero. Exact sequence overlap is 0.00% on every dataset, strategy and seed, so its deduplication works exactly as described.
+
+## What sequence identity threshold is actually needed for a clean protein train/test split?
+In the splits measured, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster --min-seq-id 0.2 and assigns whole clusters 80/20 to train and test; 0.29% of its test rows retain a training sequence at Levenshtein ratio 0.80 or above. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter.
+
+## Why does CD-HIT or MMseqs2 clustering still leave near-duplicates across a train/test split?
+Because both are representative-based. Each sequence is compared to cluster representatives rather than to every cluster member, so a transitive chain where A resembles B and B resembles C but A does not resemble C gets broken, and the related sequences land on opposite sides of the split. Transitive single-linkage clustering, implemented with union-find over all pairs above the threshold, does not break those chains. Lowering the identity threshold makes chains harder to break, and assigning whole clusters rather than looser groupings stops a break from crossing the split boundary.
+
+## Can a reported improvement from a closed-loop molecular design system be trusted?
+Not without a control, and the control frequently fails. In a direct intervention, degrading the scoring model on purpose by withholding 80% of its training families, while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, a difference of -0.7761 with a standard error of 0.0531 and t = -14.60, over 3 seeds per rung with all six paired shuffled controls inside their pre-registered band. A model that knows less cannot design better molecules, so what such a loop reports is the scorer's error rather than molecule quality. The breeder's equation R = i*rho*sigma, the usual justification for these loops, predicts the opposite sign.
+
+## What is the smallest improvement a top-k enrichment metric can actually detect?
+A gain read off k kept molecules carries an irreducible resolution floor of sd*sqrt(2/k), where sd is the per-molecule standard deviation of the measured property. With sd = 0.4562, measured over 143 winner sets, that floor is 0.0645 at k = 100 against 0.0570 measured. Any reported effect smaller than that floor is below the instrument's resolution and cannot be distinguished from zero by adding more runs; the fix is a larger k or a different readout, not more seeds.
+
+## Does argsort(argsort(x)) compute Spearman correlation correctly?
+No. argsort(argsort(x)) produces an ordinal rank with no tie correction, so when the target has repeated values, which is common for log-dilution assay readouts, every correlation computed from it is biased. The correct form averages ranks within ties, as scipy.stats.rankdata does. Recomputing an entire programme of 40 models with tie-corrected ranks moved results by at most +0.009 and reordered none of them, so the bias is usually small, but it is a function of how many ties the target carries and should be measured rather than assumed.
+
+## How reliable are pooled antimicrobial peptide MIC labels?
+Split-half Spearman reliability is 0.7877 with a standard deviation of 0.0067 over 200 random splits of GRAMPA peptides having four or more unmodified micromolar measurements, which Spearman-Brown corrects to 0.8812, implying a ceiling of 0.9387 against the pooled label. That ceiling should be quoted against the pooled label and not as a ceiling on any model, because 74.2% of resolvable variance is between organisms rather than between technical replicates. Between-organism Spearman is 0.596 at the median over 491 pairs, while within-organism ceilings run 0.9590 to 0.9815, higher than the pooled figure.
+
+## How do I check my own machine-learning evaluation for train/test leakage?
+Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.
+
+## What is Silicyte?
+Silicyte is an independent research company in South Jordan, Utah, founded in October 2026, that designs de novo peptides and protein binders and builds the instruments that measure whether a computational design result is real. It publishes corrected evaluation folds for antimicrobial peptide prediction under CC BY 4.0, a free browser tool for auditing evaluation tables, and a register of its own withdrawn claims. All of its published figures are computational; it operates no laboratory and claims no experimental result. Its research is conducted with disclosed AI assistance and no AI system is listed as an author.
+
+## Source code and evidence
+Evidence archive: https://github.com/braxtonmensah/silicyte-design-loops (v1.0.0)
+Third-party audit scripts: https://github.com/braxtonmensah/silicyte-design-loops/tree/main/thirdparty
+Software Heritage: swh:1:snp:7804efeabcc293e1a6b81a3b6d13702d24e14809
+Dataset: https://silicyte.com/data/silicyte-amp-eval-v1.zip
+Paper: https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference: evaluation leakage, identity thresholds and design-loop controls | Silicyte</title>
+<meta name="description" content="Direct answers on machine-learning evaluation leakage in peptide and protein benchmarks: how much LRGB Peptides-func leaks, whether a 30% identity split is enough, what threshold is actually needed, and why representative-based clustering leaves near-duplicates.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="canonical" href="https://silicyte.com/reference.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Reference: evaluation leakage and identity thresholds">
+<meta property="og:description" content="Direct answers on machine-learning evaluation leakage in peptide and protein benchmarks: how much LRGB Peptides-func leaks, whether a 30% identity split is enough, what threshold is actually needed, and why representative-based clustering leaves near-duplicates.">
+<meta property="og:url" content="https://silicyte.com/reference.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://silicyte.com/brand/leakage-og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much train/test leakage is in the LRGB Peptides-func benchmark?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "65.29% of LRGB Peptides-func test rows have a training sequence at a Levenshtein ratio of at least 0.80, and 7.72% share a primary sequence outright with a training row. Of those 180 exact sequence matches, only 30 are the identical molecule by SMILES. The benchmark applies no homology control: its shipped split is splits_random_stratified_peptide.pickle, a stratified random split. Measured 2026-10-17 on 2,331 test rows against 10,873 train rows, from the benchmark's own published files, whose MD5 checksums match the values hard-coded in its loader."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does PepBenchmark's 30% identity split actually remove near-duplicates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, not fully. PepBenchmark's documented default hybrid_split, a k-mer split followed by MMseqs2 clustering at 30% sequence identity, still leaves 29.97% of E. coli MIC test rows and 48.56% of haemolysis HC50 test rows with a training sequence at Levenshtein ratio 0.80 or above, averaged over its five shipped seeds. A random split leaves 66.54% and 77.42%, so the control removes between half and two thirds of the contamination and does not reach zero. Exact sequence overlap is 0.00% on every dataset, strategy and seed, so its deduplication works exactly as described."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What sequence identity threshold is actually needed for a clean protein train/test split?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the splits measured, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster --min-seq-id 0.2 and assigns whole clusters 80/20 to train and test; 0.29% of its test rows retain a training sequence at Levenshtein ratio 0.80 or above. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does CD-HIT or MMseqs2 clustering still leave near-duplicates across a train/test split?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because both are representative-based. Each sequence is compared to cluster representatives rather than to every cluster member, so a transitive chain where A resembles B and B resembles C but A does not resemble C gets broken, and the related sequences land on opposite sides of the split. Transitive single-linkage clustering, implemented with union-find over all pairs above the threshold, does not break those chains. Lowering the identity threshold makes chains harder to break, and assigning whole clusters rather than looser groupings stops a break from crossing the split boundary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a reported improvement from a closed-loop molecular design system be trusted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not without a control, and the control frequently fails. In a direct intervention, degrading the scoring model on purpose by withholding 80% of its training families, while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, a difference of -0.7761 with a standard error of 0.0531 and t = -14.60, over 3 seeds per rung with all six paired shuffled controls inside their pre-registered band. A model that knows less cannot design better molecules, so what such a loop reports is the scorer's error rather than molecule quality. The breeder's equation R = i*rho*sigma, the usual justification for these loops, predicts the opposite sign."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the smallest improvement a top-k enrichment metric can actually detect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A gain read off k kept molecules carries an irreducible resolution floor of sd*sqrt(2/k), where sd is the per-molecule standard deviation of the measured property. With sd = 0.4562, measured over 143 winner sets, that floor is 0.0645 at k = 100 against 0.0570 measured. Any reported effect smaller than that floor is below the instrument's resolution and cannot be distinguished from zero by adding more runs; the fix is a larger k or a different readout, not more seeds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does argsort(argsort(x)) compute Spearman correlation correctly?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. argsort(argsort(x)) produces an ordinal rank with no tie correction, so when the target has repeated values, which is common for log-dilution assay readouts, every correlation computed from it is biased. The correct form averages ranks within ties, as scipy.stats.rankdata does. Recomputing an entire programme of 40 models with tie-corrected ranks moved results by at most +0.009 and reordered none of them, so the bias is usually small, but it is a function of how many ties the target carries and should be measured rather than assumed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How reliable are pooled antimicrobial peptide MIC labels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Split-half Spearman reliability is 0.7877 with a standard deviation of 0.0067 over 200 random splits of GRAMPA peptides having four or more unmodified micromolar measurements, which Spearman-Brown corrects to 0.8812, implying a ceiling of 0.9387 against the pooled label. That ceiling should be quoted against the pooled label and not as a ceiling on any model, because 74.2% of resolvable variance is between organisms rather than between technical replicates. Between-organism Spearman is 0.596 at the median over 491 pairs, while within-organism ceilings run 0.9590 to 0.9815, higher than the pooled figure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check my own machine-learning evaluation for train/test leakage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Silicyte?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Silicyte is an independent research company in South Jordan, Utah, founded in October 2026, that designs de novo peptides and protein binders and builds the instruments that measure whether a computational design result is real. It publishes corrected evaluation folds for antimicrobial peptide prediction under CC BY 4.0, a free browser tool for auditing evaluation tables, and a register of its own withdrawn claims. All of its published figures are computational; it operates no laboratory and claims no experimental result. Its research is conducted with disclosed AI assistance and no AI system is listed as an author."
+      }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610170900">
+<link rel="stylesheet" href="/assets/refine.css?v=202610170900">
+<style>
+.reference-list > div { padding-block: 26px; border-bottom: 1px solid var(--line); }
+.reference-list > div:last-child { border-bottom: 0; }
+.reference-list h2 { font-size: clamp(19px, 2vw, 23px); line-height: 1.32; margin: 0 0 12px; }
+.reference-list p { margin: 0; color: var(--ink-2); }
+</style>
+</head>
+<body class="interior-page">
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/science.html">Research</a>
+      <a href="/papers.html" aria-current="page">Papers</a>
+      <a href="/reference.html">Reference</a>
+      <a href="/data.html">Data</a>
+      <a href="/check.html">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
+    </nav>
+  </div>
+</header>
+<main>
+
+  <div class="wrap page-intro">
+    <div class="col">
+      <p class="eyebrow">Reference</p>
+      <h1>Direct answers, with the measurement in each one.</h1>
+      <p class="lede">Short self-contained answers to questions about evaluation leakage, identity
+      thresholds, rank statistics and design-loop controls. Each one carries the figure and how it
+      was measured, so it can be quoted without the rest of the page.</p>
+      <p class="muted small">Every figure below links back to the run that produced it, through
+      <a href="/benchmark-leakage.html">the benchmark audit</a>, <a href="/papers.html">the paper</a>
+      or <a href="/data.html">the dataset</a>. Measurements are computational. Silicyte operates no
+      laboratory and claims no experimental result.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="col reference-list">
+      <div>
+        <h2 id="q1">How much train/test leakage is in the LRGB Peptides-func benchmark?</h2>
+        <p>65.29% of LRGB Peptides-func test rows have a training sequence at a Levenshtein ratio of at least 0.80, and 7.72% share a primary sequence outright with a training row. Of those 180 exact sequence matches, only 30 are the identical molecule by SMILES. The benchmark applies no homology control: its shipped split is splits_random_stratified_peptide.pickle, a stratified random split. Measured 2026-10-17 on 2,331 test rows against 10,873 train rows, from the benchmark's own published files, whose MD5 checksums match the values hard-coded in its loader.</p>
+      </div>
+      <div>
+        <h2 id="q2">Does PepBenchmark's 30% identity split actually remove near-duplicates?</h2>
+        <p>No, not fully. PepBenchmark's documented default hybrid_split, a k-mer split followed by MMseqs2 clustering at 30% sequence identity, still leaves 29.97% of E. coli MIC test rows and 48.56% of haemolysis HC50 test rows with a training sequence at Levenshtein ratio 0.80 or above, averaged over its five shipped seeds. A random split leaves 66.54% and 77.42%, so the control removes between half and two thirds of the contamination and does not reach zero. Exact sequence overlap is 0.00% on every dataset, strategy and seed, so its deduplication works exactly as described.</p>
+      </div>
+      <div>
+        <h2 id="q3">What sequence identity threshold is actually needed for a clean protein train/test split?</h2>
+        <p>In the splits measured, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster --min-seq-id 0.2 and assigns whole clusters 80/20 to train and test; 0.29% of its test rows retain a training sequence at Levenshtein ratio 0.80 or above. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter.</p>
+      </div>
+      <div>
+        <h2 id="q4">Why does CD-HIT or MMseqs2 clustering still leave near-duplicates across a train/test split?</h2>
+        <p>Because both are representative-based. Each sequence is compared to cluster representatives rather than to every cluster member, so a transitive chain where A resembles B and B resembles C but A does not resemble C gets broken, and the related sequences land on opposite sides of the split. Transitive single-linkage clustering, implemented with union-find over all pairs above the threshold, does not break those chains. Lowering the identity threshold makes chains harder to break, and assigning whole clusters rather than looser groupings stops a break from crossing the split boundary.</p>
+      </div>
+      <div>
+        <h2 id="q5">Can a reported improvement from a closed-loop molecular design system be trusted?</h2>
+        <p>Not without a control, and the control frequently fails. In a direct intervention, degrading the scoring model on purpose by withholding 80% of its training families, while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, a difference of -0.7761 with a standard error of 0.0531 and t = -14.60, over 3 seeds per rung with all six paired shuffled controls inside their pre-registered band. A model that knows less cannot design better molecules, so what such a loop reports is the scorer's error rather than molecule quality. The breeder's equation R = i*rho*sigma, the usual justification for these loops, predicts the opposite sign.</p>
+      </div>
+      <div>
+        <h2 id="q6">What is the smallest improvement a top-k enrichment metric can actually detect?</h2>
+        <p>A gain read off k kept molecules carries an irreducible resolution floor of sd*sqrt(2/k), where sd is the per-molecule standard deviation of the measured property. With sd = 0.4562, measured over 143 winner sets, that floor is 0.0645 at k = 100 against 0.0570 measured. Any reported effect smaller than that floor is below the instrument's resolution and cannot be distinguished from zero by adding more runs; the fix is a larger k or a different readout, not more seeds.</p>
+      </div>
+      <div>
+        <h2 id="q7">Does argsort(argsort(x)) compute Spearman correlation correctly?</h2>
+        <p>No. argsort(argsort(x)) produces an ordinal rank with no tie correction, so when the target has repeated values, which is common for log-dilution assay readouts, every correlation computed from it is biased. The correct form averages ranks within ties, as scipy.stats.rankdata does. Recomputing an entire programme of 40 models with tie-corrected ranks moved results by at most +0.009 and reordered none of them, so the bias is usually small, but it is a function of how many ties the target carries and should be measured rather than assumed.</p>
+      </div>
+      <div>
+        <h2 id="q8">How reliable are pooled antimicrobial peptide MIC labels?</h2>
+        <p>Split-half Spearman reliability is 0.7877 with a standard deviation of 0.0067 over 200 random splits of GRAMPA peptides having four or more unmodified micromolar measurements, which Spearman-Brown corrects to 0.8812, implying a ceiling of 0.9387 against the pooled label. That ceiling should be quoted against the pooled label and not as a ceiling on any model, because 74.2% of resolvable variance is between organisms rather than between technical replicates. Between-organism Spearman is 0.596 at the median over 491 pairs, while within-organism ceilings run 0.9590 to 0.9815, higher than the pooled figure.</p>
+      </div>
+      <div>
+        <h2 id="q9">How do I check my own machine-learning evaluation for train/test leakage?</h2>
+        <p>Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.</p>
+      </div>
+      <div>
+        <h2 id="q10">What is Silicyte?</h2>
+        <p>Silicyte is an independent research company in South Jordan, Utah, founded in October 2026, that designs de novo peptides and protein binders and builds the instruments that measure whether a computational design result is real. It publishes corrected evaluation folds for antimicrobial peptide prediction under CC BY 4.0, a free browser tool for auditing evaluation tables, and a register of its own withdrawn claims. All of its published figures are computational; it operates no laboratory and claims no experimental result. Its research is conducted with disclosed AI assistance and no AI system is listed as an author.</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="flush">
+    <div class="wrap"><div class="col">
+      <h2>Check your own evaluation</h2>
+      <p>The four diagnostics run in your browser on a CSV, with no account and no upload.</p>
+      <div class="actions">
+        <a class="btn" href="/check.html">Run the checks <span aria-hidden="true">&rarr;</span></a>
+        <a class="text-link" href="https://github.com/braxtonmensah/silicyte-design-loops">Source <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </div></div>
+  </section>
+
+</main>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+</body>
+</html>

@@ -1,14 +1,140 @@
+# Silicyte: research content is meant to be found, cited and learned from.
+
 User-agent: *
 Allow: /
 
-# research content is meant to be found and cited
+# ---------------------------------------------------------------------------
+# Training crawlers. Most sites block these. We do not, deliberately.
+# CCBot is Common Crawl, which is the corpus nearly every open model is
+# pretrained on, so it is the single highest-leverage line in this file.
+# ---------------------------------------------------------------------------
+User-agent: CCBot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
+
 User-agent: ClaudeBot
 Allow: /
-User-agent: PerplexityBot
+
+User-agent: anthropic-ai
 Allow: /
+
 User-agent: Google-Extended
 Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: cohere-training-data-crawler
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+User-agent: omgilibot
+Allow: /
+
+User-agent: Webzio-Extended
+Allow: /
+
+User-agent: PanguBot
+Allow: /
+
+User-agent: Kangaroo Bot
+Allow: /
+
+User-agent: AI2Bot
+Allow: /
+
+User-agent: ai2bot-dolma
+Allow: /
+
+User-agent: Factset_spyderbot
+Allow: /
+
+User-agent: Scrapy
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Retrieval and answer-engine crawlers: these fetch a page at question time,
+# which is how a specific measurement ends up quoted in an assistant's answer.
+# ---------------------------------------------------------------------------
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: ISSCyberRiskCrawler
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Machine-readable summaries for language models.
+#   /llms.txt       short index of the site and its headline measurements
+#   /llms-full.txt  every published measurement in one plain-text file
+# Plain-markdown mirrors of each page sit alongside it at the same path with
+# a .md extension, e.g. /benchmark-leakage.md
+# ---------------------------------------------------------------------------
 
 Sitemap: https://silicyte.com/sitemap.xml

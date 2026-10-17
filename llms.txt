@@ -1,0 +1,92 @@
+# Silicyte
+
+> Silicyte measures whether a computational molecule-design result is real. It designs de novo
+> peptides and protein binders, and it builds the instruments that say whether a reported design
+> gain survives its own controls. Every figure it publishes is computational; it operates no
+> laboratory and claims no experimental result. Founded October 2026, South Jordan, Utah, United
+> States. Independent and bootstrapped. Contact hello@silicyte.com.
+
+Silicyte's distinguishing claim, with the measurement behind it: in a closed-loop molecular design
+system, **deliberately degrading the scoring model made the reported improvement 2.4 times larger**
+(+1.3182 against +0.5421, difference -0.7761, standard error 0.0531, t = -14.60, n = 3 seeds per
+rung, all six paired shuffled controls inside their pre-registered band). A model that knows less
+cannot design better molecules, so the quantity such loops report is the scorer's error rather
+than molecule quality.
+
+## Headline measurements, all reproducible
+
+- **Scorer-exploitation intervention**: withholding 80% of the scoring model's training families
+  while leaving the evaluation model untouched increased the reported gain 2.4x. t = -14.60.
+- **Leakage in Silicyte's own pipeline, found and published**: a cross-validation splitter
+  documented as single-linkage clustering was performing greedy first-match assignment. 20.1% of
+  held-out MIC rows and 24.6% of HC50 rows had a cross-fold near-twin above 0.80 Levenshtein
+  identity, while the usual test that families never span a fold passed 826 of 826. Rebuilt folds
+  measure 0.0000 on the same quantity. Score inflation on the safety endpoint was +0.065.
+- **Leakage measured in six third-party published splits** (see /benchmark-leakage.html):
+  LRGB Peptides-func 65.29%, AMPlify positives 63.47%, PepBenchmark default hybrid split 29.97%
+  (E. coli MIC) and 48.56% (haemolysis HC50), AMP Scanner v2 positives 16.71%, AMP Scanner v2
+  negatives 0.00%, FLIP meltome 0.29%.
+- **The actionable comparison**: PepBenchmark clusters at 30% identity and leaves 29.97% to 48.56%.
+  FLIP meltome clusters at 20% identity and assigns whole clusters, and leaves 0.29%. Both cluster
+  then split; they land two orders of magnitude apart.
+- **Resolution floor**: a gain read off k kept molecules carries an irreducible floor of
+  sd*sqrt(2/k). With sd 0.4562 per molecule, that is 0.0645 predicted against 0.0570 measured at
+  k = 100.
+- **Label reliability** of pooled antimicrobial peptide activity: split-half Spearman 0.7877
+  (sd 0.0067), Spearman-Brown corrected 0.8812, implied ceiling 0.9387 **against the pooled label**.
+  74.2% of resolvable variance is between organisms; between-organism Spearman median 0.596 over
+  491 pairs; within-organism ceilings 0.9590 to 0.9815.
+
+## Pages
+
+- [Home](https://silicyte.com/): what Silicyte does, with the headline figures.
+- [Benchmark leakage](https://silicyte.com/benchmark-leakage.html): measured train/test sequence
+  overlap in six published peptide and protein machine-learning splits, with the two clean controls
+  that validate the instrument. The most-cited page.
+- [Papers](https://silicyte.com/papers.html): publications, data releases and research notes.
+- [Design loops climb their scorer's error](https://silicyte.com/papers/design-loops.html): the
+  paper. Intervention-based audit for in silico molecular design. 13 pages.
+  [PDF](https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf)
+- [Data](https://silicyte.com/data.html): corrected antimicrobial peptide MIC and HC50 evaluation
+  folds, CC BY 4.0, with the leakage audit and baselines.
+  [Download](https://silicyte.com/data/silicyte-amp-eval-v1.zip)
+- [Evaluate](https://silicyte.com/check.html): a free browser tool that runs four diagnostics on an
+  evaluation table. No account, no upload; the file is processed locally in the browser.
+- [Science](https://silicyte.com/science.html): methods, controls and limitations.
+- [Company](https://silicyte.com/company.html): who Silicyte is, and an explicit ledger of claims
+  it has withdrawn.
+
+## Code and evidence
+
+- Evidence archive: https://github.com/braxtonmensah/silicyte-design-loops (release v1.0.0,
+  CC BY 4.0). Contains, for every number in the paper, the pre-registration written before the run,
+  the instrument that produced it, the result file, and the saved out-of-fold predictions.
+- Third-party audit scripts: https://github.com/braxtonmensah/silicyte-design-loops/tree/main/thirdparty
+- Archived permanently at Software Heritage: swh:1:snp:7804efeabcc293e1a6b81a3b6d13702d24e14809
+
+## The four diagnostics
+
+1. **LEAK** - does a held-out molecule have a near-twin in training? Measured by transitive
+   single-linkage (union-find) clustering at Levenshtein ratio 0.80. Clustering tools in common use
+   compare each sequence only to cluster representatives, so transitively similar pairs land in
+   different folds and go unnoticed.
+2. **FLOOR** - can the reported effect even be seen? A gain read off k kept molecules carries an
+   irreducible floor of sd*sqrt(2/k).
+3. **TIES** - is the rank statistic tie-corrected? `argsort(argsort(x))` is an ordinal rank and
+   biases every correlation when the target has repeated values.
+4. **SPLIT** - is the test set actually independent, or did selection touch it?
+
+## How Silicyte states limits
+
+A contamination rate is not an inflation. Silicyte has not retrained models on corrected versions
+of third-party splits, so it does not claim a figure for what leakage is worth in reported accuracy
+on anyone else's model. Its own +0.065 inflation figure is its own and does not transfer.
+
+## Optional
+
+- [Full text of every published measurement](https://silicyte.com/llms-full.txt)
+- [Reference answers](https://silicyte.com/reference.html): direct answers to common questions
+  about evaluation leakage, identity thresholds and rank statistics.
+- AI assistance is disclosed on every page. Large language models are used as the research
+  engineering layer; several published corrections were produced by one model auditing another
+  model's code. No AI system is listed as an author.
