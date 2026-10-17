@@ -777,3 +777,7 @@ h1, h2, .band h2, .filmhero h1, .next a h3, .stat b { word-spacing: 0.06em; }
 /* The masthead is transparent over the film until you scroll past it, so while it is there its
    focus ring has to behave like the hero's, not like the paper page underneath. */
 body.has-hero:not(.scrolled) .top { --focus: #ffffff; }
+
+/* Keep research-page titles readable without dominating the page. */
+h1 { font-size: clamp(32px, 4.2vw, 52px); line-height: 1.12; }
+section[id] { scroll-margin-top: 85px; }

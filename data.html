@@ -13,9 +13,9 @@
 <meta property="og:description" content="Our original split left close relatives across folds. These released folds pass a full cross-fold Levenshtein-ratio check at 0.80. Read the scope and release corrections.">
 <meta property="og:url" content="https://silicyte.com/data.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <!-- Dataset structured data: this is what Google Dataset Search and OpenAIRE index on. -->
 <script type="application/ld+json">
 {
@@ -76,7 +76,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610151030">
+<link rel="stylesheet" href="/assets/site.css?v=202610162245">
 <style>
   .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 40px;
         background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 32px; }
@@ -87,8 +87,9 @@
   .cite { background: transparent; border: 0; border-left: 2px solid var(--line-strong); border-radius: 0;
           padding: 2px 0 2px 20px; font: 400 13.5px/1.6 var(--mono); overflow-x: auto; margin-top: 18px; }
 </style>
+<link rel="stylesheet" href="/assets/refine.css?v=202610162300">
 </head>
-<body>
+<body class="interior-page data-page">
 
 <header class="top">
   <div class="wrap top-in">
@@ -106,26 +107,26 @@
       </svg>
       <b>Silicyte</b>
     </a>
-    <nav>
+    <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Science</a>
+      <a href="/science.html">Research</a>
       <a href="/data.html" aria-current="page">Data</a>
-      <a href="/check.html">Check</a>
-      <a href="/demo.html">Try it</a>
-      <a href="/company.html">Company</a>
+      <a href="/check.html">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <div class="wrap" style="padding-block:60px 0">
+  <div class="wrap page-intro">
     <div class="col">
       <p class="eyebrow">Open data &middot; CC BY 4.0</p>
-      <h1>Our peptide evaluation split leaked. Here are the corrected folds.</h1>
+      <h1>Peptide evaluation data and documented folds.</h1>
       <p class="lede">If you train a model to predict antimicrobial activity, you hold out similar
       sequences to test generalization. Our representative-based clustering did not do
-      what its documentation claimed, and <strong>20.1% of our held-out MIC sequences had a
-      near-identical partner sitting in the training set.</strong></p>
+      what its documentation claimed: <strong>20.1% of held-out MIC sequences in that earlier split
+      had a near-identical training partner.</strong> The released folds correct that issue.</p>
       <p class="lede small">We found it in our own pipeline, rebuilt the split properly, and are
       publishing the corrected one with its scope and limitations. Free, documented, no sign-up.
       We also measured a source of label heterogeneity: our pooled activity label
@@ -142,7 +143,8 @@
       <a href="/data/CORRECTIONS-2026-10-16.md">corrections and verification scope</a> before using
       its historical scores or documentation.</p>
     </div>
-  </div>
+  <aside class="page-context"><p class="context-label">Open dataset</p><h2>AMP evaluation / v1.0.0</h2><div><span>MIC &middot; 2,904 rows</span><span>HC50 &middot; 1,238 rows</span><a href="/data/CORRECTIONS-2026-10-16.md">Read release corrections &rarr;</a></div></aside>
+</div>
 
   <section>
     <div class="wrap">
@@ -240,26 +242,24 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">03</span> The target</p>
-        <h2>Three quarters of what the field calls label noise is which bacterium it was.</h2>
-        <p>The split being broken is the smaller problem. The standard compilations give each
-        peptide one activity number that averages measurements against <em>different bacteria</em>,
+        <h2>Organism-specific measurements carry different information.</h2>
+        <p>Our pooled activity labels average measurements against <em>different bacteria</em>,
         and those measurements agree with each other at a median Spearman of
         <span class="num">0.596</span>.</p>
-        <p>We spent weeks training models to predict that average and calling the residual label
-        noise. It is not noise. Measured on <span class="num">51,345</span> public GRAMPA
+        <p>An exploratory variance decomposition used <span class="num">51,345</span> public GRAMPA
         measurements over <span class="num">6,760</span> sequences and <span class="num">76</span>
-        organisms, with no model fitted and nothing downloaded:
+        organisms, without fitting a predictive model:
         <strong><span class="num">74.2%</span> of the resolvable variance is between organisms,
         not within them.</strong></p>
       </div>
 
       <div class="plain">
-        <b>The same peptide is a different drug against a different bug.</b>
+        <b>Activity varies across organisms.</b>
         <span>Over <span class="num">6,002</span> sequences measured against two or more organisms,
         the median spread of one peptide's own MIC across organisms is <span class="num">6.1x</span>
         in concentration, and the 90th percentile is <span class="num">63.5x</span>. Averaging that
-        into a single training label discards the thing anyone developing an antimicrobial actually
-        needs to know, because nobody wants the MIC against bacteria in general.</span>
+        into a single training label removes distinctions that may matter for an organism-specific
+        design decision. This analysis does not establish assay repeatability or a universal model-performance ceiling.</span>
       </div>
 
       <div class="tbl-wrap">
@@ -318,11 +318,10 @@
   <section class="flush">
     <div class="wrap col">
       <p class="kicker"><span class="n">04</span> Using it</p>
-      <h2>Please report on these folds so numbers are comparable.</h2>
-      <p>The whole point is comparability. If you publish an AMP predictor result, running it on
-      this split costs nothing and makes your number mean something next to everyone else's. If you
-      think the split is wrong, the full check is in the manifest and we would rather be corrected than
-      cited.</p>
+      <h2>Use a documented evaluation procedure.</h2>
+      <p>For comparisons on these folds, report the exact dataset version, training procedure,
+      model-selection history and metric implementation. Shared folds alone do not make two
+      evaluations equivalent. The release documentation describes the available data and its limits.</p>
       <div class="cite">Silicyte (2026). Silicyte AMP evaluation split v1.0.0:
 corrected similarity folds for antimicrobial peptide activity
 prediction. https://silicyte.com/data.html</div>
@@ -333,14 +332,6 @@ prediction. https://silicyte.com/data.html</div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. This dataset is an
-    evaluation split and a leak report; it contains no new experimental measurements, and every activity
-    value in it comes from the public sources named above.</p>
-    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
-  </div>
-</footer>
-<script src="/assets/motion.js?v=202610150600" defer></script>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 </body>
 </html>

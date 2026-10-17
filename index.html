@@ -3,43 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Silicyte | AI molecular design, measured</title>
-<meta name="description" content="We crippled our own scoring model and the design loop reported a better result. Silicyte designs peptides and binders, and measures which gains are real.">
+<title>Silicyte | Molecular design. Carefully evaluated.</title>
+<meta name="description" content="Peptide and protein-design research, supported by reproducible model evaluation. Explore the research, data and browser tools.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Silicyte">
-<meta property="og:description" content="We break our own scoring model on purpose. The reported improvement gets bigger. That is the problem we build instruments for.">
+<meta property="og:description" content="Peptide and protein-design research, supported by reproducible model evaluation. Explore the research, data and browser tools.">
 <meta property="og:url" content="https://silicyte.com/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
+<meta property="og:image:width" content="1536">
+<meta property="og:image:height" content="1024">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Silicyte">
-<meta name="twitter:description" content="We break our own scoring model on purpose. The reported improvement gets bigger.">
-<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Silicyte","url":"https://silicyte.com/","email":"hello@silicyte.com","foundingDate":"2026-10","description":"Research company building de novo peptides and protein binders, and the measurement instruments that separate a real design gain from scoring-model exploitation.","address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah"}}</script>
+<meta name="twitter:description" content="Peptide and protein-design research, supported by reproducible model evaluation. Explore the research, data and browser tools.">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Silicyte","url":"https://silicyte.com/","email":"hello@silicyte.com","foundingDate":"2026-10","description":"Independent research venture developing peptide and protein-design workflows and reproducible model evaluation.","address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah"}}</script>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610151030">
-<style>
-  .next { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 44px; background: transparent; border: 0; border-top: 1px solid var(--ink); margin-top: 38px; }
-  .next a { background: transparent; padding: 24px 0 30px; text-decoration: none; color: var(--ink); display: block; border-bottom: 1px solid transparent; }
-  .next a:hover { background: transparent; border-bottom-color: var(--ink); }
-  .next a h3 { font: 400 22px/1.25 var(--display); margin-bottom: 8px; letter-spacing: -.01em; }
-  .next a p { font-size: 15px; color: var(--ink-2); margin: 0; }
-  .next a .go { font: 500 12px/1 var(--mono); color: var(--brand); letter-spacing: .06em; margin-top: 14px; display: block; }
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=202610162245">
+<link rel="stylesheet" href="/assets/refine.css?v=202610162300">
+<link rel="stylesheet" href="/assets/home.css?v=202610162300">
 </head>
-<body>
-
+<body class="home-page">
 <header class="top">
   <div class="wrap top-in">
     <a class="brandmark" href="/" aria-label="Silicyte home">
@@ -56,314 +49,60 @@
       </svg>
       <b>Silicyte</b>
     </a>
-    <nav>
+    <nav aria-label="Main navigation">
       <a href="/" aria-current="page">Home</a>
-      <a href="/science.html">Science</a>
+      <a href="/science.html">Research</a>
       <a href="/data.html">Data</a>
-      <a href="/check.html">Check</a>
-      <a href="/demo.html">Try it</a>
-      <a href="/company.html">Company</a>
+      <a href="/check.html">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="filmhero">
-    <video class="film" id="film" muted loop playsinline preload="none"
-           poster="/assets/hero/poster.jpg"
-           aria-label="A recorded run of our membrane simulation: peptides embed in the bacterial membrane and sit on the surface of the human one"></video>
-    <div class="wrap hero-in">
-      <p class="eyebrow">In silico design, measured</p>
-      <h1>A worse model reported better results.</h1>
-      <p class="lede">We design peptides and binders, and build the instruments that tell a real
-      gain from a gamed score.</p>
-      <div class="actions">
-        <a class="btn" href="/check.html">Check your own result</a>
+  <section class="molecular-hero" aria-labelledby="hero-title">
+    <div class="wrap molecular-layout">
+      <div class="molecular-copy">
+        <p class="eyebrow">Peptide design &amp; model evaluation</p>
+        <h1 id="hero-title">Molecular design.<br><span>Carefully evaluated.</span></h1>
+        <p class="lede">We develop peptide and protein-design workflows, and evaluate how reliably their scores support candidate selection.</p>
+        <div class="actions">
+          <a class="btn" href="/science.html">Explore the research <span aria-hidden="true">&rarr;</span></a>
+          <a class="text-link" href="/company.html#contact">Discuss a project <span aria-hidden="true">&nearr;</span></a>
+        </div>
+        <p class="hero-detail">Computational research. Reproducible evaluation.</p>
+      </div>
+      <figure class="molecular-art">
+        <img src="/assets/hero/molecular-ribbon.png" width="1536" height="1024" alt="Sculptural silver and blue folded molecular ribbon" fetchpriority="high">
+        <figcaption>Conceptual molecular illustration</figcaption>
+      </figure>
+    </div>
+    <div class="wrap hero-baseline"><span>Silicyte</span><span>Design &nbsp;/&nbsp; Evaluate &nbsp;/&nbsp; Reproduce</span><span>Independent research</span></div>
+  </section>
+
+  <section class="focus-section">
+    <div class="wrap">
+      <div class="section-intro"><p class="eyebrow">Our focus</p><h2>Better evidence for<br>the next design decision.</h2><p>Useful predictions need a clear connection to the data, the evaluation procedure and the decision they inform.</p></div>
+      <div class="focus-grid">
+        <article><span class="focus-number">01 / Design</span><h3>Peptides &amp; protein binders</h3><p>Computational workflows for proposing and comparing molecular candidates.</p><a href="/science.html">Research direction <span aria-hidden="true">&rarr;</span></a></article>
+        <article><span class="focus-number">02 / Evaluate</span><h3>Model evaluation</h3><p>Checks for sequence overlap, metric handling and sensitivity to the scoring procedure.</p><a href="/check.html">Try the evaluation tool <span aria-hidden="true">&rarr;</span></a></article>
+        <article><span class="focus-number">03 / Reproduce</span><h3>Traceable results</h3><p>Released evaluation folds, documented methods and explicit limits on what each result establishes.</p><a href="/data.html">Explore the data <span aria-hidden="true">&rarr;</span></a></article>
       </div>
     </div>
   </section>
 
-  <section class="band band-ink">
-    <div class="wrap">
-      <div class="split">
-        <div class="rail">
-          <p class="kicker"><span class="n">01</span> The finding</p>
-          <p>Three independent runs per arm, twelve arms in one allocation, job 12243941.</p>
-        </div>
-        <div class="body">
-          <h2>We starved our own scoring model. It reported six times the improvement.</h2>
-          <p>We tested how a reported design gain changed when we withheld training families
-          from the scorer. The starved arm reported a larger computational gain. Independent
-          experimental outcomes are needed to establish which arm produced better molecules.</p>
-        </div>
-      </div>
-
-      <div class="figbleed">
-        <figure style="margin:0">
-          <div class="figbox dark">
-            <svg id="scorerFig" viewBox="0 0 1200 520" role="img" aria-labelledby="figTitle figDesc">
-              <title id="figTitle">Reported computational gain under intact and starved scorers</title>
-              <desc id="figDesc">With all of its training data the loop reported a 3.5-fold
-              improvement. Starved of four fifths of that data it reported 21-fold, approximately
-              six times the fold improvement of the intact arm. The dashed line marks the intact
-              result for comparison. These are computed gains, not measured biological gains.</desc>
-
-              <g class="fx fx-grid">
-                <g stroke="currentColor" stroke-opacity="0.14" stroke-width="1">
-                  <line x1="290" y1="119.2" x2="1000" y2="119.2"/>
-                  <line x1="290" y1="193.1" x2="1000" y2="193.1"/>
-                  <line x1="290" y1="267" x2="1000" y2="267"/>
-                  <line x1="290" y1="340.9" x2="1000" y2="340.9"/>
-                </g>
-                <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" fill="currentColor" opacity="0.78">
-                  <text x="276" y="124.2" text-anchor="end">20x</text>
-                  <text x="276" y="198.1" text-anchor="end">15x</text>
-                  <text x="276" y="272" text-anchor="end">10x</text>
-                  <text x="276" y="345.9" text-anchor="end">5x</text>
-                  <text x="276" y="405" text-anchor="end">1x</text>
-                </g>
-                <line x1="290" y1="400" x2="1000" y2="400" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
-                <text x="290" y="486" font-family="Satoshi, system-ui, sans-serif" font-size="14"
-                      fill="currentColor" opacity="0.7">1x means the loop reported no improvement at all</text>
-              </g>
-
-              <g class="fx fx-bar1">
-                <rect x="375" y="363.1" width="150" height="36.9" fill="#2f86e0"/>
-              </g>
-              <g class="fx fx-lab1" font-family="Satoshi, system-ui, sans-serif">
-                <line x1="450" y1="358.5" x2="450" y2="367.3" stroke="#8ec4f5" stroke-width="2"/>
-                <line x1="438" y1="358.5" x2="462" y2="358.5" stroke="#8ec4f5" stroke-width="2"/>
-                <line x1="438" y1="367.3" x2="462" y2="367.3" stroke="#8ec4f5" stroke-width="2"/>
-                <text id="n1" x="450" y="345" text-anchor="middle" font-family="Clash Display, system-ui, sans-serif"
-                      font-size="44" font-weight="500" letter-spacing="-0.03em" fill="currentColor"
-                      data-count="3.5" data-dec="1">3.5x</text>
-                <text x="450" y="434" text-anchor="middle" font-size="17" font-weight="500" fill="#8ec4f5">Intact scorer</text>
-                <text x="450" y="457" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.78">all of its training families</text>
-              </g>
-
-              <g class="fx fx-ghost">
-                <line x1="525" y1="363.1" x2="960" y2="363.1" stroke="currentColor" stroke-opacity="0.75"
-                      stroke-width="2" stroke-dasharray="9 7"/>
-              </g>
-              <g class="fx fx-ghostlab" font-family="Satoshi, system-ui, sans-serif">
-                <text x="733" y="337" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">intact-arm result</text>
-                <text x="733" y="355" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">shown as a reference line</text>
-              </g>
-
-              <g class="fx fx-bar2">
-                <rect x="745" y="104.4" width="150" height="295.6" fill="#e08a2e"/>
-              </g>
-              <g class="fx fx-lab2" font-family="Satoshi, system-ui, sans-serif">
-                <line x1="820" y1="76.3" x2="820" y2="130.1" stroke="#f5bd7c" stroke-width="2"/>
-                <line x1="808" y1="76.3" x2="832" y2="76.3" stroke="#f5bd7c" stroke-width="2"/>
-                <line x1="808" y1="130.1" x2="832" y2="130.1" stroke="#f5bd7c" stroke-width="2"/>
-                <text id="n2" x="820" y="62" text-anchor="middle" font-family="Clash Display, system-ui, sans-serif"
-                      font-size="44" font-weight="500" letter-spacing="-0.03em" fill="currentColor"
-                      data-count="21" data-dec="0">21x</text>
-                <text x="820" y="434" text-anchor="middle" font-size="17" font-weight="500" fill="#f5bd7c">Starved scorer</text>
-                <text x="820" y="457" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.78">one fifth of them</text>
-              </g>
-
-              <g class="fx fx-gap">
-                <line x1="925" y1="104.4" x2="925" y2="363.1" stroke="#f5bd7c" stroke-width="1.5"/>
-                <line x1="918" y1="104.4" x2="932" y2="104.4" stroke="#f5bd7c" stroke-width="1.5"/>
-                <line x1="918" y1="363.1" x2="932" y2="363.1" stroke="#f5bd7c" stroke-width="1.5"/>
-                <text x="944" y="228" font-family="Clash Display, system-ui, sans-serif" font-size="34"
-                      font-weight="500" letter-spacing="-0.02em" fill="currentColor">6x</text>
-                <text x="944" y="252" font-family="Satoshi, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.82">above where the</text>
-                <text x="944" y="270" font-family="Satoshi, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.82">intact-arm gain</text>
-              </g>
-            </svg>
-          </div>
-          <figcaption>Error bars are one standard error, drawn asymmetric because the measurement is
-          made in log units and shown here as fold-change. The difference between the arms is
-          <span class="num">14.6</span> times its reported standard error. This does not establish
-          actual molecule quality or the cause of the difference. Six control loops on scrambled
-          rewards all stayed inside their registered
-          band. Full numbers on the <a href="/science.html">science page</a>.</figcaption>
-        </figure>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><b>6x</b><span>larger improvement reported by the starved scorer</span></div>
-        <div class="stat"><b>14.6 SE</b><span>difference divided by its reported standard error</span></div>
-        <div class="stat"><b>0 of 6</b><span>control runs that misbehaved</span></div>
-        <div class="stat"><b>6</b><span>measurement faults found in our own pipeline and published</span></div>
-      </div>
+  <section class="research-section">
+    <div class="wrap research-layout">
+      <div><p class="eyebrow">Research note / 001</p><h2>How sensitive is a design gain<br>to the model scoring it?</h2></div>
+      <div><p>In our peptide-design experiment, withholding training families from the scoring model increased the reported computational gain. The result motivates closer evaluation of the scoring procedure; it does not establish better biological activity.</p><a class="text-link" href="/science.html#intervention">Read the experiment and its limits <span aria-hidden="true">&rarr;</span></a></div>
     </div>
   </section>
 
-  <section class="band">
-    <div class="wrap">
-      <div class="split">
-        <div class="rail">
-          <p class="kicker"><span class="n">02</span> The film</p>
-          <p>Above: a recorded run of our own membrane simulation.</p>
-        </div>
-        <div class="body">
-          <h2>Two membranes, the same peptides, and the peptides choose.</h2>
-          <p class="muted">The bacterial surface is negatively charged and the human one is not, so
-          the peptide's charged face is pulled harder to the first. By the end of the run they are
-          buried in the bacterial sheet and still sitting on top of the human one.</p>
-          <p class="muted"><strong>It is a simulation we wrote, not a measurement, and it stops
-          short of the step that actually kills the cell.</strong> Every lipid is tethered to its
-          own lattice site, so the sheet springs back and no pore ever opens. Selectivity, the ratio
-          between those two outcomes, is the number this company exists to predict, and it is
-          measured in <a href="/science.html">the science</a>, not here.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band band-brand">
-    <div class="wrap">
-      <div class="split">
-        <div class="rail">
-          <p class="kicker"><span class="n">03</span> Where to go next</p>
-        </div>
-        <div class="body">
-          <h2>Four ways to check us.</h2>
-        </div>
-      </div>
-      <div class="next">
-        <a href="/check.html">
-          <h3>Check your own result</h3>
-          <p>The four checks we failed first, on your data, in this tab. Nothing is uploaded, which
-          is the point: the people who need this are holding results they will not send to a
-          stranger.</p>
-          <span class="go">RUN THE CHECK &rarr;</span>
-        </a>
-        <a href="/demo.html">
-          <h3>Run it on a peptide</h3>
-          <p>Paste a peptide and watch the four steps we actually run, ending with what that
-          molecule measures against ten different bacteria rather than on average.</p>
-          <span class="go">RUN THE PIPELINE &rarr;</span>
-        </a>
-        <a href="/science.html">
-          <h3>Read the evidence</h3>
-          <p>Every number with its sample size and error bar, the six faults we found in our own
-          measurements, and the register of claims we have withdrawn.</p>
-          <span class="go">SEE THE SCIENCE &rarr;</span>
-        </a>
-        <a href="/company.html">
-          <h3>Work with us</h3>
-          <p>Who we are, what we have built, what we do not claim, and what we are trying to
-          fund.</p>
-          <span class="go">ABOUT SILICYTE &rarr;</span>
-        </a>
-      </div>
-    </div>
+  <section class="collaboration-section">
+    <div class="wrap collaboration-layout"><div><p class="eyebrow">Work with Silicyte</p><h2>Start with a specific research question.</h2><p>Have a peptide-design workflow or model result to evaluate? Get in touch to discuss scope, available evidence and a useful next step.</p></div><a class="btn" href="mailto:hello@silicyte.com">hello@silicyte.com <span aria-hidden="true">&nearr;</span></a></div>
   </section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance: large language models
-    are used as the research engineering layer for writing and auditing analysis code, running
-    pre-registered experiments on a university GPU allocation, and checking every reported number
-    against its source table.</p>
-    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">hello@silicyte.com</a></p>
-  </div>
-</footer>
-
-<div class="tip" id="tip" role="status" aria-live="polite"></div>
-
-<script>
-(function () {
-  "use strict";
-  // ---------------------------------------------------------------- chart tooltips
-  var tip = document.getElementById("tip");
-  function showTip(e, text) {
-    tip.textContent = text;
-    tip.classList.add("on");
-    var x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
-    var y = Math.max(8, e.clientY - tip.offsetHeight - 14);
-    tip.style.left = x + "px"; tip.style.top = y + "px";
-  }
-  function hideTip() { tip.classList.remove("on"); }
-  Array.prototype.forEach.call(document.querySelectorAll(".hit"), function (g) {
-    var text = g.getAttribute("data-tip").replace(/&#10;/g, "\n");
-    g.addEventListener("mousemove", function (e) { showTip(e, text); });
-    g.addEventListener("mouseleave", hideTip);
-    g.addEventListener("touchstart", function (e) { showTip(e.touches[0], text); setTimeout(hideTip, 2600); }, { passive: true });
-  });
-
-  // ---------------------------------------------------------------- the chart, staged
-  // The figure rests in its finished state. It is only armed (hidden) if it is below the fold
-  // and motion is allowed, so a reader who lands with it already on screen, or who asked for
-  // reduced motion, or whose browser never runs this, sees the complete chart and not a gap.
-  var fig = document.getElementById("scorerFig");
-  var noMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (fig && !noMotion && "IntersectionObserver" in window) {
-    var r = fig.getBoundingClientRect();
-    if (r.top > (window.innerHeight || 800) * 0.75) {
-      fig.classList.add("armed");
-      var seen = false;
-      new IntersectionObserver(function (es, obs) {
-        es.forEach(function (en) {
-          if (!en.isIntersecting || seen) return;
-          seen = true;
-          fig.classList.add("play");
-          obs.disconnect();
-          // The two headline numbers count while their own bar grows, so the number and the
-          // height arrive together rather than one explaining the other after the fact.
-          countTo(document.getElementById("n1"), 250, 650);
-          countTo(document.getElementById("n2"), 2000, 1050);
-        });
-      }, { threshold: 0.3 }).observe(fig);
-    }
-  }
-
-  function countTo(el, delay, dur) {
-    if (!el) return;
-    var target = parseFloat(el.getAttribute("data-count"));
-    var dec = parseInt(el.getAttribute("data-dec"), 10) || 0;
-    var final = el.textContent;
-    if (!isFinite(target)) return;
-    el.textContent = (0).toFixed(dec) + "x";
-    setTimeout(function () {
-      var t0 = 0;
-      (function step(now) {
-        if (!t0) t0 = now;
-        var p = Math.min(1, (now - t0) / dur);
-        var e = 1 - Math.pow(1 - p, 3);
-        el.textContent = (target * e).toFixed(dec) + "x";
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = final;
-      })(performance.now());
-    }, delay);
-  }
-
-  // ---------------------------------------------------------------- the hero film
-  // The film is an enhancement and it is attached, never assumed. The element ships with a poster
-  // and no source, so a phone, a metered connection, a visitor who asked for less motion, or a
-  // browser with scripting off all get a still frame of the same run and the page is complete.
-  // Nothing in the layout depends on the video arriving.
-  var film = document.getElementById("film");
-  if (!film) return;
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var conn = navigator.connection || {};
-  var thrifty = conn.saveData === true || /^(slow-2g|2g|3g)$/.test(conn.effectiveType || "");
-  if (reduce || thrifty || window.innerWidth < 860) return;
-
-  var src = document.createElement("source");
-  src.src = "/assets/hero/selectivity.mp4";
-  src.type = "video/mp4";
-  film.appendChild(src);
-  film.preload = "auto";
-  film.load();
-  var play = function () { var p = film.play(); if (p && p.catch) p.catch(function () {}); };
-  if (film.readyState >= 2) play(); else film.addEventListener("canplay", play, { once: true });
-
-  // Stop decoding while it is off screen. A looping background video that keeps running under
-  // three screens of text is pure battery cost for something nobody is looking at.
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) play(); else film.pause(); });
-    }, { threshold: 0.05 }).observe(film);
-  }
-})();
-</script>
-<script src="/assets/motion.js?v=202610150600" defer></script>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 </body>
 </html>

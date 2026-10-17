@@ -13,16 +13,16 @@
 <meta property="og:description" content="Drop a CSV and get four checks on whether your reported gain is real. Runs entirely in your browser; nothing is uploaded, because the people who most need this are holding unpublished results.">
 <meta property="og:url" content="https://silicyte.com/check.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610151030">
+<link rel="stylesheet" href="/assets/site.css?v=202610162245">
 <style>
   .drop {
     border: 1px dashed var(--line-strong); border-radius: 0; background: transparent;
@@ -67,8 +67,9 @@
   .tier ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-2); }
   .tier li { margin-bottom: 5px; }
 </style>
+<link rel="stylesheet" href="/assets/refine.css?v=202610162300">
 </head>
-<body>
+<body class="interior-page check-page">
 
 <header class="top">
   <div class="wrap top-in">
@@ -86,32 +87,29 @@
       </svg>
       <b>Silicyte</b>
     </a>
-    <nav>
+    <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Science</a>
+      <a href="/science.html">Research</a>
       <a href="/data.html">Data</a>
-      <a href="/check.html" aria-current="page">Check</a>
-      <a href="/demo.html">Try it</a>
-      <a href="/company.html">Company</a>
+      <a href="/check.html" aria-current="page">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <div class="wrap" style="padding-block:60px 0">
+  <div class="wrap page-intro">
     <div class="col">
       <p class="eyebrow">The instrument</p>
       <h1>Four diagnostics for peptide evaluation tables.</h1>
-      <p class="lede">Each of these four is a mistake we made first, found in our own pipeline, and
-      published. They are cheap to check and expensive to miss, and three of the four pass silently
-      when they are wrong.</p>
-      <p class="lede small">Drop a CSV below. <strong>Nothing is uploaded.</strong> The file is read
-      by this page and never leaves your machine, which matters because the people who most need
-      this check are holding unpublished results they will not send to a stranger.</p>
+      <p class="lede">Inspect sequence overlap, prediction spread, rank ties and split membership. Results describe these diagnostics and their coverage; they do not certify a model or establish biological performance.</p>
+      <p class="lede small">Drop a CSV below. <strong>Nothing is uploaded.</strong> Your selected file is processed locally in this browser. Public site assets and examples are fetched from external servers.</p>
     </div>
-  </div>
+  <aside class="page-context"><p class="context-label">Browser tool</p><h2>Start with your evaluation table</h2><div><span>Unmodified peptide sequences</span><span>CSV input &middot; no account</span><span>Selected files processed locally</span></div></aside>
+</div>
 
-  <section>
+  <section id="checker">
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">01</span> Run it</p>
@@ -138,7 +136,7 @@
         <span>Your file is processed locally and is not uploaded. This page retrieves public fonts,
         scripts and, when requested, our example dataset. There is no file-upload endpoint or
         analytics on this page. The checker source is one readable file you
-        can inspect: <a href="/assets/check.js">check.js</a>. Read it before you trust it.</span>
+        can inspect: <a href="/assets/check.js">check.js</a>. Inspect the implementation and its limits.</span>
       </div>
 
       <div id="config" hidden>
@@ -170,141 +168,45 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">02</span> What each check catches</p>
-        <h2>Why these four and not others.</h2>
-        <p>Because these are the four that got us. Every one of them passed a check we thought was
-        adequate, and every one of them changed a number we had already written down.</p>
+        <h2>What each diagnostic reports.</h2>
+        <p>Interpret each result according to the supplied columns, comparison coverage and
+        stated limits. The research record documents the issues that motivated these checks.</p>
       </div>
 
       <div class="tbl-wrap">
-        <table>
-          <colgroup><col style="width:11%"><col style="width:47%"><col style="width:42%"></colgroup>
-          <thead><tr><th scope="col">Check</th><th scope="col">The failure it catches</th><th scope="col">What it cost us</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><b>LEAK</b></td>
-              <td>A held-out molecule has a near-twin in training. Our previous clustering
-              documents itself as single linkage but compares each sequence only to cluster
-              <em>representatives</em>, first match wins, so transitively similar pairs land in
-              different folds.</td>
-              <td><span class="num">20.1%</span> of MIC and <span class="num">24.6%</span> of HC50 held-out
-              rows, while the standard family-overlap check passed <span class="num">826 of 826</span></td>
-            </tr>
-            <tr>
-              <td><b>SPREAD</b></td>
-              <td>Prediction spread is descriptive. It cannot establish the uncertainty or
-              significance of an experimental effect without the relevant outcomes and design.</td>
-              <td>our earlier conclusions needed an uncertainty analysis appropriate to their design</td>
-            </tr>
-            <tr>
-              <td><b>TIES</b></td>
-              <td>The rank correlation is not tie-corrected. <code>argsort(argsort(x))</code> is an
-              ordinal rank, and it biases every correlation once the target has repeated values,
-              which activity labels always do.</td>
-              <td>every Spearman in one of our lanes needed recomputing</td>
-            </tr>
-            <tr>
-              <td><b>SPLIT</b></td>
-              <td>The same molecule appears on both sides, by string identity, before similarity is
-              even considered. The cheapest possible defect and the easiest to acquire when two
-              databases are merged.</td>
-              <td>one public compilation already contained <span class="num">100%</span> of another, which is
-              how a &ldquo;new data source&rdquo; turns out to be the old one</td>
-            </tr>
-          </tbody>
-        </table>
+        <table><thead><tr><th scope="col">Diagnostic</th><th scope="col">Purpose</th><th scope="col">Interpretation</th></tr></thead><tbody>
+          <tr><td><b>LEAK</b></td><td>Compare peptide similarity across the designated training and test sets.</td><td>Detected close relatives are flagged. A sampled comparison without a finding remains inconclusive.</td></tr>
+          <tr><td><b>SPREAD</b></td><td>Describe the distribution of supplied predictions.</td><td>Prediction spread is descriptive; it is not an experimental error bar or a significance test.</td></tr>
+          <tr><td><b>TIES</b></td><td>Compare tie-corrected rank correlation with an ordinal-rank calculation.</td><td>A difference identifies sensitivity to tie handling. Constant predictions cannot define a Spearman correlation.</td></tr>
+          <tr><td><b>SPLIT</b></td><td>Check exact sequence overlap across designated training and test sets.</td><td>A pass requires usable sequence and split data for every record. It does not rule out all forms of leakage.</td></tr>
+        </tbody></table>
       </div>
 
       <div class="plain">
-        <b>The leak does not flatter all models equally, which is the dangerous part.</b>
-        <span>A large model can memorise a near-twin's label where a 36-feature linear model cannot,
-        so the leak inflates exactly the models people are most excited about. Measured inflation on
-        our own data reaches <span class="num">+0.065</span> on the safety axis. If you are comparing
-        a protein language model against a simple baseline on a leaky split, the comparison is not
-        measuring what you think.</span>
+        <b>Sequence overlap can affect model comparisons.</b>
+        <span>Our historical evaluation recorded score inflation of up to <span class="num">0.065</span>
+        on the safety endpoint after a split defect. The size and direction of an overlap effect
+        depend on the model and evaluation. Corrected splits and retraining are needed to assess
+        the impact on a particular result.</span>
       </div>
 
-      <p class="col muted small" style="margin-top:20px">A pass here is not a certificate. These
-      four are necessary and nowhere near sufficient: they say nothing about whether your target is
-      well specified, and on that point see the <a href="/data.html">data page</a>, where we measure
-      that <span class="num">74.2%</span> of the variance in the standard antimicrobial target is
-      which bacterium was tested rather than anything about the peptide.</p>
+      <p class="col muted small" style="margin-top:20px">Each result applies to its stated diagnostic
+      and coverage. These checks do not establish whether the prediction target matches the intended
+      experimental decision. The <a href="/data.html">dataset analysis</a> illustrates why pooled
+      activity labels require careful interpretation.</p>
     </div>
   </section>
 
-  <section class="flush">
-    <div class="wrap">
-      <div class="col">
-        <p class="kicker"><span class="n">03</span> Working with us</p>
-        <h2>What we do for money.</h2>
-        <p>The checks above are free and always will be, because an instrument nobody runs measures
-        nothing. Two things are not free, and we are stating prices rather than asking you to
-        enquire.</p>
-      </div>
-
-      <div class="price">
-        <div class="tier">
-          <span class="amt">Free</span>
-          <span class="what">This page</span>
-          <p>The four checks, in your browser, on your own unpublished data, with nothing uploaded
-          and no account.</p>
-          <ul>
-            <li>Peptide similarity, prediction spread, tie handling and exact overlap</li>
-            <li>Our corrected folds and the full leak report, <a href="/data.html">CC BY 4.0</a></li>
-            <li>The source, one readable file</li>
-          </ul>
-        </div>
-        <div class="tier">
-          <span class="amt">$5,000&ndash;15,000</span>
-          <span class="what">Full review, fixed fee</span>
-          <p>We go through a specific result end to end: the split, the folds, the controls, the metric,
-          and whether the gain you reported survives all four. Scope and price agreed before we
-          start.</p>
-          <ul>
-            <li>A written report naming each defect and its measured size</li>
-            <li>Corrected folds for your dataset, yours to keep and publish</li>
-            <li>A re-measured headline number, whichever way it goes</li>
-            <li>We will say in writing if we find nothing</li>
-          </ul>
-        </div>
-        <div class="tier">
-          <span class="amt">In development</span>
-          <span class="what">Hosted evaluation</span>
-          <p>Submit a model, get scored against held-out labels you do not hold, on corrected splits
-          and per-organism targets, on every commit. A benchmark whose test set is public is
-          memorised within a year, so part of ours is withheld by design.</p>
-          <ul>
-            <li>Not available yet, and we will not pretend otherwise</li>
-            <li>Email if you want to be the first one and shape it</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col" style="margin-top:40px">
-        <h2 class="h-sm" style="font:500 26px/1.2 var(--display);margin-bottom:14px">Two things worth saying plainly</h2>
-        <p class="muted">We have no laboratory and no experimental result of our own. Every number on
-        this site is computational, and these are computational checks. It can tell you your
-        reported gain is an artifact. It cannot tell you your molecule works.</p>
-        <p class="muted">And we would rather be corrected than cited. If a check here is wrong, the
-        source is one file and the argument is in the open. Send it.</p>
-        <div class="copyrow">
-          <code id="email">hello@silicyte.com</code>
-          <button class="copybtn" id="copyEmail" type="button">Copy address</button>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section class="flush"><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">03</span> Work with Silicyte</p><h2>Need a deeper evaluation?</h2>
+    <p>The browser tool provides a starting point. A project review begins with a specific model result, the available evidence and an agreed scope.</p>
+  </div><div class="price">
+    <div class="tier"><span class="what">Browser diagnostics</span><h3>Free to use</h3><p>Sequence overlap, descriptive prediction spread, rank ties and split membership. No account is required.</p><a href="#checker">Run the diagnostics &rarr;</a></div>
+    <div class="tier"><span class="what">Project review</span><h3>Scope agreed before work</h3><p>Discuss a reproducible review of a defined result, with a written interpretation, scripts and a record of unavailable evidence. Feasibility, deliverables and fees are agreed before an engagement.</p><a href="/company.html#contact">Discuss your evaluation &rarr;</a></div>
+  </div><div class="col tool-scope"><h3>What these checks establish</h3><p>The diagnostics describe the supplied data and their coverage. They do not certify a model, establish biological activity or replace experimental validation. <a href="/science.html">Read the methods and limitations</a>.</p></div></div></section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance: large language models
-    are used as the research engineering layer for writing and auditing analysis code, running
-    pre-registered experiments on a university GPU allocation, and checking every reported number
-    against its source table. Several of the corrections behind these four checks were produced by
-    one model auditing another's code.</p>
-    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
-  </div>
-</footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="/assets/check.js?v=202610162200"></script>
 <script>
@@ -575,6 +477,7 @@
 
   // ---------------------------------------------------------------- email
   var btn = el("copyEmail");
+  if (!btn) return;
   btn.addEventListener("click", function () {
     var node = el("email");
     var done = function () {
@@ -589,6 +492,5 @@
   });
 })();
 </script>
-<script src="/assets/motion.js?v=202610150600" defer></script>
 </body>
 </html>

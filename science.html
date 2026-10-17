@@ -10,14 +10,14 @@
 <link rel="canonical" href="https://silicyte.com/science.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Silicyte Science">
-<meta property="og:description" content="Every number with its error bar, in plain language first, including the ones we withdrew.">
+<meta property="og:description" content="Computational experiments, controls, evaluation methods and research corrections.">
 <meta property="og:url" content="https://silicyte.com/science.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Silicyte Science">
-<meta name="twitter:description" content="Every number with its error bar, in plain language first, including the ones we withdrew.">
-<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:description" content="Computational experiments, controls, evaluation methods and research corrections.">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
@@ -57,7 +57,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@400,500,600,700&f%5B%5D=satoshi@400,401,500,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610151030">
+<link rel="stylesheet" href="/assets/site.css?v=202610162245">
 <style>
   .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
   .toc a {
@@ -66,8 +66,9 @@
   }
   .toc a:hover { border-color: var(--ink-3); color: var(--ink); }
 </style>
+<link rel="stylesheet" href="/assets/refine.css?v=202610162300">
 </head>
-<body>
+<body class="interior-page research-page">
 
 <header class="top">
   <div class="wrap top-in">
@@ -85,45 +86,44 @@
       </svg>
       <b>Silicyte</b>
     </a>
-    <nav>
+    <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html" aria-current="page">Science</a>
+      <a href="/science.html" aria-current="page">Research</a>
       <a href="/data.html">Data</a>
-      <a href="/check.html">Check</a>
-      <a href="/demo.html">Try it</a>
-      <a href="/company.html">Company</a>
+      <a href="/check.html">Evaluate</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <div class="wrap" style="padding-block:60px 0">
+  <div class="wrap page-intro">
     <div class="col">
       <p class="eyebrow">Evidence</p>
-      <h1>Every number, with what it means before what it is.</h1>
-      <p class="lede">Each result below says what it means in plain terms first, then gives the
-      figure, the sample size and the error, so you can check rather than trust.</p>
+      <h1>Research, methods and evidence.</h1>
+      <p class="lede">Computational results with their methods, controls and limitations. This record also preserves corrections to earlier interpretations.</p>
       <div class="toc">
         <a href="#intervention">The intervention</a>
         <a href="#floor">Why checks go blind</a>
         <a href="#noise">The wrong error bar</a>
-        <a href="#faults">Six faults in our own work</a>
+        <a href="#faults">Evaluation corrections</a>
         <a href="#build">Where the limit is</a>
-        <a href="#withdrawn">What we withdrew</a>
+        <a href="#withdrawn">Result status</a>
       </div>
     </div>
-  </div>
+  <aside class="page-context"><p class="context-label">Research record</p><h2>Experiments and controls</h2><div><a href="#intervention">Scoring sensitivity</a><a href="#faults">Evaluation corrections</a><a href="#withdrawn">Result status</a></div></aside>
+</div>
 
   <section id="intervention">
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">01</span> The intervention</p>
-        <h2>Cripple the scorer and the loop reports a better result.</h2>
-        <p>Design loops are usually judged by how much they improve a held-out predictor. We tested
-        whether that number tracks molecule quality by changing the one thing that should control
-        it: how good the scoring model is. We withheld 80% of its training families, which removes
-        whole regions of chemical space rather than thinning data it already covers, and left the
-        measuring model untouched so both arms were judged on the same ruler.</p>
+        <h2>Reported gains depend on the scoring procedure.</h2>
+        <p>We tested the sensitivity of a reported design gain to the scoring model's training
+        coverage. We withheld 80% of its training families and kept the separate measuring model
+        fixed so both arms were evaluated with the same computational procedure. This intervention
+        does not directly measure molecule quality.</p>
       </div>
 
       <div class="plain">
@@ -142,8 +142,8 @@
       the causal mechanism. Shared scorer errors are a hypothesis to test. Six control loops run
       with scrambled rewards all stayed inside their
       pre-registered band of <span class="num">&plusmn;0.11</span>, spanning
-      <span class="num">-0.0851</span> to <span class="num">+0.0396</span>, which is how we know
-      the apparatus itself was behaving.</p>
+      <span class="num">-0.0851</span> to <span class="num">+0.0396</span>. This is a control
+      outcome for these runs, rather than proof that the full evaluation is free of defects.</p>
 
       <p class="col muted small"><b>What this does not show.</b> It does not show the molecules got
       worse, and it does not establish why the effect inverts. A plausible account is that the
@@ -152,7 +152,7 @@
       What it establishes is the sign and the size.</p>
 
       <div class="actions">
-        <a class="btn ghost" href="/demo.html">Reproduce this in your browser</a>
+        <a class="btn ghost" href="/demo.html">Explore the peptide prediction demonstration</a>
       </div>
     </div>
   </section>
@@ -160,7 +160,7 @@
   <section id="floor">
     <div class="wrap">
       <div class="col">
-        <p class="kicker"><span class="n">02</span> Why the usual safeguard fails</p>
+        <p class="kicker"><span class="n">02</span> Interpreting the control</p>
         <h2>An independent metric still needs an appropriate uncertainty analysis.</h2>
         <p>In our retained-candidate experiments, averages varied with which candidates were
         selected. We examined a simple spread-based approximation under an independent-sample
@@ -235,11 +235,9 @@
   <section id="faults">
     <div class="wrap">
       <div class="col">
-        <p class="kicker"><span class="n">04</span> Our own faults</p>
-        <h2>Six things that were wrong in our pipeline, and passed every test we had.</h2>
-        <p>Each of these invalidated a result we had already written down. They are listed because
-        a company whose product is measurement should be judged on what it catches in its own work,
-        and because every one of them is a mistake another group can check for today.</p>
+        <p class="kicker"><span class="n">04</span> Evaluation corrections</p>
+        <h2>Six evaluation issues and their corrections.</h2>
+        <p>The issues below affected earlier results. We retain the original context and corrections to make the research record traceable and the checks reproducible.</p>
       </div>
       <div class="cards">
         <div class="card">
@@ -284,14 +282,14 @@
         <div class="card">
           <span class="ix">FAULT 06</span>
           <h3>A correlation that mishandled ties</h3>
-          <p>Our rank statistic did not correct for tied values, which biased every accuracy figure
-          we had quoted. Activity labels are full of ties, so this was not a small correction. Every
-          figure on this page has since been recomputed with tie correction.</p>
+          <p>Our earlier rank implementation mishandled tied values and affected reported
+          correlations. The current browser checker uses average ranks for ties. Historical
+          model results should be interpreted with their recorded evaluation and correction status.</p>
         </div>
       </div>
       <p class="col muted" style="margin-top:30px">The pattern connecting most of these: the guard
       was tested, and the test passed, but nobody measured the quantity the guard exists to bound.
-      That is the check we now run first, on our own work and on anyone else's.</p>
+      Current checks state the quantity measured, the available coverage and the remaining limits.</p>
     </div>
   </section>
 
@@ -312,18 +310,18 @@
         <span class="num">+0.007</span>, against a threshold of <span class="num">+0.02</span> we
         had set in advance for calling it worthwhile. Going from <span class="num">983</span> to
         <span class="num">1,353</span> training examples moved it <span class="num">+0.003</span>.
-        The limit is in the model and in how it transfers, not in the size of the dataset.</span>
+        This particular experiment does not establish whether additional or different data would
+        improve another model or task.</span>
       </div>
 
       <div class="plain">
-        <b>So we rebuilt the scorer, and the gain came from letting it train.</b>
-        <span>Every accuracy figure this field reports for a protein language model is a linear fit
-        on frozen features. Unfreezing the same weights moves potency by
-        <span class="num">+0.1192</span> and safety by <span class="num">+0.1577</span> on leak-free
-        folds. Safety gains most, which is the opposite of what a data-volume argument predicts,
-        because safety has less than half the labels. Retrained on deliberately scrambled labels the
-        same model scores <span class="num">-0.0228</span>, which is the control that makes the rest
-        mean anything. Full table, folds and method on the <a href="/data.html">data page</a>.</span>
+        <b>Historical fine-tuning comparison.</b>
+        <span>Our recorded comparison of frozen features and fine-tuning reported changes of
+        <span class="num">+0.1192</span> for potency and <span class="num">+0.1577</span> for safety.
+        These are computational results for that evaluation. A shuffled-label run scored
+        <span class="num">-0.0228</span>; one null run does not establish independence of every
+        selection step. The fine-tuning result was not freshly reproduced in the October 16
+        descriptor-baseline rerun. See the <a href="/data.html">data record and limitations</a>.</span>
       </div>
     </div>
   </section>
@@ -332,9 +330,9 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">06</span> Withdrawn</p>
-        <h2>Results we published and then took back.</h2>
-        <p>A programme that shows only its surviving results gives you no way to judge how many did
-        not survive. This list is kept current.</p>
+        <h2>Research corrections and result status.</h2>
+        <p>Earlier claims are retained below with their current status and the evidence that
+        changed their interpretation.</p>
       </div>
       <div class="ledger">
         <div>
@@ -387,15 +385,6 @@
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>Silicyte, South Jordan, Utah. Research conducted with AI assistance. No molecule described
-    on this page has a measured potency or safety value; every activity figure is a model
-    prediction, and outside measurement comes only through challenge organisers who make and test
-    selected entries.</p>
-    <p>&copy; 2026 Silicyte &middot; <a href="/company.html">Company</a></p>
-  </div>
-</footer>
-<script src="/assets/motion.js?v=202610150600" defer></script>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 </body>
 </html>
