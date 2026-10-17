@@ -199,6 +199,17 @@ python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style
       <p><strong>0.80 Levenshtein is a choice,</strong> and it is the threshold the evaluations I
       work with are meant to mimic. The scripts take it as a parameter and the rates at 0.85, 0.90
       and 0.95 are in the output.</p>
+      <p><strong>Related work, and a connection I have not tested.</strong> Adamczyk, Ludynia and
+      Czech (<a href="https://arxiv.org/abs/2501.17901">arXiv:2501.17901</a>, also in
+      <em>Bioinformatics</em> 42(5)) show that count-based molecular fingerprints with short-range
+      features outperform GNNs and transformers across LRGB and five other peptide benchmarks, which
+      challenges the assumption that long-range interaction modelling is necessary. They do not
+      measure sequence overlap, and I am not claiming they did. But the two results sit next to each
+      other in an interesting way: if 65% of test rows have a close relative in training, a model
+      that can recognise local motifs has a route to a good score that does not require learning the
+      property. That is a hypothesis about a mechanism, it is not something I have tested, and
+      testing it would mean retraining both model families on corrected splits.</p>
+
       <p><strong>Homology leakage is not a new concern.</strong> It is well documented in general.
       The only thing I am adding is the measurement on these specific published splits, and the
       comparison between the ones that handled it and the one that handled it well.</p>
