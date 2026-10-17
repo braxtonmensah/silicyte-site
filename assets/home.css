@@ -85,3 +85,42 @@
   .collaboration-layout { flex-direction: column; align-items: flex-start; gap: 25px; }
   .footer-row { flex-direction: column; gap: 10px; }
 }
+
+/* ---------------------------------------------------------------- evidence strip
+   Four measured figures in the first screen, each linking to the page that shows the run.
+   Across fourteen biomedical AI sites benchmarked on 2026-10-14, zero put a checkable number
+   above the fold; they quote petabyte counts with nothing attached. This is the cheapest
+   available differentiator, so it gets the most legible treatment on the page: mono numerals
+   at tabular width, a hairline between cells, and the label set small above the figure so the
+   eye lands on the number first. */
+.evidence {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  margin: 34px 0 0; padding-top: 24px; border-top: 1px solid #24303a;
+  gap: 0;
+}
+.evidence > div { display: flex; flex-direction: column; padding-right: 20px; border-right: 1px solid #24303a; }
+.evidence > div:last-child { border-right: 0; padding-right: 0; }
+.evidence > div + div { padding-left: 20px; }
+.evidence dt {
+  font: 500 9.5px/1.45 var(--mono); letter-spacing: .09em; text-transform: uppercase;
+  color: #7f909f; margin-bottom: 9px; max-width: 17ch;
+}
+.evidence dd { margin: auto 0 0; }
+.evidence dd a { text-decoration: none; display: inline-block; }
+.evidence dd b {
+  font: 500 23px/1 var(--mono); font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em; color: #e9f1f7; white-space: nowrap;
+  border-bottom: 1px solid transparent; padding-bottom: 2px;
+}
+.evidence dd a:hover b { border-bottom-color: #7f909f; }
+
+@media (max-width: 980px) {
+  .evidence { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+  .evidence > div:nth-child(2) { border-right: 0; padding-right: 0; }
+  .evidence > div:nth-child(3) { padding-left: 0; }
+  .evidence dd b { font-size: 21px; }
+}
+@media (max-width: 560px) {
+  .evidence { grid-template-columns: 1fr 1fr; }
+  .evidence dt { font-size: 9px; max-width: none; }
+}
