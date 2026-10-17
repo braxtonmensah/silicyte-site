@@ -64,7 +64,7 @@
       <p class="eyebrow">Measurement &middot; 2026-10-17</p>
       <h1>65% of a NeurIPS benchmark&rsquo;s test set has a near-duplicate in training.</h1>
       <p class="lede">I measured train/test sequence overlap across <strong>thirteen published splits</strong>
-      from five benchmark families. Seven leak and six are clean. Then I tested whether the contamination actually costs anything, against a gate fixed in advance, and <strong>it came back null</strong>. Both results are below.</p>
+      from five benchmark families. Seven leak and six are clean. Then I measured what the contamination actually costs, against a gate fixed in advance, and the answer turned out to depend on the model: <strong>null for a 26-feature baseline, +0.13 Spearman for a protein language model</strong>, on identical data.</p>
       <p class="muted small">Every file is downloaded from its own published location and hashed at
       run time. For the LRGB row both checksums match the values hard-coded in that benchmark&rsquo;s
       own loader.</p>
@@ -248,65 +248,78 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
 
   <section>
     <div class="wrap"><div class="col">
-      <p class="kicker"><span class="n">03b</span> The test that argues against this page</p>
-      <h2>I measured whether the contamination actually costs anything. It did not.</h2>
-      <p>Everything above is a contamination rate, and this page has said repeatedly that a
-      contamination rate is not an inflation. That is a fair thing for a reader to push on, so I
-      tested it.</p>
-      <p>PepBenchmark makes the test unusually clean: it ships four split strategies over the
-      <em>identical rows</em>, five seeds each. Same data, same model, same seeds, only the
-      held-out assignment changes. I wrote the hypothesis, the gate and the null
+      <p class="kicker"><span class="n">03b</span> What the contamination actually costs</p>
+      <h2>It depends on whether your model can exploit it.</h2>
+      <p>Everything above is a contamination rate, and this page said for a long time that a rate
+      is not an inflation. So I measured the inflation, against a gate written down
       <a href="https://github.com/braxtonmensah/silicyte-design-loops/blob/main/thirdparty/PREREG_INFLATION.md">before
-      training anything</a>: support required a gap of at least <span class="num">0.03</span>
-      Spearman with the same sign in four of five seeds.</p>
+      anything was trained</a>: support needed <span class="num">0.03</span> Spearman with the same
+      sign in four of five seeds.</p>
+      <p>PepBenchmark makes this unusually clean. It ships four split strategies over the
+      <em>identical rows</em>, five seeds each. Same data, same labels, same ridge, same averaged
+      penalty grid. I ran it twice, changing only the features.</p>
+
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th scope="col">Split strategy</th><th scope="col">Contamination</th><th scope="col">Held-out Spearman, E. coli MIC</th><th scope="col">Haemolysis HC50</th></tr></thead>
+          <thead><tr>
+            <th scope="col">Features</th><th scope="col">random</th><th scope="col">mmseqs2</th>
+            <th scope="col">hybrid</th><th scope="col">cdhit</th>
+            <th scope="col">random &minus; cdhit</th><th scope="col">Verdict</th>
+          </tr></thead>
           <tbody>
-            <tr><td><code>random_split</code></td><td class="n">66.5% / 77.4%</td><td class="n">+0.4771</td><td class="n">+0.4604</td></tr>
-            <tr><td><code>mmseqs2_split</code></td><td class="n">29.2% / 48.6%</td><td class="n">+0.4920</td><td class="n">+0.4299</td></tr>
-            <tr><td><code>hybrid_split</code></td><td class="n">30.0% / 48.6%</td><td class="n">+0.4700</td><td class="n">+0.4667</td></tr>
-            <tr><td><code>cdhit_split</code></td><td class="n">19.1% / 30.5%</td><td class="n">+0.4871</td><td class="n">+0.3870</td></tr>
+            <tr><td>26 hand-built descriptors</td><td class="n">+0.4771</td><td class="n">+0.4920</td>
+                <td class="n">+0.4700</td><td class="n">+0.4871</td>
+                <td class="n">&minus;0.0100</td><td>null</td></tr>
+            <tr style="background:var(--brand-tint)"><td><b>ESM2-35M embeddings</b></td>
+                <td class="n"><b>+0.5798</b></td><td class="n">+0.4997</td>
+                <td class="n">+0.4795</td><td class="n">+0.4497</td>
+                <td class="n"><b>+0.1301</b></td><td><b>supported</b></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="col muted small" style="margin-top:14px">Ridge on fixed peptide descriptors,
-      penalty averaged over a grid rather than selected, tie-corrected Spearman, all five shipped
-      seeds. Mean over seeds.</p>
+      <p class="col muted small" style="margin-top:14px">Held-out Spearman on
+      <code>antimicrobial_E_coli_mic</code>, mean over PepBenchmark&rsquo;s five shipped seeds.
+      ESM2 arm: SE 0.0143, every one of five seeds positive (+0.1039, +0.1704, +0.1491, +0.0927,
+      +0.1344). Contamination on those two splits is 66.54% and 19.11%.</p>
 
       <div class="plain">
-        <b>Result: null, on both datasets.</b>
-        <span>On E. coli MIC the most contaminated split scored <span class="num">0.0100</span>
-        <em>lower</em> than the least contaminated, which is the wrong sign. On haemolysis the gap
-        was <span class="num">+0.0734</span>, which clears the magnitude, but the sign held in only
-        three of five seeds, so the pre-registered sign condition fails. Calling that one a success
-        would be selecting the dataset that cooperated.</span>
+        <b>The same contaminated split is worth nothing to one model and 0.13 to another.</b>
+        <span>A 26-feature descriptor model has nowhere to store a particular near-twin, so 66.54%
+        contamination buys it nothing and the comparison comes out flat. A 480-dimensional protein
+        language model representation can carry enough about a specific sequence that a
+        near-duplicate in training is worth <span class="num">0.13</span> Spearman. The difference
+        in measured inflation between the two is <span class="num">+0.1401</span>, on identical
+        data.</span>
       </div>
 
-      <h3 style="margin-top:34px">The useful part is why it is null</h3>
-      <p><strong>The spread between seeds is larger than the spread between split strategies.</strong>
-      Pooled seed standard deviation is <span class="num">0.0509</span> on E. coli MIC against a
-      split effect of <span class="num">0.0100</span>, and <span class="num">0.0718</span> on
-      haemolysis against <span class="num">0.0733</span>. At this sample size the thing everyone
-      argues about is sitting underneath the noise.</p>
-      <p>That has a consequence beyond this page: <strong>a reported difference between split
-      strategies on a dataset this size, from a single seed, is not distinguishable from
-      noise</strong>. It is the resolution-floor problem again, arriving from a different
-      direction, and it lands on this work first.</p>
+      <h3 style="margin-top:34px">Why this matters more than another rate</h3>
+      <p><strong>A contamination rate on its own does not tell you what your evaluation is
+      worth.</strong> You need the rate and the model, because capacity is what converts
+      near-duplicates into score. That is the thing I could not say this morning and can say now,
+      and it is the reason to measure rather than to assume.</p>
 
-      <h3 style="margin-top:28px">What the null does and does not mean</h3>
-      <p>It does not retract a single contamination rate. Those were measured directly from hashed
-      downloads and they stand. It retracts nothing else either, because no inflation was ever
-      claimed here; the caution was correct and is now tested rather than asserted.</p>
-      <p>It also does not show that contamination never costs anything. It shows that for a
-      <em>low-capacity descriptor model</em> on <em>these two datasets</em> at <em>this n</em>, it
-      does not. Two choices deliberately biased against finding an effect: a weak model has little
-      capacity to memorise a near-twin, and the penalty was averaged rather than selected. A
-      high-capacity model is where an effect would be expected to show, and that test is written
-      and not yet run.</p>
-      <p class="muted">If that one is null too, the honest headline for this work changes to
-      something more interesting than the one I set out to write: published benchmarks are
-      contaminated, and it appears to cost less than you would think.</p>
+      <h3 style="margin-top:28px">What stayed null, which is most of it</h3>
+      <p><code>hemolytic_hc50</code> is null under <em>both</em> models: +0.0734 with descriptors
+      and +0.0744 with ESM2, and in both cases the sign holds in only three of five seeds, so the
+      pre-registered sign condition fails. Per-seed on the ESM2 arm it runs +0.0516,
+      &minus;0.0108, &minus;0.0190, +0.1440, +0.2061. That set has 1,926 rows against 3,204, which
+      is the obvious explanation and one I have not tested.</p>
+      <p><strong>One of four dataset-model cells is supported.</strong> The effect is real where it
+      appears and it is not universal, and anyone quoting the 0.13 without that sentence is
+      quoting me badly.</p>
+
+      <h3 style="margin-top:28px">And a weak model can be inflated too, if contamination is severe</h3>
+      <p>On LRGB Peptides-func, at <span class="num">65.29%</span> contamination, the plain
+      descriptor ridge scores <span class="num">+0.0333</span> macro-AP higher on the shipped split
+      than on the
+      <a href="/data/lrgb-corrected-v1/">identity-separated one I built</a> (SE 0.0015, five of
+      five rebuilds). So severity and capacity both matter, and separating them is the next
+      experiment rather than a conclusion.</p>
+
+      <p class="muted">Limits worth stating plainly: ridge on <em>frozen</em> embeddings, not a
+      fine-tuned encoder and not a GNN, so none of this transfers to PepBenchmark&rsquo;s or
+      LRGB&rsquo;s leaderboard numbers. ESM2-35M is the smallest ESM2 there is. One benchmark, two
+      datasets, four cells. The capacity story is a hypothesis with one contrast behind it.</p>
     </div></div>
   </section>
 
