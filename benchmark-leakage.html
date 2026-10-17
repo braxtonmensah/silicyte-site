@@ -63,10 +63,9 @@
     <div class="col">
       <p class="eyebrow">Measurement &middot; 2026-10-17</p>
       <h1>65% of a NeurIPS benchmark&rsquo;s test set has a near-duplicate in training.</h1>
-      <p class="lede">I measured train/test sequence overlap across <strong>eleven published splits</strong>
-      from five benchmark families. Six leak, including one that leaks despite applying a homology
-      control. <strong>Five are clean</strong>, and four of those come from the same benchmark, which
-      is what makes the rest of the table worth reading.</p>
+      <p class="lede">I measured train/test sequence overlap across <strong>thirteen published splits</strong>
+      from five benchmark families. Seven leak and six are clean, and one benchmark appears on both
+      sides of that line, which turns out to be the most useful thing in the table.</p>
       <p class="muted small">Every file is downloaded from its own published location and hashed at
       run time. For the LRGB row both checksums match the values hard-coded in that benchmark&rsquo;s
       own loader.</p>
@@ -102,6 +101,10 @@
                 <td>as above</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
             <tr><td><b>FLIP scl</b> <code>mixed_hard</code><br><span class="small muted">different task: 10-class localisation</span></td>
                 <td>as above</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
+            <tr><td><b>FLIP conservation</b> <code>sampled</code><br><span class="small muted">same benchmark, random split</span></td>
+                <td>Random 95/5. No clustering.</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
+            <tr style="background:var(--brand-tint)"><td><b>FLIP secondary_structure</b> <code>sampled</code><br><span class="small muted">same benchmark, same random design</span></td>
+                <td>Random 95/5. No clustering.</td><td class="n">0.00%</td><td class="n"><b>65.38%</b></td></tr>
           </tbody>
         </table>
       </div>
@@ -115,19 +118,22 @@
 
   <section>
     <div class="wrap"><div class="col">
-      <p class="kicker"><span class="n">01</span> The five clean rows</p>
+      <p class="kicker"><span class="n">01</span> The six clean rows</p>
       <h2>They are why the rest of the table is believable.</h2>
       <p>If a check reports contamination everywhere, it is a false-positive generator and you
-      should ignore it. This one returns <strong>0.00%</strong> and <strong>0.29%</strong> on two
-      splits produced by different groups, on different molecule types, neither of which I had any
-      hand in.</p>
-      <p>The AMP Scanner v2 pair is the sharpest version. One paper, one tool, one preprocessing
-      run, two classes: positives filtered at 90% identity come back at 16.71%, negatives filtered
-      at 40% come back at exactly zero. The check discriminates on the threshold alone. It also
-      localises the damage, because contamination confined to the positive class inflates
-      <em>sensitivity</em> specifically rather than accuracy uniformly.</p>
-      <p>FLIP meltome is the other, and it is the more useful one, because it shows the problem is
-      solvable rather than inherent.</p>
+      should ignore it. This one returns <strong>0.00%</strong> five times and
+      <strong>0.29%</strong> once, on six splits I had no hand in, from two different groups,
+      across peptides and full-length proteins and across regression, 10-class classification and
+      per-residue prediction.</p>
+      <p>The AMP Scanner v2 pair is the sharpest single version. One paper, one tool, one
+      preprocessing run, two classes: positives filtered at 90% identity come back at
+      <span class="num">16.71%</span>, negatives filtered at 40% come back at exactly zero. The
+      check discriminates on the threshold alone. It also localises the damage, because
+      contamination confined to the positive class inflates <em>sensitivity</em> specifically
+      rather than accuracy uniformly.</p>
+      <p>FLIP matters for a different reason: it is the only benchmark here that appears on both
+      sides of the table, and that contrast is the most useful thing on this page. See the
+      correction below.</p>
     </div></div>
   </section>
 
@@ -160,6 +166,41 @@
       byte-different files with different checksums whose train and test index sets are identical
       across all five seeds, on both datasets. The k-mer motif split has collapsed into the random
       split.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker"><span class="n">02a</span> The correction</p>
+      <h2>One benchmark sits on both sides of the line, and that is the finding.</h2>
+      <p>Earlier today this page said FLIP was clean on four splits out of four. I then measured
+      three more and one of them is not clean at all.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">FLIP split</th><th scope="col">How it is built, per FLIP&rsquo;s own README</th><th scope="col">Twin &ge; 0.80</th></tr></thead>
+          <tbody>
+            <tr><td><code>meltome/mixed</code>, <code>human</code>, <code>human_cell</code></td><td>MMseqs2 at 20% identity, whole clusters assigned</td><td class="n">0.29% / 0.05% / 0.00%</td></tr>
+            <tr><td><code>scl/mixed_hard</code></td><td>cluster-based</td><td class="n">0.00%</td></tr>
+            <tr><td><code>conservation/sampled</code></td><td>&ldquo;Randomly split sequences into train/test with 95/5% probability&rdquo;</td><td class="n">0.00%</td></tr>
+            <tr style="background:var(--brand-tint)"><td><code>secondary_structure/sampled</code></td><td>the same sentence, verbatim, in its own README</td><td class="n"><b>65.38%</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:18px">The two random splits are built by the identical documented
+      procedure and both carry FLIP&rsquo;s green status marker. They land at opposite ends of the
+      table. So the variable here is not the split method at all. It is how redundant the underlying
+      corpus is: the PDB is full of near-identical chains, and the conservation sequences are not.</p>
+      <p><strong>This sharpens the rule rather than breaking it.</strong> &ldquo;Cluster your
+      splits&rdquo; was never the whole story. A random split is perfectly safe when the corpus is
+      not redundant, and badly unsafe when it is, and there is no way to know which case you are in
+      without measuring. That is the argument for measuring, and it is a better argument than the
+      one I had this morning.</p>
+      <p class="muted">Measured but excluded: <code>FLIP bind</code> returns 98.33% on its
+      <code>from_publication</code> split. I am not reporting that as leakage. Its six splits test
+      generalisation across <em>ligand type</em> (<code>one_vs_many</code>, <code>one_vs_sm</code>,
+      <code>one_vs_sn</code>), not across sequence similarity, so the same protein recurring with a
+      different ligand is the design rather than a defect. A sequence-overlap number there does not
+      mean what it means elsewhere on this page.</p>
     </div></div>
   </section>
 
@@ -273,8 +314,7 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
       stability tasks are single-parent mutant libraries: every sequence is a variant of one wild
       type, so an edit-distance check returns about 100% by construction. The number would be real
       and meaningless. Running them to make the table longer would be the same kind of move this
-      page criticises. FLIP&rsquo;s <code>bind</code>, <code>conservation</code> and
-      <code>secondary_structure</code> are simply not done yet.</p>
+      page criticises. FLIP&rsquo;s <code>bind</code> is measured and excluded for the reason given above: its splits control for ligand type, not sequence identity.</p>
 
       <p><strong>Homology leakage is not a new concern.</strong> It is well documented in general.
       The only thing I am adding is the measurement on these specific published splits, and the
