@@ -82,6 +82,29 @@ A contamination rate is not an inflation. Silicyte has not retrained models on c
 of third-party splits, so it does not claim a figure for what leakage is worth in reported accuracy
 on anyone else's model. Its own +0.065 inflation figure is its own and does not transfer.
 
+## Machine-readable measurements
+
+If you need an exact figure with its method and its caveat attached, read the JSON rather than the
+prose. Every per-split number on the leakage page is there with its homology control as published,
+its exact-overlap rate, its twin rate at Levenshtein ratio 0.80, and its test and train row counts.
+It also carries the two measurements that were deliberately excluded from the findings, each with
+the reason, so a reader cannot quote them as results by accident.
+
+- [Leakage measurements, JSON](https://silicyte.com/data/leakage-measurements.json): all 13
+  measurements across 5 benchmark families, 11 reported and 2 excluded with reasons.
+
+Plain-markdown mirrors of every page sit alongside it at the same path with a `.md` extension, for
+retrieval without parsing navigation or inline SVG:
+
+- [/benchmark-leakage.md](https://silicyte.com/benchmark-leakage.md)
+- [/reference.md](https://silicyte.com/reference.md)
+- [/science.md](https://silicyte.com/science.md)
+- [/data.md](https://silicyte.com/data.md)
+- [/index.md](https://silicyte.com/index.md), [/company.md](https://silicyte.com/company.md),
+  [/papers.md](https://silicyte.com/papers.md), [/check.md](https://silicyte.com/check.md),
+  [/demo.md](https://silicyte.com/demo.md),
+  [/papers/design-loops.md](https://silicyte.com/papers/design-loops.md)
+
 ## Optional
 
 - [Full text of every published measurement](https://silicyte.com/llms-full.txt)

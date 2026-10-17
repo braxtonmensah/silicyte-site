@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRGB Peptides-func corrected split and download | Silicyte</title>
+<meta name="description" content="Download Silicyte's corrected LRGB Peptides-func row-index split, with release metadata, methods, source checksums and limitations. Computational evaluation data.">
+<link rel="canonical" href="https://silicyte.com/data/lrgb-corrected-v1/">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="LRGB Peptides-func corrected split and download">
+<meta property="og:description" content="A downloadable row-index split with its original-split control, methods and limitations.">
+<meta property="og:url" content="https://silicyte.com/data/lrgb-corrected-v1/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "@id": "https://silicyte.com/data/lrgb-corrected-v1/#dataset",
+  "name": "Silicyte corrected LRGB Peptides-func split v1",
+  "description": "Row indices for a transitive single-linkage split of LRGB Peptides-func at Levenshtein ratio 0.80. Release metadata records 0 of 2,331 test rows with a training relative at this threshold, against 65.29% for the original split. These are overlap measurements, not a model-performance or experimental claim.",
+  "url": "https://silicyte.com/data/lrgb-corrected-v1/",
+  "version": "1",
+  "datePublished": "2026-10-17",
+  "isAccessibleForFree": true,
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "creator": {"@type": "Person", "name": "Braxton Mensah"},
+  "publisher": {"@type": "Organization", "@id": "https://silicyte.com/#organization", "name": "Silicyte", "url": "https://silicyte.com/"},
+  "measurementTechnique": "Transitive single linkage at Levenshtein ratio 0.80, with whole clusters assigned to folds",
+  "distribution": {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://silicyte.com/data/lrgb-corrected-v1/lrgb_peptides_func_singlelinkage080.json"}
+}
+</script>
+<link rel="stylesheet" href="/assets/site.css?v=202610170700">
+<link rel="stylesheet" href="/assets/refine.css?v=202610170700">
+</head>
+<body class="interior-page">
+<header class="top"><div class="wrap top-in">
+  <a class="brandmark" href="/" aria-label="Silicyte home"><b>Silicyte</b></a>
+  <nav aria-label="Main navigation">
+    <a href="/">Home</a><a href="/science.html">Research</a><a href="/papers.html">Papers</a>
+    <a href="/reference.html">Reference</a><a href="/data.html">Data</a><a href="/company.html">About</a>
+  </nav>
+</div></header>
+<main>
+  <div class="wrap page-intro"><div class="col">
+    <p class="eyebrow">Open evaluation data &middot; Version 1 &middot; 17 October 2026</p>
+    <h1>LRGB Peptides-func.<br>A corrected evaluation split.</h1>
+    <p class="lede">Download the row indices, inspect the release metadata, and compare the corrected split with the original-split control.</p>
+    <div class="actions">
+      <a class="btn" href="lrgb_peptides_func_singlelinkage080.json" download>Download split JSON</a>
+      <a class="text-link" href="README.md">Read the release notes</a>
+    </div>
+  </div></div>
+  <section class="flush"><div class="wrap"><div class="col">
+    <h2>What the release records</h2>
+    <p>The release metadata records <strong>0 of 2,331 test rows</strong> with a training sequence at Levenshtein ratio <strong>0.80 or above</strong>. The same run records <strong>65.29%</strong> on LRGB's original split. These measure sequence overlap; they do not measure how much any model's score changes.</p>
+    <p>The split uses transitive single linkage, assigns whole clusters to folds, and retains 10,873 training, 2,331 validation and 2,331 test rows. It records 6,339 clusters and seed <code>20261017</code>.</p>
+    <h2>How to use the file</h2>
+    <p>The JSON contains <code>splits.train</code>, <code>splits.val</code> and <code>splits.test</code>. Each is a list of zero-based row indices into LRGB's <code>peptide_multi_class_dataset.csv.gz</code> in its original file order. Update your loader to read this JSON format; it is not a pickle file.</p>
+    <p>The source-data MD5 is <code>701eb743e899f4d793f0e13c8fa5a1b4</code>; the original-split MD5 is <code>5a0114bdadc80b94fc7ae974f13ef061</code>. Check your inputs before using these indices.</p>
+    <p><a href="https://github.com/braxtonmensah/silicyte-design-loops/blob/main/thirdparty/build_lrgb_split.py">Inspect the builder and verification code</a>. The release notes describe the control and method.</p>
+    <h2>Scope and licence</h2>
+    <p>This download contains split indices and metadata, not the underlying molecular dataset. The split release is CC BY 4.0; the underlying LRGB data retains its own CC BY-NC 4.0 terms.</p>
+    <p>No model-performance improvement follows from the overlap count alone. The 0.80 threshold is a stated evaluation choice, not a universal guarantee of independence. Computational results do not establish biological activity or clinical usefulness.</p>
+    <p>Credit: Braxton Mensah, Silicyte (2026), <cite>Corrected LRGB Peptides-func split, v1</cite>, <a href="https://silicyte.com/data/lrgb-corrected-v1/">release page</a>. This is a release citation, not a DOI or peer-reviewed publication.</p>
+    <div class="actions"><a class="text-link" href="/benchmark-leakage.html">Read the benchmark audit</a><a class="text-link" href="/data.html">Browse other evaluation data</a></div>
+  </div></div></section>
+</main>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+</body>
+</html>

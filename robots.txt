@@ -4,9 +4,8 @@ User-agent: *
 Allow: /
 
 # ---------------------------------------------------------------------------
-# Training crawlers. Most sites block these. We do not, deliberately.
-# CCBot is Common Crawl, which is the corpus nearly every open model is
-# pretrained on, so it is the single highest-leverage line in this file.
+# Training crawler access is allowed. Permission to crawl does not guarantee
+# crawling, inclusion in a training corpus, citations or search visibility.
 # ---------------------------------------------------------------------------
 User-agent: CCBot
 Allow: /
@@ -75,8 +74,8 @@ User-agent: Scrapy
 Allow: /
 
 # ---------------------------------------------------------------------------
-# Retrieval and answer-engine crawlers: these fetch a page at question time,
-# which is how a specific measurement ends up quoted in an assistant's answer.
+# Retrieval and answer-engine crawler access is allowed. Inclusion in an
+# answer or citation is determined by each service, not this file.
 # ---------------------------------------------------------------------------
 User-agent: OAI-SearchBot
 Allow: /
@@ -132,9 +131,8 @@ Allow: /
 # ---------------------------------------------------------------------------
 # Machine-readable summaries for language models.
 #   /llms.txt       short index of the site and its headline measurements
-#   /llms-full.txt  every published measurement in one plain-text file
-# Plain-markdown mirrors of each page sit alongside it at the same path with
-# a .md extension, e.g. /benchmark-leakage.md
+#   /llms-full.txt  extended research summary
+# These summaries are optional resources, not Google ranking directives.
 # ---------------------------------------------------------------------------
 
 Sitemap: https://silicyte.com/sitemap.xml

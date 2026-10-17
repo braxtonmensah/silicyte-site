@@ -27,6 +27,117 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=202610170830">
 <link rel="stylesheet" href="/assets/refine.css?v=202610170830">
+<link rel="alternate" type="text/markdown" href="/benchmark-leakage.md" title="Plain markdown mirror">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Report",
+      "@id": "https://silicyte.com/benchmark-leakage.html#report",
+      "url": "https://silicyte.com/benchmark-leakage.html",
+      "name": "Train/test sequence overlap measured in thirteen published peptide and protein ML splits",
+      "headline": "65% of a NeurIPS benchmark's test set has a near-duplicate in training",
+      "datePublished": "2026-10-17",
+      "dateModified": "2026-10-17",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "author": {
+        "@type": "Person",
+        "name": "Braxton Mensah",
+        "affiliation": {"@type": "Organization", "name": "Silicyte"}
+      },
+      "publisher": {"@id": "https://silicyte.com/#org"},
+      "about": [
+        {"@type": "Thing", "name": "Data leakage"},
+        {"@type": "Thing", "name": "Train-test contamination"},
+        {"@type": "Thing", "name": "Benchmark validity"},
+        {"@type": "Thing", "name": "Antimicrobial peptides"},
+        {"@type": "Thing", "name": "Sequence identity clustering"}
+      ],
+      "abstract": "The fraction of test rows carrying a training sequence at Levenshtein ratio 0.80 or above, measured across thirteen published splits in five benchmark families. LRGB Peptides-func 65.29%, AMPlify positives 63.47%, PepBenchmark's documented 30%-identity default 29.97% and 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, FLIP meltome 0.29%. The load-bearing result is that FLIP conservation and FLIP secondary_structure are built by the identical documented random 95/5 procedure and measure 0.00% and 65.38%, so the variable is corpus redundancy rather than the split method.",
+      "disambiguatingDescription": "These are contamination rates, not score inflations. Nothing was retrained, so the measurements do not state by how much any reported accuracy is overstated.",
+      "citation": [
+        {"@type": "CreativeWork", "name": "PepBenchmark, Appendix D.1, self-reported corpus redundancy 19% to 47% at 90% identity"},
+        {"@type": "CreativeWork", "name": "Tonshoff et al., TMLR 2024, a critique of LRGB on hyperparameters rather than data"}
+      ],
+      "mainEntity": {"@id": "https://silicyte.com/data/leakage-measurements.json#dataset"},
+      "correction": "An earlier version published at 06:00 ET on 2026-10-17 stated that FLIP was clean on four splits out of four. Three further splits were then measured and secondary_structure sampled returns 65.38%. That claim is retracted and the correction was posted to the FLIP repository."
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://silicyte.com/data/leakage-measurements.json#dataset",
+      "name": "Leakage measurements across thirteen published peptide and protein ML splits",
+      "description": "Per-split test-row contamination rates. For each published split: the homology control as published, the exact sequence overlap rate, and the fraction of test rows with a training sequence at Levenshtein ratio 0.80 or above, with test and train row counts. Includes two measurements that were deliberately excluded from the findings, each with the reason.",
+      "url": "https://silicyte.com/benchmark-leakage.html",
+      "datePublished": "2026-10-17",
+      "isAccessibleForFree": true,
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": {"@id": "https://silicyte.com/#org"},
+      "measurementTechnique": "Levenshtein ratio against every training sequence, threshold 0.80, computed on each benchmark's own published split files, hashed at runtime",
+      "variableMeasured": [
+        {"@type": "PropertyValue", "name": "Twin rate at Levenshtein ratio 0.80", "unitText": "percent of test rows"},
+        {"@type": "PropertyValue", "name": "Exact sequence overlap", "unitText": "percent of test rows"}
+      ],
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://silicyte.com/data/leakage-measurements.json"
+      },
+      "citation": "https://github.com/braxtonmensah/silicyte-design-loops/tree/main/thirdparty"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://silicyte.com/benchmark-leakage.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do two splits built by the same documented procedure leak 0% and 65%?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the split method is not the variable, corpus redundancy is. FLIP conservation and FLIP secondary_structure both state 'Randomly split sequences into train/test with 95/5% probability' verbatim in their own READMEs, both are flagged green, and they measure 0.00% and 65.38% respectively. The PDB contains an enormous number of near-identical chains, which the secondary structure corpus draws on, and the conservation sequences do not. A random split is safe on a non-redundant corpus and badly unsafe on a redundant one, and there is no way to know which case applies without measuring it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a 65% contamination rate the same as a benchmark being overstated by 65 points?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A contamination rate is not a score inflation. Nothing was retrained to produce these numbers, so they do not say by how much any reported accuracy is overstated. Quoting them as 'benchmark X is overstated by Y points' quotes something that was not measured."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What identity threshold produces a clean protein train/test split?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the splits measured here, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster at min-seq-id 0.2 and assigns whole clusters 80/20, retaining 0.29%. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which measured splits came back clean, and why does that matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Six rows returned at or near zero: AMP Scanner v2 negatives 0.00%, FLIP meltome human_cell 0.00%, FLIP scl mixed_hard 0.00%, FLIP conservation sampled 0.00%, FLIP meltome human 0.05%, and FLIP meltome mixed 0.29%. These are load-bearing. AMP Scanner v2 positives and negatives come from the same paper, the same tool and the same run, differing only in CD-HIT threshold, 90% against 40%, and return 16.71% and exactly 0.00%. A measurement that found contamination everywhere would be worthless as evidence."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://silicyte.com/#org",
+      "name": "Silicyte",
+      "url": "https://silicyte.com/",
+      "email": "hello@silicyte.com",
+      "foundingDate": "2026-10",
+      "description": "Silicyte measures whether a computational molecule-design result is real. Every figure it publishes is computational; it operates no laboratory and claims no experimental result.",
+      "knowsAbout": ["Benchmark validity", "Data leakage", "Peptide design", "Protein binder design", "Reproducibility"]
+    }
+  ]
+}
+</script>
 </head>
 <body class="interior-page">
 <header class="top">
