@@ -139,3 +139,116 @@ footer { padding-block: 28px; border-top: 1px solid #d2dce1; background: #f5f5f0
   .interior-page .tbl-wrap { margin-inline: 0; }
   .footer-row { flex-direction: column; gap: 10px; }
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage leakage figure.
+   This band replaced two paragraphs that said an audit existed. A company whose
+   product is measurement shows the measurement.
+
+   Colour: one sequential hue, steps validated against this band's #0b1016
+   surface (monotone lightness, adjacent gaps >= 0.06, light end 3.21:1, hue
+   spread 1 degree). Brighter = more contamination, so ink tracks the quantity.
+   One series, so there is no legend: the heading names what is plotted.
+   --------------------------------------------------------------------------- */
+.leakfig { padding-block: clamp(3.5rem, 7vw, 6rem); }
+.leakfig h2 { margin: .35rem 0 0; }
+.leakfig-lede {
+  max-width: 46rem; margin: 1rem 0 0; color: var(--ink-2);
+}
+.leakfig-tools { margin-top: 1.75rem; }
+.leakfig-toggle {
+  font: 500 .78rem/1 var(--mono); letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-2); background: transparent; cursor: pointer;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: .5rem .9rem;
+}
+.leakfig-toggle:hover { color: #fff; border-color: #fff; }
+
+.leakfig-fig { margin: 1.25rem 0 0; }
+.leakfig-rows { display: flex; flex-direction: column; gap: 2px; }
+
+.leakfig-row {
+  position: relative;
+  display: grid; align-items: center;
+  grid-template-columns: minmax(11rem, 15rem) 1fr 4.5rem;
+  gap: 1rem;
+  /* Hit target is taller than the mark, per the interaction spec. */
+  padding: .45rem 0;
+  border-radius: 3px;
+}
+.leakfig-row:hover, .leakfig-row:focus-visible {
+  background: rgba(255, 255, 255, .05); outline: none;
+}
+.leakfig-name { font: .82rem/1.3 var(--mono); }
+.leakfig-name b { font-weight: 500; color: var(--ink); display: block; }
+.leakfig-name i { font-style: normal; color: var(--ink-3); }
+
+.leakfig-track {
+  height: 15px; position: relative;
+  /* One recessive baseline instead of a grid. */
+  border-left: 1px solid var(--line-strong);
+}
+.leakfig-bar {
+  display: block; height: 100%;
+  /* Anchored to the baseline, rounded only at the data end. */
+  border-radius: 0 4px 4px 0;
+}
+.leakfig-zero {
+  display: block; height: 100%; width: 3px; background: var(--line-strong);
+}
+.leakfig-val {
+  font: 500 .86rem/1 var(--mono); color: var(--ink); text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.leakfig-val[data-zero] { color: var(--ink-3); }
+
+/* The flagged pair: the two splits built by the identical documented procedure. */
+.leakfig-row.is-flagged .leakfig-name b::after {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-left: .45rem;
+  border-radius: 50%; background: var(--s-amber); vertical-align: middle;
+}
+
+.leakfig-tip {
+  position: absolute; left: 12rem; bottom: calc(100% - .2rem); z-index: 5;
+  max-width: 24rem; padding: .5rem .7rem;
+  font: .78rem/1.35 var(--body); color: #0b1016; background: #e7edf4;
+  border-radius: 4px; box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
+  opacity: 0; visibility: hidden; transition: opacity .12s ease;
+  pointer-events: none;
+}
+.leakfig-row:hover .leakfig-tip, .leakfig-row:focus-visible .leakfig-tip {
+  opacity: 1; visibility: visible;
+}
+
+.leakfig-cap {
+  display: flex; gap: .7rem; align-items: flex-start;
+  margin: 1.75rem 0 0; padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  max-width: 54rem; font-size: .92rem; color: var(--ink-2);
+}
+.leakfig-cap b { color: var(--ink); }
+.leakfig-cap code { font: .85em var(--mono); color: var(--ink); }
+.leakfig-flag {
+  flex: 0 0 auto; width: 7px; height: 7px; margin-top: .45rem;
+  border-radius: 50%; background: var(--s-amber);
+}
+
+.leakfig-table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: .88rem; }
+.leakfig-table caption { text-align: left; color: var(--ink-3); padding-bottom: .6rem; }
+.leakfig-table th, .leakfig-table td {
+  text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--line);
+}
+.leakfig-table thead th { color: var(--ink-3); font-weight: 500; }
+.leakfig-table tbody th { font-weight: 500; font-family: var(--mono); font-size: .84rem; }
+.leakfig-table tbody th span { color: var(--ink-3); }
+.leakfig-table .n { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); }
+
+.leakfig-limit { max-width: 46rem; margin-top: 1.5rem; color: var(--ink-3); font-size: .9rem; }
+.leakfig-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; }
+
+@media (max-width: 720px) {
+  .leakfig-row { grid-template-columns: 1fr 3.9rem; grid-template-areas: "name val" "track track"; gap: .3rem .7rem; }
+  .leakfig-name { grid-area: name; }
+  .leakfig-val { grid-area: val; }
+  .leakfig-track { grid-area: track; }
+  .leakfig-tip { left: 0; max-width: 100%; }
+}
