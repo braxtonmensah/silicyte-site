@@ -4,7 +4,7 @@
 
 # Silicyte
 
-> Peptide and protein design with the control runs attached. We measure whether a design score tracks the molecules or its own error: starved-scorer intervention t = -14.60, 20.1% leakage in the standard split, 0.0000 in our corrected folds.
+> Silicyte publishes research on peptide and protein model evaluation, benchmark leakage and controlled design loops. Explore the methods, code and open data.
 
 Canonical: https://silicyte.com/
 
@@ -18,7 +18,7 @@ Controls included.
 
 We design peptides and protein binders, and we measure whether the score that ranks them is tracking the molecules or its own error.
 
-[Explore the research →](/science.html) [Discuss a project ↗](/company.html#contact)
+[Evaluate your model →](/evaluation.html) [Explore the research →](/science.html)
 
 Starved scorer vs intact [**t = -14.60**](/science.html)
 
@@ -74,10 +74,30 @@ In our peptide-design experiment, withholding training families from the scoring
 
 [Read the experiment and its limits →](/science.html#intervention)
 
+Open research / Benchmark evaluation
+
+## Twelve published splits,
+measured the same way.
+
+Share of test rows carrying a training sequence at a Levenshtein ratio of 0.80 or above. Each bar is a benchmark's own shipped split, read from its own published files. Hover a bar for the homology control its authors applied.
+
+Show as table
+
+**The two bars that matter sit at opposite ends.** FLIP `conservation` and FLIP `secondary_structure` are built by the identical documented procedure. The sentence “Randomly split sequences into train/test with 95/5% probability” appears verbatim in both of their own READMEs, both are flagged green, and they measure **0.00%** and **65.38%**. The variable is not the split method. It is how redundant the underlying corpus is.
+
+Test-row contamination at Levenshtein ratio 0.80, by published split
+
+| Published split | Homology control, as published | Twin ≥ 0.80 |
+|---|---|---|
+
+A contamination rate is not a score inflation. Nothing was retrained for these figures, so they do not say by how much any reported accuracy is overstated. Two further splits were measured and deliberately excluded, each with its reason, in the [machine-readable record](/data/leakage-measurements.json).
+
+[Read the benchmark audit →](/benchmark-leakage.html) [Open the corrected LRGB split →](/data/lrgb-corrected-v1/)
+
 Work with Silicyte
 
-## Start with a specific research question.
+## Does your model improvement survive its own evaluation?
 
-Have a peptide-design workflow or model result to evaluate? Get in touch to discuss scope, available evidence and a useful next step.
+A fixed-scope, ten-business-day retrospective evaluation on the data you already have. One endpoint, one pipeline, a reproduced metric and a corrected comparison. Fixed-fee pilot, $2,500, scoped on a free call first.
 
-[hello@silicyte.com ↗](mailto:hello@silicyte.com)
+[See the Evaluation Sprint →](/evaluation.html)

@@ -252,3 +252,37 @@ footer { padding-block: 28px; border-top: 1px solid #d2dce1; background: #f5f5f0
   .leakfig-track { grid-area: track; }
   .leakfig-tip { left: 0; max-width: 100%; }
 }
+
+/* ---------------------------------------------------------------------------
+   Offer page and the header call to action.
+   The nav already had an unused .cta button style. It now carries "Work with us"
+   on every page, which is how a buyer finds the paid offer from anywhere.
+   --------------------------------------------------------------------------- */
+/* On the homepage the header sits over the dark hero, where the default dark
+   .cta button would vanish. Invert it there until the header scrolls to light. */
+body.has-hero:not(.scrolled) .top nav a.cta { background: #fff; color: #0b1016; }
+body.has-hero:not(.scrolled) .top nav a.cta:hover { background: var(--brand-tint); color: #0b1016; }
+.top nav a.cta { font-weight: 600; margin-left: 4px; }
+
+.offer-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
+
+.offer-facts dl { margin: .75rem 0 0; display: grid; gap: 0; }
+.offer-facts dl > div {
+  display: grid; grid-template-columns: 8.5rem 1fr; gap: .75rem;
+  padding: .6rem 0; border-top: 1px solid var(--line);
+}
+.offer-facts dl > div:first-child { border-top: 0; }
+.offer-facts dt { font: .74rem/1.4 var(--mono); letter-spacing: .03em; text-transform: uppercase; color: var(--ink-3); }
+.offer-facts dd { margin: 0; color: var(--ink); font-weight: 500; }
+.offer-facts dl > div:first-child dd { font: 600 1.5rem/1.1 var(--display); letter-spacing: -.01em; }
+.offer-fine { margin-top: 1rem; font-size: .86rem; color: var(--ink-3); }
+
+.offer-page main ul { padding-left: 1.1rem; }
+.offer-page main ul li { margin: .35rem 0; }
+
+.offer-close { padding-block: clamp(3rem, 6vw, 5rem); }
+.offer-close h2 { margin-top: .35rem; }
+
+@media (max-width: 720px) {
+  .offer-facts dl > div { grid-template-columns: 1fr; gap: .15rem; }
+}

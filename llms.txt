@@ -82,6 +82,15 @@ A contamination rate is not an inflation. Silicyte has not retrained models on c
 of third-party splits, so it does not claim a figure for what leakage is worth in reported accuracy
 on anyone else's model. Its own +0.065 inflation figure is its own and does not transfer.
 
+## Working with Silicyte
+
+- [Model Evaluation Sprint](https://silicyte.com/evaluation.html): a fixed-scope, ten-business-day
+  retrospective evaluation of whether a reported model improvement survives a reproducible
+  evaluation on the customer's own experimental data. One endpoint, one pipeline, one data snapshot.
+  Fixed-fee pilot, $2,500, scoped on a free call first. Peptide activity and toxicity endpoints
+  first. Computational only: it is not prospective laboratory validation and makes no promise about
+  future hit rates. Contact hello@silicyte.com.
+
 ## Machine-readable measurements
 
 If you need an exact figure with its method and its caveat attached, read the JSON rather than the

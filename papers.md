@@ -4,7 +4,7 @@
 
 # Papers and releases
 
-> Measured leakage in three third-party published peptide benchmarks. PepBenchmark's own default 30%-identity split still leaves 29.97% to 48.56% of test rows with a close relative in training; LRGB Peptides-func leaves 65.29%; AMP Scanner v2 gives 16.71% on its 90%-filtered positives against 0.00% on its 40%-filtered negatives.
+> Silicyte research papers, benchmark audits and evaluation-data releases. Read the methods, code, controls and limitations behind our published computational work.
 
 Canonical: https://silicyte.com/papers.html
 
@@ -30,6 +30,8 @@ Braxton Mensah. Degrading a design loop’s selection model on purpose, by withh
 02 Research note
 
 ## The leakage defect is not ours alone.
+
+[Read the benchmark audit, methods and current corrections](/benchmark-leakage.html), or [download the corrected LRGB split](/data/lrgb-corrected-v1/). The table below is a selection of the reported measurements; sequence overlap alone does not quantify score inflation.
 
 Every leakage figure we had published came from our own pipeline on one dataset family, so the claim that this is a field problem rested on a single case, and that case was us. On 2026-10-17 we ran our own check against three third-party published benchmarks. All were downloaded fresh and hashed. For the LRGB benchmark both MD5s match the values hard-coded in its official loader, so this is exactly reproducible rather than approximately.
 

@@ -119,6 +119,8 @@ Computed exactly as the 0.9387 pooled figure was, but within one organism at a t
 
 ## Use a documented evaluation procedure.
 
+For LRGB Peptides-func, a separate release provides [corrected row-index splits, source checksums and release notes](/data/lrgb-corrected-v1/). See the [benchmark audit](/benchmark-leakage.html) for the original-split control and limitations.
+
 For comparisons on these folds, report the exact dataset version, training procedure, model-selection history and metric implementation. Shared folds alone do not make two evaluations equivalent. The release documentation describes the available data and its limits.
 
 Silicyte (2026). Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction. https://silicyte.com/data.html
