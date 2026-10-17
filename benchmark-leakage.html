@@ -63,9 +63,10 @@
     <div class="col">
       <p class="eyebrow">Measurement &middot; 2026-10-17</p>
       <h1>65% of a NeurIPS benchmark&rsquo;s test set has a near-duplicate in training.</h1>
-      <p class="lede">I measured train/test sequence overlap across six published peptide and
-      protein splits. Four leak badly, one leaks despite applying a homology control, and
-      <strong>one is clean</strong>. The difference between them is specific and worth knowing.</p>
+      <p class="lede">I measured train/test sequence overlap across <strong>eleven published splits</strong>
+      from five benchmark families. Six leak, including one that leaks despite applying a homology
+      control. <strong>Five are clean</strong>, and four of those come from the same benchmark, which
+      is what makes the rest of the table worth reading.</p>
       <p class="muted small">Every file is downloaded from its own published location and hashed at
       run time. For the LRGB row both checksums match the values hard-coded in that benchmark&rsquo;s
       own loader.</p>
@@ -95,6 +96,12 @@
                 <td>CD-HIT at 40% identity, pool filtered before splitting</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
             <tr><td><b>FLIP meltome</b> <code>mixed</code><br><span class="small muted">NeurIPS 2021, full-length proteins</span></td>
                 <td>MMseqs2 at <b>20%</b> identity, whole <b>clusters</b> assigned 80/20</td><td class="n">0.00%</td><td class="n"><b>0.29%</b></td></tr>
+            <tr><td><b>FLIP meltome</b> <code>human</code><br><span class="small muted">same benchmark, human proteins only</span></td>
+                <td>as above</td><td class="n">0.00%</td><td class="n"><b>0.05%</b></td></tr>
+            <tr><td><b>FLIP meltome</b> <code>human_cell</code><br><span class="small muted">same benchmark, human cell lysate</span></td>
+                <td>as above</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
+            <tr><td><b>FLIP scl</b> <code>mixed_hard</code><br><span class="small muted">different task: 10-class localisation</span></td>
+                <td>as above</td><td class="n">0.00%</td><td class="n"><b>0.00%</b></td></tr>
           </tbody>
         </table>
       </div>
@@ -108,7 +115,7 @@
 
   <section>
     <div class="wrap"><div class="col">
-      <p class="kicker"><span class="n">01</span> The two clean rows</p>
+      <p class="kicker"><span class="n">01</span> The five clean rows</p>
       <h2>They are why the rest of the table is believable.</h2>
       <p>If a check reports contamination everywhere, it is a false-positive generator and you
       should ignore it. This one returns <strong>0.00%</strong> and <strong>0.29%</strong> on two
@@ -158,6 +165,27 @@
 
   <section>
     <div class="wrap"><div class="col">
+      <p class="kicker"><span class="n">02b</span> A result I am not counting</p>
+      <h2>Peptides-struct is the same split, not a second data point.</h2>
+      <p>LRGB ships a second peptide task, Peptides-struct, and measuring it returns
+      <span class="num">7.72%</span> exact and <span class="num">65.29%</span> twins: identical to
+      Peptides-func to the digit. That is not a confirmation, and I am not presenting it as one.</p>
+      <p>The structure dataset file is genuinely different
+      (<code>9786061a34298a0684150f2e4ff13f47</code>, matching the loader). But
+      <code>splits_random_stratified_peptide_structure.pickle</code> hashes to
+      <code>5a0114bdadc80b94fc7ae974f13ef061</code>, <strong>byte-identical to the func split</strong>,
+      and its train, val and test index sets are identical as sets. LRGB uses one split for both
+      peptide tasks over the same 15,535 molecules; only the label column differs. So this is the
+      same computation on the same sequences, and counting it twice would be the exact error this
+      page is about.</p>
+      <p>The honest framing is stronger than the double-count would have been: <strong>a single
+      contaminated split sits underneath both LRGB peptide leaderboards</strong> and the thirty-plus
+      published models scored on them.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">03</span> Reproduce it</p>
       <h2>Three scripts, no credentials.</h2>
       <p>Each downloads the benchmarks&rsquo; own published files and hashes them at run time.</p>
@@ -167,7 +195,8 @@ cd silicyte-design-loops/thirdparty<br>
 pip install rapidfuzz numpy<br>
 python verify_thirdparty.py&nbsp;&nbsp;<span style="color:var(--ink-3)"># LRGB + AMP Scanner v2</span><br>
 python verify_pepbench.py&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># PepBenchmark, 4 strategies x 5 seeds</span><br>
-python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># AMPlify + FLIP meltome</span>
+python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># AMPlify + FLIP meltome mixed</span><br>
+python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--ink-3)"># FLIP human/human_cell/scl + Peptides-struct</span>
       </span></div>
       <p>LRGB data <code>701eb743e899f4d793f0e13c8fa5a1b4</code> and split
       <code>5a0114bdadc80b94fc7ae974f13ef061</code>, both matching the values hard-coded in
@@ -238,6 +267,14 @@ python verify_more.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style
       sequence identity is the wrong axis to split on. My result is consistent with theirs and
       weaker than it: I show a specific control underperforming, not that the whole approach is
       unsound.</p>
+
+      <p><strong>What I deliberately did not measure, and why.</strong> FLIP&rsquo;s
+      <code>aav</code> and <code>gb1</code> tasks, ProteinGym, and TAPE&rsquo;s fluorescence and
+      stability tasks are single-parent mutant libraries: every sequence is a variant of one wild
+      type, so an edit-distance check returns about 100% by construction. The number would be real
+      and meaningless. Running them to make the table longer would be the same kind of move this
+      page criticises. FLIP&rsquo;s <code>bind</code>, <code>conservation</code> and
+      <code>secondary_structure</code> are simply not done yet.</p>
 
       <p><strong>Homology leakage is not a new concern.</strong> It is well documented in general.
       The only thing I am adding is the measurement on these specific published splits, and the
