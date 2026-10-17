@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Papers and releases | Silicyte</title>
-<meta name="description" content="Measured leakage in three third-party published peptide benchmarks. PepBenchmark's own default 30%-identity split still leaves 29.97% to 48.56% of test rows with a close relative in training; LRGB Peptides-func leaves 65.29%; AMP Scanner v2 gives 16.71% on its 90%-filtered positives against 0.00% on its 40%-filtered negatives.">
+<meta name="description" content="Silicyte research papers, benchmark audits and evaluation-data releases. Read the methods, code, controls and limitations behind our published computational work.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="canonical" href="https://silicyte.com/papers.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Papers and releases | Silicyte">
-<meta property="og:description" content="Measured leakage in three third-party published peptide benchmarks. PepBenchmark's own default 30%-identity split still leaves 29.97% to 48.56% of test rows with a close relative in training; LRGB Peptides-func leaves 65.29%; AMP Scanner v2 gives 16.71% on its 90%-filtered positives against 0.00% on its 40%-filtered negatives.">
+<meta property="og:description" content="Silicyte research papers, benchmark audits and evaluation-data releases. Read the methods, code, controls and limitations behind our published computational work.">
 <meta property="og:url" content="https://silicyte.com/papers.html">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -20,6 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=202610170700">
 <link rel="stylesheet" href="/assets/refine.css?v=202610170700">
+<link rel="alternate" type="text/markdown" href="/papers.md" title="Plain markdown mirror">
 </head>
 <body>
 <header class="top">
@@ -92,6 +93,7 @@
       <div class="col">
         <p class="kicker"><span class="n">02</span> Research note</p>
         <h2>The leakage defect is not ours alone.</h2>
+        <p><a href="/benchmark-leakage.html">Read the benchmark audit, methods and current corrections</a>, or <a href="/data/lrgb-corrected-v1/">download the corrected LRGB split</a>. The table below is a selection of the reported measurements; sequence overlap alone does not quantify score inflation.</p>
         <p>Every leakage figure we had published came from our own pipeline on one dataset family,
         so the claim that this is a field problem rested on a single case, and that case was us.
         On <span class="num">2026-10-17</span> we ran our own check against three third-party
