@@ -165,8 +165,9 @@
           <h2>Why one peptide is not one number.</h2>
           <p>Here is what the nearest labelled relative actually measured, organism by organism, in
           the public record. Across the whole set the median peptide's MIC moves
-          <span class="num">6.1x</span> between organisms, and
-          <span class="num">74.2%</span> of the variance everyone models as noise is this.</p>
+          <span class="num">6.1x</span> between organisms.
+          Our recorded decomposition attributed <span class="num">74.2%</span> of resolvable variance
+          to organism differences; that does not establish a universal noise ceiling.</p>
           <div id="s4out"></div>
         </div>
       </div>
@@ -367,10 +368,10 @@
       body = "Any model trained on this data has seen it. A prediction here measures memory, not generalisation, and the number below is not evidence of anything.";
     } else if (top >= 0.80) {
       cls = "warn"; title = "A near-twin of this peptide is in the training data.";
-      body = "At " + top.toFixed(2) + " identity this sits above the threshold our corrected folds hold out on. A model can score well here by recognising the relative. This is exactly the case that inflates published accuracy by up to 0.065, and the split in common use would have let it through.";
+      body = "At " + top.toFixed(2) + " identity this is above our fold-separation threshold. A close training relative can compromise an evaluation intended to test generalization. This does not establish how much any particular model's accuracy is affected.";
     } else if (top >= 0.40) {
       cls = "ok"; title = "In domain.";
-      body = "The closest labelled relative is " + top.toFixed(2) + " identical, which is close enough for the model to have learned something relevant and far enough that it is not simply recalling it.";
+      body = "The closest labelled relative has similarity " + top.toFixed(2) + ", within this demo's illustrative prediction band. Similarity alone does not validate a prediction or exclude memorization. This is a computational model output, not a measurement of this peptide.";
     } else {
       cls = ""; title = "Out of domain. We do not know how accurate we are here.";
       body = "The closest labelled relative is only " + top.toFixed(2) + " identical. Below 0.40 identity our held-out sample is about five peptides, so our accuracy in this region is unmeasured rather than measured-and-good. The model will still return a number. Treat it as a guess.";

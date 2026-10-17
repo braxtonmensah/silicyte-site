@@ -112,19 +112,20 @@
         </div>
         <div>
           <span class="tag">Resolved</span>
-          <h3>The leaking data split is fixed, and the result survived it</h3>
+          <h3>The released folds pass their stated similarity check</h3>
           <p>We found on <span class="num">2026-10-14</span> that our own cross-validation was
-          leaking, rebuilt it from scratch, and re-measured everything. The scoring-model result
-          survived and improved: <span class="num">0.5356</span> on potency against
-          <span class="num">0.4502</span> for the previous approach, with a scrambled-label control
-          at <span class="num">-0.0228</span>. We also found that a hyperparameter step we thought
-          was best practice was costing us <span class="num">0.038</span>, and removed it.</p>
+          leaking and rebuilt the folds. A full check of the released CSVs on October 16 found no
+          cross-fold pair at or above Levenshtein ratio 0.80. Our historical fine-tuning result was
+          <span class="num">0.5356</span> on potency with a scrambled-label run at
+          <span class="num">-0.0228</span>. These computational results do not establish biological
+          performance or independence of every model-selection step. See the
+          <a href="/data/CORRECTIONS-2026-10-16.md">release corrections and limitations</a>.</p>
         </div>
         <div>
           <span class="tag">Stage</span>
-          <h3>Research stage, bootstrapped, not incorporated</h3>
-          <p>Silicyte was founded in October 2026 and is independent and bootstrapped. There is no
-          legal entity yet, no outside funding and no revenue. Computational candidates are not
+          <h3>Research stage, incorporated and bootstrapped</h3>
+          <p>Silicyte was founded in October 2026. It is incorporated, independent and bootstrapped.
+          Computational candidates are not
           medicines, and we do not describe them as such.</p>
         </div>
         <div>

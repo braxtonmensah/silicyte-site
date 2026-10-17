@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Design-loop gain is scorer exploitation, proven by intervention | Silicyte</title>
-<meta name="description" content="A starved scoring model made the reported improvement 2.4x larger (t = -14.60). Every number here carries its error bar, including the ones we withdrew.">
+<title>Scorer intervention and evaluation limits | Silicyte</title>
+<meta name="description" content="Our starved scorer reported 21-fold computational improvement versus 3.5-fold for the intact arm. The experiment does not establish biological improvement or a causal mechanism. Methods, controls and limitations.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/science.html">
@@ -22,8 +22,8 @@
 {
   "@context": "https://schema.org/",
   "@type": "ScholarlyArticle",
-  "headline": "Design-loop gain is scorer exploitation, proven by intervention",
-  "description": "Starving a design loop's scoring model of four fifths of its training data made the loop report a 2.4x LARGER improvement (difference 0.7761, SE 0.0531, t = -14.60), with all six scrambled-reward controls inside band. A model that knows less cannot design better molecules, so the reported gain was not measuring the molecules. Also reports the resolution floor that makes most independent validation of these loops unreadable, and six measurement faults found in our own pipeline.",
+  "headline": "Scorer intervention and evaluation limits",
+  "description": "Computational experiments in our peptide-design pipeline: withholding scorer training families increased the reported gain. This does not establish actual molecule quality or a causal mechanism. Also records evaluation defects, historical uncertainty approximations and withdrawn claims. No experimentally validated design is claimed.",
   "url": "https://silicyte.com/science.html",
   "datePublished": "2026-10-14",
   "inLanguage": "en",
@@ -127,7 +127,7 @@
       </div>
 
       <div class="plain">
-        <b>Theory says a better scorer gains more. The measurement says the opposite, hard.</b>
+        <b>Withholding scorer training families increased the reported computational gain.</b>
         <span>Intact scorer: the loop reported its molecules ended <span class="num">3.5x</span>
         better at killing bacteria relative to harming blood cells. Scorer given a fifth of the
         data: <span class="num">21x</span> better. In the units the field uses, that is
@@ -137,9 +137,10 @@
         allocation, job <span class="num">12243941</span>.</span>
       </div>
 
-      <p class="col muted">A model trained on less data cannot find better molecules. It can only
-      be easier to fool. So the quantity that rose is the scoring model's error, and the loop was
-      climbing it. Six control loops run with scrambled rewards all stayed inside their
+      <p class="col muted">This intervention changed the reported computational metric. Without
+      experimental outcomes it does not establish which arm produced better molecules or identify
+      the causal mechanism. Shared scorer errors are a hypothesis to test. Six control loops run
+      with scrambled rewards all stayed inside their
       pre-registered band of <span class="num">&plusmn;0.11</span>, spanning
       <span class="num">-0.0851</span> to <span class="num">+0.0396</span>, which is how we know
       the apparatus itself was behaving.</p>
@@ -160,21 +161,19 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">02</span> Why the usual safeguard fails</p>
-        <h2>An independent check cannot see an effect smaller than its own blur.</h2>
-        <p>The standard defence against this problem is a second, independent metric, and it only
-        works if that metric can resolve the effect. An independent check averages its verdict over
-        the molecules the loop kept, and comparing two such averages carries a built-in wobble that
-        depends only on how many you kept and how much they vary. Keep few molecules and the check
-        is blurry however good the model behind it is. The reason is arithmetic rather than
-        biology, and it is computable from numbers every group already has.</p>
+        <h2>An independent metric still needs an appropriate uncertainty analysis.</h2>
+        <p>In our retained-candidate experiments, averages varied with which candidates were
+        selected. We examined a simple spread-based approximation under an independent-sample
+        model. Pairing, dependence, selection and the relevant outcome variance can change that
+        calculation. Prediction spread alone does not establish experimental resolution.</p>
       </div>
 
       <div class="plain">
-        <b>At 100 molecules kept, our independent check was blind to anything under a 16% change.</b>
+        <b>Our historical approximation gave a 16% scale at 100 molecules kept.</b>
         <span>And the changes we were asking it about ranged from <span class="num">3%</span> better
         to <span class="num">18%</span> worse. So six separate conclusions of "the independent check
-        did not move" were not findings at all. They were measurements taken with an instrument too
-        blurry to answer the question.</span>
+        did not move" needed a better uncertainty analysis. The approximation alone does not
+        establish that any individual effect was undetectable or statistically insignificant.</span>
       </div>
 
       <div class="tbl-wrap">
@@ -182,8 +181,8 @@
           <thead>
             <tr>
               <th scope="col">Molecules kept</th>
-              <th scope="col">Smallest change the check can see</th>
-              <th scope="col">In the field's units</th>
+              <th scope="col">Approximation, not a detection threshold</th>
+              <th scope="col">Historical computed scale</th>
             </tr>
           </thead>
           <tbody>
@@ -197,9 +196,10 @@
       <p class="col muted small" style="margin-top:14px">Predicted from the spread between
       individual molecules (<span class="num">0.4562</span> over <span class="num">143</span> saved
       sets of winners); the predicted <span class="num">0.0645</span> came back as
-      <span class="num">0.0570</span> when measured directly. The fix is design, not more runs:
-      keep more molecules, or score both arms against one shared pool of candidates so the sampling
-      wobble cancels. <a href="/check.html">Check your own</a> computes this floor for your data.</p>
+      <span class="num">0.0570</span> in that particular check. This comparison does not calibrate
+      a universal significance test. More observations or paired comparisons may improve precision,
+      but covariance and selection must be accounted for. <a href="/check.html">Our browser tool</a>
+      now labels prediction spread as descriptive and does not issue an uncertainty verdict.</p>
     </div>
   </section>
 
@@ -299,14 +299,14 @@
     <div class="wrap">
       <div class="col">
         <p class="kicker"><span class="n">05</span> Where the limit actually is</p>
-        <h2>Not the amount of data, and not the model's size.</h2>
-        <p>Both of those are the usual explanations for a predictor that will not improve, and we
-        tested both. What we build, and which challenges it is entered in, is on the
+        <h2>What our model experiments did and did not establish.</h2>
+        <p>We tested particular changes in data quantity and model size. These experiments do not
+        rule out better data or models. What we build is described on the
         <a href="/company.html">company page</a>.</p>
       </div>
 
       <div class="plain">
-        <b>More data is not the bottleneck. We checked.</b>
+        <b>This particular data addition did not clear our improvement bar.</b>
         <span>Adding <span class="num">42%</span> more laboratory measurements moved our scoring
         model's accuracy by between <span class="num">-0.004</span> and
         <span class="num">+0.007</span>, against a threshold of <span class="num">+0.02</span> we
@@ -353,9 +353,10 @@
           <span class="tag">Reinstated</span>
           <h3>Accuracy figures inflated by our own leaking data split</h3>
           <p>Overstated by as much as <span class="num">0.065</span> by fault 03, and withdrawn
-          while the clean re-run ran. The re-run finished: the fine-tuning gain survived honest
-          folds and is quoted again above, at <span class="num">0.5356</span> rather than the leaky
-          <span class="num">0.5219</span>. The leak was not what produced it.</p>
+          while the corrected-fold re-run ran. The fine-tuned model's score on that run
+          is recorded at <span class="num">0.5356</span> rather than the earlier
+          <span class="num">0.5219</span>. This is a historical computational result; neither that
+          comparison nor one shuffled-label run establishes independence of all selection steps.</p>
         </div>
         <div>
           <span class="tag">Withdrawn</span>

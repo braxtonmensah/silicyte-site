@@ -1,4 +1,4 @@
-/* Silicyte Check: the checks that decide whether a reported design gain is real.
+/* Silicyte Check: limited diagnostics for unmodified peptide evaluation tables.
  *
  * Everything here runs in the visitor's browser. Nothing is uploaded, which matters because the
  * people who most need this check are holding unpublished results they will not send to a stranger.
@@ -10,12 +10,12 @@
  *             REPRESENTATIVES, so transitively-similar pairs land in different folds. We measured
  *             20.1% of held-out MIC rows with a cross-fold twin above 0.80 identity while the usual
  *             "does a family span a fold" check passed 826 of 826.
- *   FLOOR     Can the reported effect even be seen? A gain read off k kept molecules carries an
- *             irreducible floor of sd*sqrt(2/k). Six of our own "the independent metric did not
- *             move" readings were below their own instrument's resolution.
+ *   SPREAD    Descriptive prediction spread. This cannot establish the uncertainty or
+ *             significance of an effect without the experimental design and relevant outcomes.
  *   TIES      Is the rank statistic tie-corrected? argsort(argsort(x)) is an ordinal rank and
  *             biases every correlation when the target has repeated values.
- *   SPLIT     Is the test set actually independent, or did selection touch it?
+ *   SPLIT     Exact peptide overlap across the supplied train/test labels. This does not
+ *             reconstruct training or model-selection history or establish independence.
  */
 (function () {
   "use strict";
@@ -47,7 +47,7 @@
       sxy += dx * dy; sxx += dx * dx; syy += dy * dy;
     }
     const d = Math.sqrt(sxx * syy);
-    return d ? sxy / d : 0;
+    return d ? sxy / d : NaN;
   }
 
   const spearman = (x, y) => pearson(rankdata(x), rankdata(y));
@@ -74,7 +74,6 @@
   function ratio(a, b) {
     const la = a.length, lb = b.length;
     if (!la && !lb) return 1;
-    if (2 * Math.min(la, lb) / (la + lb) < 0.5) return 0;   // cheap bound before the DP
     let prev = new Int32Array(lb + 1), cur = new Int32Array(lb + 1);
     for (let j = 0; j <= lb; j++) prev[j] = j;
     for (let i = 1; i <= la; i++) {
@@ -89,7 +88,22 @@
   }
 
   // ---------------------------------------------------------------- checks
+  function sequenceInputNote(rows) {
+    if (!rows.length || rows.some(r => !r.seq)) {
+      return "Needs an unmodified peptide sequence on every row; identifiers and SMILES are not supported.";
+    }
+    if (rows.some(r => r.split !== "train" && r.split !== "test")) {
+      return "Every row needs an explicit train/test assignment. Choose a held-out fold for multi-fold data; validation is not automatically treated as test.";
+    }
+    if (!rows.some(r => r.split === "train") || !rows.some(r => r.split === "test")) {
+      return "Needs at least one training peptide and one held-out peptide.";
+    }
+    return null;
+  }
+
   function checkLeak(rows, thresh, cap) {
+    const note = sequenceInputNote(rows);
+    if (note) return { ok: null, note };
     const tr = rows.filter(r => r.split === "train" && r.seq);
     const te = rows.filter(r => r.split === "test" && r.seq);
     if (!tr.length || !te.length) {
@@ -108,14 +122,21 @@
       worstAll.push(best);
     }
     worstAll.sort((a, b) => a - b);
-    const above = worstAll.filter(v => v > thresh).length / worstAll.length;
+    const above = worstAll.filter(v => v >= thresh).length / worstAll.length;
     const mean = worstAll.reduce((a, b) => a + b, 0) / worstAll.length;
+    const sampled = sampleTe.length !== te.length || sampleTr.length !== tr.length;
     return {
-      ok: above <= 0.02,
+      ok: above > 0 ? false : sampled ? null : true,
+      note: above > 0
+        ? "Close relatives were found. If sampled, the fraction describes only the checked subset."
+        : sampled
+          ? "No close relative was found in the sampled comparisons. Unchecked pairs may contain one, so this result is inconclusive."
+          : "No pair at or above the threshold was found in the complete comparison. This does not establish model-selection independence.",
       frac: above, mean,
       p95: worstAll[Math.floor(worstAll.length * 0.95)],
       max: worstAll[worstAll.length - 1],
-      sampled: sampleTe.length !== te.length || sampleTr.length !== tr.length,
+      sampled,
+      checkedTrain: sampleTr.length, checkedTest: sampleTe.length,
       nTest: te.length, nTrain: tr.length,
     };
   }
@@ -137,9 +158,10 @@
     const k = te.length;
     const spread = sd(te.map(r => r.pred));
     const floor = spread * Math.sqrt(2 / k);
-    const eff = isFinite(reportedEffect) ? Math.abs(reportedEffect) : null;
+    const eff = Number.isFinite(reportedEffect) ? reportedEffect : null;
     return {
-      ok: eff === null ? null : eff > floor,
+      ok: null,
+      note: "Prediction spread is descriptive. It does not establish the resolution, uncertainty or significance of a reported effect; that requires the relevant outcomes and experimental design.",
       k, spread, floor, reported: eff,
       kFor: [100, 200, 1000, 3250].map(kk => ({ k: kk, floor: spread * Math.sqrt(2 / kk) })),
     };
@@ -150,6 +172,9 @@
     if (te.length < 10) return { ok: null, note: "needs test rows with predictions and truth" };
     const p = te.map(r => r.pred), t = te.map(r => r.truth);
     const corrected = spearman(p, t), ordinal = spearmanOrdinal(p, t);
+    if (!Number.isFinite(corrected) || !Number.isFinite(ordinal)) {
+      return { ok: null, note: "Spearman correlation is undefined when predictions or outcomes are constant." };
+    }
     const distinct = new Set(t).size;
     return {
       ok: Math.abs(corrected - ordinal) < 0.005,
@@ -159,14 +184,14 @@
   }
 
   function checkSplit(rows) {
+    const note = sequenceInputNote(rows);
+    if (note) return { ok: null, note, dupes: 0, nTrain: 0, nTest: 0, ratio: null };
     const seen = new Map();
-    let dupes = 0;
     for (const r of rows) {
-      if (!r.seq) continue;
-      const prev = seen.get(r.seq);
-      if (prev && prev !== r.split) dupes++;
-      seen.set(r.seq, r.split);
+      if (!seen.has(r.seq)) seen.set(r.seq, new Set());
+      seen.get(r.seq).add(r.split);
     }
+    const dupes = Array.from(seen.values()).filter(sides => sides.size > 1).length;
     const te = rows.filter(r => r.split === "test").length;
     const tr = rows.filter(r => r.split === "train").length;
     return { ok: dupes === 0, dupes, nTrain: tr, nTest: te, ratio: te / Math.max(1, tr + te) };
@@ -200,7 +225,7 @@
   function guess(header) {
     const find = (pats) => header.find(h => pats.some(p => p.test(h))) || "";
     return {
-      seq: find([/^seq/i, /sequence/i, /smiles/i, /^id$/i, /peptide/i]),
+      seq: find([/^seq/i, /sequence/i, /peptide/i]),
       pred: find([/pred/i, /score/i, /^y_?hat/i, /output/i]),
       truth: find([/truth/i, /^y$/i, /actual/i, /label/i, /target/i, /measured/i, /log_?mic/i]),
       split: find([/split/i, /fold/i, /set$/i, /partition/i]),
@@ -208,14 +233,22 @@
   }
 
   function normalise(rows, map) {
-    return rows.map(r => {
+    return rows.map((r, i) => {
       let sp = String(r[map.split] ?? "").toLowerCase().trim();
-      if (/^(1|test|val|valid|validation|holdout|held.?out)$/.test(sp)) sp = "test";
+      if (/^(1|test|holdout|held.?out)$/.test(sp)) sp = "test";
       else if (/^(0|train|training|fit)$/.test(sp)) sp = "train";
+      const seq = String(r[map.seq] ?? "").trim().toUpperCase();
+      if (map.seq && (!seq || !/^[ACDEFGHIKLMNPQRSTVWY]+$/.test(seq))) {
+        throw new Error("Row " + (i + 1) + ": only unmodified peptide sequences using the 20 standard amino acids are supported; SMILES, identifiers and modified residues are not.");
+      }
+      const number = key => {
+        const value = String(r[key] ?? "").trim();
+        return value === "" ? NaN : Number(value);
+      };
       return {
-        seq: String(r[map.seq] ?? "").toUpperCase().replace(/[^A-Z0-9]/g, ""),
-        pred: parseFloat(r[map.pred]),
-        truth: parseFloat(r[map.truth]),
+        seq,
+        pred: number(map.pred),
+        truth: number(map.truth),
         split: sp,
       };
     });
@@ -223,6 +256,9 @@
 
   function run(rows, map, opts) {
     const o = Object.assign({ identity: 0.80, reportedEffect: NaN, cap: 420 }, opts || {});
+    if (!Number.isFinite(o.identity) || o.identity <= 0 || o.identity > 1 || !Number.isInteger(o.cap) || o.cap < 1) {
+      throw new Error("Similarity threshold must be greater than 0 and at most 1; comparison cap must be a positive integer.");
+    }
     const data = normalise(rows, map);
     return {
       n: data.length,

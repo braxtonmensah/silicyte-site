@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Check your own result | Silicyte</title>
-<meta name="description" content="Four checks that decide whether a reported design gain is real: split leakage, resolution floor, tie handling, test independence. Runs in your browser. Nothing is uploaded.">
+<meta name="description" content="Local diagnostics for unmodified peptide tables: sequence similarity, descriptive prediction spread, tie handling and exact overlap. Incomplete checks remain inconclusive. Your file is not uploaded.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/check.html">
@@ -101,7 +101,7 @@
   <div class="wrap" style="padding-block:60px 0">
     <div class="col">
       <p class="eyebrow">The instrument</p>
-      <h1>Is your reported gain real? Four checks, in this tab.</h1>
+      <h1>Four diagnostics for peptide evaluation tables.</h1>
       <p class="lede">Each of these four is a mistake we made first, found in our own pipeline, and
       published. They are cheap to check and expensive to miss, and three of the four pass silently
       when they are wrong.</p>
@@ -116,7 +116,8 @@
       <div class="col">
         <p class="kicker"><span class="n">01</span> Run it</p>
         <h2>Your file, or ours.</h2>
-        <p>One row per molecule. The page guesses your columns from their names and you can correct
+        <p>One row per unmodified peptide, using the 20 standard amino acids. SMILES, sample IDs and
+        modified residues are not supported. The page guesses your columns and you can correct
         it. A sequence column and a train/test or fold column are enough for two of the four checks;
         prediction and truth columns unlock the other two.</p>
       </div>
@@ -129,13 +130,14 @@
           <button class="btn ghost" id="demoReal" type="button">Use our published MIC folds</button>
           <button class="btn ghost" id="demoBad" type="button">Use a deliberately broken example</button>
         </div>
-        <input type="file" id="file" accept=".csv,.tsv,text/csv" hidden>
+        <input type="file" id="file" accept=".csv,text/csv" hidden>
       </div>
 
       <div class="privacy">
         <span aria-hidden="true">&#10003;</span>
-        <span>This page makes no network requests after it loads. There is no upload endpoint to
-        send your file to, no analytics on this page, and the code is one readable file you
+        <span>Your file is processed locally and is not uploaded. This page retrieves public fonts,
+        scripts and, when requested, our example dataset. There is no file-upload endpoint or
+        analytics on this page. The checker source is one readable file you
         can inspect: <a href="/assets/check.js">check.js</a>. Read it before you trust it.</span>
       </div>
 
@@ -180,7 +182,7 @@
           <tbody>
             <tr>
               <td><b>LEAK</b></td>
-              <td>A held-out molecule has a near-twin in training. The clustering in common use
+              <td>A held-out molecule has a near-twin in training. Our previous clustering
               documents itself as single linkage but compares each sequence only to cluster
               <em>representatives</em>, first match wins, so transitively similar pairs land in
               different folds.</td>
@@ -188,12 +190,10 @@
               rows, while the standard family-overlap check passed <span class="num">826 of 826</span></td>
             </tr>
             <tr>
-              <td><b>FLOOR</b></td>
-              <td>The reported effect is smaller than the resolution of the instrument that read it.
-              A gain measured over <em>k</em> kept molecules carries an irreducible floor of
-              sd&middot;&radic;(2/k).</td>
-              <td>six of our own &ldquo;the independent metric did not move&rdquo; readings sat below their
-              own instrument's resolution</td>
+              <td><b>SPREAD</b></td>
+              <td>Prediction spread is descriptive. It cannot establish the uncertainty or
+              significance of an experimental effect without the relevant outcomes and design.</td>
+              <td>our earlier conclusions needed an uncertainty analysis appropriate to their design</td>
             </tr>
             <tr>
               <td><b>TIES</b></td>
@@ -248,7 +248,7 @@
           <p>The four checks, in your browser, on your own unpublished data, with nothing uploaded
           and no account.</p>
           <ul>
-            <li>Leakage, resolution floor, tie handling, split independence</li>
+            <li>Peptide similarity, prediction spread, tie handling and exact overlap</li>
             <li>Our corrected folds and the full leak report, <a href="/data.html">CC BY 4.0</a></li>
             <li>The source, one readable file</li>
           </ul>
@@ -306,7 +306,7 @@
   </div>
 </footer>
 
-<script src="/assets/check.js?v=202610142130"></script>
+<script src="/assets/check.js?v=202610162200"></script>
 <script>
 (function () {
   "use strict";
@@ -317,8 +317,17 @@
   // ---------------------------------------------------------------- loading
   function load(text, name) {
     var p = A.parseCSV(text);
-    if (!p.rows.length) { el("note").textContent = "That file parsed to zero rows."; return; }
+    if (!p.rows.length) {
+      state = { header: [], rows: [], name: "" };
+      el("config").hidden = true;
+      el("out").innerHTML = "";
+      el("out").appendChild(card(null, "No usable rows", "No checks were run on this file."));
+      el("note").textContent = "That file parsed to zero rows.";
+      return;
+    }
     state.header = p.header; state.rows = p.rows; state.name = name;
+    el("out").innerHTML = "";
+    el("out").appendChild(card(null, "Ready", "Previous results have been cleared. Review the column mapping, then run the checks for this file."));
 
     var g = A.guess(p.header);
     ["seq", "split", "pred", "truth"].forEach(function (k) {
@@ -368,7 +377,7 @@
 
   function card(verdict, title, body, pairs) {
     var cls = verdict === true ? "pass" : verdict === false ? "fail" : "skip";
-    var word = verdict === true ? "Pass" : verdict === false ? "Look" : "Skipped";
+    var word = verdict === true ? "Pass" : verdict === false ? "Look" : "No verdict";
     var d = document.createElement("div");
     d.className = "check";
     var v = document.createElement("div");
@@ -395,43 +404,28 @@
 
     // LEAK
     var L = res.leak;
-    if (L.ok === null) {
+    if (L.frac === undefined) {
       out.appendChild(card(null, "LEAK — near-twins across the split", L.note));
     } else {
       out.appendChild(card(L.ok,
         "LEAK — near-twins across the split",
-        L.ok
-          ? "At most 2% of held-out molecules have a close relative in training, which is what a split built by transitive clustering looks like."
-          : "Held-out molecules have close relatives in training. A model can score well here by recognising the relative rather than by generalising, and a large model will do that more readily than a simple one.",
-        [["above threshold", pct(L.frac)],
+        L.note,
+        [["checked test rows at or above threshold", pct(L.frac)],
          ["mean best identity", fmt(L.mean)],
          ["95th percentile", fmt(L.p95)],
          ["worst single pair", fmt(L.max)],
          ["train / test rows", L.nTrain.toLocaleString() + " / " + L.nTest.toLocaleString()],
-         ["sampled for speed", L.sampled ? "yes, 420 per side" : "no, all pairs"]]));
+         ["comparisons checked", L.checkedTrain.toLocaleString() + " train × " + L.checkedTest.toLocaleString() + " test"],
+         ["sampled for speed", L.sampled ? "yes; negative results are inconclusive" : "no, all pairs"]]));
     }
 
-    // FLOOR
+    // Descriptive spread; never an inferential pass/fail check.
     var F = res.floor;
-    if (F.ok === null && F.note) {
-      out.appendChild(card(null, "FLOOR — can the effect even be seen", F.note));
-    } else {
-      var pairs = [["held-out molecules (k)", String(F.k)],
-                   ["spread of predictions (sd)", fmt(F.spread)],
-                   ["resolution floor, sd·√(2/k)", fmt(F.floor)]];
-      F.kFor.forEach(function (r) { pairs.push(["floor at k = " + r.k, fmt(r.floor)]); });
-      var body;
-      if (F.reported === null) {
-        body = "This is the smallest difference your setup can resolve. Enter the gain you are reporting above and the check will tell you whether it clears its own instrument.";
-      } else if (F.ok) {
-        body = "Your reported gain of " + fmt(F.reported) + " is larger than the floor, so the instrument can see it. That does not make it real, only visible.";
-        pairs.unshift(["your reported gain", fmt(F.reported)]);
-      } else {
-        body = "Your reported gain of " + fmt(F.reported) + " is below the resolution of the measurement that produced it. A number this size is indistinguishable from the noise of which molecules happened to be kept.";
-        pairs.unshift(["your reported gain", fmt(F.reported)]);
-      }
-      out.appendChild(card(F.ok, "FLOOR — can the effect even be seen", body, pairs));
-    }
+    var spreadPairs = F.k === undefined ? [] : [["held-out predictions", String(F.k)],
+      ["prediction standard deviation", fmt(F.spread)],
+      ["descriptive sd·√(2/k)", fmt(F.floor)]];
+    if (F.reported !== null && F.reported !== undefined) spreadPairs.push(["reported gain (not tested)", fmt(F.reported)]);
+    out.appendChild(card(null, "SPREAD — descriptive, not an uncertainty test", F.note, spreadPairs));
 
     // TIES
     var T = res.ties;
@@ -441,7 +435,7 @@
       out.appendChild(card(T.ok,
         "TIES — is the rank statistic corrected",
         T.ok
-          ? "Tie correction changes your correlation by less than 0.005 here, so an uncorrected implementation would not have misled you on this data."
+          ? "Tie correction changes this correlation by less than 0.005. This is a comparison of two calculations, not validation of your model or evaluation procedure."
           : "Your target has repeated values, and an uncorrected ordinal rank shifts the correlation by the amount below. If any number you have published came out of argsort(argsort(x)), it needs recomputing.",
         [["tie-corrected Spearman", fmt(T.corrected)],
          ["uncorrected ordinal rank", fmt(T.ordinal)],
@@ -454,17 +448,15 @@
     var S = res.split;
     out.appendChild(card(S.ok,
       "SPLIT — exact duplicates across the split",
-      S.ok
+      S.note || (S.ok
         ? "No molecule appears on both sides by exact string identity. This is the floor of the floor, and it is worth checking every time two sources are merged."
-        : "Identical molecules appear on both sides of the split. Similarity is not the issue here; these are the same string, and whatever your model scored on them it did not predict.",
-      [["duplicate molecules across sides", S.dupes.toLocaleString()],
+        : "Identical peptide strings appear on both sides of the supplied split. Investigate whether this overlap compromises your intended evaluation."),
+      S.note ? [] : [["duplicate molecules across sides", S.dupes.toLocaleString()],
        ["train rows", S.nTrain.toLocaleString()],
        ["test rows", S.nTest.toLocaleString()],
        ["held-out share", pct(S.ratio)]]));
 
-    el("note").textContent = "“Look” is not a verdict on your work, it is a request that " +
-      "you check that one thing. Three of these four passed a check we thought was adequate before " +
-      "they failed this one. " + res.n.toLocaleString() + " rows read, nothing uploaded.";
+    el("note").textContent = "“Look” flags a finding to investigate. “No verdict” means the data or method cannot establish a result. A pass applies only to the named check, not biological validity or model-selection independence. " + res.n.toLocaleString() + " rows read; your file was not uploaded.";
   }
 
   // ---------------------------------------------------------------- run
@@ -491,7 +483,7 @@
     var ident = parseFloat(el("c-ident").value);
 
     el("out").innerHTML = "";
-    el("out").appendChild(card(null, "Working", "Comparing every held-out molecule against training. This runs on your processor, so a large file takes a moment."));
+    el("out").appendChild(card(null, "Working", "Comparing peptide sequences locally. Large inputs are sampled; a negative sampled search is inconclusive."));
     el("run").disabled = true;
     // Yield once so the working state paints before the pairwise comparison blocks the thread.
     setTimeout(function () {
@@ -533,8 +525,7 @@
       .then(function (t) {
         load(t, "folds_mic.csv (ours)");
         el("note").textContent = "These are our published MIC folds. They carry no predictions, so " +
-          "FLOOR and TIES will skip; LEAK and SPLIT should pass, because this release measures " +
-          "cross-fold identity above 0.80 at 0.0000.";
+          "SPREAD and TIES cannot run. SPLIT checks exact overlap; LEAK samples this large file and cannot establish absence of close relatives. The full release audit is documented on the data page.";
       })
       .catch(function () { el("note").textContent = "Could not fetch the folds. Download them from the data page instead."; });
   });
@@ -576,9 +567,9 @@
     load(lines.join("\n"), "synthetic-broken-example.csv");
     el("c-eff").value = "0.02";
     el("note").textContent = "This file is synthetic and contains no real measurements. It was " +
-      "built with all four defects present: a near-twin of every training family on the test side, " +
+      "built with known overlap and ties: a near-twin of every training family on the test side, " +
       "a few exact duplicates straddling the split, a target quantised to a 2-fold dilution grid " +
-      "so it is full of ties, and a reported gain of 0.02 that is below its own resolution floor. " +
+      "so it is full of ties, and a reported gain of 0.02 whose uncertainty this page cannot establish. " +
       "Press run.";
   });
 

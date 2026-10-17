@@ -92,9 +92,9 @@
         </div>
         <div class="body">
           <h2>We starved our own scoring model. It reported six times the improvement.</h2>
-          <p>A design loop is judged by how much it improves a held-out predictor. The theory is
-          that a better scorer picks better molecules and so reports a bigger gain. We changed the
-          one thing that should control that number, and it moved the wrong way.</p>
+          <p>We tested how a reported design gain changed when we withheld training families
+          from the scorer. The starved arm reported a larger computational gain. Independent
+          experimental outcomes are needed to establish which arm produced better molecules.</p>
         </div>
       </div>
 
@@ -102,12 +102,11 @@
         <figure style="margin:0">
           <div class="figbox dark">
             <svg id="scorerFig" viewBox="0 0 1200 520" role="img" aria-labelledby="figTitle figDesc">
-              <title id="figTitle">What each scorer reported, against what the theory says it should report</title>
+              <title id="figTitle">Reported computational gain under intact and starved scorers</title>
               <desc id="figDesc">With all of its training data the loop reported a 3.5-fold
-              improvement. Starved of four fifths of that data it reported 21-fold. The standard
-              theory says the starved scorer should land at or below the intact one, marked by the
-              dashed line at the height of the first bar. The measured result is six times above
-              it.</desc>
+              improvement. Starved of four fifths of that data it reported 21-fold, approximately
+              six times the fold improvement of the intact arm. The dashed line marks the intact
+              result for comparison. These are computed gains, not measured biological gains.</desc>
 
               <g class="fx fx-grid">
                 <g stroke="currentColor" stroke-opacity="0.14" stroke-width="1">
@@ -147,8 +146,8 @@
                       stroke-width="2" stroke-dasharray="9 7"/>
               </g>
               <g class="fx fx-ghostlab" font-family="Satoshi, system-ui, sans-serif">
-                <text x="733" y="337" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">theory says a worse scorer</text>
-                <text x="733" y="355" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">should land at or below here</text>
+                <text x="733" y="337" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">intact-arm result</text>
+                <text x="733" y="355" text-anchor="end" font-size="14.5" fill="currentColor" opacity="0.85">shown as a reference line</text>
               </g>
 
               <g class="fx fx-bar2">
@@ -172,22 +171,22 @@
                 <text x="944" y="228" font-family="Clash Display, system-ui, sans-serif" font-size="34"
                       font-weight="500" letter-spacing="-0.02em" fill="currentColor">6x</text>
                 <text x="944" y="252" font-family="Satoshi, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.82">above where the</text>
-                <text x="944" y="270" font-family="Satoshi, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.82">theory puts it</text>
+                <text x="944" y="270" font-family="Satoshi, system-ui, sans-serif" font-size="14" fill="currentColor" opacity="0.82">intact-arm gain</text>
               </g>
             </svg>
           </div>
           <figcaption>Error bars are one standard error, drawn asymmetric because the measurement is
           made in log units and shown here as fold-change. The difference between the arms is
-          <span class="num">14.6</span> times its own uncertainty. A model trained on less data
-          cannot find better molecules, so what rose is the scorer's error, not the quality of the
-          molecules. Six control loops on scrambled rewards all stayed inside their registered
+          <span class="num">14.6</span> times its reported standard error. This does not establish
+          actual molecule quality or the cause of the difference. Six control loops on scrambled
+          rewards all stayed inside their registered
           band. Full numbers on the <a href="/science.html">science page</a>.</figcaption>
         </figure>
       </div>
 
       <div class="stats">
         <div class="stat"><b>6x</b><span>larger improvement reported by the starved scorer</span></div>
-        <div class="stat"><b>14.6&sigma;</b><span>how far that gap sits outside its own error bars</span></div>
+        <div class="stat"><b>14.6 SE</b><span>difference divided by its reported standard error</span></div>
         <div class="stat"><b>0 of 6</b><span>control runs that misbehaved</span></div>
         <div class="stat"><b>6</b><span>measurement faults found in our own pipeline and published</span></div>
       </div>
