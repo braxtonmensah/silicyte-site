@@ -25,9 +25,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=202610171500">
-<link rel="stylesheet" href="/assets/refine.css?v=202610171500">
-<link rel="stylesheet" href="/assets/home.css?v=202610171500">
+<link rel="stylesheet" href="/assets/site.css?v=202610171600">
+<link rel="stylesheet" href="/assets/refine.css?v=202610171600">
+<link rel="stylesheet" href="/assets/home.css?v=202610171600">
 <link rel="alternate" type="text/markdown" href="/index.md" title="Plain markdown mirror">
 </head>
 <body class="home-page">
@@ -86,7 +86,7 @@
             <dd><a href="/science.html"><b class="num">t = -14.60</b></a></dd>
           </div>
           <div>
-            <dt>Leaked held‑out rows, standard split</dt>
+            <dt>Our own earlier split, found in self‑audit</dt>
             <dd><a href="/data.html"><b class="num">20.1%</b></a></dd>
           </div>
           <div>
@@ -100,6 +100,9 @@
         </dl>
         <p class="hero-detail">Every figure above links to the run that produced it. Computational
         results only; we operate no laboratory and claim no experimental result.</p>
+        <p class="hero-detail"><a href="/papers/design-loops.html">Design loops climb their
+        scorer&rsquo;s error: an intervention-based audit for in silico molecular design</a>.
+        Preprint, <a href="https://doi.org/10.5281/zenodo.23441786">DOI&nbsp;10.5281/zenodo.23441786</a>.</p>
       </div>
       <figure class="molecular-art">
         <img src="/assets/hero/molecular-ribbon.png" width="1536" height="1024" alt="Sculptural silver and blue folded molecular ribbon" fetchpriority="high">
@@ -133,7 +136,7 @@
   <section class="band-ink leakfig" aria-labelledby="leakfig-title">
     <div class="wrap">
       <p class="eyebrow">Open research / Benchmark evaluation</p>
-      <h2 id="leakfig-title">Twelve published splits,<br>measured the same way.</h2>
+      <h2 id="leakfig-title">Thirteen published splits,<br>measured the same way.</h2>
       <p class="leakfig-lede">Share of test rows carrying a training sequence at a Levenshtein
         ratio of 0.80 or above. Each bar is a benchmark's own shipped split, read from its own
         published files. Hover a bar for the homology control its authors applied.</p>
@@ -145,7 +148,7 @@
 
       <figure class="leakfig-fig">
         <div class="leakfig-rows" id="leakfig-rows" role="img"
-             aria-label="Bar chart of test-row contamination across twelve published splits, from 65.38% down to 0.00%."></div>
+             aria-label="Bar chart of test-row contamination across thirteen published splits, from 65.38% down to 0.00%."></div>
 
         <figcaption class="leakfig-cap">
           <span class="leakfig-flag"></span>
@@ -189,6 +192,7 @@
         ["LRGB Peptides-func", "", 65.29, "None. Stratified random split.", 0],
         ["AMPlify", "positive class", 63.47, "Not documented in the repository", 0],
         ["PepBenchmark", "hemolytic HC50", 48.56, "k-mer, then MMseqs2 at 30% identity", 0],
+        ["AMPlify", "negative class", 30.18, "Not documented in the repository", 0],
         ["PepBenchmark", "E. coli MIC", 29.97, "k-mer, then MMseqs2 at 30% identity", 0],
         ["AMP Scanner v2", "positive class", 16.71, "CD-HIT at 90% identity, pool filtered before splitting", 0],
         ["FLIP meltome", "mixed", 0.29, "MMseqs2 at 20% identity, whole clusters assigned 80/20", 0],

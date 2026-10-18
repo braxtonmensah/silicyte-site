@@ -22,13 +22,15 @@ We design peptides and protein binders, and we measure whether the score that ra
 
 Starved scorer vs intact [**t = -14.60**](/science.html)
 
-Leaked held‑out rows, standard split [**20.1%**](/data.html)
+Our own earlier split, found in self‑audit [**20.1%**](/data.html)
 
 Same measure, our rebuilt folds [**0.0000**](/data.html)
 
 Shuffled‑label control [**−0.0228**](/science.html)
 
 Every figure above links to the run that produced it. Computational results only; we operate no laboratory and claim no experimental result.
+
+[Design loops climb their scorer's error: an intervention-based audit for in silico molecular design](/papers/design-loops.html). Preprint, [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786).
 
 Conceptual molecular illustration
 
@@ -76,7 +78,7 @@ In our peptide-design experiment, withholding training families from the scoring
 
 Open research / Benchmark evaluation
 
-## Twelve published splits,
+## Thirteen published splits,
 measured the same way.
 
 Share of test rows carrying a training sequence at a Levenshtein ratio of 0.80 or above. Each bar is a benchmark's own shipped split, read from its own published files. Hover a bar for the homology control its authors applied.

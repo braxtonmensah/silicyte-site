@@ -19,13 +19,13 @@ Each entry links to the artifact a sceptical reader would actually open: the PDF
 
 01 Paper
 
-Draft · 2026-10-17
+Preprint · DOI 10.5281/zenodo.23441786
 
 ### [Design loops climb their scorer’s error: an intervention-based audit for in silico molecular design](/papers/design-loops.html)
 
-Braxton Mensah. Degrading a design loop’s selection model on purpose, by withholding 80% of its training families while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, difference -0.7761, SE 0.0531, t = -14.60. A model that knows less cannot design better molecules, so what the loop climbs is the scorer’s error. 13 pages. Not peer reviewed and not posted to a preprint server.
+Braxton Mensah. Degrading a design loop’s selection model on purpose, by withholding 80% of its training families while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, difference -0.7761, SE 0.0531, t = -14.60. A model that knows less cannot design better molecules, so what the loop climbs is the scorer’s error. 13 pages. Not peer reviewed. Archived on Zenodo with a DOI; not posted to bioRxiv.
 
-[Abstract](/papers/design-loops.html) · [PDF](/papers/Mensah_DesignLoops_preprint.pdf) · [Evidence archive](https://github.com/braxtonmensah/silicyte-design-loops) · DOI pending
+[Abstract](/papers/design-loops.html) · [PDF](/papers/Mensah_DesignLoops_preprint.pdf) · [Evidence archive](https://github.com/braxtonmensah/silicyte-design-loops) · [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786)
 
 02 Research note
 
