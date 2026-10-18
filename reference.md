@@ -37,7 +37,7 @@ Because both are representative-based. Each sequence is compared to cluster repr
 
 ## Can a reported improvement from a closed-loop molecular design system be trusted?
 
-Not without a control, and the control frequently fails. In a direct intervention, degrading the scoring model on purpose by withholding 80% of its training families, while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, a difference of -0.7761 with a standard error of 0.0531 and t = -14.60, over 3 seeds per rung with all six paired shuffled controls inside their pre-registered band. A model that knows less cannot design better molecules, so what such a loop reports is the scorer's error rather than molecule quality. The breeder's equation R = i*rho*sigma, the usual justification for these loops, predicts the opposite sign.
+Not without a control, and the control frequently fails. In a direct intervention, degrading the scoring model on purpose by withholding 80% of its training families, while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, a difference of -0.7761 with a standard error of 0.0531 and t = -14.60, over 3 seeds per rung with all six paired shuffled controls inside their pre-registered band. So on this system the reported gain is not a monotone measure of scorer accuracy. The mechanism is not established. The breeder's equation R = i*rho*sigma, the usual justification for these loops, predicts the opposite sign.
 
 ## What is the smallest improvement a top-k enrichment metric can actually detect?
 
