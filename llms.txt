@@ -44,7 +44,7 @@ not established.
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
   that validate the instrument. The most-cited page.
 - [Papers](https://silicyte.com/papers.html): publications, data releases and research notes.
-- [Design loops climb their scorer's error](https://silicyte.com/papers/design-loops.html): the
+- [Degrading the scoring model made the reported gain 2.4 times larger](https://silicyte.com/papers/design-loops.html): the
   paper. Intervention-based audit for in silico molecular design. 13 pages.
   [PDF](https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf)
 - [Data](https://silicyte.com/data.html): corrected antimicrobial peptide MIC and HC50 evaluation

@@ -2,7 +2,7 @@
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
-# Design loops climb their scorer's error
+# Degrading the scoring model made the reported gain 2.4 times larger
 
 > Degrading a design loop's scoring model on purpose made its reported gain 2.4 times larger (t = -14.60). An intervention-based audit for in silico molecular design, with every number traceable to a pre-registration.
 
@@ -13,7 +13,7 @@ Canonical: https://silicyte.com/papers/design-loops.html
 
 Paper · draft v1 · 2026-10-17
 
-# Design loops climb their scorer’s error
+# Degrading the scoring model made the reported gain 2.4 times larger
 
 An intervention-based audit for in silico molecular design.
 

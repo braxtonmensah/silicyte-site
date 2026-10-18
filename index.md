@@ -30,7 +30,7 @@ Shuffled‑label control [**−0.0228**](/science.html)
 
 Every figure above links to the run that produced it. Computational results only; we operate no laboratory and claim no experimental result.
 
-[Design loops climb their scorer's error: an intervention-based audit for in silico molecular design](/papers/design-loops.html). 14 pages, not peer reviewed and not posted to a preprint server. Its evidence archive is deposited and citable: [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786).
+[Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops.html). 14 pages, not peer reviewed and not posted to a preprint server. Its evidence archive is deposited and citable: [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786).
 
 Conceptual molecular illustration
 
