@@ -17,7 +17,7 @@ Paper · draft v1 · 2026-10-17
 
 An intervention-based audit for in silico molecular design.
 
-Braxton Mensah, Silicyte, South Jordan, Utah. Not peer reviewed. Not submitted to a journal or a preprint server. 13 pages.
+Braxton Mensah, Silicyte, South Jordan, Utah. Not peer reviewed. Not submitted to a journal or a preprint server. 14 pages.
 
 [Download the PDF ↓](/papers/Mensah_DesignLoops_preprint.pdf) [Evidence archive ↗](https://github.com/braxtonmensah/silicyte-design-loops)
 
