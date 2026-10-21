@@ -262,6 +262,11 @@ footer { padding-block: 28px; border-top: 1px solid #d2dce1; background: #f5f5f0
 body.has-hero:not(.scrolled) .top nav a.cta { background: #fff; color: #0b1016; }
 body.has-hero:not(.scrolled) .top nav a.cta:hover { background: var(--brand-tint); color: #0b1016; }
 .top nav a.cta { font-weight: 600; margin-left: 4px; }
+/* The dark header redefines --ink as a light colour, so site.css's .cta (background
+   var(--ink), text var(--paper)) rendered light on light, about 1.1:1. Pin it: dark text
+   on a light pill, which also matches the homepage hero inversion above. */
+.top nav a.cta { background: #edf3f8; color: #0b1016; }
+.top nav a.cta:hover { background: #ffffff; color: #0b1016; }
 
 .offer-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
 
