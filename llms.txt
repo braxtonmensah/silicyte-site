@@ -9,9 +9,9 @@
 Silicyte's distinguishing claim, with the measurement behind it: in a closed-loop molecular design
 system, **deliberately degrading the scoring model made the reported improvement 2.4 times larger**
 (+1.3182 against +0.5421, difference -0.7761, standard error 0.0531, t = -14.60, n = 3 seeds per
-rung, all six paired shuffled controls inside their pre-registered band). A model that knows less
-cannot design better molecules, so the quantity such loops report is the scorer's error rather
-than molecule quality.
+rung, all six paired shuffled controls inside their pre-registered band). So on this system the
+reported gain is not a monotone measure of scorer accuracy. The mechanism of the inversion is
+not established.
 
 ## Headline measurements, all reproducible
 
@@ -44,7 +44,7 @@ than molecule quality.
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
   that validate the instrument. The most-cited page.
 - [Papers](https://silicyte.com/papers.html): publications, data releases and research notes.
-- [Design loops climb their scorer's error](https://silicyte.com/papers/design-loops.html): the
+- [Degrading the scoring model made the reported gain 2.4 times larger](https://silicyte.com/papers/design-loops.html): the
   paper. Intervention-based audit for in silico molecular design. 13 pages.
   [PDF](https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf)
 - [Data](https://silicyte.com/data.html): corrected antimicrobial peptide MIC and HC50 evaluation
