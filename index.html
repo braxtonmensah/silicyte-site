@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Silicyte | Peptide and protein model evaluation</title>
-<meta name="description" content="Silicyte publishes research on peptide and protein model evaluation, benchmark leakage and controlled design loops. Explore the methods, code and open data.">
+<title>Silicyte | Control integrity for AI agent fleets</title>
+<meta name="description" content="Silicyte measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path and failed independently, and how often agents override them. Earlier research on peptide and protein model evaluation stays here.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/">
 <meta property="og:site_name" content="Silicyte">
-<meta property="og:title" content="Silicyte | Peptide and protein model evaluation">
-<meta property="og:description" content="Silicyte publishes research on peptide and protein model evaluation, benchmark leakage and controlled design loops. Explore the methods, code and open data.">
+<meta property="og:title" content="Silicyte | Control integrity for AI agent fleets">
+<meta property="og:description" content="Silicyte measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path and failed independently, and how often agents override them. Earlier research on peptide and protein model evaluation stays here.">
 <meta property="og:url" content="https://silicyte.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
@@ -19,9 +19,9 @@
 <meta property="og:image:height" content="1024">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Silicyte">
-<meta name="twitter:description" content="Silicyte publishes research on peptide and protein model evaluation, benchmark leakage and controlled design loops. Explore the methods, code and open data.">
+<meta name="twitter:description" content="Silicyte measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path and failed independently, and how often agents override them. Earlier research on peptide and protein model evaluation stays here.">
 <meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte","url":"https://silicyte.com/","logo":"https://silicyte.com/brand/silicyte-logo-512.png","sameAs":["https://www.linkedin.com/company/silicyte/","https://github.com/braxtonmensah"],"email":"hello@silicyte.com","foundingDate":"2026-10","description":"Independent research venture developing peptide and protein-design workflows and reproducible model evaluation.","disambiguatingDescription":"Silicyte is an independent computational biology research venture in South Jordan, Utah. It is unrelated to SiliCycle, a silica chemistry manufacturer, and to silicyne, a silicon allotrope.","knowsAbout":["benchmark data leakage","peptide design","protein model evaluation","closed-loop molecular design","cross-validation splitting","reproducible machine learning evaluation"],"address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","@id":"https://silicyte.com/company.html#braxton-mensah","name":"Braxton Mensah","sameAs":["https://www.linkedin.com/in/braxtonmensah","https://github.com/braxtonmensah"]}},{"@type":"WebSite","@id":"https://silicyte.com/#website","url":"https://silicyte.com/","name":"Silicyte","publisher":{"@id":"https://silicyte.com/#organization"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte","url":"https://silicyte.com/","logo":"https://silicyte.com/brand/silicyte-logo-512.png","sameAs":["https://www.linkedin.com/company/silicyte/","https://github.com/braxtonmensah"],"email":"hello@silicyte.com","foundingDate":"2026-10","description":"Independent research venture measuring control integrity for AI agent fleets, with earlier work on peptide and protein model evaluation.","disambiguatingDescription":"Silicyte is an independent computational biology research venture in South Jordan, Utah. It is unrelated to SiliCycle, a silica chemistry manufacturer, and to silicyne, a silicon allotrope.","knowsAbout":["benchmark data leakage","peptide design","protein model evaluation","closed-loop molecular design","cross-validation splitting","reproducible machine learning evaluation"],"address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","@id":"https://silicyte.com/company.html#braxton-mensah","name":"Braxton Mensah","sameAs":["https://www.linkedin.com/in/braxtonmensah","https://github.com/braxtonmensah"]}},{"@type":"WebSite","@id":"https://silicyte.com/#website","url":"https://silicyte.com/","name":"Silicyte","publisher":{"@id":"https://silicyte.com/#organization"}}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
       <a href="/reference.html">Reference</a>
       <a href="/data.html">Data</a>
       <a href="/audit.html">Audit</a>
-      <a href="/check.html">Evaluate</a>
+      <a href="/refusal-uptime.html">Agents</a>
       <a href="/demo.html">Demo</a>
       <a href="/company.html">About</a>
       <a class="cta" href="/evaluation.html">Work with us</a>
@@ -63,6 +63,22 @@
 </header>
 
 <main>
+  <section class="research-section" aria-labelledby="agents-title">
+    <div class="wrap research-layout">
+      <div>
+        <p class="eyebrow">New focus / Control integrity for AI agent fleets</p>
+        <h2 id="agents-title">Did your agents&rsquo; guardrails actually run?</h2>
+      </div>
+      <div>
+        <p>Silicyte now measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path, failed independently, and how often agents override them. On one operator&rsquo;s fleet of Claude Code agents, one guardrail was absent on <span class="num">29.8%</span> of the calls it existed to check, and absence rose from <span class="num">0.2%</span> with one agent running to <span class="num">53.1%</span> with 11 or more. Our peptide and protein evaluation work stays on this site as earlier work.</p>
+        <div class="actions">
+          <a class="text-link" href="/refusal-uptime.html">Read the measurement <span aria-hidden="true">&rarr;</span></a>
+          <a class="text-link" href="https://github.com/braxtonmensah/refusal-uptime">Get the open-source probe <span aria-hidden="true">&nearr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="molecular-hero" aria-labelledby="hero-title">
     <div class="wrap molecular-layout">
       <div class="molecular-copy">

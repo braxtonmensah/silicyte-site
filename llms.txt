@@ -1,10 +1,18 @@
 # Silicyte
 
-> Silicyte measures whether a computational molecule-design result is real. It designs de novo
-> peptides and protein binders, and it builds the instruments that say whether a reported design
-> gain survives its own controls. Every figure it publishes is computational; it operates no
-> laboratory and claims no experimental result. Founded October 2026, South Jordan, Utah, United
-> States. Independent and bootstrapped. Contact hello@silicyte.com.
+> Silicyte measures control integrity for AI agent fleets: whether the guardrails on AI coding
+> agents ran, covered every path, failed independently, and how often agents override them. Its
+> earlier work, still published here, builds instruments that say whether a computational
+> molecule-design result survives its own controls. Every figure it publishes is computational; it
+> operates no laboratory and claims no experimental result. Founded October 2026. Independent and
+> bootstrapped. Contact hello@silicyte.com.
+
+**Current focus**: control integrity for AI agent fleets. Measured on one operator's fleet of
+Claude Code agents on one Windows laptop (261,254 tool calls, 30 Sep to 21 Oct 2026): one guardrail
+was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent
+running to 53.1% with 11 or more. Not peer reviewed. See /refusal-uptime.html.
+
+The earlier research's distinguishing claim follows.
 
 Silicyte's distinguishing claim, with the measurement behind it: in a closed-loop molecular design
 system, **deliberately degrading the scoring model made the reported improvement 2.4 times larger**
@@ -40,6 +48,10 @@ not established.
 ## Pages
 
 - [Home](https://silicyte.com/): what Silicyte does, with the headline figures.
+- [Refusal uptime](https://silicyte.com/refusal-uptime.html): control integrity for AI agent
+  fleets. One guardrail was absent on 29.8% of the calls it existed to check; absence rose from
+  0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
+  override, with the prediction that was wrong. Not peer reviewed.
 - [Benchmark leakage](https://silicyte.com/benchmark-leakage.html): measured train/test sequence
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
   that validate the instrument. The most-cited page.
@@ -50,13 +62,17 @@ not established.
 - [Data](https://silicyte.com/data.html): corrected antimicrobial peptide MIC and HC50 evaluation
   folds, CC BY 4.0, with the leakage audit and baselines.
   [Download](https://silicyte.com/data/silicyte-amp-eval-v1.zip)
-- [Evaluate](https://silicyte.com/check.html): a free browser tool that runs four diagnostics on an
+- [Evaluate](https://silicyte.com/check.html) (no longer in the header; linked from page text): a free browser tool that runs four diagnostics on an
   evaluation table. No account, no upload; the file is processed locally in the browser.
 - [Science](https://silicyte.com/science.html): methods, controls and limitations.
 - [Company](https://silicyte.com/company.html): who Silicyte is, and an explicit ledger of claims
   it has withdrawn.
 
 ## Code and evidence
+
+- Refusal uptime probe: https://github.com/braxtonmensah/refusal-uptime (release v0.1.0, MIT;
+  standard-library Python; computes each Claude Code hook's refusal uptime from your own
+  transcripts, locally; includes a canary wrapper and the technical note with every number).
 
 - Evidence archive: https://github.com/braxtonmensah/silicyte-design-loops (release v1.0.0,
   CC BY 4.0). Contains, for every number in the paper, the pre-registration written before the run,

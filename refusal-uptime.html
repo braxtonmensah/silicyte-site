@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refusal uptime: did your agents' guardrails actually run? | Silicyte</title>
+<meta name="description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
+<link rel="canonical" href="https://silicyte.com/refusal-uptime.html">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Refusal uptime: did your agents' guardrails actually run?">
+<meta property="og:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<meta property="og:url" content="https://silicyte.com/refusal-uptime.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Refusal uptime: did your agents' guardrails actually run?">
+<meta name="twitter:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171600">
+<link rel="stylesheet" href="/assets/refine.css?v=202610171600">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Report",
+      "@id": "https://silicyte.com/refusal-uptime.html#report",
+      "url": "https://silicyte.com/refusal-uptime.html",
+      "name": "Refusal uptime: did your agents' guardrails actually run?",
+      "headline": "Refusal uptime: did your agents' guardrails actually run?",
+      "datePublished": "2026-10-21",
+      "dateModified": "2026-10-21",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "name": "Braxton Mensah",
+        "affiliation": {"@type": "Organization", "name": "Silicyte"}
+      },
+      "publisher": {"@id": "https://silicyte.com/#organization"},
+      "about": [
+        {"@type": "Thing", "name": "Control integrity"},
+        {"@type": "Thing", "name": "AI agent guardrails"},
+        {"@type": "Thing", "name": "Refusal uptime"}
+      ],
+      "abstract": "Measured on one operator's fleet of Claude Code agents on one Windows laptop, 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. One guardrail was absent on 30,929 of 103,850 calls it existed to check (29.8%). Absence rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. Prepared with AI assistance; not peer reviewed."
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://silicyte.com/#organization",
+      "name": "Silicyte",
+      "url": "https://silicyte.com/",
+      "email": "hello@silicyte.com"
+    }
+  ]
+}
+</script>
+</head>
+<body class="interior-page">
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/science.html">Research</a>
+      <a href="/papers.html">Papers</a>
+      <a href="/reference.html">Reference</a>
+      <a href="/data.html">Data</a>
+      <a href="/audit.html">Audit</a>
+      <a href="/refusal-uptime.html" aria-current="page">Agents</a>
+      <a href="/demo.html">Demo</a>
+      <a href="/company.html">About</a>
+      <a class="cta" href="/evaluation.html">Work with us</a>
+    </nav>
+  </div>
+</header>
+<main>
+
+  <div class="wrap page-intro">
+    <div class="col">
+      <p class="eyebrow">Measurement &middot; 2026-10-21</p>
+      <h1>Refusal uptime: did your agents&rsquo; guardrails actually run?</h1>
+      <p class="lede">Claude Code runs each pre-tool guardrail as a separate process with a timeout, and by default a guardrail that times out lets the action through. The agent&rsquo;s result looks the same as if the guardrail had allowed it. The timeout is logged, but nothing reports it as a share of the actions the guardrail should have checked. On one operator&rsquo;s fleet of Claude Code agents, <strong>one guardrail was absent on 29.8% of the calls it existed to check.</strong></p>
+      <p class="muted small">Measured on one Windows laptop with 8 logical CPUs, from 30 Sep to 21 Oct 2026:
+      3,844 sessions and 261,254 tool calls. Forecasts were written down before each measurement,
+      and every count was computed twice by independent methods. Prepared with AI assistance; not
+      peer reviewed.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">The design</p>
+      <h2>To the agent, a timeout and a clean pass look the same.</h2>
+      <p>Claude Code gives every pre-tool guardrail a timeout. If the guardrail does not answer in
+      time, the action goes through unless the hook sets <code>onFailure: "block"</code>, an
+      opt-in added in v2.1.295. The transcript records the timeout, but the agent&rsquo;s tool result
+      is the same as if the guardrail had run and allowed it.</p>
+      <p>This is a documented design choice that keeps agents fast. It is not a vulnerability. It does
+      mean that whether a guardrail ran has to be measured, because the absence of a refusal does
+      not show it.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">The measurement</p>
+      <h2>One guardrail was absent on 29.8% of the calls it existed to check.</h2>
+      <p>The fleet was about ten Claude Code sessions, with their sub-agents, run by one operator on
+      one Windows laptop with 8 logical CPUs. Guardrail budgets were 10 to 15 seconds, the
+      operator&rsquo;s choice (the documented default is 600 s), and <code>onFailure</code> was not set. Across 3,844 sessions and 261,254 tool calls, from 30 Sep to 21 Oct 2026, we
+      counted how often each guardrail was absent on the calls it existed to check.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Guardrail</th>
+            <th scope="col">Calls it existed to check</th>
+            <th scope="col">Absent</th>
+            <th scope="col">Share absent</th>
+          </tr></thead>
+          <tbody>
+            <tr style="background:var(--brand-tint)"><td><b>Compute guard</b> (<code>gpu_before_cpu</code>, 15 s)</td>
+                <td class="n">103,850</td><td class="n">30,929</td><td class="n"><b>29.8%</b></td></tr>
+            <tr><td><b>Polling guard</b> (<code>no_poll</code>, 10 s)</td>
+                <td class="n">40,283</td><td class="n">24,121</td><td class="n"><b>59.9%</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small" style="margin-top:14px">For the compute guard, <span class="num">30,761</span>
+      of the <span class="num">30,929</span> calls on which it was absent returned a result that was
+      not a refusal. The compute guard&rsquo;s absence was forecast before the read at 0.20 (band 0.05
+      to 0.50); it came in at 0.298.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Load</p>
+      <h2>Absence rose with the number of agents running at once.</h2>
+      <p>For the compute guard, counting agents as transcripts active in the same 10 minutes: with
+      one running, absence was <span class="num">0.2%</span> (5 of 2,258). With 11 or more it was
+      <span class="num">53.1%</span> (28,569 of 53,831), and with 30 or more it was
+      <span class="num">79.2%</span>. Agent count is our proxy for load; CPU, memory and disk were not
+      measured.</p>
+
+      <figure style="margin-bottom:26px">
+        <div class="figbox">
+          <svg viewBox="0 0 400 296" style="min-width:0;max-width:480px" role="img"
+               aria-label="Bar chart of guardrail absence by number of agents running at once, drawn to scale from 0 to 60 percent. One agent: 0.2 percent. Two to three agents: 0.5 percent. Four to six agents: 4.4 percent. Seven to ten agents: 7.6 percent. Eleven or more agents: 53.1 percent.">
+            <title>Guardrail absence by number of agents running at once</title>
+            <text class="ch-sub" x="4" y="12">Guardrail absent, % of calls</text>
+            <!-- Plot area: x 44 to 392, y 28 (60%) to 244 (0%). 216px / 60 = 3.6px per percentage point. -->
+            <g>
+              <line class="ch-grid" x1="44" x2="392" y1="28" y2="28"/>
+              <line class="ch-grid" x1="44" x2="392" y1="64" y2="64"/>
+              <line class="ch-grid" x1="44" x2="392" y1="100" y2="100"/>
+              <line class="ch-grid" x1="44" x2="392" y1="136" y2="136"/>
+              <line class="ch-grid" x1="44" x2="392" y1="172" y2="172"/>
+              <line class="ch-grid" x1="44" x2="392" y1="208" y2="208"/>
+            </g>
+            <g>
+              <text class="ch-tick" x="38" y="32" text-anchor="end">60%</text>
+              <text class="ch-tick" x="38" y="68" text-anchor="end">50%</text>
+              <text class="ch-tick" x="38" y="104" text-anchor="end">40%</text>
+              <text class="ch-tick" x="38" y="140" text-anchor="end">30%</text>
+              <text class="ch-tick" x="38" y="176" text-anchor="end">20%</text>
+              <text class="ch-tick" x="38" y="212" text-anchor="end">10%</text>
+              <text class="ch-tick" x="38" y="248" text-anchor="end">0%</text>
+            </g>
+            <g fill="var(--brand)">
+              <rect x="56.8"  y="243.28" width="44" height="0.72"/>
+              <rect x="126.4" y="242.2"  width="44" height="1.8"/>
+              <rect x="196"   y="228.16" width="44" height="15.84"/>
+              <rect x="265.6" y="216.64" width="44" height="27.36"/>
+              <rect x="335.2" y="52.84"  width="44" height="191.16"/>
+            </g>
+            <line class="ch-axis" x1="44" x2="392" y1="244.5" y2="244.5"/>
+            <g style="paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round">
+              <text class="ch-val" x="78.8"  y="236.3" text-anchor="middle">0.2%</text>
+              <text class="ch-val" x="148.4" y="235.2" text-anchor="middle">0.5%</text>
+              <text class="ch-val" x="218"   y="221.2" text-anchor="middle">4.4%</text>
+              <text class="ch-val" x="287.6" y="209.6" text-anchor="middle">7.6%</text>
+              <text class="ch-val" x="357.2" y="45.8"  text-anchor="middle">53.1%</text>
+            </g>
+            <g>
+              <text class="ch-lab" x="78.8"  y="264" text-anchor="middle">1</text>
+              <text class="ch-lab" x="148.4" y="264" text-anchor="middle">2-3</text>
+              <text class="ch-lab" x="218"   y="264" text-anchor="middle">4-6</text>
+              <text class="ch-lab" x="287.6" y="264" text-anchor="middle">7-10</text>
+              <text class="ch-lab" x="357.2" y="264" text-anchor="middle">11 or more</text>
+            </g>
+            <text class="ch-sub" x="218" y="288" text-anchor="middle">Agents running at once</text>
+          </svg>
+        </div>
+        <figcaption>Share of calls on which the guardrail was absent, by the number of agents
+        running at once. Bars are drawn to scale on a 0 to 60% axis. One operator&rsquo;s fleet,
+        30 Sep to 21 Oct 2026.</figcaption>
+      </figure>
+
+      <p>The same rise held within single days (on 18 Oct, from 2.0% of 51 calls to 70.0%) and within
+      single sessions: of 82 sessions that ran at both low and peak load, 61 were absent more often at
+      peak (per-session means <span class="num">2.3%</span> vs <span class="num">37.6%</span>). The
+      rise from one agent to eleven or more was forecast before the read at +0.25 (band +0.05 to
+      +0.60); it came in at +0.529.</p>
+      <p>A Linux server pinned to 8 cores, running synthetic agents with replicas of the same guards
+      (not Claude Code itself), showed zero absence even at 48 agents (22,824 runs). Why the
+      workstation differs (memory pressure, process start cost, antivirus, a cloud-synced folder) is
+      not yet tested.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Control integrity</p>
+      <h2>Presence is one of four numbers per guardrail.</h2>
+      <p>Whether a guardrail ran is not the only question. We report four numbers for each
+      guardrail and call the set its control integrity.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Number</th>
+            <th scope="col">Question</th>
+            <th scope="col">Measured</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Presence</td>
+                <td>Did the guardrail run?</td>
+                <td>Absent on <span class="num">29.8%</span> of the calls it existed to check.</td></tr>
+            <tr><td>Coverage</td>
+                <td>Did it watch every path?</td>
+                <td><span class="num">20.5%</span> of 931 protected writes went through a shell path the guard never watched. <span class="num">38.8%</span> got no verdict at all.</td></tr>
+            <tr><td>Independence</td>
+                <td>Did the guards fail independently?</td>
+                <td>When the compute guard was absent, the polling guard on the same machine was absent too <span class="num">99.86%</span> of the time (<span class="num">91.0%</span> the other way round). Guards on one host failed together.</td></tr>
+            <tr><td>Override</td>
+                <td>How often do agents override the guard?</td>
+                <td><span class="num">81.6%</span> of 461 refusals were re-issued with the guard&rsquo;s own sanctioned override. <span class="num">95.4%</span> of 18,588 override uses came before any refusal.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">A wrong prediction</p>
+      <h2>We predicted covert routing-around on 20% of refusals. It happened on 0.7%.</h2>
+      <p>Before reading the data we predicted that, after a guard refused, agents would reach the same
+      effect through a path the guard does not watch on <span class="num">20%</span> of refusals. It
+      happened after <span class="num">4</span> of <span class="num">603</span> refusals across the
+      three guards (<span class="num">0.7%</span>, from a five-call detector, so a lower bound). The
+      forecast was wrong by a wide margin. These agents took the guard&rsquo;s sanctioned override
+      openly instead.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Growth, an extrapolation from one fleet</p>
+      <h2>On its trend, this fleet&rsquo;s busy hours reach 30 agents by 26 Nov 2026.</h2>
+      <p>Over the measured period, guard timeouts doubled every <span class="num">2.8</span> days.
+      Busy-hour concurrency (the mean of a day&rsquo;s six busiest 10-minute windows, 10.4 agents on
+      21 Oct) doubles every <span class="num">23.8</span> days. Peak windows already pass 30. On its
+      trend the busy-hour mean reaches 30, where absence was 79%, by
+      <span class="num">26 Nov 2026</span>.</p>
+      <div class="plain">
+        <b>An extrapolation from one fleet.</b>
+        <span>The 26 Nov 2026 date takes one operator&rsquo;s trend and projects it onto that
+        fleet&rsquo;s own measured curve. It is not a measurement, and it is not a forecast for any
+        other fleet.</span>
+      </div>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Audit</p>
+      <h2>Audit frameworks ask whether controls kept operating.</h2>
+      <p>PCI DSS 4.0.1 requirement 10.7.2 says: &ldquo;Failures of critical security control
+      systems are detected, alerted, and addressed promptly.&rdquo; SOC 2 Type 2 asks whether
+      controls operated effectively over the period.</p>
+      <p>Refusal uptime is the share of the calls a guardrail existed to check on which the
+      guardrail was present, computed per guardrail.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Related</p>
+      <h2>Related work.</h2>
+      <p>Claude Code&rsquo;s own OpenTelemetry hook events count cancelled hooks. The AISIX gateway
+      counts bypasses. Breach-and-attack simulation validates security controls the same way.</p>
+      <p>Claude Code v2.1.295 added an opt-in <code>onFailure: 'block'</code>.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="col">
+      <p class="kicker">Method</p>
+      <h2>Method and limits.</h2>
+      <p>Where a number was forecast before the data was read, this page says so; the others were
+      not pre-registered. Every count was computed twice by independent methods. This page was
+      prepared with AI assistance and is not peer reviewed. The full technical note, with every
+      number and its limits, is in the
+      <a href="https://github.com/braxtonmensah/refusal-uptime/blob/main/NOTE.md">probe&rsquo;s repository</a>.</p>
+      <p>The measurements come from one operator&rsquo;s fleet of Claude Code sessions on one Windows
+      laptop with 8 logical CPUs, from 30 Sep to 21 Oct 2026. The Linux comparison used synthetic
+      agents running replicas of the guards. The 26 Nov 2026 date is an extrapolation from one
+      fleet. Nothing here describes the security of any vendor&rsquo;s product.</p>
+    </div></div>
+  </section>
+
+  <section class="flush">
+    <div class="wrap"><div class="col">
+      <p class="kicker">Your turn</p>
+      <h2>Compute refusal uptime for your own agents.</h2>
+      <p>The open-source probe computes refusal uptime per guardrail from your own Claude Code
+      transcripts. It runs locally and is standard-library Python. A canary wrapper makes guard
+      presence observable.</p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/braxtonmensah/refusal-uptime">Get the probe <span aria-hidden="true">&rarr;</span></a>
+        <a class="text-link" href="/papers.html">Earlier work <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div></div>
+  </section>
+
+</main>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<script>window.goatcounter={no_onload:false};</script>
+<script data-goatcounter="https://silicyte.goatcounter.com/count"
+        data-goatcounter-settings='{"allow_local":false}'
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
