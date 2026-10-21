@@ -5,6 +5,10 @@
 .home-page .brandmark, .home-page .top nav a { color: #d5dce3; }
 .home-page .brandmark b { font-size: 21px; }
 .home-page .top nav a:hover, .home-page .top nav a[aria-current] { color: white; background: #17222d; }
+/* The CTA keeps dark text on its light pill here too: the rule above (and line 5) would
+   otherwise paint it #d5dce3 on #edf3f8, which is unreadable. */
+.home-page .top nav a.cta { background: #edf3f8; color: #0b1016; }
+.home-page .top nav a.cta:hover { background: #ffffff; color: #0b1016; }
 .home-page .top { --ink: #edf3f8; --focus: #a9cbeb; }
 .molecular-hero { position: relative; overflow: hidden; background: #080f17; color: #f1f4f7; padding: 0; border: 0; --focus: #b2d6f4; }
 .molecular-layout { display: grid; grid-template-columns: 46% 54%; align-items: center; min-height: 570px; position: relative; }
