@@ -4,16 +4,52 @@
 
 # Silicyte
 
-> Silicyte publishes research on peptide and protein model evaluation, benchmark leakage and controlled design loops. Explore the methods, code and open data.
+> Silicyte measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path and failed independently, and how often agents override them. Earlier research on peptide and protein model evaluation stays here.
 
 Canonical: https://silicyte.com/
 
 ---
 [**Silicyte**](/)
 
-Peptide design & model evaluation
+Control integrity for AI agent fleets
 
-# Molecular design.
+# Did your agents' guardrails actually run?
+
+We measure whether the guardrails on AI agents ran, covered every path and failed independently, and how often agents override them. On one operator's fleet of Claude Code agents, a guardrail was absent on 29.8% of the calls it existed to check. We traced the cause and fixed it.
+
+[Read the measurement →](/refusal-uptime.html) [Get the open-source probe ↗](https://github.com/braxtonmensah/refusal-uptime)
+
+Guardrail absent, 261,254 calls over 21 days [**29.8%**](/refusal-uptime.html)
+
+Absent with 11 or more agents at once [**53.1%**](/refusal-uptime.html)
+
+Guardrail time, 8 calls at once, before and after the fix (p95) [**36.3 s → 2.5 s**](/refusal-uptime.html#cause-and-fix)
+
+Absent after the fix, live traffic [**0 of 2,211**](/refusal-uptime.html#cause-and-fix)
+
+One operator, one Windows laptop, 30 Sep to 23 Oct 2026. Every figure links to how it was measured, and the pass thresholds were registered before each read. Prepared with AI assistance; not peer reviewed.
+
+Time for a tool call's guardrails to finish, 95th percentile, one laptop, synthetic bursts:
+
+| tool calls at once | five guardrail processes | one dispatcher process |
+|---|---|---|
+| 1 | 8.3 s | 0.9 s |
+| 4 | 24.5 s | 1.0 s |
+| 8 | 36.3 s | 2.5 s |
+
+The guardrails' timeout budget was 10 to 15 s. Same decisions on 145 of 145 replayed calls.
+
+Control integrity / Four numbers per guardrail
+
+## A guardrail that never refuses may simply never have run.
+
+To the agent, a guardrail that timed out and one that ran and allowed the action look the same. So we report four numbers for each guardrail. **Presence:** did it run (absent on 29.8% of its calls before the fix). **Coverage:** did it watch every path (20.5% of protected writes went through a path it never watched). **Independence:** did the guards fail separately (they failed together 99.86% of the time). **Override:** how often agents take the sanctioned way around it (81.6% of refusals).
+
+[Read the full measurement and its limits →](/refusal-uptime.html)
+
+Earlier work / Peptide design & model evaluation
+
+## Molecular design.
 Controls included.
 
 We design peptides and protein binders, and we measure whether the score that ranks them is tracking the molecules or its own error.

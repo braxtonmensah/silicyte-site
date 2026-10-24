@@ -4,7 +4,7 @@
 
 # About Silicyte
 
-> Silicyte is an independent research venture developing peptide and protein-design workflows and reproducible model evaluation. Founded by Braxton Mensah.
+> Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.
 
 Canonical: https://silicyte.com/company.html
 
@@ -13,22 +13,24 @@ Canonical: https://silicyte.com/company.html
 
 About Silicyte
 
-# Molecular design,
-with evidence in view.
+# Controls, measured
+like results.
 
-Silicyte is an independent research venture developing peptide and protein-design workflows alongside tools for reproducible model evaluation.
+Silicyte is an independent research venture that measures whether the controls around automated work actually operated: the guardrails on AI agent fleets now, and the evaluations behind computational molecular design before that.
 
-Founded by Braxton Mensah in October 2026, the work focuses on a practical question: how reliably does a computational score support the next candidate-selection decision?
+Founded by Braxton Mensah in October 2026. Both lines of work ask the same question: when a system reports that a check passed, did the check run, and does the number mean what it says?
 
 Independent research
 
 ## Founded by Braxton Mensah
 
-Peptides & protein bindersReproducible model evaluationContact Silicyte →
+Control integrity for AI agentsModel evaluation auditsPeptides & protein bindersContact Silicyte →
 
 01 Approach
 
-## Connect the score to the decision.
+## Measure the control, not only the outcome.
+
+A guardrail that never refuses may simply never have run. On one operator's fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix the guardrails were absent on 0 of 2,211 live calls. [Read the measurement and its limits](/refusal-uptime.html).
 
 Candidate ranking helps determine which molecules receive experimental attention. We study how data separation, metric implementation and scoring choices affect that ranking.
 
@@ -42,9 +44,17 @@ The research record includes methods, controls, limitations and corrections so r
 
 ## Research and evaluation tools.
 
-Our current work includes peptide and binder design workflows, a browser-based evaluation checker, and released antimicrobial peptide evaluation folds.
+Our current work includes the refusal uptime measurement and its open-source probe, a browser-based evaluation checker, released antimicrobial peptide evaluation folds, and peptide and binder design workflows.
 
 For potential collaborations, we begin with a specific question, the available data and the evidence needed to support a useful decision. Scope and feasibility are agreed before any engagement.
+
+Probe
+
+### Refusal uptime probe
+
+Open-source, standard-library Python that computes each Claude Code hook's refusal uptime from your own transcripts, on your own machine.
+
+[Get the probe ↗](https://github.com/braxtonmensah/refusal-uptime)
 
 Tool
 
@@ -74,7 +84,7 @@ An interactive view of computational predictions and their limits. Demonstration
 
 ## Clear scope. Traceable evidence.
 
-Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. Existing computational results and historical corrections are documented on the [science page](/science.html).
+Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator's fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the [science page](/science.html).
 
 AI tools support software development and analysis. Their use does not establish scientific validity; reproducible methods, appropriate controls and experimental evidence determine what a result can support.
 
@@ -86,7 +96,7 @@ The browser checker processes selected files locally. It loads public website as
 
 ## Discuss a research or evaluation project.
 
-For peptide-design research, model evaluation, laboratory collaboration or investment enquiries, contact Braxton with the question you are working on and the evidence you need.
+For measuring the guardrails on your own agent fleet, model evaluation, peptide-design research or investment enquiries, contact Braxton with the question you are working on and the evidence you need.
 
 Founder[Braxton Mensah](https://www.linkedin.com/in/braxtonmensah)
 

@@ -10,7 +10,12 @@
 **Current focus**: control integrity for AI agent fleets. Measured on one operator's fleet of
 Claude Code agents on one Windows laptop (261,254 tool calls, 30 Sep to 21 Oct 2026): one guardrail
 was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent
-running to 53.1% with 11 or more. Not peer reviewed. See /refusal-uptime.html.
+running to 53.1% with 11 or more. Cause, measured 23 Oct 2026: each guardrail was a separate
+process, and at 8 tool calls at once their start-up took 36.3 s at the 95th percentile against
+10 to 15 s budgets. Running every guardrail in one dispatcher process cut that to 2.5 s with the
+same decision on 145 of 145 replayed calls, and on live traffic afterwards the guardrails were
+absent on 0 of 2,211 calls (Wilson 95% interval 0 to 0.17%; nine hours, 8 sessions; the 11-plus
+load did not recur). Not peer reviewed. See /refusal-uptime.html#cause-and-fix.
 
 The earlier research's distinguishing claim follows.
 
@@ -51,7 +56,8 @@ not established.
 - [Refusal uptime](https://silicyte.com/refusal-uptime.html): control integrity for AI agent
   fleets. One guardrail was absent on 29.8% of the calls it existed to check; absence rose from
   0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
-  override, with the prediction that was wrong. Not peer reviewed.
+  override, with the prediction that was wrong, the measured cause (process start-up), and the
+  fix (absent on 0 of 2,211 calls after it). Not peer reviewed.
 - [Benchmark leakage](https://silicyte.com/benchmark-leakage.html): measured train/test sequence
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
   that validate the instrument. The most-cited page.
@@ -125,12 +131,14 @@ its exact-overlap rate, its twin rate at Levenshtein ratio 0.80, and its test an
 It also carries the two measurements that were deliberately excluded from the findings, each with
 the reason, so a reader cannot quote them as results by accident.
 
-- [Leakage measurements, JSON](https://silicyte.com/data/leakage-measurements.json): all 13
-  measurements across 5 benchmark families, 11 reported and 2 excluded with reasons.
+- [Leakage measurements, JSON](https://silicyte.com/data/leakage-measurements.json): 13 split
+  measurements across 5 benchmark families (12 entries; PepBenchmark is read on two datasets),
+  plus 2 measured and deliberately excluded with reasons.
 
 Plain-markdown mirrors of every page sit alongside it at the same path with a `.md` extension, for
 retrieval without parsing navigation or inline SVG:
 
+- [/refusal-uptime.md](https://silicyte.com/refusal-uptime.md)
 - [/benchmark-leakage.md](https://silicyte.com/benchmark-leakage.md)
 - [/reference.md](https://silicyte.com/reference.md)
 - [/science.md](https://silicyte.com/science.md)

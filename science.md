@@ -31,7 +31,7 @@ Scoring sensitivityEvaluation correctionsResult status
 
 We tested the sensitivity of a reported design gain to the scoring model's training coverage. We withheld 80% of its training families and kept the separate measuring model fixed so both arms were evaluated with the same computational procedure. This intervention does not directly measure molecule quality.
 
-**Withholding scorer training families increased the reported computational gain.** Intact scorer: the loop reported its molecules ended 3.5x better at killing bacteria relative to harming blood cells. Scorer given a fifth of the data: 21x better. In the units the field uses, that is +0.5421 against +1.3182, a difference of 0.7761 with a standard error of 0.0531, which is 14.6 error bars wide. Three runs each, twelve arms in one allocation, job 12243941.
+**Withholding scorer training families increased the reported computational gain.** Intact scorer: the loop reported its molecules ended 3.5x better at killing bacteria relative to harming blood cells. Scorer given a fifth of the data: 21x better. In the units the field uses, that is +0.5421 against +1.3182, a difference of 0.7761 with a standard error of 0.0531, which is 14.6 error bars wide (t = −14.60). Three runs each, twelve arms in one allocation, job 12243941.
 
 This intervention changed the reported computational metric. Without experimental outcomes it does not establish which arm produced better molecules or identify the causal mechanism. Shared scorer errors are a hypothesis to test. Six control loops run with scrambled rewards all stayed inside their pre-registered band of ±0.11, spanning -0.0851 to +0.0396. This is a control outcome for these runs, rather than proof that the full evaluation is free of defects.
 

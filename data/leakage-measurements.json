@@ -50,6 +50,17 @@
       "train_rows": 3338
     },
     {
+      "id": 12,
+      "benchmark": "AMPlify",
+      "split": "negative class",
+      "venue": "BMC Genomics 2022",
+      "homology_control_as_published": "Not documented in the repository",
+      "exact_overlap_pct": 0.00,
+      "twin_at_080_pct": 30.18,
+      "test_rows": 835,
+      "notes": "Non-AMP negatives, train_balanced to test_balanced, same download and run as id 2. Measured 2026-10-17 and shown on the homepage chart since then; added to this record on 2026-10-23 (see corrections_issued). Numbered 12 so that ids 1 to 11 keep their meaning."
+    },
+    {
       "id": 3,
       "benchmark": "PepBenchmark",
       "split": "hybrid_split, the paper's documented default",
@@ -163,6 +174,10 @@
   ],
 
   "corrections_issued": [
+    {
+      "when": "2026-10-23 21:30 ET",
+      "what": "The homepage chart has shown 13 split measurements since 2026-10-17, but this record carried 11 entries and omitted AMPlify's negative class (30.18%, measured in the same run as its positive class). The row is added as id 12. No measured value changed. Counting PepBenchmark's two datasets separately, as the chart does, the record now yields the chart's 13 values."
+    },
     {
       "when": "2026-10-17 06:00 ET",
       "what": "Published that FLIP was clean four splits out of four. Three further splits were then measured and one of them, secondary_structure sampled, returns 65.38%. The claim was retracted on the page and the correction posted to the FLIP repository on the same thread where the maintainers had been told their benchmark held up."

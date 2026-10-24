@@ -23,6 +23,7 @@ Every file is downloaded from its own published location and hashed at run time.
 |---|---|---|---|
 | **LRGB Peptides-func** NeurIPS 2022 Datasets & Benchmarks | None. Stratified random split. | 7.72% | 65.29% |
 | **AMPlify**, positive class BMC Genomics 2022 | Not documented in the repository | 0.00% | 63.47% |
+| **AMPlify**, negative class same paper, same download, same run | Not documented in the repository | 0.00% | 30.18% |
 | **PepBenchmark**, `hybrid_split` ICLR 2026, the paper’s documented default | k-mer, then MMseqs2 at 30% identity | 0.00% | 29.97% / 48.56% |
 | **AMP Scanner v2**, positive class Bioinformatics 2018 | CD-HIT at 90% identity, pool filtered before splitting | 0.00% | 16.71% |
 | **AMP Scanner v2**, negative class same paper, same tool, same run | CD-HIT at 40% identity, pool filtered before splitting | 0.00% | **0.00%** |
@@ -33,7 +34,7 @@ Every file is downloaded from its own published location and hashed at run time.
 | **FLIP conservation**`sampled` same benchmark, random split | Random 95/5. No clustering. | 0.00% | **0.00%** |
 | **FLIP secondary_structure**`sampled` same benchmark, same random design | Random 95/5. No clustering. | 0.00% | **65.38%** |
 
-“Twin” means a Levenshtein ratio of at least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train. AMPlify: 835 against 3,338. PepBenchmark: mean over its five shipped seeds, on `antimicrobial_E_coli_mic` and `hemolytic_hc50`. AMP Scanner v2: 712 per class per side. FLIP meltome: 3,134 against 24,817, of which 20,206 unique.
+“Twin” means a Levenshtein ratio of at least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train. AMPlify: 835 test rows per class; 3,338 train for the positive class. PepBenchmark: mean over its five shipped seeds, on `antimicrobial_E_coli_mic` and `hemolytic_hc50`. AMP Scanner v2: 712 per class per side. FLIP meltome: 3,134 against 24,817, of which 20,206 unique.
 
 01 The six clean rows
 
@@ -144,7 +145,7 @@ Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned enc
 
 ## What this does not show.
 
-**A contamination rate is not an inflation.** I retrained nothing on corrected versions of these splits, so I have not measured what any of it is worth in reported accuracy. Anyone quoting these as “benchmark X is overstated by Y points” is quoting something I did not measure.
+**A contamination rate is not a score inflation.** I retrained nothing on corrected versions of these splits, so I have not measured what any of it is worth in reported accuracy. Anyone quoting these as “benchmark X is overstated by Y points” is quoting something I did not measure.
 
 **For LRGB, only 30 of the 180 exact matches are the same molecule.** 180 test rows share a primary sequence with training and 30 of those also share a SMILES. For a sequence model all 180 are leakage; for the graph models LRGB is actually used to benchmark, the other 150 differ in stereochemistry or modification and are near-duplicates rather than duplicates. I say “shares a primary sequence” and never “duplicate molecule”.
 

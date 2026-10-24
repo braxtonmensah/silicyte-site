@@ -19,7 +19,7 @@ Each entry links to the artifact a sceptical reader would actually open: the PDF
 
 01 Paper
 
-Draft · evidence archive DOI 10.5281/zenodo.23441786
+Working paper · not peer reviewed · evidence archive DOI 10.5281/zenodo.23441786
 
 ### [Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops.html)
 

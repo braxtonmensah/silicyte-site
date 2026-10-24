@@ -155,3 +155,29 @@
   .evidence { grid-template-columns: 1fr 1fr; }
   .evidence dt { font-size: 11.5px; max-width: none; }
 }
+
+/* 10/23: the agents hero (one hero, the current focus) and the molecular band demoted to an h2 with the same type. */
+.molecular-copy h2.hero-h { font: 500 clamp(36px, 3.65vw, 54px)/1.12 var(--display); letter-spacing: -.025em; margin: 0 0 24px; color: #f1f4f7; }
+.molecular-copy h2.hero-h span { color: #a8bed2; }
+.agents-hero .molecular-copy { padding-block: 64px; }
+.agents-hero .evidence dd .num { white-space: nowrap; }
+.agents-art { margin: 0 0 0 28px; min-width: 0; }
+.agents-art svg { display: block; width: 100%; height: auto; max-width: 560px; }
+.agents-art figcaption { color: #879aa9; font: 400 11px/1.5 var(--mono); margin-top: 6px; max-width: 560px; }
+.agents-art .af-budget { fill: rgba(232, 192, 122, .16); }
+.agents-art .af-note { fill: #cdb27c; font: 400 11px var(--mono); }
+.agents-art .af-grid line { stroke: #22303b; stroke-width: 1; }
+.agents-art .af-tick text { fill: #8496a6; font: 400 11px var(--ui); }
+.agents-art .af-old, .agents-art .af-old rect { fill: #4d6a82; }
+.agents-art .af-new, .agents-art .af-new rect { fill: #9ecdf2; }
+.agents-art .af-axis { stroke: #3a4855; stroke-width: 1; }
+.agents-art .af-val text { fill: #e3ebf2; font: 500 12px var(--mono); }
+.agents-art .af-lab text { fill: #a3b2c0; font: 400 12px var(--ui); }
+.agents-art .af-key text { fill: #bdc8d3; font: 400 12px var(--ui); }
+@media (max-width: 900px) { .agents-art { margin: 0 0 40px; } }
+/* Four long labels and a two-value figure do not fit four across in the 46% copy column: always 2 x 2 here. */
+.agents-hero .evidence { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+.agents-hero .evidence > div:nth-child(2) { border-right: 0; padding-right: 0; }
+.agents-hero .evidence > div:nth-child(3) { padding-left: 0; }
+/* The old hero hid its detail line on phones; this one carries the scope and the AI-assistance disclosure, so it stays. */
+@media (max-width: 560px) { .agents-hero .evidence dd b { font-size: 17px; } .agents-hero .hero-detail { display: block; } }

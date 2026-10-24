@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About Silicyte | Molecular design and evaluation</title>
-<meta name="description" content="Silicyte is an independent research venture developing peptide and protein-design workflows and reproducible model evaluation. Founded by Braxton Mensah.">
+<title>About Silicyte | Control integrity for AI agents and model evaluation</title>
+<meta name="description" content="Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/company.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="About Silicyte">
-<meta property="og:description" content="Silicyte is an independent research venture developing peptide and protein-design workflows and reproducible model evaluation. Founded by Braxton Mensah.">
+<meta property="og:description" content="Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.">
 <meta property="og:url" content="https://silicyte.com/company.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
@@ -60,15 +60,16 @@
 <main>
   <div class="wrap page-intro"><div class="col">
     <p class="eyebrow">About Silicyte</p>
-    <h1>Molecular design,<br>with evidence in view.</h1>
-    <p class="lede">Silicyte is an independent research venture developing peptide and protein-design workflows alongside tools for reproducible model evaluation.</p>
-    <p>Founded by Braxton Mensah in October 2026, the work focuses on a practical question: how reliably does a computational score support the next candidate-selection decision?</p>
-  </div><aside class="page-context"><p class="context-label">Independent research</p><h2>Founded by Braxton Mensah</h2><div><span>Peptides &amp; protein binders</span><span>Reproducible model evaluation</span><a href="#contact">Contact Silicyte &rarr;</a></div></aside>
+    <h1>Controls, measured<br>like results.</h1>
+    <p class="lede">Silicyte is an independent research venture that measures whether the controls around automated work actually operated: the guardrails on AI agent fleets now, and the evaluations behind computational molecular design before that.</p>
+    <p>Founded by Braxton Mensah in October 2026. Both lines of work ask the same question: when a system reports that a check passed, did the check run, and does the number mean what it says?</p>
+  </div><aside class="page-context"><p class="context-label">Independent research</p><h2>Founded by Braxton Mensah</h2><div><span>Control integrity for AI agents</span><span>Model evaluation audits</span><span>Peptides &amp; protein binders</span><a href="#contact">Contact Silicyte &rarr;</a></div></aside>
 </div>
 
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">01</span> Approach</p>
-    <h2>Connect the score to the decision.</h2>
+    <h2>Measure the control, not only the outcome.</h2>
+    <p>A guardrail that never refuses may simply never have run. On one operator&rsquo;s fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix the guardrails were absent on 0 of 2,211 live calls. <a href="/refusal-uptime.html">Read the measurement and its limits</a>.</p>
     <p>Candidate ranking helps determine which molecules receive experimental attention. We study how data separation, metric implementation and scoring choices affect that ranking.</p>
     <p>In our own peptide-design experiment, withholding training families from a scoring model increased the reported computational gain. This is evidence of sensitivity to the scoring procedure. Independent experimental outcomes are needed to establish which candidates are biologically better.</p>
     <p>The research record includes methods, controls, limitations and corrections so readers can inspect what each result supports.</p>
@@ -78,9 +79,10 @@
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">02</span> Available work</p>
     <h2>Research and evaluation tools.</h2>
-    <p>Our current work includes peptide and binder design workflows, a browser-based evaluation checker, and released antimicrobial peptide evaluation folds.</p>
+    <p>Our current work includes the refusal uptime measurement and its open-source probe, a browser-based evaluation checker, released antimicrobial peptide evaluation folds, and peptide and binder design workflows.</p>
     <p>For potential collaborations, we begin with a specific question, the available data and the evidence needed to support a useful decision. Scope and feasibility are agreed before any engagement.</p>
   </div><div class="ledger">
+    <div><span class="tag">Probe</span><h3>Refusal uptime probe</h3><p>Open-source, standard-library Python that computes each Claude Code hook&rsquo;s refusal uptime from your own transcripts, on your own machine.</p><a href="https://github.com/braxtonmensah/refusal-uptime">Get the probe &nearr;</a></div>
     <div><span class="tag">Tool</span><h3>Peptide evaluation diagnostics</h3><p>Check supported sequence tables for overlap and metric issues. The checker abstains when inputs or coverage do not support a conclusion.</p><a href="/check.html">Open the checker &rarr;</a></div>
     <div><span class="tag">Data</span><h3>Released evaluation folds</h3><p>MIC and HC50 peptide folds with a stated similarity rule, historical baseline records and release corrections.</p><a href="/data.html">Review the dataset &rarr;</a></div>
     <div><span class="tag">Demonstration</span><h3>Peptide prediction workflow</h3><p>An interactive view of computational predictions and their limits. Demonstration outputs are not measurements of a submitted peptide.</p><a href="/demo.html">Explore the demonstration &rarr;</a></div>
@@ -89,7 +91,7 @@
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">03</span> Research practices</p>
     <h2>Clear scope. Traceable evidence.</h2>
-    <p>Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. Existing computational results and historical corrections are documented on the <a href="/science.html">science page</a>.</p>
+    <p>Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator&rsquo;s fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the <a href="/science.html">science page</a>.</p>
     <p>AI tools support software development and analysis. Their use does not establish scientific validity; reproducible methods, appropriate controls and experimental evidence determine what a result can support.</p>
     <p>The browser checker processes selected files locally. It loads public website assets and examples from external servers. Any project work would require a separate agreement covering access, confidentiality and data handling.</p>
     <p><a href="/science.html#withdrawn">Read the research corrections</a> &middot; <a href="/data/CORRECTIONS-2026-10-16.md">Dataset release notes</a></p>
@@ -98,7 +100,7 @@
   <section id="contact" class="flush"><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">04</span> Contact</p>
     <h2>Discuss a research or evaluation project.</h2>
-    <p>For peptide-design research, model evaluation, laboratory collaboration or investment enquiries, contact Braxton with the question you are working on and the evidence you need.</p>
+    <p>For measuring the guardrails on your own agent fleet, model evaluation, peptide-design research or investment enquiries, contact Braxton with the question you are working on and the evidence you need.</p>
   </div><dl class="facts">
     <div><dt>Founder</dt><dd><a href="https://www.linkedin.com/in/braxtonmensah">Braxton Mensah</a></dd></div>
     <div><dt>Location</dt><dd>South Jordan, Utah, United States</dd></div>

@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Refusal uptime: did your agents' guardrails actually run? | Silicyte</title>
-<meta name="description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<meta name="description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/refusal-uptime.html">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta property="og:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<meta property="og:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
 <meta property="og:url" content="https://silicyte.com/refusal-uptime.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta name="twitter:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent running to 53.1% with 11 or more. Four numbers per guardrail, an open-source probe, and the prediction we got wrong.">
+<meta name="twitter:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
       "name": "Refusal uptime: did your agents' guardrails actually run?",
       "headline": "Refusal uptime: did your agents' guardrails actually run?",
       "datePublished": "2026-10-21",
-      "dateModified": "2026-10-21",
+      "dateModified": "2026-10-23",
       "inLanguage": "en",
       "isAccessibleForFree": true,
       "author": {
@@ -47,7 +47,7 @@
         {"@type": "Thing", "name": "AI agent guardrails"},
         {"@type": "Thing", "name": "Refusal uptime"}
       ],
-      "abstract": "Measured on one operator's fleet of Claude Code agents on one Windows laptop, 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. One guardrail was absent on 30,929 of 103,850 calls it existed to check (29.8%). Absence rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. Prepared with AI assistance; not peer reviewed."
+      "abstract": "Measured on one operator's fleet of Claude Code agents on one Windows laptop, 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. One guardrail was absent on 30,929 of 103,850 calls it existed to check (29.8%). Absence rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. On 23 Oct 2026 the cause was measured as guardrail start-up time (five separate processes per call, p95 36.3 s with 8 calls at once against 10 to 15 s budgets); one dispatcher process returned the same decision on 145 of 145 replayed calls at p95 2.5 s. Prepared with AI assistance; not peer reviewed."
     },
     {
       "@type": "Organization",
@@ -95,7 +95,7 @@
 
   <div class="wrap page-intro">
     <div class="col">
-      <p class="eyebrow">Measurement &middot; 2026-10-21</p>
+      <p class="eyebrow">Measurement &middot; 2026-10-21 &middot; cause and fix 2026-10-23</p>
       <h1>Refusal uptime: did your agents&rsquo; guardrails actually run?</h1>
       <p class="lede">Claude Code runs each pre-tool guardrail as a separate process with a timeout, and by default a guardrail that times out lets the action through. The agent&rsquo;s result looks the same as if the guardrail had allowed it. The timeout is logged, but nothing reports it as a share of the actions the guardrail should have checked. On one operator&rsquo;s fleet of Claude Code agents, <strong>one guardrail was absent on 29.8% of the calls it existed to check.</strong></p>
       <p class="muted small">Measured on one Windows laptop with 8 logical CPUs, from 30 Sep to 21 Oct 2026:
@@ -220,9 +220,55 @@
       rise from one agent to eleven or more was forecast before the read at +0.25 (band +0.05 to
       +0.60); it came in at +0.529.</p>
       <p>A Linux server pinned to 8 cores, running synthetic agents with replicas of the same guards
-      (not Claude Code itself), showed zero absence even at 48 agents (22,824 runs). Why the
-      workstation differs (memory pressure, process start cost, antivirus, a cloud-synced folder) is
-      not yet tested.</p>
+      (not Claude Code itself), showed zero absence even at 48 agents (22,824 runs). On the
+      workstation, process start cost was measured on 23 Oct and is the cause on this fleet (next
+      section); memory pressure, antivirus and the cloud-synced folder were not separated from it.</p>
+    </div></div>
+  </section>
+
+  <section id="cause-and-fix">
+    <div class="wrap"><div class="col">
+      <p class="kicker">Cause and fix &middot; 2026-10-23</p>
+      <h2>The guardrails timed out while starting. Running them in one process fixed it.</h2>
+      <p>On this fleet every shell call started five guardrails at once, each one its own Python
+      process. We timed the start-up itself, with bursts of tool calls fired together on the same
+      laptop. With 4 calls at once, a call&rsquo;s guardrails took <span class="num">24.5 s</span> to
+      finish at the 95th percentile; with 8 at once, <span class="num">36.3 s</span>. Both are past the
+      10 to 15 s budgets, which is the load curve above. It also explains the independence row below:
+      the guards on one host failed together because they were all waiting on the same start-up.</p>
+      <p>The fix runs every guardrail inside a single dispatcher process per call, each guard&rsquo;s own
+      code unchanged. Replayed on 145 tool calls (140 real calls from the fleet and 5 built to be
+      refused), the dispatcher returned the same decision and the same refusal text on all
+      <span class="num">145</span>. At 8 calls at once its 95th percentile was <span class="num">2.5 s</span>,
+      <span class="num">0.069</span> of the old figure. The pass threshold, 0.50, was registered before
+      the measurement.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Tool calls at once</th>
+            <th scope="col">Five guard processes, p95</th>
+            <th scope="col">One dispatcher, p95</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="n">8.3 s</td><td class="n">0.9 s</td></tr>
+            <tr><td>4</td><td class="n">24.5 s</td><td class="n">1.0 s</td></tr>
+            <tr style="background:var(--brand-tint)"><td><b>8</b></td><td class="n"><b>36.3 s</b></td><td class="n"><b>2.5 s</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small" style="margin-top:14px">Limits: one laptop, synthetic bursts of calls fired
+      together, six rounds per setting. The old form was launched without the shell layer the agent
+      harness puts in front of each guardrail, so its real cost was higher than shown.</p>
+      <h3 style="margin-top:28px">After the fix, on live traffic: absent on 0 of 2,211 calls.</h3>
+      <p>The fix went live on this fleet at 11:37 ET on 23 Oct. Over the next nine hours, across 8
+      sessions, the transcripts recorded <span class="num">0</span> guardrail timeouts or errors on the
+      <span class="num">2,211</span> calls the guardrails existed to check (Wilson 95% interval 0 to
+      0.17%). Counted independently, the dispatcher&rsquo;s own log shows it ran on 2,214 calls, within 3
+      of the transcript count for every tool, with no guard errors and 35 refusals applied. The gate,
+      registered before the read, was failures on at most 2% of at least 2,000 calls.</p>
+      <p class="muted small">Limit: the heaviest load of the earlier period, 11 or more agents at once,
+      did not recur in those nine hours, so presence at that load is not yet measured after the fix.
+      Before the fix, at 7 to 10 agents, the compute guard was absent on 7.6% of its calls.</p>
     </div></div>
   </section>
 
