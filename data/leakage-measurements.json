@@ -175,7 +175,7 @@
 
   "corrections_issued": [
     {
-      "when": "2026-10-23 21:30 ET",
+      "when": "2026-10-23 20:44 ET",
       "what": "The homepage chart has shown 13 split measurements since 2026-10-17, but this record carried 11 entries and omitted AMPlify's negative class (30.18%, measured in the same run as its positive class). The row is added as id 12. No measured value changed. Counting PepBenchmark's two datasets separately, as the chart does, the record now yields the chart's 13 values."
     },
     {
