@@ -70,12 +70,24 @@ interval 0 to 0.17%). Counted independently, the dispatcher's own log shows it r
 within 3 of the transcript count for every tool, with no guard errors and 35 refusals applied. The
 gate, registered before the read, was failures on at most 2% of at least 2,000 calls.
 
-Then the heavy load came back: absent on 0 of 1,184 calls with 11 to 20 agents at once. Those nine
+Then the heavy load came back: absent on 0 of 1,184 calls with 11 to 20 agents at once, in one
+sustained busy episode. Those nine
 hours never reached 11 agents at once, so we registered a second gate before looking: failures on at
 most 2% of at least 500 calls made while 11 or more agents were active. By 14:24 ET on 25 Oct that
 load had recurred, peaking at 20. The guardrails were absent on 0 of the 1,184 calls they existed to
 check at that load (Wilson 95% upper bound 0.32%). Before the fix, at the same load, the compute guard
 was absent on 53.1% of its calls.
+
+How much that shows depends on what counts as one trial. Calls made in the same ten minutes share one
+machine state, so they are not independent, and the 0.32% bound overstates the evidence. The 1,184
+calls fall in six ten-minute windows on one day, five of them back to back as sessions resumed after the
+standby described below. Windows are a weak unit as well: before the fix, 83 of 423 busy windows had
+already been clean, so a window-level test we registered before looking failed its own gate (clean
+share 0.196 against a pass bound of 0.10). Longer runs separate the two regimes: before the fix, none of
+the 21 sustained busy episodes (five or more consecutive ten-minute windows at 11 or more agents) was
+clean; after it, the one sustained episode so far was. Under the old regime a clean sustained episode
+had a chance of at most about 15% (95% upper bound from 0 of 21), so one clean episode is encouraging,
+not conclusive. More are needed.
 
 Across all 7,870 checked calls since the fix, there were 5 absences, and all 5 came from one episode:
 the laptop went into standby between 02:56 and 03:21 ET on 25 Oct, in the middle of calls. A timeout
