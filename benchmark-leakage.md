@@ -22,8 +22,8 @@ Every file is downloaded from its own published location and hashed at run time.
 | Published split | Homology control, as published | Exact overlap | Twin ≥ 0.80 |
 |---|---|---|---|
 | **LRGB Peptides-func** NeurIPS 2022 Datasets & Benchmarks | None. Stratified random split. | 7.72% | 65.29% |
-| **AMPlify**, positive class BMC Genomics 2022 | Not documented in the repository | 0.00% | 63.47% |
-| **AMPlify**, negative class same paper, same download, same run | Not documented in the repository | 0.00% | 30.18% |
+| **AMPlify**, positive class BMC Genomics 2022 | None, by design (paper's Methods; see the correction below) | 0.00% | 63.47% |
+| **AMPlify**, negative class same paper, same download, same run | None, by design (paper's Methods; see the correction below) | 0.00% | 30.18% |
 | **PepBenchmark**, `hybrid_split` ICLR 2026, the paper’s documented default | k-mer, then MMseqs2 at 30% identity | 0.00% | 29.97% / 48.56% |
 | **AMP Scanner v2**, positive class Bioinformatics 2018 | CD-HIT at 90% identity, pool filtered before splitting | 0.00% | 16.71% |
 | **AMP Scanner v2**, negative class same paper, same tool, same run | CD-HIT at 40% identity, pool filtered before splitting | 0.00% | **0.00%** |
@@ -33,6 +33,8 @@ Every file is downloaded from its own published location and hashed at run time.
 | **FLIP scl**`mixed_hard` different task: 10-class localisation | as above | 0.00% | **0.00%** |
 | **FLIP conservation**`sampled` same benchmark, random split | Random 95/5. No clustering. | 0.00% | **0.00%** |
 | **FLIP secondary_structure**`sampled` same benchmark, same random design | Random 95/5. No clustering. | 0.00% | **65.38%** |
+
+**Correction, 25 Oct 2026.** This table first said AMPlify's homology control was "not documented in the repository". Its maintainers replied on [issue #21](https://github.com/BirolLab/AMPlify/issues/21) (22 Oct): near-identical sequences were kept deliberately, as the paper's Methods explain, because a single amino-acid substitution can change or abolish antimicrobial activity. They also point to the paper's Fig. 2, which evaluates AMPlify and other tools on test subsets filtered by similarity to each tool's training set and, they report, finds AMPlify ahead at every threshold. That is the paired control a contamination rate lacks, and it was in the paper; we had not read the full paper before measuring. The 63.47% and 30.18% stand as measured; what they cost in reported performance is the question Fig. 2 addresses and this table does not.
 
 “Twin” means a Levenshtein ratio of at least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train. AMPlify: 835 test rows per class; 3,338 train for the positive class. PepBenchmark: mean over its five shipped seeds, on `antimicrobial_E_coli_mic` and `hemolytic_hc50`. AMP Scanner v2: 712 per class per side. FLIP meltome: 3,134 against 24,817, of which 20,206 unique.
 

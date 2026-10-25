@@ -195,9 +195,9 @@
             <tr><td><b>LRGB Peptides-func</b><br><span class="small muted">NeurIPS 2022 Datasets &amp; Benchmarks</span></td>
                 <td>None. Stratified random split.</td><td class="n">7.72%</td><td class="n">65.29%</td></tr>
             <tr><td><b>AMPlify</b>, positive class<br><span class="small muted">BMC Genomics 2022</span></td>
-                <td>Not documented in the repository</td><td class="n">0.00%</td><td class="n">63.47%</td></tr>
+                <td>None, by design (paper&rsquo;s Methods; see the note below)</td><td class="n">0.00%</td><td class="n">63.47%</td></tr>
             <tr><td><b>AMPlify</b>, negative class<br><span class="small muted">same paper, same download, same run</span></td>
-                <td>Not documented in the repository</td><td class="n">0.00%</td><td class="n">30.18%</td></tr>
+                <td>None, by design (paper&rsquo;s Methods; see the note below)</td><td class="n">0.00%</td><td class="n">30.18%</td></tr>
             <tr style="background:var(--brand-tint)"><td><b>PepBenchmark</b>, <code>hybrid_split</code><br><span class="small muted">ICLR 2026, the paper&rsquo;s documented default</span></td>
                 <td>k-mer, then MMseqs2 at 30% identity</td><td class="n">0.00%</td><td class="n">29.97% / 48.56%</td></tr>
             <tr><td><b>AMP Scanner v2</b>, positive class<br><span class="small muted">Bioinformatics 2018</span></td>
@@ -219,6 +219,15 @@
           </tbody>
         </table>
       </div>
+      <p class="col small" style="margin-top:14px"><b>Correction, 25 Oct 2026.</b> This table first said
+      AMPlify&rsquo;s homology control was &ldquo;not documented in the repository&rdquo;. Its maintainers replied on
+      <a href="https://github.com/BirolLab/AMPlify/issues/21">issue #21</a> (22 Oct): near-identical sequences were kept
+      deliberately, as the paper&rsquo;s Methods explain, because a single amino-acid substitution can change or abolish
+      antimicrobial activity. They also point to the paper&rsquo;s Fig. 2, which evaluates AMPlify and other tools on test
+      subsets filtered by similarity to each tool&rsquo;s training set and, they report, finds AMPlify ahead at every
+      threshold. That is the paired control a contamination rate lacks, and it was in the paper; we had not read the full
+      paper before measuring. The 63.47% and 30.18% stand as measured; what they cost in reported performance is the
+      question Fig. 2 addresses and this table does not.</p>
       <p class="col muted small" style="margin-top:14px">&ldquo;Twin&rdquo; means a Levenshtein ratio of
       at least 0.80 against any training sequence. LRGB: 2,331 test rows against 10,873 train.
       AMPlify: 835 test rows per class; 3,338 train for the positive class. PepBenchmark: mean over its five shipped seeds, on
