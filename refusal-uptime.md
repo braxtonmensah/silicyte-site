@@ -70,9 +70,22 @@ interval 0 to 0.17%). Counted independently, the dispatcher's own log shows it r
 within 3 of the transcript count for every tool, with no guard errors and 35 refusals applied. The
 gate, registered before the read, was failures on at most 2% of at least 2,000 calls.
 
-Limit: the heaviest load of the earlier period, 11 or more agents at once, did not recur in those
-nine hours, so presence at that load is not yet measured after the fix. Before the fix, at 7 to 10
-agents, the compute guard was absent on 7.6% of its calls.
+Then the heavy load came back: absent on 0 of 1,184 calls with 11 to 20 agents at once. Those nine
+hours never reached 11 agents at once, so we registered a second gate before looking: failures on at
+most 2% of at least 500 calls made while 11 or more agents were active. By 14:24 ET on 25 Oct that
+load had recurred, peaking at 20. The guardrails were absent on 0 of the 1,184 calls they existed to
+check at that load (Wilson 95% upper bound 0.32%). Before the fix, at the same load, the compute guard
+was absent on 53.1% of its calls.
+
+Across all 7,870 checked calls since the fix, there were 5 absences, and all 5 came from one episode:
+the laptop went into standby between 02:56 and 03:21 ET on 25 Oct, in the middle of calls. A timeout
+that counts wall-clock time fires the moment the machine wakes, so the call goes ahead unchecked. That
+is a second way for a guardrail to vanish, and no timeout setting fixes it; only a guardrail that
+blocks on failure, or a host that does not sleep under agents, does.
+
+Limits: one laptop, and a before/after comparison rather than a randomized one, so the controlled
+evidence for the cause is still the bench above. Load since the fix peaked at 20 agents; before it,
+absence reached 79.2% at 30 or more, a load not yet seen since.
 
 ## Control integrity: four numbers per guardrail
 
