@@ -6,15 +6,15 @@
 <title>Split Audit: find train/test leakage in your own data | Silicyte</title>
 <meta name="description" content="Upload a train/test split and find out how many test rows have a near-duplicate in training. Runs entirely in your browser; your sequences are never uploaded. The leak rate is free. The row-level findings and a corrected split are $99.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
-<link rel="canonical" href="https://silicyte.com/audit.html">
+<link rel="canonical" href="https://silicyte.com/audit">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Split Audit: find train/test leakage in your own data">
 <meta property="og:description" content="Upload a train/test split, get the leak rate free, in your browser. Your sequences never leave your machine.">
-<meta property="og:url" content="https://silicyte.com/audit.html">
+<meta property="og:url" content="https://silicyte.com/audit">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://silicyte.com/audit.html#app","name":"Silicyte Split Audit","applicationCategory":"DeveloperApplication","operatingSystem":"Any browser","url":"https://silicyte.com/audit.html","description":"Measures the fraction of test rows that carry a near-duplicate in training, using python-Levenshtein ratio at a 0.80 threshold, entirely in the browser. Produces row-level findings and a corrected split rebuilt by transitive single linkage.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Leak rate"},{"@type":"Offer","price":"99","priceCurrency":"USD","name":"Row-level findings and corrected split"}],"publisher":{"@id":"https://silicyte.com/#organization"}},{"@type":"FAQPage","@id":"https://silicyte.com/audit.html#faq","mainEntity":[{"@type":"Question","name":"Is my data uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison runs in your browser using JavaScript on your own machine. The file is read locally and the sequences are never sent to any server. You can confirm this by opening your browser's network tab while the audit runs, or by disconnecting from the network before loading the file."}},{"@type":"Question","name":"What counts as leakage here?","acceptedAnswer":{"@type":"Answer","text":"A test row is counted as leaking when some training row reaches a python-Levenshtein ratio of 0.80 or above against it. The ratio is (lensum minus indel distance) divided by lensum. Every test row is compared against every training row, with no sampling."}},{"@type":"Question","name":"Does a clean result mean my evaluation is sound?","acceptedAnswer":{"@type":"Answer","text":"No. A clean result is a statement about sequence similarity only. It does not establish that model selection, hyperparameter choice or threshold tuning were independent of the test set, and it does not measure leakage through shared assay batches, duplicated measurements under different identifiers, or metadata."}},{"@type":"Question","name":"Does a 65% contamination rate mean the reported accuracy is 65 points too high?","acceptedAnswer":{"@type":"Answer","text":"No. A contamination rate is not a score inflation. Establishing how much a reported number is overstated requires retraining on a corrected split and comparing, which this audit does not do."}}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://silicyte.com/audit#app","name":"Silicyte Split Audit","applicationCategory":"DeveloperApplication","operatingSystem":"Any browser","url":"https://silicyte.com/audit","description":"Measures the fraction of test rows that carry a near-duplicate in training, using python-Levenshtein ratio at a 0.80 threshold, entirely in the browser. Produces row-level findings and a corrected split rebuilt by transitive single linkage.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Leak rate"},{"@type":"Offer","price":"99","priceCurrency":"USD","name":"Row-level findings and corrected split"}],"publisher":{"@id":"https://silicyte.com/#organization"}},{"@type":"FAQPage","@id":"https://silicyte.com/audit#faq","mainEntity":[{"@type":"Question","name":"Is my data uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison runs in your browser using JavaScript on your own machine. The file is read locally and the sequences are never sent to any server. You can confirm this by opening your browser's network tab while the audit runs, or by disconnecting from the network before loading the file."}},{"@type":"Question","name":"What counts as leakage here?","acceptedAnswer":{"@type":"Answer","text":"A test row is counted as leaking when some training row reaches a python-Levenshtein ratio of 0.80 or above against it. The ratio is (lensum minus indel distance) divided by lensum. Every test row is compared against every training row, with no sampling."}},{"@type":"Question","name":"Does a clean result mean my evaluation is sound?","acceptedAnswer":{"@type":"Answer","text":"No. A clean result is a statement about sequence similarity only. It does not establish that model selection, hyperparameter choice or threshold tuning were independent of the test set, and it does not measure leakage through shared assay batches, duplicated measurements under different identifiers, or metadata."}},{"@type":"Question","name":"Does a 65% contamination rate mean the reported accuracy is 65 points too high?","acceptedAnswer":{"@type":"Answer","text":"No. A contamination rate is not a score inflation. Establishing how much a reported number is overstated requires retraining on a corrected split and comparing, which this audit does not do."}}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -42,13 +42,13 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Research</a>
-      <a href="/papers.html">Papers</a>
-      <a href="/reference.html">Reference</a>
-      <a href="/data.html">Data</a>
-      <a href="/audit.html" aria-current="page">Audit</a>
-      <a href="/company.html">About</a>
-      <a class="cta" href="/evaluation.html">Work with us</a>
+      <a href="/science">Research</a>
+      <a href="/papers">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit" aria-current="page">Audit</a>
+      <a href="/company">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
     </nav>
   </div>
 </header>
@@ -96,7 +96,7 @@ p003,GIGKFLHSAKKFGKAFVGEIMNT,test</code></pre>
   </div></div></section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evaluation.html">Services</a> &middot; <a href="/company.html">About &amp; research practices</a> &middot; <a href="/careers.html">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evaluation">Services</a> &middot; <a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="/assets/audit.js?v=202610171600"></script>
 <script src="/assets/audit-ui.js?v=202610171600"></script>

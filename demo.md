@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/demo.html
+<!-- Plain-markdown mirror of https://silicyte.com/demo
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Explore sequence properties, reference similarity and computational predictions for a peptide. Reference assay measurements and model outputs are distinguished.
 
-Canonical: https://silicyte.com/demo.html
+Canonical: https://silicyte.com/demo
 
 ---
 [**Silicyte**](/)

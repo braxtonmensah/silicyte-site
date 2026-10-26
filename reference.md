@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/reference.html
+<!-- Plain-markdown mirror of https://silicyte.com/reference
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Direct answers on machine-learning evaluation leakage in peptide and protein benchmarks: how much LRGB Peptides-func leaks, whether a 30% identity split is enough, what threshold is actually needed, and why representative-based clustering leaves near-duplicates.
 
-Canonical: https://silicyte.com/reference.html
+Canonical: https://silicyte.com/reference
 
 ---
 [**Silicyte**](/)
@@ -53,7 +53,7 @@ Split-half Spearman reliability is 0.7877 with a standard deviation of 0.0067 ov
 
 ## How do I check my own machine-learning evaluation for train/test leakage?
 
-Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.
+Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.
 
 ## What is Silicyte?
 

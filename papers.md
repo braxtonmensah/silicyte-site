@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/papers.html
+<!-- Plain-markdown mirror of https://silicyte.com/papers
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Silicyte research papers, benchmark audits and evaluation-data releases. Read the methods, code, controls and limitations behind our published computational work.
 
-Canonical: https://silicyte.com/papers.html
+Canonical: https://silicyte.com/papers
 
 ---
 [**Silicyte**](/)

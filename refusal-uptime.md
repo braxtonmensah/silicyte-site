@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/refusal-uptime.html
+<!-- Plain-markdown mirror of https://silicyte.com/refusal-uptime
      Generated for retrieval crawlers. The HTML page is canonical.
      Full technical note: https://github.com/braxtonmensah/refusal-uptime/blob/main/NOTE.md -->
 
@@ -9,7 +9,7 @@
 > as a share of the actions the guardrail should have checked. On one operator's fleet of Claude
 > Code agents, one guardrail was absent on 29.8% of the calls it existed to check.
 
-Canonical: https://silicyte.com/refusal-uptime.html
+Canonical: https://silicyte.com/refusal-uptime
 
 Measured on one Windows laptop with 8 logical CPUs, 30 Sep to 21 Oct 2026: 3,844 sessions and
 261,254 tool calls. Every count was computed twice by independent methods. Where a number was

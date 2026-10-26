@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/audit.html
+<!-- Plain-markdown mirror of https://silicyte.com/audit
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Upload a train/test split and find out how many test rows have a near-duplicate in training. Runs entirely in your browser; your sequences are never uploaded. The leak rate is free. The row-level findings and a corrected split are $99.
 
-Canonical: https://silicyte.com/audit.html
+Canonical: https://silicyte.com/audit
 
 ---
 [**Silicyte**](/)

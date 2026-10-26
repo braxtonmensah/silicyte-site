@@ -7,16 +7,16 @@
 <meta name="description" content="Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
-<link rel="canonical" href="https://silicyte.com/company.html">
+<link rel="canonical" href="https://silicyte.com/company">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="About Silicyte">
 <meta property="og:description" content="Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.">
-<meta property="og:url" content="https://silicyte.com/company.html">
+<meta property="og:url" content="https://silicyte.com/company">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","@id":"https://silicyte.com/company.html#webpage","url":"https://silicyte.com/company.html","name":"About Silicyte","about":{"@id":"https://silicyte.com/#organization"},"mainEntity":{"@type":"Person","@id":"https://silicyte.com/company.html#braxton-mensah","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah","affiliation":{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","@id":"https://silicyte.com/company#webpage","url":"https://silicyte.com/company","name":"About Silicyte","about":{"@id":"https://silicyte.com/#organization"},"mainEntity":{"@type":"Person","@id":"https://silicyte.com/company#braxton-mensah","name":"Braxton Mensah","sameAs":"https://www.linkedin.com/in/braxtonmensah","affiliation":{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte"}}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -44,15 +44,15 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Research</a>
-      <a href="/papers.html">Papers</a>
-      <a href="/reference.html">Reference</a>
-      <a href="/data.html">Data</a>
-      <a href="/audit.html">Audit</a>
-      <a href="/refusal-uptime.html">Agents</a>
-      <a href="/demo.html">Demo</a>
-      <a href="/company.html" aria-current="page">About</a>
-      <a class="cta" href="/evaluation.html">Work with us</a>
+      <a href="/science">Research</a>
+      <a href="/papers">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit">Audit</a>
+      <a href="/refusal-uptime">Agents</a>
+      <a href="/demo">Demo</a>
+      <a href="/company" aria-current="page">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
     </nav>
   </div>
 </header>
@@ -69,11 +69,11 @@
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">01</span> Approach</p>
     <h2>Measure the control, not only the outcome.</h2>
-    <p>A guardrail that never refuses may simply never have run. On one operator&rsquo;s fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix the guardrails were absent on 0 of 2,211 live calls. <a href="/refusal-uptime.html">Read the measurement and its limits</a>.</p>
+    <p>A guardrail that never refuses may simply never have run. On one operator&rsquo;s fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix the guardrails were absent on 0 of 2,211 live calls. <a href="/refusal-uptime">Read the measurement and its limits</a>.</p>
     <p>Candidate ranking helps determine which molecules receive experimental attention. We study how data separation, metric implementation and scoring choices affect that ranking.</p>
     <p>In our own peptide-design experiment, withholding training families from a scoring model increased the reported computational gain. This is evidence of sensitivity to the scoring procedure. Independent experimental outcomes are needed to establish which candidates are biologically better.</p>
     <p>The research record includes methods, controls, limitations and corrections so readers can inspect what each result supports.</p>
-    <a href="/science.html">Explore the research &rarr;</a>
+    <a href="/science">Explore the research &rarr;</a>
   </div></div></section>
 
   <section><div class="wrap"><div class="col">
@@ -83,18 +83,18 @@
     <p>For potential collaborations, we begin with a specific question, the available data and the evidence needed to support a useful decision. Scope and feasibility are agreed before any engagement.</p>
   </div><div class="ledger">
     <div><span class="tag">Probe</span><h3>Refusal uptime probe</h3><p>Open-source, standard-library Python that computes each Claude Code hook&rsquo;s refusal uptime from your own transcripts, on your own machine.</p><a href="https://github.com/braxtonmensah/refusal-uptime">Get the probe &nearr;</a></div>
-    <div><span class="tag">Tool</span><h3>Peptide evaluation diagnostics</h3><p>Check supported sequence tables for overlap and metric issues. The checker abstains when inputs or coverage do not support a conclusion.</p><a href="/check.html">Open the checker &rarr;</a></div>
-    <div><span class="tag">Data</span><h3>Released evaluation folds</h3><p>MIC and HC50 peptide folds with a stated similarity rule, historical baseline records and release corrections.</p><a href="/data.html">Review the dataset &rarr;</a></div>
-    <div><span class="tag">Demonstration</span><h3>Peptide prediction workflow</h3><p>An interactive view of computational predictions and their limits. Demonstration outputs are not measurements of a submitted peptide.</p><a href="/demo.html">Explore the demonstration &rarr;</a></div>
+    <div><span class="tag">Tool</span><h3>Peptide evaluation diagnostics</h3><p>Check supported sequence tables for overlap and metric issues. The checker abstains when inputs or coverage do not support a conclusion.</p><a href="/check">Open the checker &rarr;</a></div>
+    <div><span class="tag">Data</span><h3>Released evaluation folds</h3><p>MIC and HC50 peptide folds with a stated similarity rule, historical baseline records and release corrections.</p><a href="/data">Review the dataset &rarr;</a></div>
+    <div><span class="tag">Demonstration</span><h3>Peptide prediction workflow</h3><p>An interactive view of computational predictions and their limits. Demonstration outputs are not measurements of a submitted peptide.</p><a href="/demo">Explore the demonstration &rarr;</a></div>
   </div></div></section>
 
   <section><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">03</span> Research practices</p>
     <h2>Clear scope. Traceable evidence.</h2>
-    <p>Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator&rsquo;s fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the <a href="/science.html">science page</a>.</p>
+    <p>Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator&rsquo;s fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the <a href="/science">science page</a>.</p>
     <p>AI tools support software development and analysis. Their use does not establish scientific validity; reproducible methods, appropriate controls and experimental evidence determine what a result can support.</p>
     <p>The browser checker processes selected files locally. It loads public website assets and examples from external servers. Any project work would require a separate agreement covering access, confidentiality and data handling.</p>
-    <p><a href="/science.html#withdrawn">Read the research corrections</a> &middot; <a href="/data/CORRECTIONS-2026-10-16.md">Dataset release notes</a></p>
+    <p><a href="/science#withdrawn">Read the research corrections</a> &middot; <a href="/data/CORRECTIONS-2026-10-16.md">Dataset release notes</a></p>
   </div></div></section>
 
   <section id="contact" class="flush"><div class="wrap"><div class="col">
@@ -110,7 +110,7 @@
   </dl><div class="copyrow"><a id="email" href="mailto:hello@silicyte.com">hello@silicyte.com</a><button class="copybtn" id="copyEmail" type="button">Copy address</button></div></div></section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="/careers.html">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script>
 (function () {

@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/company.html
+<!-- Plain-markdown mirror of https://silicyte.com/company
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Silicyte is an independent research venture that measures whether automated controls actually operated: the guardrails on AI agent fleets, and the evaluations behind computational molecular design. Founded by Braxton Mensah.
 
-Canonical: https://silicyte.com/company.html
+Canonical: https://silicyte.com/company
 
 ---
 [**Silicyte**](/)

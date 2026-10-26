@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/evaluation.html
+<!-- Plain-markdown mirror of https://silicyte.com/evaluation
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Does your reported model improvement survive a reproducible evaluation on your own experimental data? A fixed-scope, ten-business-day retrospective evaluation for peptide activity and toxicity models. Fixed-fee pilot, $2,500.
 
-Canonical: https://silicyte.com/evaluation.html
+Canonical: https://silicyte.com/evaluation
 
 ---
 [**Silicyte**](/)

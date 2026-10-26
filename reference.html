@@ -6,11 +6,11 @@
 <title>Reference: evaluation leakage, identity thresholds and design-loop controls | Silicyte</title>
 <meta name="description" content="Direct answers on machine-learning evaluation leakage in peptide and protein benchmarks: how much LRGB Peptides-func leaks, whether a 30% identity split is enough, what threshold is actually needed, and why representative-based clustering leaves near-duplicates.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
-<link rel="canonical" href="https://silicyte.com/reference.html">
+<link rel="canonical" href="https://silicyte.com/reference">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Reference: evaluation leakage and identity thresholds">
 <meta property="og:description" content="Direct answers on machine-learning evaluation leakage in peptide and protein benchmarks: how much LRGB Peptides-func leaks, whether a 30% identity split is enough, what threshold is actually needed, and why representative-based clustering leaves near-duplicates.">
-<meta property="og:url" content="https://silicyte.com/reference.html">
+<meta property="og:url" content="https://silicyte.com/reference">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -89,7 +89,7 @@
       "name": "How do I check my own machine-learning evaluation for train/test leakage?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser."
+        "text": "Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser."
       }
     },
     {
@@ -135,15 +135,15 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Research</a>
-      <a href="/papers.html" aria-current="page">Papers</a>
-      <a href="/reference.html">Reference</a>
-      <a href="/data.html">Data</a>
-      <a href="/audit.html">Audit</a>
-      <a href="/refusal-uptime.html">Agents</a>
-      <a href="/demo.html">Demo</a>
-      <a href="/company.html">About</a>
-      <a class="cta" href="/evaluation.html">Work with us</a>
+      <a href="/science">Research</a>
+      <a href="/papers" aria-current="page">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit">Audit</a>
+      <a href="/refusal-uptime">Agents</a>
+      <a href="/demo">Demo</a>
+      <a href="/company">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
     </nav>
   </div>
 </header>
@@ -157,8 +157,8 @@
       thresholds, rank statistics and design-loop controls. Each one carries the figure and how it
       was measured, so it can be quoted without the rest of the page.</p>
       <p class="muted small">Every figure below links back to the run that produced it, through
-      <a href="/benchmark-leakage.html">the benchmark audit</a>, <a href="/papers.html">the paper</a>
-      or <a href="/data.html">the dataset</a>. Measurements are computational. Silicyte operates no
+      <a href="/benchmark-leakage">the benchmark audit</a>, <a href="/papers">the paper</a>
+      or <a href="/data">the dataset</a>. Measurements are computational. Silicyte operates no
       laboratory and claims no experimental result.</p>
     </div>
   </div>
@@ -200,7 +200,7 @@
       </div>
       <div>
         <h2 id="q9">How do I check my own machine-learning evaluation for train/test leakage?</h2>
-        <p>Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check.html that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.</p>
+        <p>Compare every held-out sequence against every training sequence, not against cluster representatives, and report the fraction of held-out rows whose closest training match exceeds your identity threshold. Silicyte publishes a free browser tool at https://silicyte.com/check that runs four checks on a CSV with no account and no upload: sequence overlap by Levenshtein ratio, prediction spread against the resolution floor, tie-corrected versus ordinal rank correlation, and exact split membership. The file is processed locally in the browser.</p>
       </div>
       <div>
         <h2 id="q10">What is Silicyte?</h2>
@@ -215,14 +215,14 @@
       <h2>Check your own evaluation</h2>
       <p>The four diagnostics run in your browser on a CSV, with no account and no upload.</p>
       <div class="actions">
-        <a class="btn" href="/check.html">Run the checks <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn" href="/check">Run the checks <span aria-hidden="true">&rarr;</span></a>
         <a class="text-link" href="https://github.com/braxtonmensah/silicyte-design-loops">Source <span aria-hidden="true">&nearr;</span></a>
       </div>
     </div></div>
   </section>
 
 </main>
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="/careers.html">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

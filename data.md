@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/data.html
+<!-- Plain-markdown mirror of https://silicyte.com/data
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Corrected MIC and HC50 peptide evaluation folds, with an explicit similarity threshold, historical baseline records and corrections to our earlier claims. Computational research, not biological validation.
 
-Canonical: https://silicyte.com/data.html
+Canonical: https://silicyte.com/data
 
 ---
 [**Silicyte**](/)
@@ -123,6 +123,6 @@ For LRGB Peptides-func, a separate release provides [corrected row-index splits,
 
 For comparisons on these folds, report the exact dataset version, training procedure, model-selection history and metric implementation. Shared folds alone do not make two evaluations equivalent. The release documentation describes the available data and its limits.
 
-Silicyte (2026). Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction. https://silicyte.com/data.html
+Silicyte (2026). Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction. https://silicyte.com/data
 
 The original v1 archive carries a CC BY 4.0 notice. Upstream measurement permissions have not been fully verified in this audit; the archive notice is not a completed rights review. See the [source and release corrections](/data/CORRECTIONS-2026-10-16.md). Questions: [hello@silicyte.com](/company.html).

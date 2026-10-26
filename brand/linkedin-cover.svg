@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2256" height="382" viewBox="0 0 1128 191">
+  <defs>
+    <radialGradient id="glow" cx="0.78" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#1536cc" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#10171c" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.8" fill="#2a343c"/>
+    </pattern>
+  </defs>
+  <rect width="1128" height="191" fill="#10171c"/>
+  <rect width="1128" height="191" fill="url(#dots)"/>
+  <rect width="1128" height="191" fill="url(#glow)"/>
+
+  <!-- Silicyte mark, large, upper left (the page logo overlaps the lower left) -->
+  <g transform="translate(118,22) scale(2.1)" opacity="0.9">
+    <g fill="#eef1f3">
+      <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+      <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+      <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+      <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+      <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+      <circle cx="15.25" cy="8.85" r="2.6"/>
+    </g>
+    <circle cx="39.15" cy="32.75" r="3.5" fill="#3d6bff"/>
+  </g>
+
+  <!-- copy, right of centre -->
+  <text x="330" y="44" font-family="DejaVu Sans Mono" font-size="11" letter-spacing="2.2" fill="#9aa4ac">SILICYTE EXPERT NETWORK  ·  NOW RECRUITING</text>
+  <text x="328" y="96" font-family="DejaVu Serif" font-size="40" fill="#eef1f3">Expert judgment, made checkable.</text>
+  <text x="330" y="128" font-family="DejaVu Sans" font-size="15" fill="#c9d0d6">Train and test AI with us. Six paid tracks, $100 to $150 an hour.</text>
+  <rect x="330" y="146" width="222" height="26" rx="4" fill="#1536cc"/>
+  <text x="441" y="164" text-anchor="middle" font-family="DejaVu Sans Mono" font-size="12" fill="#ffffff">silicyte.com/careers</text>
+  <text x="566" y="164" font-family="DejaVu Sans Mono" font-size="11" fill="#9aa4ac">biology · agents · verifiers · red team · data integrity</text>
+</svg>

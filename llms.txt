@@ -53,25 +53,25 @@ not established.
 ## Pages
 
 - [Home](https://silicyte.com/): what Silicyte does, with the headline figures.
-- [Refusal uptime](https://silicyte.com/refusal-uptime.html): control integrity for AI agent
+- [Refusal uptime](https://silicyte.com/refusal-uptime): control integrity for AI agent
   fleets. One guardrail was absent on 29.8% of the calls it existed to check; absence rose from
   0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
   override, with the prediction that was wrong, the measured cause (process start-up), and the
   fix (absent on 0 of 2,211 calls after it). Not peer reviewed.
-- [Benchmark leakage](https://silicyte.com/benchmark-leakage.html): measured train/test sequence
+- [Benchmark leakage](https://silicyte.com/benchmark-leakage): measured train/test sequence
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
   that validate the instrument. The most-cited page.
-- [Papers](https://silicyte.com/papers.html): publications, data releases and research notes.
-- [Degrading the scoring model made the reported gain 2.4 times larger](https://silicyte.com/papers/design-loops.html): the
+- [Papers](https://silicyte.com/papers): publications, data releases and research notes.
+- [Degrading the scoring model made the reported gain 2.4 times larger](https://silicyte.com/papers/design-loops): the
   paper. Intervention-based audit for in silico molecular design. 13 pages.
   [PDF](https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf)
-- [Data](https://silicyte.com/data.html): corrected antimicrobial peptide MIC and HC50 evaluation
+- [Data](https://silicyte.com/data): corrected antimicrobial peptide MIC and HC50 evaluation
   folds, CC BY 4.0, with the leakage audit and baselines.
   [Download](https://silicyte.com/data/silicyte-amp-eval-v1.zip)
-- [Evaluate](https://silicyte.com/check.html) (no longer in the header; linked from page text): a free browser tool that runs four diagnostics on an
+- [Evaluate](https://silicyte.com/check) (no longer in the header; linked from page text): a free browser tool that runs four diagnostics on an
   evaluation table. No account, no upload; the file is processed locally in the browser.
-- [Science](https://silicyte.com/science.html): methods, controls and limitations.
-- [Company](https://silicyte.com/company.html): who Silicyte is, and an explicit ledger of claims
+- [Science](https://silicyte.com/science): methods, controls and limitations.
+- [Company](https://silicyte.com/company): who Silicyte is, and an explicit ledger of claims
   it has withdrawn.
 
 ## Code and evidence
@@ -106,7 +106,7 @@ on anyone else's model. Its own +0.065 inflation figure is its own and does not 
 
 ## Free tool: check your own split
 
-- [Split Audit](https://silicyte.com/audit.html): upload a train/test split and get the exact
+- [Split Audit](https://silicyte.com/audit): upload a train/test split and get the exact
   fraction of test rows carrying a training sequence at Levenshtein ratio 0.80 or above. The
   comparison is complete, not sampled, and runs entirely in the visitor's browser, so sequences
   are never uploaded. The leak rate is free. For $99 it also returns every leaking row with its
@@ -116,7 +116,7 @@ on anyone else's model. Its own +0.065 inflation figure is its own and does not 
 
 ## Working with Silicyte
 
-- [Model Evaluation Sprint](https://silicyte.com/evaluation.html): a fixed-scope, ten-business-day
+- [Model Evaluation Sprint](https://silicyte.com/evaluation): a fixed-scope, ten-business-day
   retrospective evaluation of whether a reported model improvement survives a reproducible
   evaluation on the customer's own experimental data. One endpoint, one pipeline, one data snapshot.
   Fixed-fee pilot, $2,500, scoped on a free call first. Peptide activity and toxicity endpoints
@@ -151,7 +151,7 @@ retrieval without parsing navigation or inline SVG:
 ## Optional
 
 - [Full text of every published measurement](https://silicyte.com/llms-full.txt)
-- [Reference answers](https://silicyte.com/reference.html): direct answers to common questions
+- [Reference answers](https://silicyte.com/reference): direct answers to common questions
   about evaluation leakage, identity thresholds and rank statistics.
 - AI assistance is disclosed on every page. Large language models are used as the research
   engineering layer; several published corrections were produced by one model auditing another

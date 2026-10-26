@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/papers/design-loops.html
+<!-- Plain-markdown mirror of https://silicyte.com/papers/design-loops
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Degrading a design loop's scoring model on purpose made its reported gain 2.4 times larger (t = -14.60). An intervention-based audit for in silico molecular design, with every number traceable to a pre-registration.
 
-Canonical: https://silicyte.com/papers/design-loops.html
+Canonical: https://silicyte.com/papers/design-loops
 
 ---
 [**Silicyte**](/)

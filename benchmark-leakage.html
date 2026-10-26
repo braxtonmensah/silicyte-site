@@ -6,11 +6,11 @@
 <title>65% of a NeurIPS benchmark's test set has a near-duplicate in training | Silicyte</title>
 <meta name="description" content="I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
-<link rel="canonical" href="https://silicyte.com/benchmark-leakage.html">
+<link rel="canonical" href="https://silicyte.com/benchmark-leakage">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="65% of a NeurIPS benchmark's test set has a near-duplicate in training">
 <meta property="og:description" content="I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.">
-<meta property="og:url" content="https://silicyte.com/benchmark-leakage.html">
+<meta property="og:url" content="https://silicyte.com/benchmark-leakage">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://silicyte.com/brand/leakage-og.png">
 <meta property="og:image:width" content="1200">
@@ -31,8 +31,8 @@
   "@graph": [
     {
       "@type": "Report",
-      "@id": "https://silicyte.com/benchmark-leakage.html#report",
-      "url": "https://silicyte.com/benchmark-leakage.html",
+      "@id": "https://silicyte.com/benchmark-leakage#report",
+      "url": "https://silicyte.com/benchmark-leakage",
       "name": "Train/test sequence overlap measured in thirteen published peptide and protein ML splits",
       "headline": "65% of a NeurIPS benchmark's test set has a near-duplicate in training",
       "datePublished": "2026-10-17",
@@ -67,7 +67,7 @@
       "@id": "https://silicyte.com/data/leakage-measurements.json#dataset",
       "name": "Leakage measurements across thirteen published peptide and protein ML splits",
       "description": "Per-split test-row contamination rates. For each published split: the homology control as published, the exact sequence overlap rate, and the fraction of test rows with a training sequence at Levenshtein ratio 0.80 or above, with test and train row counts. Includes two measurements that were deliberately excluded from the findings, each with the reason.",
-      "url": "https://silicyte.com/benchmark-leakage.html",
+      "url": "https://silicyte.com/benchmark-leakage",
       "datePublished": "2026-10-17",
       "isAccessibleForFree": true,
       "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -86,7 +86,7 @@
     },
     {
       "@type": "FAQPage",
-      "@id": "https://silicyte.com/benchmark-leakage.html#faq",
+      "@id": "https://silicyte.com/benchmark-leakage#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -155,15 +155,15 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Research</a>
-      <a href="/papers.html" aria-current="page">Papers</a>
-      <a href="/reference.html">Reference</a>
-      <a href="/data.html">Data</a>
-      <a href="/audit.html">Audit</a>
-      <a href="/refusal-uptime.html">Agents</a>
-      <a href="/demo.html">Demo</a>
-      <a href="/company.html">About</a>
-      <a class="cta" href="/evaluation.html">Work with us</a>
+      <a href="/science">Research</a>
+      <a href="/papers" aria-current="page">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit">Audit</a>
+      <a href="/refusal-uptime">Agents</a>
+      <a href="/demo">Demo</a>
+      <a href="/company">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
     </nav>
   </div>
 </header>
@@ -518,7 +518,7 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
       comparison between the ones that handled it and the one that handled it well.</p>
       <p class="muted">I found this class of defect in my own work first, along with three others,
       and withdrew the claims that depended on them. That record is in
-      <a href="/papers/design-loops.html">the paper</a>, including the register of what I retracted.</p>
+      <a href="/papers/design-loops">the paper</a>, including the register of what I retracted.</p>
     </div></div>
   </section>
 
@@ -529,14 +529,14 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
       <p>The same check runs in your browser on a CSV, with no account and no upload. If it finds
       nothing, that is a useful result too, and two of the six rows above are exactly that.</p>
       <div class="actions">
-        <a class="btn" href="/check.html">Run it on your data <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn" href="/check">Run it on your data <span aria-hidden="true">&rarr;</span></a>
         <a class="text-link" href="https://github.com/braxtonmensah/silicyte-design-loops">Source <span aria-hidden="true">&nearr;</span></a>
       </div>
     </div></div>
   </section>
 
 </main>
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="/careers.html">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

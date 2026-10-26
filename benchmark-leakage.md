@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/benchmark-leakage.html
+<!-- Plain-markdown mirror of https://silicyte.com/benchmark-leakage
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > I measured train/test sequence overlap in six published peptide and protein ML splits. LRGB Peptides-func 65.29%, AMPlify 63.47%, PepBenchmark's default 30%-identity split 29.97% to 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, and FLIP meltome 0.29%. The clean one clusters at 20% identity and splits whole clusters.
 
-Canonical: https://silicyte.com/benchmark-leakage.html
+Canonical: https://silicyte.com/benchmark-leakage
 
 ---
 [**Silicyte**](/)

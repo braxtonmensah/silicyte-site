@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/science.html
+<!-- Plain-markdown mirror of https://silicyte.com/science
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Our starved scorer reported 21-fold computational improvement versus 3.5-fold for the intact arm. The experiment does not establish biological improvement or a causal mechanism. Methods, controls and limitations.
 
-Canonical: https://silicyte.com/science.html
+Canonical: https://silicyte.com/science
 
 ---
 [**Silicyte**](/)

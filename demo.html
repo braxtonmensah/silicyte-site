@@ -7,11 +7,11 @@
 <meta name="description" content="Explore sequence properties, reference similarity and computational predictions for a peptide. Reference assay measurements and model outputs are distinguished.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
-<link rel="canonical" href="https://silicyte.com/demo.html">
+<link rel="canonical" href="https://silicyte.com/demo">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Run the pipeline on a peptide">
 <meta property="og:description" content="An interactive peptide prediction demonstration with reference data, sequence similarity and explicit limits on interpretation.">
-<meta property="og:url" content="https://silicyte.com/demo.html">
+<meta property="og:url" content="https://silicyte.com/demo">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/assets/hero/molecular-ribbon.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -94,15 +94,15 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science.html">Research</a>
-      <a href="/papers.html">Papers</a>
-      <a href="/reference.html">Reference</a>
-      <a href="/data.html">Data</a>
-      <a href="/audit.html">Audit</a>
-      <a href="/refusal-uptime.html">Agents</a>
-      <a href="/demo.html" aria-current="page">Demo</a>
-      <a href="/company.html">About</a>
-      <a class="cta" href="/evaluation.html">Work with us</a>
+      <a href="/science">Research</a>
+      <a href="/papers">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit">Audit</a>
+      <a href="/refusal-uptime">Agents</a>
+      <a href="/demo" aria-current="page">Demo</a>
+      <a href="/company">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
     </nav>
   </div>
 </header>
@@ -189,21 +189,21 @@
       <span class="num">0.4502</span> on the released MIC folds. The historical fine-tuned result
       of <span class="num">0.5356</span> is a separate model result, not the model running in this browser.
       These computational scores do not establish biological performance. See the
-      <a href="/data.html">data page and release corrections</a>.</p>
+      <a href="/data">data page and release corrections</a>.</p>
       <p class="muted">Reference values come from GRAMPA in micromolar units, reduced to a median
       per peptide and organism. Some source records lack complete chemical-modification metadata;
       canonical sequence letters alone do not verify that chemistry. Cite the original sources.
       Sequence input is processed in the browser. Reference measurements come from
       that public dataset; a predicted MIC is not a measured MIC for your input.</p>
       <div class="actions">
-        <a class="btn ghost" href="/check.html">Check your own result instead</a>
-        <a class="btn ghost" href="/data.html">Take the corrected folds</a>
+        <a class="btn ghost" href="/check">Check your own result instead</a>
+        <a class="btn ghost" href="/data">Take the corrected folds</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company.html">About &amp; research practices</a> &middot; <a href="/careers.html">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="/assets/run.js?v=202610150010"></script>
 <script src="/assets/designer.js?v=202610142230"></script>
@@ -436,7 +436,7 @@
       'reference peptide shown above, not experimental results for your input. In our dataset ' +
       'analysis, measurements across <span class="num">491</span> organism pairs had a median ' +
       'Spearman correlation of <span class="num">0.596</span>. A pooled activity label can obscure ' +
-      'organism-specific differences. See the <a href="/data.html">data analysis and its limitations</a>.</p>';
+      'organism-specific differences. See the <a href="/data">data analysis and its limitations</a>.</p>';
 
     var dots = el("s4out").querySelectorAll(".orgdot"), k2 = 0;
     (function tick() {

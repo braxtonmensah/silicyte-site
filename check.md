@@ -1,4 +1,4 @@
-<!-- Plain-markdown mirror of https://silicyte.com/check.html
+<!-- Plain-markdown mirror of https://silicyte.com/check
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
@@ -6,7 +6,7 @@
 
 > Local diagnostics for unmodified peptide tables: sequence similarity, descriptive prediction spread, tie handling and exact overlap. Incomplete checks remain inconclusive. Your file is not uploaded.
 
-Canonical: https://silicyte.com/check.html
+Canonical: https://silicyte.com/check
 
 ---
 [**Silicyte**](/)
