@@ -32,9 +32,14 @@ Absence of the compute guard by transcripts active in the same 10 minutes: 1: 0.
 same rise held within single days and within single sessions (61 of 82 sessions; per-session means
 2.3% vs 37.6%). Forecast +0.25 (band +0.05 to +0.60); measured +0.529. A Linux server running
 synthetic agents with replicas of the same guards showed zero absence up to 48 agents on 8 cores
-(22,824 runs). On the workstation, process start cost was measured on 23 Oct and is the cause on
-this fleet (next section); memory pressure, antivirus and the cloud-synced folder were not separated
-from it.
+(22,824 runs). On the workstation, per-call process start cost was measured on 23 Oct and removing
+it fixed this fleet (next section), but it is not shown to be the whole cause. On clean public Windows
+runners (4 vCPUs, 25 Oct), synthetic load, about 1 GB of free memory, antivirus real-time scanning and
+a Git Bash launch layer each made guards slower and stacked: 95th-percentile time at 24 agents was
+2.7 s with none of them, 4.6 s with scanning, and 6.8 s with scanning and the shell layer. None pushed
+a guard past 10 s, so whatever else the laptop adds (the real agent sessions, the cloud-synced folder)
+is untested. The runs, their pre-registered gates and their data are public:
+[loadtest-results](https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results).
 
 ## Cause and fix (2026-10-23)
 
