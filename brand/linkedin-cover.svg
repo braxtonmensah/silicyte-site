@@ -26,10 +26,10 @@
   </g>
 
   <!-- copy, right of centre -->
-  <text x="330" y="44" font-family="DejaVu Sans Mono" font-size="11" letter-spacing="2.2" fill="#9aa4ac">SILICYTE EXPERT NETWORK  ·  NOW RECRUITING</text>
+  <text x="330" y="44" font-family="DejaVu Sans Mono" font-size="11" letter-spacing="2.2" fill="#9aa4ac">SILICYTE  ·  AI EVALUATION YOU CAN CHECK</text>
   <text x="328" y="96" font-family="DejaVu Serif" font-size="40" fill="#eef1f3">Expert judgment, made checkable.</text>
-  <text x="330" y="128" font-family="DejaVu Sans" font-size="15" fill="#c9d0d6">Train and test AI with us. Six paid tracks, $100 to $150 an hour.</text>
+  <text x="330" y="128" font-family="DejaVu Sans" font-size="15" fill="#c9d0d6">We measure whether AI guardrails and evaluations actually ran.</text>
   <rect x="330" y="146" width="222" height="26" rx="4" fill="#1536cc"/>
-  <text x="441" y="164" text-anchor="middle" font-family="DejaVu Sans Mono" font-size="12" fill="#ffffff">silicyte.com/careers</text>
-  <text x="566" y="164" font-family="DejaVu Sans Mono" font-size="11" fill="#9aa4ac">biology · agents · verifiers · red team · data integrity</text>
+  <text x="441" y="164" text-anchor="middle" font-family="DejaVu Sans Mono" font-size="12" fill="#ffffff">silicyte.com</text>
+  <text x="566" y="164" font-family="DejaVu Sans Mono" font-size="11" fill="#9aa4ac">guardrails · scorers · benchmark leakage</text>
 </svg>

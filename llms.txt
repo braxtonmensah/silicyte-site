@@ -159,7 +159,7 @@ retrieval without parsing navigation or inline SVG:
 
 ## Careers
 
-Silicyte Expert Network: a paid network of scientists, engineers and analysts who train and test AI
-systems, $100 to $150 an hour across six tracks (biology trainer, frontier agent analyst, frontier AI
-research scout, verifier engineer, red-team evaluator, data integrity auditor). Paid work begins when
-a funded project is signed; offers are in writing before work starts. See /careers.html.
+Silicyte expert bench: biology task authors, verifier engineers and data integrity auditors who build
+checkable AI evaluation tasks (each with a program-checkable key and a control that should fail).
+Silicyte is not recruiting yet: a role opens only when a signed, funded project defines it, and pay is a
+fixed fee per accepted deliverable set in writing before work begins. See /careers.
