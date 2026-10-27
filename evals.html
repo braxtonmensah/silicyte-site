@@ -125,6 +125,7 @@
     <p>In total, 19 of 19 controls fail and 45 of 49 reward-hack attempts are caught. The 4 that are not caught are the same attempt, once per task, listed on purpose: <b>copying the public key</b>. A public sample cannot hide its key, and two of the four use labels that are public in MaveDB and UniProt. Paid tasks keep keys private and can use unpublished data.</p>
     <p>What the near-miss controls show: in the GO task, keeping electronically inferred annotations moves the universe from 16,846 genes to 17,478, and following &ldquo;regulates&rdquo; edges moves the tested-term count from 7,149 to 7,419. In the HER2 task, selecting atoms by chain letter alone adds 3 water molecules that carry chain ID C. One convention error, one FAIL.</p>
     <p class="src">Source: CI run <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/actions/runs/40433262658">40433262658</a>, files <code>tasks/*/key_meta.json</code> and <code>tasks/*/REWARD_HACK_LOG.md</code> in the repository.</p>
+    <p>Break them yourself: the <a href="https://github.com/braxtonmensah/silicyte-grader-wargame">Grader Wargame</a> turns these graders into levels with one deliberate hole each, plus a final level that runs the GO grader on a key kept off the repository. You attack by pull request; CI verifies every claim without running your code and writes the <a href="https://braxtonmensah.github.io/silicyte-grader-wargame/">scoreboard</a>.</p>
   </div></div></section>
 
   <section><div class="wrap"><div class="col">
