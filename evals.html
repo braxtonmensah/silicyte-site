@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkable biology evals | Silicyte</title>
+<meta name="description" content="Biology tasks for evaluating AI systems that a program can grade: a key, a deterministic grader, controls that must fail, and a reward-hack log. A free 4-task sample is public and graded in GitHub Actions. 10-task pilot, quoted within 48 hours.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="canonical" href="https://silicyte.com/evals">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Biology eval tasks a program can grade">
+<meta property="og:description" content="A free 4-task sample: keys, deterministic graders, controls that must fail, reward-hack logs, graded in GitHub Actions. 10-task pilot, quoted within 48 hours.">
+<meta property="og:url" content="https://silicyte.com/evals">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://silicyte.com/evals#webpage","url":"https://silicyte.com/evals","name":"Checkable biology evals","about":{"@id":"https://silicyte.com/#organization"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171600">
+<link rel="stylesheet" href="/assets/refine.css?v=202610211520">
+<link rel="alternate" type="text/markdown" href="/evals.md" title="Plain markdown mirror">
+<style>
+  .notice { margin: 0 0 18px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: 5px; background: var(--surface); font-size: 15.5px; }
+  .steps { margin: 26px 0 0; padding: 0; list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 18px 44px; }
+  .steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 2px; font: 500 13px/1 var(--mono); color: var(--brand); }
+  .steps b { display: block; margin-bottom: 3px; }
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tbl-wrap td, .tbl-wrap th { vertical-align: top; }
+  .src { font-size: 13.5px; color: var(--ink-3); }
+</style>
+</head>
+<body class="interior-page about-page">
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/science">Research</a>
+      <a href="/papers">Papers</a>
+      <a href="/reference">Reference</a>
+      <a href="/data">Data</a>
+      <a href="/audit">Audit</a>
+      <a href="/refusal-uptime">Agents</a>
+      <a href="/demo">Demo</a>
+      <a href="/company">About</a>
+      <a class="cta" href="/evaluation">Work with us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-intro"><div class="col">
+    <p class="eyebrow">Silicyte evals</p>
+    <h1>Biology tasks<br>a program can grade.</h1>
+    <p class="lede">Silicyte builds evaluation tasks for AI systems in therapeutic and basic biology. Every task comes with a key a program scores, a deterministic grader, controls that must fail, and a log of attempts to fool the grader.</p>
+    <p>A free sample of <b>4 tasks</b> is public on GitHub and graded in GitHub Actions on every push: <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample">github.com/braxtonmensah/silicyte-bio-evals-sample</a>. Read the graders, run them, try to break them.</p>
+    <p class="notice">Checkable task data is not a new idea: established data vendors already sell verified tasks. The sample is here so you can judge our work by its controls and its reward-hack logs, not by our description of them.</p>
+  </div><aside class="page-context"><p class="context-label">For AI labs and AI-for-science teams</p><h2>10-task pilot</h2><div><span>Ten tasks in your area of biology</span><span>Private keys, graders, controls, hack logs</span><span>Price quoted within 48 hours</span><span>Therapeutic and basic science only</span><a href="#pilot">How the pilot works &rarr;</a></div></aside>
+</div>
+
+  <section><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">01</span> What a checkable task is</p>
+    <h2>One right answer, and a grader that cannot be talked into another.</h2>
+    <p>A model learns whatever its scorer rewards. In Silicyte&rsquo;s own published research, deliberately degrading a design loop&rsquo;s scoring model made its reported gain <a href="/papers/design-loops">2.4 times larger</a> (t = -14.60, DOI <a href="https://doi.org/10.5281/zenodo.23441786">10.5281/zenodo.23441786</a>). So each task we ship carries six things, and CI checks all six:</p>
+    <ol class="steps">
+      <li><b>A prompt with the conventions written out.</b> Which atoms count, which annotations to drop, which edges to follow: written down, so there is exactly one right answer.</li>
+      <li><b>A key a program scores.</b> Rebuilt from the source data on every CI run; CI fails if the rebuilt key differs from the committed one by a single byte.</li>
+      <li><b>A deterministic grader.</b> No model calls, no randomness, no network. Same answer, same verdict, every time.</li>
+      <li><b>Controls that must fail.</b> Shuffled labels, plus the near-miss answer each common convention error produces.</li>
+      <li><b>A reward-hack log.</b> Attempts to fool the grader and whether each was caught, generated from the grader&rsquo;s actual verdicts.</li>
+      <li><b>Provenance.</b> Every data file&rsquo;s URL, license and SHA-256, checked on every run. CC0 and CC BY 4.0 sources only in the sample.</li>
+    </ol>
+  </div></div></section>
+
+  <section><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">02</span> The free sample</p>
+    <h2>Four tasks, graded in public.</h2>
+    <p>Every figure below is read from the CI run linked at the end of this section.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th scope="col">Task</th>
+        <th scope="col">What the model must produce</th>
+        <th scope="col">PASS requires</th>
+        <th scope="col">Controls failed</th>
+        <th scope="col">Hacks caught</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>Trastuzumab epitope on HER2</b><br><span class="small muted">PDB 1N8Z, CC0</span></td>
+            <td>The 17 HER2 residues within 4.0 &Aring; of the Fab, which chain contacts each, the closest Fab residue and the distance</td>
+            <td>Exact set and fields; distance within 0.01 &Aring;</td><td class="n">5 of 5</td><td class="n">15 of 16</td></tr>
+        <tr><td><b>PTEN variant abundance</b><br><span class="small muted">MaveDB VAMP-seq, CC0</span></td>
+            <td>Abundance predictions for 780 missense variants at 60 positions held out entirely</td>
+            <td>Spearman &ge; 0.66 (best of four cheap baselines: 0.558)</td><td class="n">3 of 3</td><td class="n">11 of 12</td></tr>
+        <tr><td><b>Gene Ontology enrichment</b><br><span class="small muted">GO release 2026-08-05, CC BY 4.0</span></td>
+            <td>Universe size, tested-term count and the 22 significant terms, under 13 written conventions</td>
+            <td>Exact; q within 1e-4 relative</td><td class="n">7 of 7</td><td class="n">9 of 10</td></tr>
+        <tr><td><b>Signal peptide cleavage</b><br><span class="small muted">UniProt 2026_03, CC BY 4.0</span></td>
+            <td>The signal peptide length of 100 anonymised human proteins</td>
+            <td>Exact for &ge; 71% (best of four cheap baselines: 61%)</td><td class="n">4 of 4</td><td class="n">10 of 11</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p>In total, 19 of 19 controls fail and 45 of 49 reward-hack attempts are caught. The 4 that are not caught are the same attempt, once per task, listed on purpose: <b>copying the public key</b>. A public sample cannot hide its key, and two of the four use labels that are public in MaveDB and UniProt. Paid tasks keep keys private and can use unpublished data.</p>
+    <p>What the near-miss controls show: in the GO task, keeping electronically inferred annotations moves the universe from 16,846 genes to 17,478, and following &ldquo;regulates&rdquo; edges moves the tested-term count from 7,149 to 7,419. In the HER2 task, selecting atoms by chain letter alone adds 3 water molecules that carry chain ID C. One convention error, one FAIL.</p>
+    <p class="src">Source: CI run <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/actions/runs/40433262658">40433262658</a>, files <code>tasks/*/key_meta.json</code> and <code>tasks/*/REWARD_HACK_LOG.md</code> in the repository.</p>
+  </div></div></section>
+
+  <section><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">03</span> How hard</p>
+    <h2>Two of four stumped a frontier model. Two did not.</h2>
+    <p>We judged difficulty three ways. First, the two prediction tasks set their bar 0.10 above the best of four cheap baselines, fixed before any model was run. Second, the two exact tasks fail on any one convention error, as the controls above show. Third, we ran a blind test.</p>
+    <p>In the blind test, a Claude Opus 5.5 agent saw only each prompt and its inputs (no keys, no internet), could not run code, and wrote one solution script per task, which CI ran once. It <b>passed 2 of 4</b>. It reproduced the HER2 epitope and the GO enrichment exactly: those two tasks test exact execution of a written-out analysis rather than stump a frontier model, and the blind pass doubles as an independent check that each has one right answer. It failed the two prediction tasks: on PTEN it reached Spearman 0.590, above every cheap baseline but under the 0.66 bar, and its signal peptide script crashed before writing an answer. One model, one shot, no execution: an agent that can run code and retry will do better. Full record: <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/blob/main/DIFFICULTY.md">DIFFICULTY.md</a>.</p>
+  </div></div></section>
+
+  <section id="pilot"><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">04</span> The 10-task pilot</p>
+    <h2>Ten tasks in your area, built the same way.</h2>
+    <ol class="steps">
+      <li><b>Tell us the area.</b> Email <a href="mailto:hello@silicyte.com?subject=10-task%20eval%20pilot">hello@silicyte.com</a> with the biology you want tested, the model behaviour you care about, and any data you want used.</li>
+      <li><b>Quote within 48 hours.</b> Scope, deliverables, delivery date and a fixed price, in writing.</li>
+      <li><b>Ten tasks.</b> Each with a prompt, private key, deterministic grader, controls that must fail, a reward-hack log and per-file provenance, plus a CI workflow that checks all of it.</li>
+      <li><b>You check it.</b> Run the graders yourself. A task whose control passes or whose key fails its own grader is fixed before the pilot is accepted.</li>
+    </ol>
+  </div><dl class="facts">
+    <div><dt>Price</dt><dd>Quoted within 48 hours, fixed, in writing</dd></div>
+    <div><dt>Scope</dt><dd>Therapeutic and basic biology: structure, variants, genomics, protein biochemistry, assays</dd></div>
+    <div><dt>Not offered</dt><dd>Anything that would make AI systems more capable of producing biological, chemical or other weapons. Every task is screened first (<a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/blob/main/DUAL_USE_SCREENING.md">our screen</a>)</dd></div>
+    <div><dt>Status</dt><dd>Early-stage and founder-led; a working brand, not yet incorporated</dd></div>
+  </dl><div class="copyrow"><a id="email" href="mailto:hello@silicyte.com?subject=10-task%20eval%20pilot">hello@silicyte.com</a><button class="copybtn" id="copyEmail" type="button">Copy address</button></div></div></section>
+
+  <section class="flush"><div class="wrap"><div class="col">
+    <p class="kicker"><span class="n">05</span> Plain terms</p>
+    <h2>What this page is, and is not.</h2>
+    <p>The sample is free under MIT (code) and CC BY 4.0 (task text and keys); data files keep their source licenses. It is a sample, not a benchmark: four tasks say little about any model&rsquo;s biology ability in general. We use AI tools in our own work, including to build these tasks, and say so; every number on this page comes from the CI run, not from our reading of it. If you find a grader bug, <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/issues/new?template=grader-hack.md">report it</a> and it becomes a CI test case with your name on it.</p>
+  </div></div></section>
+</main>
+
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evals">Evals</a> &middot; <a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById("copyEmail");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    var node = document.getElementById("email");
+    var done = function () {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy address"; }, 1800);
+    };
+    try {
+      navigator.clipboard.writeText(node.textContent.trim()).then(done, function () {
+        var r = document.createRange(); r.selectNode(node);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = "Select and copy";
+      });
+    } catch (e) { btn.textContent = "Select and copy"; }
+  });
+})();
+</script>
+<script>window.goatcounter={no_onload:false};</script>
+<script data-goatcounter="https://silicyte.goatcounter.com/count"
+        data-goatcounter-settings='{"allow_local":false}'
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

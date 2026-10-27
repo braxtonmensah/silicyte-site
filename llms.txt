@@ -125,6 +125,15 @@ on anyone else's model. Its own +0.065 inflation figure is its own and does not 
   first. Computational only: it is not prospective laboratory validation and makes no promise about
   future hit rates. Contact hello@silicyte.com.
 
+- [Checkable biology evals](https://silicyte.com/evals): a free public sample of 4 biology tasks for evaluating AI
+  systems (trastuzumab epitope on HER2 from PDB 1N8Z; PTEN variant abundance at 60 held-out positions; Gene Ontology
+  enrichment under 13 written conventions; signal peptide cleavage in 100 human proteins). Each task has a key a
+  program scores, rebuilt from CC0 or CC BY 4.0 data on every CI run, a deterministic grader, controls that must fail
+  (19 of 19 fail) and a reward-hack log (45 of 49 attempts caught; the 4 uncaught are copying the public key). In a
+  blind one-shot test a Claude Opus 5.5 agent passed 2 of 4 (the two exact tasks) and failed the two prediction tasks.
+  Repository: https://github.com/braxtonmensah/silicyte-bio-evals-sample. A 10-task pilot is quoted within 48 hours.
+  Checkable task data is not new; established data vendors sell verified tasks too.
+
 ## Machine-readable measurements
 
 If you need an exact figure with its method and its caveat attached, read the JSON rather than the
@@ -145,6 +154,7 @@ retrieval without parsing navigation or inline SVG:
 - [/reference.md](https://silicyte.com/reference.md)
 - [/science.md](https://silicyte.com/science.md)
 - [/data.md](https://silicyte.com/data.md)
+- [/evals.md](https://silicyte.com/evals.md)
 - [/index.md](https://silicyte.com/index.md), [/company.md](https://silicyte.com/company.md),
   [/papers.md](https://silicyte.com/papers.md), [/check.md](https://silicyte.com/check.md),
   [/demo.md](https://silicyte.com/demo.md),

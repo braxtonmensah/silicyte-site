@@ -14,6 +14,9 @@ In Silicyte's own published research, deliberately degrading a design loop's sco
 times larger (t = -14.60; /papers/design-loops). A model learns whatever its scorer rewards, so every task we ship comes
 with a key a program can score and a control that should fail, and we test the grader as hard as the answer.
 
+To see what the bench builds, read the free sample of four checkable biology tasks (/evals): each with its key,
+grader, controls and reward-hack log, graded in public on GitHub.
+
 Biology work covers therapeutic and basic science only. We do not take projects that would make AI systems more capable
 of producing biological, chemical or other weapons.
 
