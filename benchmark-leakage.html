@@ -367,6 +367,26 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
     </div></div>
   </section>
 
+  <section id="run-it">
+    <div class="wrap"><div class="col">
+      <p class="kicker"><span class="n">03a</span> Run it on your split</p>
+      <h2>One line in GitHub Actions.</h2>
+      <p><a href="https://github.com/braxtonmensah/twin-check">twin-check</a> is a GitHub Action
+      applying the same 0.80 rule as this page&rsquo;s record. Point it at your own train and test
+      files (FASTA or CSV) and it writes the twin rate, the exact-overlap rate, a JSON record and a
+      badge to the job.</p>
+      <div class="plain"><span style="font-family:var(--mono);font-size:13px;line-height:1.9;display:block">
+- uses: braxtonmensah/twin-check@v1<br>
+&nbsp;&nbsp;with: { train: data/train.fasta, test: data/test.fasta }
+      </span></div>
+      <p>Its own CI reruns this record from the upstream files with every MD5 checked:
+      LRGB Peptides-func 65.29%, AMPlify positives 63.47%, FLIP meltome mixed 0.29%, and 0.00% on the
+      corrected LRGB split. <a href="https://github.com/braxtonmensah/twin-check/actions/workflows/reproduce-record.yml">Latest reproduce-record run</a>.
+      A twin rate is not a score inflation; for proper similarity-aware splitting, DataSAIL and
+      GraphPart already exist.</p>
+    </div></div>
+  </section>
+
   <section>
     <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">03b</span> What the contamination actually costs</p>

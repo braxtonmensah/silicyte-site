@@ -110,6 +110,15 @@ Each downloads the benchmarks’ own published files and hashes them at run time
 
 LRGB data `701eb743e899f4d793f0e13c8fa5a1b4` and split `5a0114bdadc80b94fc7ae974f13ef061`, both matching the values hard-coded in `graphgps/loader/dataset/peptides_functional.py`. AMP Scanner v2 zip `c32196cca2f4ac9adf728409e4129797`. FLIP meltome splits.zip `72b9257e8d6714d203c64bedaef0724e`.
 
+## Run it on your split
+
+[twin-check](https://github.com/braxtonmensah/twin-check) is a GitHub Action applying the same 0.80 rule as this page's record. Point it at your own train and test files (FASTA or CSV) and it writes the twin rate, the exact-overlap rate, a JSON record and a badge to the job.
+
+    - uses: braxtonmensah/twin-check@v1
+      with: { train: data/train.fasta, test: data/test.fasta }
+
+Its own CI reruns this record from the upstream files with every MD5 checked: LRGB Peptides-func 65.29%, AMPlify positives 63.47%, FLIP meltome mixed 0.29%, and 0.00% on the corrected LRGB split. [Latest reproduce-record run](https://github.com/braxtonmensah/twin-check/actions/workflows/reproduce-record.yml). A twin rate is not a score inflation; for proper similarity-aware splitting, DataSAIL and GraphPart already exist.
+
 03b What the contamination actually costs
 
 ## It depends on whether your model can exploit it.
