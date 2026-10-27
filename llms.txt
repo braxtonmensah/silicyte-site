@@ -102,9 +102,12 @@ not established.
 
 ## How Silicyte states limits
 
-A contamination rate is not an inflation. Silicyte has not retrained models on corrected versions
-of third-party splits, so it does not claim a figure for what leakage is worth in reported accuracy
-on anyone else's model. Its own +0.065 inflation figure is its own and does not transfer.
+A contamination rate is not an inflation. Silicyte's rates were measured without retraining, and
+it does not claim a figure for what leakage is worth on anyone else's reported model. Where it did
+retrain, the figure is stated with the model named: its own +0.065 on HC50, and on LRGB
+Peptides-func the count ECFP + LightGBM baseline of arXiv 2501.17901 scores +0.1773 macro AP higher
+on the shipped split than on corrected splits (sd 0.0094, preregistered gate, rerunnable at
+https://github.com/braxtonmensah/peptides-func-split-rerun).
 
 ## Free tool: check your own split
 

@@ -54,7 +54,7 @@
         {"@type": "Thing", "name": "Sequence identity clustering"}
       ],
       "abstract": "The fraction of test rows carrying a training sequence at Levenshtein ratio 0.80 or above, measured across thirteen published splits in five benchmark families. LRGB Peptides-func 65.29%, AMPlify positives 63.47%, PepBenchmark's documented 30%-identity default 29.97% and 48.56%, AMP Scanner v2 16.71% on positives and 0.00% on negatives, FLIP meltome 0.29%. The load-bearing result is that FLIP conservation and FLIP secondary_structure are built by the identical documented random 95/5 procedure and measure 0.00% and 65.38%, so the variable is corpus redundancy rather than the split method.",
-      "disambiguatingDescription": "These are contamination rates, not score inflations. Nothing was retrained, so the measurements do not state by how much any reported accuracy is overstated.",
+      "disambiguatingDescription": "These are contamination rates, not score inflations. A rate alone does not state by how much any reported accuracy is overstated. For LRGB Peptides-func the inflation was measured separately by retraining: the published count-ECFP + LightGBM baseline scores +0.1773 macro AP higher on the shipped split than on corrected splits (sd 0.0094, 5 of 5, preregistered gate, verdict H1), rerunnable at github.com/braxtonmensah/peptides-func-split-rerun.",
       "citation": [
         {"@type": "CreativeWork", "name": "PepBenchmark, Appendix D.1, self-reported corpus redundancy 19% to 47% at 90% identity"},
         {"@type": "CreativeWork", "name": "Tonshoff et al., TMLR 2024, a critique of LRGB on hyperparameters rather than data"}
@@ -101,7 +101,7 @@
           "name": "Is a 65% contamination rate the same as a benchmark being overstated by 65 points?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. A contamination rate is not a score inflation. Nothing was retrained to produce these numbers, so they do not say by how much any reported accuracy is overstated. Quoting them as 'benchmark X is overstated by Y points' quotes something that was not measured."
+            "text": "No. A contamination rate is not a score inflation. The rates were produced without retraining, so on their own they do not say by how much any reported accuracy is overstated. Where an inflation was measured, it is reported separately with the model named: on LRGB Peptides-func, the count-ECFP + LightGBM baseline of arXiv 2501.17901 scores 0.7460 macro AP on the shipped split and 0.5687 on corrected splits, a difference of +0.1773 (sd 0.0094). That figure belongs to that model and does not transfer to other models."
           }
         },
         {
@@ -449,13 +449,66 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
       appears and it is not universal, and anyone quoting the 0.13 without that sentence is
       quoting me badly.</p>
 
-      <h3 style="margin-top:28px">And a weak model can be inflated too, if contamination is severe</h3>
-      <p>On LRGB Peptides-func, at <span class="num">65.29%</span> contamination, the plain
-      descriptor ridge scores <span class="num">+0.0333</span> macro-AP higher on the shipped split
-      than on the
-      <a href="/data/lrgb-corrected-v1/">identity-separated one I built</a> (SE 0.0015, five of
-      five rebuilds). So severity and capacity both matter, and separating them is the next
-      experiment rather than a conclusion.</p>
+      <h3 style="margin-top:28px" id="peptides-func-retrained">LRGB Peptides-func, retrained: the published fingerprint baseline on both splits</h3>
+      <p>At <span class="num">65.29%</span> contamination, does the shipped split inflate a retrained
+      model? I preregistered the same gate (support needs <span class="num">+0.03</span> macro AP
+      with the same sign in four of five resamples; below <span class="num">+0.01</span> is a null;
+      between is inconclusive) and ran it in public CI on two models: M1, the count ECFP + LightGBM
+      baseline of <a href="https://arxiv.org/abs/2501.17901">arXiv:2501.17901</a>, and M2, the
+      descriptor ridge from my earlier one-off read. Each was scored on LRGB&rsquo;s shipped split and
+      on five rebuilds of the <a href="/data/lrgb-corrected-v1/">identity-separated split</a>
+      (contrast A), and, with training held identical, on the shipped test rows that have a training
+      twin versus those that do not (contrast C).</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Model</th><th scope="col">Contrast</th><th scope="col">Contaminated</th>
+            <th scope="col">Clean</th><th scope="col">Difference</th><th scope="col">sd</th>
+            <th scope="col">Verdict</th>
+          </tr></thead>
+          <tbody>
+            <tr style="background:var(--brand-tint)"><td><b>M1 count ECFP + LightGBM</b></td>
+                <td>A, shipped vs corrected split</td><td class="n"><b>0.7460</b></td>
+                <td class="n">0.5687</td><td class="n"><b>+0.1773</b></td><td class="n">0.0094</td>
+                <td><b>supported (H1)</b></td></tr>
+            <tr><td>M2 descriptor ridge</td><td>A, shipped vs corrected split</td>
+                <td class="n">0.3542</td><td class="n">0.3229</td><td class="n">+0.0312</td>
+                <td class="n">0.0054</td><td>supported (H1)</td></tr>
+            <tr><td>M1 count ECFP + LightGBM</td><td>C, twinned vs untwinned test rows</td>
+                <td class="n">0.7966</td><td class="n">0.5847</td><td class="n">+0.2119</td>
+                <td class="n">0.0280</td><td>supported (H1)</td></tr>
+            <tr><td>M2 descriptor ridge</td><td>C, twinned vs untwinned test rows</td>
+                <td class="n">0.3775</td><td class="n">0.3147</td><td class="n">+0.0629</td>
+                <td class="n">0.0088</td><td>supported (H1)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Macro average precision over the 10 labels,
+      mean of 5 resamples, every resample positive in all four rows. M1 on the shipped split scores
+      0.7460, the figure the paper reports. Controls in the same jobs: twin rate 65.29% on the shipped
+      split and 0.00% on every corrected split, label-shuffled training at the base rate, identical
+      numbers on rerun. Record:
+      <a href="https://github.com/braxtonmensah/peptides-func-split-rerun">peptides-func-split-rerun</a>
+      (<a href="https://github.com/braxtonmensah/peptides-func-split-rerun/releases/tag/v1.0.0">v1.0.0</a>,
+      <a href="/data/peptides-func-split-rerun.json">machine-readable copy</a>); fork it and press Run
+      workflow to rerun every number.</p>
+
+      <div class="plain">
+        <b>For the published fingerprint baseline, the shipped split is worth 0.18 macro AP.</b>
+        <span>It scores <span class="num">0.7460</span> on LRGB&rsquo;s split and
+        <span class="num">0.5687</span> on splits where no test sequence has a training sequence at
+        ratio 0.80 or above, a difference of <span class="num">+0.1773</span> (sd 0.0094). Inside one
+        test set, with training unchanged, rows that have a training twin score
+        <span class="num">+0.2119</span> higher than rows that do not. The weak descriptor model
+        moves by about a sixth as much, which fits the capacity reading above.</span>
+      </div>
+
+      <p class="muted">What this does not show: contrast A changes the test rows, and contrast C
+      compares rows of different kinds (peptides from large families may be easier or harder for
+      reasons other than having a relative in training), so neither isolates contamination from row
+      difficulty. Two named models on one benchmark; it says nothing about the graph networks and
+      transformers on the LRGB leaderboard, and the number must be quoted with the model named.</p>
 
       <p class="muted">Limits worth stating plainly: ridge on <em>frozen</em> embeddings, not a
       fine-tuned encoder and not a GNN, so none of this transfers to PepBenchmark&rsquo;s or
@@ -468,10 +521,11 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
     <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">04</span> Limits</p>
       <h2>What this does not show.</h2>
-      <p><strong>A contamination rate is not a score inflation.</strong> I retrained nothing on corrected
-      versions of these splits, so I have not measured what any of it is worth in reported accuracy.
-      Anyone quoting these as &ldquo;benchmark X is overstated by Y points&rdquo; is quoting
-      something I did not measure.</p>
+      <p><strong>A contamination rate is not a score inflation.</strong> The rates were measured
+      without retraining. The only retrained comparisons are the ones in section 03b (PepBenchmark
+      E. coli and HC50; LRGB Peptides-func with two named models), and each belongs to its model.
+      Anyone quoting a rate on this page as &ldquo;benchmark X is overstated by Y points&rdquo; is
+      quoting something I did not measure.</p>
       <p><strong>For LRGB, only 30 of the 180 exact matches are the same molecule.</strong> 180 test
       rows share a primary sequence with training and 30 of those also share a SMILES. For a
       sequence model all 180 are leakage; for the graph models LRGB is actually used to benchmark,
@@ -514,8 +568,9 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
       measure sequence overlap, and I am not claiming they did. But the two results sit next to each
       other in an interesting way: if 65% of test rows have a close relative in training, a model
       that can recognise local motifs has a route to a good score that does not require learning the
-      property. That is a hypothesis about a mechanism, it is not something I have tested, and
-      testing it would mean retraining both model families on corrected splits.</p>
+      property. For the fingerprint family this is now measured (section 03b): their count ECFP +
+      LightGBM baseline loses 0.18 macro AP on corrected splits. The GNN and transformer side has not
+      been retrained, so whether fingerprints lose more than graph models do is still untested.</p>
 
       <p><strong>A stronger version of this argument already exists, and it is not mine.</strong>
       Mattsson and Walters, in work covered by Derek Lowe in July 2026, show for protein-ligand

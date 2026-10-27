@@ -15,7 +15,7 @@
     "name": "test-row contamination rate",
     "definition": "The fraction of test rows that have at least one training sequence at a Levenshtein ratio of 0.80 or above. Reported alongside exact_overlap, the fraction of test rows sharing a primary sequence outright with a training row.",
     "twin_threshold_levenshtein_ratio": 0.80,
-    "what_it_is_not": "A contamination rate is NOT a score inflation. Nothing was retrained for these numbers, so they do not say by how much any reported accuracy is overstated. Anyone quoting these as 'benchmark X is overstated by Y points' is quoting something that was not measured.",
+    "what_it_is_not": "A contamination rate is NOT a score inflation. Nothing was retrained for these rates, so on their own they do not say by how much any reported accuracy is overstated. Anyone quoting these as 'benchmark X is overstated by Y points' is quoting something that was not measured. Where an inflation was measured by retraining, it is recorded separately under inflation_measured with the model named.",
     "provenance": "Each script downloads the benchmark's own published split files and hashes them at runtime. For LRGB both MD5s match the values hard-coded in its own loader."
   },
 
@@ -157,6 +157,25 @@
       "exact_overlap_pct": 0.00,
       "twin_at_080_pct": 65.38,
       "notes": "Identical documented procedure to id 10 and 65 points apart. The difference is corpus redundancy: the PDB holds an enormous number of near-identical chains and the conservation sequences do not."
+    }
+  ],
+
+  "inflation_measured": [
+    {
+      "benchmark": "LRGB Peptides-func",
+      "measured": "2026-10-27",
+      "design": "Same rows and labels, same model, two splits: LRGB's shipped split vs 5 rebuilds of the single-linkage 0.80 corrected split (contrast A); and, with identical training, shipped test rows with vs without a training twin (contrast C). Gate preregistered: H1 if difference >= +0.03 macro AP with the same sign in 4 of 5 resamples; H0 below +0.01 or sign inconsistent.",
+      "metric": "macro average precision over 10 labels",
+      "results": [
+        {"model": "count ECFP + LightGBM (arXiv 2501.17901 baseline)", "contrast": "A", "shipped": 0.7460, "corrected_mean_of_5": 0.5687, "difference": 0.1773, "sd": 0.0094, "verdict": "H1"},
+        {"model": "26-descriptor ridge", "contrast": "A", "shipped": 0.3542, "corrected_mean_of_5": 0.3229, "difference": 0.0312, "sd": 0.0054, "verdict": "H1"},
+        {"model": "count ECFP + LightGBM (arXiv 2501.17901 baseline)", "contrast": "C", "twinned": 0.7966, "untwinned": 0.5847, "difference": 0.2119, "sd": 0.0280, "verdict": "H1"},
+        {"model": "26-descriptor ridge", "contrast": "C", "twinned": 0.3775, "untwinned": 0.3147, "difference": 0.0629, "sd": 0.0088, "verdict": "H1"}
+      ],
+      "caveat": "Two named models on one benchmark. Contrast A changes the test rows; contrast C keeps training identical but does not remove row difficulty. Does not transfer to graph networks or transformers on the LRGB leaderboard.",
+      "record": "https://github.com/braxtonmensah/peptides-func-split-rerun/releases/tag/v1.0.0",
+      "machine_readable": "https://silicyte.com/data/peptides-func-split-rerun.json",
+      "ci_runs": ["https://github.com/braxtonmensah/peptides-func-split-rerun/actions/runs/40564969278", "https://github.com/braxtonmensah/peptides-func-split-rerun/actions/runs/40565551293"]
     }
   ],
 

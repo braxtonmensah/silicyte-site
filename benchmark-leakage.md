@@ -146,9 +146,22 @@ Held-out Spearman on `antimicrobial_E_coli_mic`, mean over PepBenchmark’s five
 
 **One of four dataset-model cells is supported.** The effect is real where it appears and it is not universal, and anyone quoting the 0.13 without that sentence is quoting me badly.
 
-### And a weak model can be inflated too, if contamination is severe
+### LRGB Peptides-func, retrained: the published fingerprint baseline on both splits
 
-On LRGB Peptides-func, at 65.29% contamination, the plain descriptor ridge scores +0.0333 macro-AP higher on the shipped split than on the [identity-separated one I built](/data/lrgb-corrected-v1/) (SE 0.0015, five of five rebuilds). So severity and capacity both matter, and separating them is the next experiment rather than a conclusion.
+At 65.29% contamination, does the shipped split inflate a retrained model? I preregistered the same gate (support needs +0.03 macro AP with the same sign in four of five resamples; below +0.01 is a null; between is inconclusive) and ran it in public CI on two models: M1, the count ECFP + LightGBM baseline of [arXiv:2501.17901](https://arxiv.org/abs/2501.17901), and M2, the descriptor ridge from my earlier one-off read. Each was scored on LRGB's shipped split and on five rebuilds of the [identity-separated split](/data/lrgb-corrected-v1/) (contrast A), and, with training held identical, on the shipped test rows that have a training twin versus those that do not (contrast C).
+
+| Model | Contrast | Contaminated | Clean | Difference | sd | Verdict |
+|---|---|---:|---:|---:|---:|---|
+| **M1 count ECFP + LightGBM** | A, shipped vs corrected split | **0.7460** | 0.5687 | **+0.1773** | 0.0094 | **supported (H1)** |
+| M2 descriptor ridge | A, shipped vs corrected split | 0.3542 | 0.3229 | +0.0312 | 0.0054 | supported (H1) |
+| M1 count ECFP + LightGBM | C, twinned vs untwinned test rows | 0.7966 | 0.5847 | +0.2119 | 0.0280 | supported (H1) |
+| M2 descriptor ridge | C, twinned vs untwinned test rows | 0.3775 | 0.3147 | +0.0629 | 0.0088 | supported (H1) |
+
+Macro average precision over the 10 labels, mean of 5 resamples, every resample positive in all four rows. M1 on the shipped split scores 0.7460, the figure the paper reports. Controls in the same jobs: twin rate 65.29% on the shipped split and 0.00% on every corrected split, label-shuffled training at the base rate, identical numbers on rerun. Record: [peptides-func-split-rerun](https://github.com/braxtonmensah/peptides-func-split-rerun) ([v1.0.0](https://github.com/braxtonmensah/peptides-func-split-rerun/releases/tag/v1.0.0), [machine-readable copy](/data/peptides-func-split-rerun.json)); fork it and press Run workflow to rerun every number.
+
+**For the published fingerprint baseline, the shipped split is worth 0.18 macro AP.** It scores 0.7460 on LRGB's split and 0.5687 on splits where no test sequence has a training sequence at ratio 0.80 or above, a difference of +0.1773 (sd 0.0094). Inside one test set, with training unchanged, rows that have a training twin score +0.2119 higher than rows that do not. The weak descriptor model moves by about a sixth as much, which fits the capacity reading above.
+
+What this does not show: contrast A changes the test rows, and contrast C compares rows of different kinds (peptides from large families may be easier or harder for reasons other than having a relative in training), so neither isolates contamination from row difficulty. Two named models on one benchmark; it says nothing about the graph networks and transformers on the LRGB leaderboard, and the number must be quoted with the model named.
 
 Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned encoder and not a GNN, so none of this transfers to PepBenchmark’s or LRGB’s leaderboard numbers. ESM2-35M is the smallest ESM2 there is. One benchmark, two datasets, four cells. The capacity story is a hypothesis with one contrast behind it.
 
@@ -156,7 +169,7 @@ Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned enc
 
 ## What this does not show.
 
-**A contamination rate is not a score inflation.** I retrained nothing on corrected versions of these splits, so I have not measured what any of it is worth in reported accuracy. Anyone quoting these as “benchmark X is overstated by Y points” is quoting something I did not measure.
+**A contamination rate is not a score inflation.** The rates were measured without retraining. The only retrained comparisons are the ones in section 03b (PepBenchmark E. coli and HC50; LRGB Peptides-func with two named models), and each belongs to its model. Anyone quoting a rate on this page as “benchmark X is overstated by Y points” is quoting something I did not measure.
 
 **For LRGB, only 30 of the 180 exact matches are the same molecule.** 180 test rows share a primary sequence with training and 30 of those also share a SMILES. For a sequence model all 180 are leakage; for the graph models LRGB is actually used to benchmark, the other 150 differ in stereochemistry or modification and are near-duplicates rather than duplicates. I say “shares a primary sequence” and never “duplicate molecule”.
 
@@ -168,7 +181,7 @@ Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned enc
 
 **The existing critique of LRGB does not look at the data.** Tönshoff, Ritzert, Rosenbluth and Grohe ([arXiv:2309.00367](https://arxiv.org/abs/2309.00367), TMLR 2024) re-ran the LRGB baselines and concluded the reported advantage of graph transformers was substantially an artifact of hyperparameter choice, feature normalisation and the link-prediction metric. That is a different and well-established finding, and it concerns the models rather than the split. I am not restating it.
 
-**Related work, and a connection I have not tested.** Adamczyk, Ludynia and Czech ([arXiv:2501.17901](https://arxiv.org/abs/2501.17901), also in *Bioinformatics* 42(5)) show that count-based molecular fingerprints with short-range features outperform GNNs and transformers across LRGB and five other peptide benchmarks, which challenges the assumption that long-range interaction modelling is necessary. They do not measure sequence overlap, and I am not claiming they did. But the two results sit next to each other in an interesting way: if 65% of test rows have a close relative in training, a model that can recognise local motifs has a route to a good score that does not require learning the property. That is a hypothesis about a mechanism, it is not something I have tested, and testing it would mean retraining both model families on corrected splits.
+**Related work, and a connection I have not tested.** Adamczyk, Ludynia and Czech ([arXiv:2501.17901](https://arxiv.org/abs/2501.17901), also in *Bioinformatics* 42(5)) show that count-based molecular fingerprints with short-range features outperform GNNs and transformers across LRGB and five other peptide benchmarks, which challenges the assumption that long-range interaction modelling is necessary. They do not measure sequence overlap, and I am not claiming they did. But the two results sit next to each other in an interesting way: if 65% of test rows have a close relative in training, a model that can recognise local motifs has a route to a good score that does not require learning the property. For the fingerprint family this is now measured (section 03b): their count ECFP + LightGBM baseline loses 0.18 macro AP on corrected splits. The GNN and transformer side has not been retrained, so whether fingerprints lose more than graph models do is still untested.
 
 **A stronger version of this argument already exists, and it is not mine.** Mattsson and Walters, in work covered by Derek Lowe in July 2026, show for protein-ligand affinity that a ligand-only baseline carrying no protein information at all still reaches r = 0.66 on one standard benchmark, and that leakage persists even at very low sequence identity. If that generalises, the problem is not that 30% was the wrong threshold but that sequence identity is the wrong axis to split on. My result is consistent with theirs and weaker than it: I show a specific control underperforming, not that the whole approach is unsound.
 

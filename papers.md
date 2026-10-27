@@ -70,7 +70,7 @@ In the same release, `kmer_split.json` and `random_split.json` are byte-differen
 
 ### What this does not establish
 
-We have not retrained anything on corrected versions of these splits, so we have not measured what the leakage is worth in accuracy on any of these benchmarks. A contamination rate is not an inflation. The only inflation figure we have measured is our own, +0.065 on HC50, and it does not transfer to somebody else’s model.
+A contamination rate is not an inflation. The rates were measured without retraining. Where we did retrain, the figure is reported with its model and does not transfer to anyone else's: our own +0.065 on HC50, and on LRGB Peptides-func the count ECFP + LightGBM baseline of arXiv 2501.17901 scores +0.1773 macro AP higher on the shipped split than on corrected splits (sd 0.0094; [rerunnable record](https://github.com/braxtonmensah/peptides-func-split-rerun), details on [benchmark-leakage](/benchmark-leakage#peptides-func-retrained)).
 
 For LRGB, of the 180 test rows that share a primary sequence with training, only 30 are the identical molecule by SMILES. For a sequence model all 180 are leakage; for the graph models LRGB actually benchmarks, the other 150 differ in stereochemistry or modification and are near-leakage. We state it as a shared primary sequence, never as duplicate molecules.
 
