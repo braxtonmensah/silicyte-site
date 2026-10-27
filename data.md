@@ -19,7 +19,7 @@ If you train a model to predict antimicrobial activity, you hold out similar seq
 
 We found it in our own pipeline, rebuilt the split properly, and are publishing the corrected one with its scope and limitations. Free, documented, no sign-up. A separate exploratory GRAMPA analysis found a median organism-pair agreement of **Spearman 0.596**. That analysis and its scope are in section 03.
 
-[Download the package (77 KB)](/data/silicyte-amp-eval-v1.zip) [Check your own split](/check.html) [Read the documentation](/data/silicyte-amp-eval-v1/README.md)
+[Download the package (77 KB)](/data/silicyte-amp-eval-v1.zip) [Check your own split](/check) [Read the documentation](/data/silicyte-amp-eval-v1/README.md)
 
 Label definitions, source metadata and release corrections
 
@@ -119,10 +119,10 @@ Computed exactly as the 0.9387 pooled figure was, but within one organism at a t
 
 ## Use a documented evaluation procedure.
 
-For LRGB Peptides-func, a separate release provides [corrected row-index splits, source checksums and release notes](/data/lrgb-corrected-v1/). See the [benchmark audit](/benchmark-leakage.html) for the original-split control and limitations.
+For LRGB Peptides-func, a separate release provides [corrected row-index splits, source checksums and release notes](/data/lrgb-corrected-v1/). See the [benchmark audit](/benchmark-leakage) for the original-split control and limitations.
 
 For comparisons on these folds, report the exact dataset version, training procedure, model-selection history and metric implementation. Shared folds alone do not make two evaluations equivalent. The release documentation describes the available data and its limits.
 
 Silicyte (2026). Silicyte AMP evaluation split v1.0.0: corrected similarity folds for antimicrobial peptide activity prediction. https://silicyte.com/data
 
-The original v1 archive carries a CC BY 4.0 notice. Upstream measurement permissions have not been fully verified in this audit; the archive notice is not a completed rights review. See the [source and release corrections](/data/CORRECTIONS-2026-10-16.md). Questions: [hello@silicyte.com](/company.html).
+The original v1 archive carries a CC BY 4.0 notice. Upstream measurement permissions have not been fully verified in this audit; the archive notice is not a completed rights review. See the [source and release corrections](/data/CORRECTIONS-2026-10-16.md). Questions: [hello@silicyte.com](/company).

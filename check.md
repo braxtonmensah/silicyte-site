@@ -63,7 +63,7 @@ No file loaded yet. The four checks and what each one catches are described belo
 
 ## What each diagnostic reports.
 
-Every check below exists because it caught something in our own work first. The [research record](/science.html) documents each one, including the results it forced us to withdraw.
+Every check below exists because it caught something in our own work first. The [research record](/science) documents each one, including the results it forced us to withdraw.
 
 | Diagnostic | Purpose | What a finding means |
 |---|---|---|
@@ -98,7 +98,7 @@ From $7,500, fixed fee
 
 One claimed improvement, taken apart before bench budget is committed against it. You get the written finding, the scripts behind every number in it, a rebuilt split where the original leaks, and an explicit list of what could not be checked and why. Scope and fee are agreed in writing first, and if the claim survives the report says so and says it plainly.
 
-[Discuss a result →](/company.html#contact)
+[Discuss a result →](/company#contact)
 
 For whoever is funding the next step
 
@@ -108,7 +108,7 @@ From $15,000, fixed fee
 
 An independent read of somebody else’s reported model performance, before capital or a partnership is committed against it. Written for a reader who is not a machine learning specialist: what the number would have to mean to be worth what is being asked for it, what we verified, and what the disclosed material did not let us verify. Five business days from receipt of the data.
 
-[Discuss a diligence read →](/company.html#contact)
+[Discuss a diligence read →](/company#contact)
 
 ### Limits, stated once
 
@@ -122,6 +122,6 @@ These four checks describe the table you supplied. They do not certify a model, 
 
 - **SPLIT** catches exact duplicates only, so passing it does not rule out leakage by similarity. That is what LEAK is for.
 
-- None of them can tell you whether the prediction target matches the decision you actually care about. The [dataset analysis](/data.html) shows why pooled activity labels make that harder than it looks.
+- None of them can tell you whether the prediction target matches the decision you actually care about. The [dataset analysis](/data) shows why pooled activity labels make that harder than it looks.
 
-[Read the methods and limitations](/science.html).
+[Read the methods and limitations](/science).

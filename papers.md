@@ -21,17 +21,17 @@ Each entry links to the artifact a sceptical reader would actually open: the PDF
 
 Working paper · not peer reviewed · evidence archive DOI 10.5281/zenodo.23441786
 
-### [Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops.html)
+### [Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops)
 
 Braxton Mensah. Degrading a design loop’s selection model on purpose, by withholding 80% of its training families while leaving the evaluation model untouched, made the reported gain 2.4 times larger: +1.3182 against +0.5421, difference -0.7761, SE 0.0531, t = -14.60. So on this system the reported gain is not a monotone measure of scorer accuracy. The mechanism is not established. 14 pages. Not peer reviewed and not posted to a preprint server. The paper itself has no DOI; the DOI below belongs to its evidence archive, which is a software deposit.
 
-[Abstract](/papers/design-loops.html) · [PDF](/papers/Mensah_DesignLoops_preprint.pdf) · [Evidence archive](https://github.com/braxtonmensah/silicyte-design-loops) · [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786)
+[Abstract](/papers/design-loops) · [PDF](/papers/Mensah_DesignLoops_preprint.pdf) · [Evidence archive](https://github.com/braxtonmensah/silicyte-design-loops) · [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786)
 
 02 Research note
 
 ## The leakage defect is not ours alone.
 
-[Read the benchmark audit, methods and current corrections](/benchmark-leakage.html), or [download the corrected LRGB split](/data/lrgb-corrected-v1/). The table below is a selection of the reported measurements; sequence overlap alone does not quantify score inflation.
+[Read the benchmark audit, methods and current corrections](/benchmark-leakage), or [download the corrected LRGB split](/data/lrgb-corrected-v1/). The table below is a selection of the reported measurements; sequence overlap alone does not quantify score inflation.
 
 Every leakage figure we had published came from our own pipeline on one dataset family, so the claim that this is a field problem rested on a single case, and that case was us. On 2026-10-17 we ran our own check against three third-party published benchmarks. All were downloaded fresh and hashed. For the LRGB benchmark both MD5s match the values hard-coded in its official loader, so this is exactly reproducible rather than approximately.
 
@@ -82,4 +82,4 @@ We redistribute neither dataset. LRGB Peptides-func is CC BY-NC 4.0, inherited f
 
 Rebuilt antimicrobial peptide MIC and HC50 folds using true transitive single linkage at 0.80, released under CC BY 4.0 with the leakage audit and the baselines. The standard split leaks 20.1% of its held-out rows; the same measure on ours is 0.0000.
 
-[Open the dataset →](/data.html)
+[Open the dataset →](/data)

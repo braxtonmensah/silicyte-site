@@ -30,7 +30,7 @@ Control integrity for AI agentsModel evaluation auditsPeptides & protein binders
 
 ## Measure the control, not only the outcome.
 
-A guardrail that never refuses may simply never have run. On one operator's fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix the guardrails were absent on 0 of 2,211 live calls. [Read the measurement and its limits](/refusal-uptime.html).
+A guardrail that never refuses may simply never have run. On one operator's fleet of Claude Code agents, one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents at once. The cause was process start-up; after the fix they were absent on 0 of 2,211 live calls at lighter load, and when heavy load returned, on 5 of 8,055 calls at 11 or more agents: about three orders of magnitude lower, not zero. [Read the measurement and its limits](/refusal-uptime).
 
 Candidate ranking helps determine which molecules receive experimental attention. We study how data separation, metric implementation and scoring choices affect that ranking.
 
@@ -38,7 +38,7 @@ In our own peptide-design experiment, withholding training families from a scori
 
 The research record includes methods, controls, limitations and corrections so readers can inspect what each result supports.
 
-[Explore the research →](/science.html)
+[Explore the research →](/science)
 
 02 Available work
 
@@ -62,7 +62,7 @@ Tool
 
 Check supported sequence tables for overlap and metric issues. The checker abstains when inputs or coverage do not support a conclusion.
 
-[Open the checker →](/check.html)
+[Open the checker →](/check)
 
 Data
 
@@ -70,7 +70,7 @@ Data
 
 MIC and HC50 peptide folds with a stated similarity rule, historical baseline records and release corrections.
 
-[Review the dataset →](/data.html)
+[Review the dataset →](/data)
 
 Demonstration
 
@@ -78,19 +78,19 @@ Demonstration
 
 An interactive view of computational predictions and their limits. Demonstration outputs are not measurements of a submitted peptide.
 
-[Explore the demonstration →](/demo.html)
+[Explore the demonstration →](/demo)
 
 03 Research practices
 
 ## Clear scope. Traceable evidence.
 
-Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator's fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the [science page](/science.html).
+Silicyte is at the research and prototype stage. We do not claim prospective laboratory validation of our designed candidates. The agent measurements come from one operator's fleet on one laptop; they are not a survey of other fleets. Existing computational results and historical corrections are documented on the [science page](/science).
 
 AI tools support software development and analysis. Their use does not establish scientific validity; reproducible methods, appropriate controls and experimental evidence determine what a result can support.
 
 The browser checker processes selected files locally. It loads public website assets and examples from external servers. Any project work would require a separate agreement covering access, confidentiality and data handling.
 
-[Read the research corrections](/science.html#withdrawn) · [Dataset release notes](/data/CORRECTIONS-2026-10-16.md)
+[Read the research corrections](/science#withdrawn) · [Dataset release notes](/data/CORRECTIONS-2026-10-16.md)
 
 04 Contact
 

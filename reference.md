@@ -17,7 +17,7 @@ Reference
 
 Short self-contained answers to questions about evaluation leakage, identity thresholds, rank statistics and design-loop controls. Each one carries the figure and how it was measured, so it can be quoted without the rest of the page.
 
-Every figure below links back to the run that produced it, through [the benchmark audit](/benchmark-leakage.html), [the paper](/papers.html) or [the dataset](/data.html). Measurements are computational. Silicyte operates no laboratory and claims no experimental result.
+Every figure below links back to the run that produced it, through [the benchmark audit](/benchmark-leakage), [the paper](/papers) or [the dataset](/data). Measurements are computational. Silicyte operates no laboratory and claims no experimental result.
 
 ## How much train/test leakage is in the LRGB Peptides-func benchmark?
 
@@ -63,4 +63,4 @@ Silicyte is an independent research company in South Jordan, Utah, founded in Oc
 
 The four diagnostics run in your browser on a CSV, with no account and no upload.
 
-[Run the checks →](/check.html) [Source ↗](https://github.com/braxtonmensah/silicyte-design-loops)
+[Run the checks →](/check) [Source ↗](https://github.com/braxtonmensah/silicyte-design-loops)

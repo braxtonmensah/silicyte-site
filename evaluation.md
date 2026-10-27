@@ -50,7 +50,7 @@ Send us your train and test split. Before the day is out you get a report on how
 
 **Run it yourself, right now, in your browser.** The leak rate is free and your sequences never leave your machine: nothing is uploaded. The $99 unlocks the row-level findings and the corrected split.
 
-[Run the audit →](/audit.html)
+[Run the audit →](/audit)
 
 Need more than the overlap number? The full sprint below reproduces your metric, reviews labels and selection, and re-scores against a fair baseline.
 
@@ -136,7 +136,7 @@ Audit
 
 Train/test overlap measured across five benchmark families from each benchmark's own published files. LRGB Peptides-func returns 65.29%; FLIP meltome returns 0.29%.
 
-[Read the audit →](/benchmark-leakage.html)
+[Read the audit →](/benchmark-leakage)
 
 Self-audit
 
@@ -144,7 +144,7 @@ Self-audit
 
 Our splitter claimed single-linkage clustering and was not. 20.1% of held-out MIC rows had a near-twin in training while the usual check passed 826 of 826. Rebuilt folds measure 0.0000.
 
-[Read the correction →](/science.html)
+[Read the correction →](/science)
 
 Release
 

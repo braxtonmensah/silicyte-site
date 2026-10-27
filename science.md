@@ -37,7 +37,7 @@ This intervention changed the reported computational metric. Without experimenta
 
 **What this does not show.** It does not show the molecules got worse, and it does not establish why the effect inverts. A plausible account is that the scorer and the measuring model share a feature vocabulary, so a handicapped scorer pushes harder along a direction the measuring model also likes. This experiment does not test that. What it establishes is the sign and the size.
 
-[Explore the peptide prediction demonstration](/demo.html)
+[Explore the peptide prediction demonstration](/demo)
 
 02 Interpreting the control
 
@@ -54,7 +54,7 @@ In our retained-candidate experiments, averages varied with which candidates wer
 | 1,000 | 4.8% | 0.0204 |
 | 3,250 | 2.6% | 0.0113 |
 
-Predicted from the spread between individual molecules (0.4562 over 143 saved sets of winners); the predicted 0.0645 came back as 0.0570 in that particular check. This comparison does not calibrate a universal significance test. More observations or paired comparisons may improve precision, but covariance and selection must be accounted for. [Our browser tool](/check.html) now labels prediction spread as descriptive and does not issue an uncertainty verdict.
+Predicted from the spread between individual molecules (0.4562 over 143 saved sets of winners); the predicted 0.0645 came back as 0.0570 in that particular check. This comparison does not calibrate a universal significance test. More observations or paired comparisons may improve precision, but covariance and selection must be accounted for. [Our browser tool](/check) now labels prediction spread as descriptive and does not issue an uncertainty verdict.
 
 03 The wrong error bar
 
@@ -88,7 +88,7 @@ FAULT 03
 
 ### Test molecules with near-twins in training
 
-The routine separating training from testing described itself as one algorithm and implemented another, so 20% of supposedly held-out molecules had a near-identical partner in training while our test passed 826 of 826. The corrected split is published on the [data page](/data.html).
+The routine separating training from testing described itself as one algorithm and implemented another, so 20% of supposedly held-out molecules had a near-identical partner in training while our test passed 826 of 826. The corrected split is published on the [data page](/data).
 
 FAULT 04
 
@@ -114,11 +114,11 @@ The pattern connecting most of these: the guard was tested, and the test passed,
 
 ## What our model experiments did and did not establish.
 
-We tested particular changes in data quantity and model size. These experiments do not rule out better data or models. What we build is described on the [company page](/company.html).
+We tested particular changes in data quantity and model size. These experiments do not rule out better data or models. What we build is described on the [company page](/company).
 
 **This particular data addition did not clear our improvement bar.** Adding 42% more laboratory measurements moved our scoring model's accuracy by between -0.004 and +0.007, against a threshold of +0.02 we had set in advance for calling it worthwhile. Going from 983 to 1,353 training examples moved it +0.003. This particular experiment does not establish whether additional or different data would improve another model or task.
 
-**Historical fine-tuning comparison.** Our recorded comparison of frozen features and fine-tuning reported changes of +0.1192 for potency and +0.1577 for safety. These are computational results for that evaluation. A shuffled-label run scored -0.0228; one null run does not establish independence of every selection step. The fine-tuning result was not freshly reproduced in the October 16 descriptor-baseline rerun. See the [data record and limitations](/data.html).
+**Historical fine-tuning comparison.** Our recorded comparison of frozen features and fine-tuning reported changes of +0.1192 for potency and +0.1577 for safety. These are computational results for that evaluation. A shuffled-label run scored -0.0228; one null run does not establish independence of every selection step. The fine-tuning result was not freshly reproduced in the October 16 descriptor-baseline rerun. See the [data record and limitations](/data).
 
 06 Withdrawn
 
@@ -162,4 +162,4 @@ Unverifiable
 
 Its values were recorded to one decimal place and its molecules were overwritten by a later run. The data needed to verify it no longer exists, so it counts for nothing.
 
-Working papers, pre-registration files and run logs for every figure on this page are available on request at [hello@silicyte.com](/company.html). Each carries its job identifiers.
+Working papers, pre-registration files and run logs for every figure on this page are available on request at [hello@silicyte.com](/company). Each carries its job identifiers.

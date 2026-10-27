@@ -167,7 +167,7 @@ Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned enc
 
 **Homology leakage is not a new concern.** It is well documented in general. The only thing I am adding is the measurement on these specific published splits, and the comparison between the ones that handled it and the one that handled it well.
 
-I found this class of defect in my own work first, along with three others, and withdrew the claims that depended on them. That record is in [the paper](/papers/design-loops.html), including the register of what I retracted.
+I found this class of defect in my own work first, along with three others, and withdrew the claims that depended on them. That record is in [the paper](/papers/design-loops), including the register of what I retracted.
 
 05 Your turn
 
@@ -175,4 +175,4 @@ I found this class of defect in my own work first, along with three others, and 
 
 The same check runs in your browser on a CSV, with no account and no upload. If it finds nothing, that is a useful result too, and two of the six rows above are exactly that.
 
-[Run it on your data →](/check.html) [Source ↗](https://github.com/braxtonmensah/silicyte-design-loops)
+[Run it on your data →](/check) [Source ↗](https://github.com/braxtonmensah/silicyte-design-loops)

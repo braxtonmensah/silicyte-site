@@ -17,15 +17,15 @@ Control integrity for AI agent fleets
 
 We measure whether the guardrails on AI agents ran, covered every path and failed independently, and how often agents override them. On one operator's fleet of Claude Code agents, a guardrail was absent on 29.8% of the calls it existed to check. We traced the cause and fixed it.
 
-[Read the measurement →](/refusal-uptime.html) [Get the open-source probe ↗](https://github.com/braxtonmensah/refusal-uptime)
+[Read the measurement →](/refusal-uptime) [Get the open-source probe ↗](https://github.com/braxtonmensah/refusal-uptime)
 
-Guardrail absent, 261,254 calls over 21 days [**29.8%**](/refusal-uptime.html)
+Guardrail absent, 261,254 calls over 21 days [**29.8%**](/refusal-uptime)
 
-Absent with 11 or more agents at once [**53.1%**](/refusal-uptime.html)
+Absent with 11 or more agents at once [**53.1%**](/refusal-uptime)
 
-Guardrail time, 8 calls at once, before and after the fix (p95) [**36.3 s → 2.5 s**](/refusal-uptime.html#cause-and-fix)
+Guardrail time, 8 calls at once, before and after the fix (p95) [**36.3 s → 2.5 s**](/refusal-uptime#cause-and-fix)
 
-Absent after the fix, live traffic [**0 of 2,211**](/refusal-uptime.html#cause-and-fix)
+Absent after the fix, at 11 or more agents (was 53.1%) [**5 of 8,055**](/refusal-uptime#cause-and-fix)
 
 One operator, one Windows laptop, 30 Sep to 23 Oct 2026. Every figure links to how it was measured, and the pass thresholds were registered before each read. Prepared with AI assistance; not peer reviewed.
 
@@ -45,7 +45,7 @@ Control integrity / Four numbers per guardrail
 
 To the agent, a guardrail that timed out and one that ran and allowed the action look the same. So we report four numbers for each guardrail. **Presence:** did it run (absent on 29.8% of its calls before the fix). **Coverage:** did it watch every path (20.5% of protected writes went through a path it never watched). **Independence:** did the guards fail separately (they failed together 99.86% of the time). **Override:** how often agents take the sanctioned way around it (81.6% of refusals).
 
-[Read the full measurement and its limits →](/refusal-uptime.html)
+[Read the full measurement and its limits →](/refusal-uptime)
 
 Earlier work / Peptide design & model evaluation
 
@@ -54,19 +54,19 @@ Controls included.
 
 We design peptides and protein binders, and we measure whether the score that ranks them is tracking the molecules or its own error.
 
-[Evaluate your model →](/evaluation.html) [Explore the research →](/science.html)
+[Evaluate your model →](/evaluation) [Explore the research →](/science)
 
-Starved scorer vs intact [**t = -14.60**](/science.html)
+Starved scorer vs intact [**t = -14.60**](/science)
 
-Our own earlier split, found in self‑audit [**20.1%**](/data.html)
+Our own earlier split, found in self‑audit [**20.1%**](/data)
 
-Same measure, our rebuilt folds [**0.0000**](/data.html)
+Same measure, our rebuilt folds [**0.0000**](/data)
 
-Shuffled‑label control [**−0.0228**](/science.html)
+Shuffled‑label control [**−0.0228**](/science)
 
 Every figure above links to the run that produced it. Computational results only; we operate no laboratory and claim no experimental result.
 
-[Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops.html). 14 pages, not peer reviewed and not posted to a preprint server. Its evidence archive is deposited and citable: [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786).
+[Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops](/papers/design-loops). 14 pages, not peer reviewed and not posted to a preprint server. Its evidence archive is deposited and citable: [DOI 10.5281/zenodo.23441786](https://doi.org/10.5281/zenodo.23441786).
 
 Conceptual molecular illustration
 
@@ -85,7 +85,7 @@ Useful predictions need a clear connection to the data, the evaluation procedure
 
 Computational workflows for proposing and comparing molecular candidates.
 
-[Research direction →](/science.html)
+[Research direction →](/science)
 
 02 / Evaluate
 
@@ -93,7 +93,7 @@ Computational workflows for proposing and comparing molecular candidates.
 
 Checks for sequence overlap, metric handling and sensitivity to the scoring procedure.
 
-[Try the evaluation tool →](/check.html)
+[Try the evaluation tool →](/check)
 
 03 / Reproduce
 
@@ -101,7 +101,7 @@ Checks for sequence overlap, metric handling and sensitivity to the scoring proc
 
 Released evaluation folds, documented methods and explicit limits on what each result establishes.
 
-[Explore the data →](/data.html)
+[Explore the data →](/data)
 
 Research note / 001
 
@@ -110,7 +110,7 @@ to the model scoring it?
 
 In our peptide-design experiment, withholding training families from the scoring model increased the reported computational gain. The result motivates closer evaluation of the scoring procedure; it does not establish better biological activity.
 
-[Read the experiment and its limits →](/science.html#intervention)
+[Read the experiment and its limits →](/science#intervention)
 
 Open research / Benchmark evaluation
 
@@ -130,7 +130,7 @@ Test-row contamination at Levenshtein ratio 0.80, by published split
 
 A contamination rate is not a score inflation. Nothing was retrained for these figures, so they do not say by how much any reported accuracy is overstated. Two further splits were measured and deliberately excluded, each with its reason, in the [machine-readable record](/data/leakage-measurements.json).
 
-[Read the benchmark audit →](/benchmark-leakage.html) [Open the corrected LRGB split →](/data/lrgb-corrected-v1/)
+[Read the benchmark audit →](/benchmark-leakage) [Open the corrected LRGB split →](/data/lrgb-corrected-v1/)
 
 Work with Silicyte
 
@@ -138,4 +138,4 @@ Work with Silicyte
 
 A fixed-scope, ten-business-day retrospective evaluation on the data you already have. One endpoint, one pipeline, a reproduced metric and a corrected comparison. Fixed-fee pilot, $2,500, scoped on a free call first.
 
-[See the Evaluation Sprint →](/evaluation.html)
+[See the Evaluation Sprint →](/evaluation)

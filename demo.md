@@ -59,8 +59,8 @@ Here is what the nearest labelled relative actually measured, organism by organi
 
 ## Model and data provenance.
 
-The demonstration uses fitted ridge weights shipped in [models.json](/assets/models.json), averaged over a penalty grid rather than selected on inner folds. An internal rerun reproduced descriptor out-of-fold Spearman 0.4502 on the released MIC folds. The historical fine-tuned result of 0.5356 is a separate model result, not the model running in this browser. These computational scores do not establish biological performance. See the [data page and release corrections](/data.html).
+The demonstration uses fitted ridge weights shipped in [models.json](/assets/models.json), averaged over a penalty grid rather than selected on inner folds. An internal rerun reproduced descriptor out-of-fold Spearman 0.4502 on the released MIC folds. The historical fine-tuned result of 0.5356 is a separate model result, not the model running in this browser. These computational scores do not establish biological performance. See the [data page and release corrections](/data).
 
 Reference values come from GRAMPA in micromolar units, reduced to a median per peptide and organism. Some source records lack complete chemical-modification metadata; canonical sequence letters alone do not verify that chemistry. Cite the original sources. Sequence input is processed in the browser. Reference measurements come from that public dataset; a predicted MIC is not a measured MIC for your input.
 
-[Check your own result instead](/check.html) [Take the corrected folds](/data.html)
+[Check your own result instead](/check) [Take the corrected folds](/data)
