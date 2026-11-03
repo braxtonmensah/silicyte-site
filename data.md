@@ -69,7 +69,7 @@ Those repeats are mostly different bacterial species rather than replicate assay
 | 36 physicochemical descriptors | 0.4502 | 0.4074 |
 | ESM2-35M frozen, mean-pooled | 0.4656 | — |
 | ESM2-650M frozen, mean-pooled | 0.4427 | 0.3502 |
-| Ankh-base frozen, mean-pooled | 0.3870 | — |
+| Ankh-base frozen, mean-pooled (corrected Nov 3) | 0.3976 | — |
 | **ESM2-650M fine-tuned, 3 seeds averaged** | **0.5356** | **0.5079** |
 | the same, on deliberately shuffled labels | -0.0228 | — |
 

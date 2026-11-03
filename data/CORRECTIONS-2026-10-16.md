@@ -44,3 +44,9 @@ These are internal data-lineage checks. They do not validate the original experi
 ## Rights-review status
 
 The immutable v1 archive contains a CC BY 4.0 notice. This audit has not completed a rights review for all underlying measurements. The identified upstream repository has no license detected by GitHub; that observation does not establish every applicable permission or legal right. Do not treat Silicyte's archive notice as a grant of rights that may belong to upstream parties. Source permissions and any applicable conditions require confirmation before a new redistribution or commercial-rights promise. No legal determination is made here.
+
+## Correction, November 3, 2026: Ankh baseline input
+
+The "Ankh-base frozen, mean-pooled" MIC baseline (0.3870 in the v1 README and formerly on the data page) and the manifest values `ankh_base_frozen_mean` 0.387 and `ankh_large_frozen_mean` 0.3383 were computed from malformed input. Ankh's tokenizer has no pre-tokenizer, so the space-separated residues our T5-family pipeline fed it became an unknown token after every residue, and half of every mean-pooled position was that token.
+
+Re-scored with one token per residue on the same folds and with the same estimator (last layer, mean-pooled over residues, ridge averaged over the same fixed penalty grid): Ankh-base MIC 0.3976, Ankh-large MIC 0.3956. The same estimator on the malformed input gives 0.3870 for Ankh-base, matching the published value. The data page now shows 0.3976. The v1 ZIP, README and manifest are unchanged as historical artifacts. The other baselines do not use this input path.
