@@ -160,11 +160,20 @@
 
 <footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evals">Evals</a> &middot; <a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
+<script src="https://cdn.amplitude.com/script/a2152c0bf86f00cba4d943e2ffdef4c0.js"></script>
+<script>
+  window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1, serverZone: 'US' }));
+  window.amplitude.init('a2152c0bf86f00cba4d943e2ffdef4c0', {
+    serverZone: 'US',
+    autocapture: true,
+  });
+</script>
 <script>
 (function () {
   var btn = document.getElementById("copyEmail");
   if (!btn) return;
   btn.addEventListener("click", function () {
+    if (window.amplitude) window.amplitude.track('Pilot Email Copied');
     var node = document.getElementById("email");
     var done = function () {
       btn.textContent = "Copied";

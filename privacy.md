@@ -13,7 +13,9 @@ States and Canada only.
 
 ## 02 When you visit the site
 
-The site counts page views with GoatCounter, which does not set cookies. Pages load fonts from Google Fonts, so Google
+The site counts page views with GoatCounter, which does not set cookies. The [Evals](/evals) page also uses Amplitude,
+which stores an identifier in your browser and records your clicks and a replay of your session on that page so we can
+see how it is used. Pages load fonts from Google Fonts, so Google
 receives your IP address when a page loads. The site is hosted on GitHub Pages, which keeps its own server logs. The
 browser checker processes the files you select inside your browser; they are not uploaded to us.
 
