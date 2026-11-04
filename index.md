@@ -19,6 +19,8 @@ AI systems now write the tools, prompts and code that their next round runs on. 
 
 Silicyte Ratchet (silicyte-0119) · Result: **pending** · prereg [cc5fb5b](https://github.com/braxtonmensah/ratchet/commit/cc5fb5b) · registered 4 Nov 2026
 
+Latest: [we measured our own AI-run lab's growth curve, and our test turned out blind, so we voided it](/lab-curve) (silicyte-0120)
+
 [Read the Ratchet test →](/ratchet) [The pre-registration ↗](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)
 
 Sealed ARC-AGI-1 tasks the loop never reads (id list hashed before any run) **400**
