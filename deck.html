@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silicyte deck</title>
+<meta name="description" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement actually compounds.">
+<link rel="canonical" href="https://silicyte.com/deck">
+<style>
+  :root { --ink:#0f1720; --muted:#4a5866; --brand:#2f6fd6; --bg:#ffffff; --rule:#d9dee4; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 "Libre Franklin", Arial, sans-serif; }
+  .slide { width:100%; max-width:1000px; min-height:560px; margin:24px auto; padding:48px 56px; border:1px solid var(--rule);
+           border-radius:10px; display:flex; flex-direction:column; justify-content:center; page-break-after:always; break-after:page; }
+  .k { color:var(--brand); font:600 13px/1 "Fira Mono", monospace; letter-spacing:.06em; text-transform:uppercase; margin:0 0 14px; }
+  h1 { font:600 46px/1.1 Georgia, serif; margin:0 0 18px; }
+  h2 { font:600 32px/1.15 Georgia, serif; margin:0 0 18px; }
+  p, li { font-size:19px; color:var(--ink); max-width:62ch; }
+  .muted { color:var(--muted); font-size:15px; }
+  .num { font:600 1em "Fira Mono", monospace; }
+  table { border-collapse:collapse; font-size:16px; margin-top:6px; }
+  td, th { border-bottom:1px solid var(--rule); padding:7px 14px 7px 0; text-align:left; vertical-align:top; }
+  @media (max-width:700px) { .slide { padding:28px 16px; margin:12px 16px; width:auto; } h1 { font-size:32px; } h2 { font-size:24px; } p, li { font-size:16px; } }
+  @media print { body { background:#fff; } .slide { margin:0; border:0; border-radius:0; min-height:100vh; max-width:none; } @page { size: 11in 6.6in; margin:0.4in; } }
+</style>
+</head>
+<body>
+<section class="slide">
+  <p class="k">Silicyte</p>
+  <h1>Does AI self-improvement actually compound?</h1>
+  <p>Pre-registered, compute-matched tests of recursive self-improvement, with the test set sealed and every result published,
+  including nulls.</p>
+  <p class="muted">Braxton Mensah, founder · silicyte.com · hello@silicyte.com · November 2026</p>
+</section>
+
+<section class="slide">
+  <p class="k">The problem</p>
+  <h2>Self-improvement claims are graded on the tests they were selected on.</h2>
+  <ul>
+    <li>AI systems now write the tools, prompts and code their next round runs on.</li>
+    <li>Published library-learning gains largely disappeared once compute was matched and reuse was measured
+    (Berlot-Attwell et al., arXiv 2410.20274 and 2504.03048).</li>
+    <li>In our own self-improving search, a selected gain of <span class="num">+0.0095</span> read <span class="num">+0.0014</span>
+    on a sealed lockbox.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="k">First study: Ratchet (silicyte-0119, registered 4 Nov 2026)</p>
+  <h2>Does a growing library of verified helpers beat its look-alikes at equal tokens?</h2>
+  <table>
+    <tr><th>Arm</th><th>What it rules out</th></tr>
+    <tr><td>Frozen after round 1</td><td>gain without growth</td></tr>
+    <tr><td>Same tokens, one round</td><td>dose, not compounding</td></tr>
+    <tr><td>Verified examples, no helpers</td><td>context, not reuse</td></tr>
+    <tr><td>Matched sham library</td><td>prompt length and genre</td></tr>
+    <tr><td>Extra samples, no library</td><td>plain test-time compute</td></tr>
+  </table>
+  <p class="muted">400 sealed ARC-AGI-1 tasks (id list hashed before any run), a reuse gate, a knockout, a contamination gate, and a
+  planted positive control that voids the run if the harness cannot see a real library. Pre-registration:
+  github.com/braxtonmensah/ratchet. Result pending; our registered prediction is <span class="num">+2</span> of 400.</p>
+</section>
+
+<section class="slide">
+  <p class="k">Why trust us</p>
+  <h2>We retract our own best numbers in public.</h2>
+  <ul>
+    <li>Our earlier headline, a guardrail hook absent on <span class="num">29.8%</span> of the calls it existed to check, came out
+    <span class="num">0.0000</span> on clean public machines. We said so on the homepage.</li>
+    <li>A verifier-gated search beat flat sampling 20 to 15 of 24 hard ARC outputs; by the rule we registered first
+    (p = 0.0625) it is a null, and we report it as one.</li>
+    <li>Paper: degrading a design loop's scorer made its reported gain 2.4x larger (t = <span class="num">-14.60</span>;
+    DOI 10.5281/zenodo.23441786).</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="k">Founder and stage</p>
+  <h2>Solo, technical, pre-revenue.</h2>
+  <ul>
+    <li>Braxton Mensah, Indiana University undergraduate. Directs an AI-agent research fleet (9,700+ cluster jobs, about 7,424
+    GPU-hours as of 18 Oct 2026). Trained and served his own ARC Prize 2026 system; official results 4 Dec 2026.</li>
+    <li>$0 revenue, 0 customers, unincorporated, no money raised.</li>
+    <li>Raising a pre-seed to run the test series behind Ratchet and to turn the sealed, compute-matched protocol into a service
+    labs use before they announce a self-improvement result.</li>
+  </ul>
+  <p class="muted">Design and implementation are AI-assisted; the founder sets the questions, the registered pass rules and the
+  retractions. Not peer reviewed.</p>
+</section>
+</body>
+</html>
