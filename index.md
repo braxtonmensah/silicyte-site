@@ -29,13 +29,13 @@ Arms at equal total tokens, plus two planted positive controls **6 + 2**
 
 Our registered prediction, growing library minus frozen library, sealed solves of 400, with its 80% band **+2** [-8, +14]
 
-Our own earlier headline, laptop vs clean public runners (guard absence at a 15 s budget) **29.8% → 0.0000**
+Our own earlier headline, laptop vs clean public runners (median guard absence at a 15 s budget) **29.8% → 0.0000**
 
 Registered 4 Nov 2026 as silicyte-0119, before any model call, at commit cc5fb5b. Result pending; it will be published whatever it shows, including a null. The design applies the compute-matched protocol of Berlot-Attwell et al. to ARC program libraries; it is an evaluation, not a new method. Prepared with AI assistance; not peer reviewed.
 
 ## Our own best number did not reproduce. We said so.
 
-On one operator's laptop fleet of Claude Code agents, a guardrail hook was absent on 29.8% of the 103,850 calls it existed to check (53.1% with 11 or more agents at once), and a one-dispatcher fix brought that to 5 of 8,055. We then reran the load on clean public machines, with antivirus on and off and with the same shell layer: absence at the documented budget was 0.0000 in every cell up to 24 agents. The effect belongs to that laptop, not to agent fleets in general, so we stopped building a company on it. The probe and every load-test result stay public: [laptop measurement](/refusal-uptime), [clean-runner reruns](https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results).
+On one operator's laptop fleet of Claude Code agents, a guardrail hook was absent on 29.8% of the 103,850 calls it existed to check (53.1% with 11 or more agents at once), and a one-dispatcher fix brought that to 5 of 8,055. We then reran the load on clean public machines, with antivirus on and off and with the same shell layer: median absence at the documented budget was 0.0000 in every cell up to 24 agents (one repeat of three in one cell read 0.0354). The effect belongs to that laptop, not to agent fleets in general, so we stopped building a company on it. The probe and every load-test result stay public: [laptop measurement](/refusal-uptime), [clean-runner reruns](https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results).
 
 ## Earlier work: before Ratchet, still public, limits attached
 

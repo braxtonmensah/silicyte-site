@@ -6,7 +6,8 @@
 
 > On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8%
 > of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave
-> 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop.
+> a median of 0.0000 absence at a 15 s budget in every cell up to 24 agents (one repeat of three in one
+> cell read 0.0354), so the effect belongs to that laptop.
 > Claude Code runs each pre-tool guardrail as a separate process with a timeout, and by default a
 > guardrail that times out lets the action through. The timeout is logged, but nothing reports it
 > as a share of the actions the guardrail should have checked.

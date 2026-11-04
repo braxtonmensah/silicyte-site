@@ -19,7 +19,7 @@ Page: https://silicyte.com/ratchet. Pre-registration:
 https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md. Not arXiv 2605.22148.
 
 **Earlier work, with its correction**: on one laptop fleet a guardrail hook was absent on 29.8% of the
-103,850 calls it existed to check; on clean public runners the same load gave 0.0000 absence at a 15 s
+103,850 calls it existed to check; on clean public runners the same load gave a median of 0.0000 absence at a 15 s
 budget in every cell up to 24 agents, so the effect belongs to that laptop. See /refusal-uptime and
 https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results.
 
@@ -67,7 +67,7 @@ not established.
   stage. [PDF](https://silicyte.com/silicyte-deck.pdf)
 - [Refusal uptime](https://silicyte.com/refusal-uptime): earlier work, measured on one laptop. One
   guardrail was absent on 29.8% of the 103,850 calls it existed to check there; on clean public runners the
-  same load gave 0.0000 at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop.
+  same load gave a median of 0.0000 at a 15 s budget in every cell up to 24 agents (one repeat of three in one cell read 0.0354), so the effect belongs to that laptop.
   On the laptop, absence rose from 0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
   override, with the prediction that was wrong, the measured cause (process start-up), and the
   fix (absent on 0 of 2,211 calls at lighter load and 5 of 8,055 at 11 or more agents after it). Not peer reviewed.

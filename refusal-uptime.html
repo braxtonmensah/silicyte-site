@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Refusal uptime: did your agents' guardrails actually run? | Silicyte</title>
-<meta name="description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
+<meta name="description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave a median of 0.0000 absence at a 15 s budget in every cell up to 24 agents (one repeat of three in one cell read 0.0354), so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/refusal-uptime">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta property="og:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
+<meta property="og:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave a median of 0.0000 absence at a 15 s budget in every cell up to 24 agents (one repeat of three in one cell read 0.0354), so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <meta property="og:url" content="https://silicyte.com/refusal-uptime">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://silicyte.com/assets/hero/agents-social-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Did your agents' guardrails actually run? On one laptop, guardrail absent on 29.8% of the calls it existed to check (0.0000 on clean public runners up to 24 agents), 53.1% with 11 or more agents at once; p95 guardrail time at 8 calls at once fell from 36.3 s to 2.5 s after the fix.">
+<meta property="og:image:alt" content="Did your agents' guardrails actually run? On one laptop, guardrail absent on 29.8% of the calls it existed to check (median 0.0000 on clean public runners up to 24 agents), 53.1% with 11 or more agents at once; p95 guardrail time at 8 calls at once fell from 36.3 s to 2.5 s after the fix.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://silicyte.com/assets/hero/agents-social-card.png">
 <meta name="twitter:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta name="twitter:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
+<meta name="twitter:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave a median of 0.0000 absence at a 15 s budget in every cell up to 24 agents (one repeat of three in one cell read 0.0354), so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@
         {"@type": "Thing", "name": "AI agent guardrails"},
         {"@type": "Thing", "name": "Refusal uptime"}
       ],
-      "abstract": "On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents (github.com/braxtonmensah/refusal-uptime, loadtest-results branch), so the effect belongs to that laptop and is not shown for agent fleets in general. The laptop measurement covered 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. On the laptop, absence (30,929 of 103,850) rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. On 23 Oct 2026 the cause was measured as guardrail start-up time (five separate processes per call, p95 36.3 s with 8 calls at once against 10 to 15 s budgets); one dispatcher process returned the same decision on 145 of 145 replayed calls at p95 2.5 s. Prepared with AI assistance; not peer reviewed."
+      "abstract": "On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave a median of 0.0000 absence at a 15 s budget in every cell up to 24 agents (one repeat of three in one cell read 0.0354) (github.com/braxtonmensah/refusal-uptime, loadtest-results branch), so the effect belongs to that laptop and is not shown for agent fleets in general. The laptop measurement covered 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. On the laptop, absence (30,929 of 103,850) rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. On 23 Oct 2026 the cause was measured as guardrail start-up time (five separate processes per call, p95 36.3 s with 8 calls at once against 10 to 15 s budgets); one dispatcher process returned the same decision on 145 of 145 replayed calls at p95 2.5 s. Prepared with AI assistance; not peer reviewed."
     },
     {
       "@type": "Organization",
