@@ -51,7 +51,11 @@ Registrations per week from 10/15: **241, 564, 123.** The daily mean was 26.33 f
 
 The cluster tells a different story from the ledger. Jobs per week: 2,246; 5,021; 4,031; 1,850; 975. GPU-hours per week, spread across the days jobs ran: 1,860.2; 3,379.3; 2,791.3; 6,055.2; 3,116.4. In week 5 the lab started 43% as many jobs as in week 1 but used 168% of the GPU-hours (113% if each job is counted on its start day). The work moved to fewer, larger jobs.
 
-The honest read: over 35 days this lab did not visibly accelerate. Its output rate tracks the rules we set more than anything the agents learned.
+The honest read: these counts cannot say whether the lab accelerated. What they do show is that its output follows the rules we set and where we spent the compute.
+
+## Where the compute went
+
+Of 17,219.5 GPU-hours allocated from 10/01 to 11/04 17:08 ET (sacct, grouped by job name), 13,333.7 (77.4%) went to the ARC Prize lane, 1,573.7 (9.1%) to a medical-imaging competition lane, and 173.1 (1.0%) to Silicyte's own jobs, the ones built to test whether the lab improves itself. 4,905.2 GPU-hours (28.5%) ended in TIMEOUT. A lab that spends 1% of its compute on the question of its own improvement should not expect to see it compound. Ratchet and our record hunts move that question to the front.
 
 ## What the lab gets right and wrong
 
