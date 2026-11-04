@@ -108,7 +108,7 @@ FAULT 06
 
 Our earlier rank implementation mishandled tied values and affected reported correlations. The current browser checker uses average ranks for ties. Historical model results should be interpreted with their recorded evaluation and correction status.
 
-The pattern connecting most of these: the guard was tested, and the test passed, but nobody measured the quantity the guard exists to bound. Current checks state the quantity measured, the available coverage and the remaining limits.
+The pattern connecting most of these: the guard was tested, and the test passed, but the quantity the guard exists to bound was never measured. Current checks state the quantity measured, the available coverage and the remaining limits.
 
 05 Where the limit actually is
 

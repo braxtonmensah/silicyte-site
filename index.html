@@ -4,25 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Silicyte | Does AI self-improvement actually compound?</title>
-<meta name="description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. First registered test: a verified-helper library on 400 sealed ARC-AGI-1 tasks (silicyte-0119).">
+<meta name="description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. Silicyte Ratchet (silicyte-0119) tests a verified-helper library on 400 sealed ARC-AGI-1 tasks; registered 4 Nov 2026, result pending.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Silicyte | Does AI self-improvement actually compound?">
-<meta property="og:description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. First registered test: a verified-helper library on 400 sealed ARC-AGI-1 tasks (silicyte-0119).">
+<meta property="og:description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. Silicyte Ratchet (silicyte-0119) tests a verified-helper library on 400 sealed ARC-AGI-1 tasks; registered 4 Nov 2026, result pending.">
 <meta property="og:url" content="https://silicyte.com/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://silicyte.com/brand/silicyte-logo-512.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
-<meta property="og:image:alt" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement compounds.">
+<meta property="og:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silicyte Ratchet (silicyte-0119): 400 sealed ARC-AGI-1 tasks, 6 arms plus 2 positive controls, registered prediction +2, result pending.">
 
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Silicyte">
-<meta name="twitter:description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. First registered test: a verified-helper library on 400 sealed ARC-AGI-1 tasks (silicyte-0119).">
-<meta name="twitter:image" content="https://silicyte.com/brand/silicyte-logo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Silicyte Ratchet: does AI self-improvement compound? A registered test, result pending">
+<meta name="twitter:description" content="Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. Silicyte Ratchet (silicyte-0119) tests a verified-helper library on 400 sealed ARC-AGI-1 tasks; registered 4 Nov 2026, result pending.">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<meta name="twitter:image:alt" content="Silicyte Ratchet (silicyte-0119): 400 sealed ARC-AGI-1 tasks, 6 arms plus 2 positive controls, registered prediction +2, result pending.">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte","url":"https://silicyte.com/","logo":"https://silicyte.com/brand/silicyte-logo-512.png","sameAs":["https://www.linkedin.com/company/silicyte/","https://github.com/braxtonmensah"],"email":"hello@silicyte.com","foundingDate":"2026-10","description":"Independent research venture running pre-registered, compute-matched tests of whether AI self-improvement compounds, with earlier work on agent guardrail uptime and peptide and protein model evaluation.","disambiguatingDescription":"Silicyte is an independent AI research venture in South Jordan, Utah. It is unrelated to SiliCycle, a silica chemistry manufacturer, and to silicyne, a silicon allotrope.","knowsAbout":["recursive self-improvement evaluation","library learning","ARC-AGI","pre-registration","benchmark data leakage","peptide design","protein model evaluation","closed-loop molecular design","cross-validation splitting","reproducible machine learning evaluation"],"address":{"@type":"PostalAddress","addressLocality":"South Jordan","addressRegion":"UT","addressCountry":"US"},"founder":{"@type":"Person","@id":"https://silicyte.com/company#braxton-mensah","name":"Braxton Mensah","sameAs":["https://www.linkedin.com/in/braxtonmensah","https://github.com/braxtonmensah"]}},{"@type":"WebSite","@id":"https://silicyte.com/#website","url":"https://silicyte.com/","name":"Silicyte","publisher":{"@id":"https://silicyte.com/#organization"}}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +32,28 @@
 <link rel="stylesheet" href="/assets/refine.css?v=202610211520">
 <link rel="stylesheet" href="/assets/home.css?v=202610232110">
 <link rel="alternate" type="text/markdown" href="/index.md" title="Plain markdown mirror">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Silicyte updates">
+<style>
+/* 11/04 homepage: status line, band, earlier-work strip, follow block. Scoped here so home.css stays shared. */
+.hero-status { font: 500 13px/1.5 var(--mono); color: #c9d6e2; margin: 22px 0 0; overflow-wrap: anywhere; }
+.hero-status b { color: #fff; font-weight: 600; }
+.hero-status a { color: #e4edf5; }
+.evidence dd .band { display: block; font: 500 12.5px/1.4 var(--mono); color: #a2bbd0; margin-top: 4px; white-space: nowrap; }
+.earlier-section { background: #f5f5f0; }
+.earlier-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.earlier-head .eyebrow { color: #455e73; font-size: 10px; margin: 0; }
+.earlier-head h2 { margin: 0; font-size: 28px; }
+.earlier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; border-top: 1px solid #c8d0d1; }
+.earlier-grid article { padding-top: 22px; min-width: 0; }
+.earlier-num { display: block; font: 600 18px/1.3 var(--mono); color: #0b1016; overflow-wrap: anywhere; }
+.earlier-grid h3 { margin: 10px 0 8px; font-size: 17px; font-weight: 600; }
+.earlier-grid p { font-size: 14.5px; color: #4c5963; margin: 0 0 10px; }
+.earlier-grid a, .earlier-more a { color: #184b76; font-size: 13.5px; }
+.earlier-more { margin: 26px 0 0; font-size: 13.5px; color: #4c5963; }
+.follow-list { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.follow-list a { color: #184b76; font-size: 15px; }
+@media (max-width: 720px) { .earlier-grid { grid-template-columns: 1fr; gap: 0; } .earlier-grid article { padding-block: 20px; border-bottom: 1px solid #d2d8d9; } .earlier-head h2 { font-size: 23px; } .follow-list { flex-direction: column; } }
+</style>
 </head>
 <body class="home-page">
 <header class="top">
@@ -51,21 +74,18 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/" aria-current="page">Home</a>
+      <a href="/ratchet">Ratchet</a>
       <a href="/science">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- 11/04: restart. The lead is now the self-improvement question and its first registered test (silicyte-0119).
+  <!-- 11/04: restart. The lead is now the self-improvement question and its registered test (silicyte-0119).
        The guardrail work moves to earlier work, with its clean-runner non-reproduction stated next to the laptop number. -->
   <section class="molecular-hero agents-hero" aria-labelledby="hero-title">
     <div class="wrap molecular-layout">
@@ -75,9 +95,10 @@
         <p class="lede">AI systems now write the tools, prompts and code that their next round runs on. Most reported gains
         are chosen on the same tests they are reported on. Silicyte runs pre-registered, compute-matched tests of whether
         self-improvement compounds, seals the test set the loop never sees, and publishes the result either way.</p>
+        <p class="hero-status">Silicyte Ratchet (silicyte-0119) &middot; Result: <b>pending</b> &middot; prereg <a href="https://github.com/braxtonmensah/ratchet/commit/cc5fb5b">cc5fb5b</a> &middot; registered 4 Nov 2026</p>
         <div class="actions">
-          <a class="btn" href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">Read the first registered test <span aria-hidden="true">&rarr;</span></a>
-          <a class="text-link" href="https://github.com/braxtonmensah/ratchet">Watch the repo <span aria-hidden="true">&nearr;</span></a>
+          <a class="btn" href="/ratchet">Read the Ratchet test <span aria-hidden="true">&rarr;</span></a>
+          <a class="text-link" href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">The pre-registration <span aria-hidden="true">&nearr;</span></a>
         </div>
         <dl class="evidence">
           <div>
@@ -89,15 +110,15 @@
             <dd><a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md#4-arms"><b class="num">6 + 2</b></a></dd>
           </div>
           <div>
-            <dt>Our registered prediction, growing library minus frozen library, sealed solves of 400</dt>
-            <dd><a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md#8-prediction-registered"><b class="num">+2</b></a></dd>
+            <dt>Our registered prediction, growing library minus frozen library, sealed solves of 400, with its 80% band</dt>
+            <dd><a href="/ratchet"><b class="num">+2</b></a><span class="band">[-8, +14]</span></dd>
           </div>
           <div>
             <dt>Our own earlier headline, laptop vs clean public runners (guard absence at a 15 s budget)</dt>
             <dd><a href="https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results"><b class="num">29.8% &rarr; 0.0000</b></a></dd>
           </div>
         </dl>
-        <p class="hero-detail">Registered 4 Nov 2026 as silicyte-0119, before any model call. Result pending; it will be
+        <p class="hero-detail">Registered 4 Nov 2026 as silicyte-0119, before any model call, at commit cc5fb5b. Result pending; it will be
         published whatever it shows, including a null. The design applies the compute-matched protocol of Berlot-Attwell et
         al. to ARC program libraries; it is an evaluation, not a new method. Prepared with AI assistance; not peer reviewed.</p>
       </div>
@@ -144,71 +165,33 @@
     </div>
   </section>
 
-  <section class="molecular-hero" aria-labelledby="molecular-title">
-    <div class="wrap molecular-layout">
-      <div class="molecular-copy">
-        <p class="eyebrow">Earlier work / Peptide design &amp; model evaluation</p>
-        <h2 id="molecular-title" class="hero-h">Molecular design.<br><span>Controls included.</span></h2>
-        <p class="lede">We design peptides and protein binders, and we measure whether the score that ranks them is tracking the molecules or its own error.</p>
-        <div class="actions">
-          <a class="btn" href="/evaluation">Evaluate your model <span aria-hidden="true">&rarr;</span></a>
-          <a class="text-link" href="/science">Explore the research <span aria-hidden="true">&rarr;</span></a>
-        </div>
-
-        <!-- The evidence strip. Four numbers from our own runs, each one linking to the page that
-             shows how it was measured. None of the fourteen biomedical AI sites we benchmarked puts
-             a checkable figure in the first screen; this is the cheapest place to differ. Only
-             figures that survive both defects found on 2026-10-14 appear here: the intervention is
-             arm-vs-arm on one ruler, and the two identity rates and the null are counts, not rank
-             correlations, so neither the fold-leak nor the tie-handling defect touches them. -->
-        <dl class="evidence">
-          <div>
-            <dt>Starved scorer vs intact</dt>
-            <dd><a href="/science"><b class="num">t = -14.60</b></a></dd>
-          </div>
-          <div>
-            <dt>Our own earlier split, found in self‑audit</dt>
-            <dd><a href="/data"><b class="num">20.1%</b></a></dd>
-          </div>
-          <div>
-            <dt>Same measure, our rebuilt folds</dt>
-            <dd><a href="/data"><b class="num">0.0000</b></a></dd>
-          </div>
-          <div>
-            <dt>Shuffled‑label control</dt>
-            <dd><a href="/science"><b class="num">&minus;0.0228</b></a></dd>
-          </div>
-        </dl>
-        <p class="hero-detail">Every figure above links to the run that produced it. Computational
-        results only; we operate no laboratory and claim no experimental result.</p>
-        <p class="hero-detail"><a href="/papers/design-loops">Degrading the scoring model made the reported gain 2.4 times larger: an intervention-based audit of in silico design loops</a>.
-        14 pages, not peer reviewed and not posted to a preprint server. Its evidence archive is
-        deposited and citable:
-        <a href="https://doi.org/10.5281/zenodo.23441786">DOI&nbsp;10.5281/zenodo.23441786</a>.</p>
-      </div>
-      <figure class="molecular-art">
-        <img src="/assets/hero/molecular-ribbon.png" width="1536" height="1024" alt="Sculptural silver and blue folded molecular ribbon" loading="lazy" decoding="async">
-        <figcaption>Conceptual molecular illustration</figcaption>
-      </figure>
-    </div>
-    <div class="wrap hero-baseline"><span>Silicyte</span><span>Design &nbsp;/&nbsp; Evaluate &nbsp;/&nbsp; Reproduce</span><span>Independent research</span></div>
-  </section>
-
-  <section class="focus-section">
+  <section class="earlier-section" aria-labelledby="earlier-title">
     <div class="wrap">
-      <div class="section-intro"><p class="eyebrow">Our focus</p><h2>Better evidence for<br>the next design decision.</h2><p>Useful predictions need a clear connection to the data, the evaluation procedure and the decision they inform.</p></div>
-      <div class="focus-grid">
-        <article><span class="focus-number">01 / Design</span><h3>Peptides &amp; protein binders</h3><p>Computational workflows for proposing and comparing molecular candidates.</p><a href="/science">Research direction <span aria-hidden="true">&rarr;</span></a></article>
-        <article><span class="focus-number">02 / Evaluate</span><h3>Model evaluation</h3><p>Checks for sequence overlap, metric handling and sensitivity to the scoring procedure.</p><a href="/check">Try the evaluation tool <span aria-hidden="true">&rarr;</span></a></article>
-        <article><span class="focus-number">03 / Reproduce</span><h3>Traceable results</h3><p>Released evaluation folds, documented methods and explicit limits on what each result establishes.</p><a href="/data">Explore the data <span aria-hidden="true">&rarr;</span></a></article>
+      <div class="earlier-head">
+        <p class="eyebrow">Earlier work</p>
+        <h2 id="earlier-title">Before Ratchet. Still public, limits attached.</h2>
       </div>
-    </div>
-  </section>
-
-  <section class="research-section">
-    <div class="wrap research-layout">
-      <div><p class="eyebrow">Research note / 001</p><h2>How sensitive is a design gain<br>to the model scoring it?</h2></div>
-      <div><p>In our peptide-design experiment, withholding training families from the scoring model increased the reported computational gain. The result motivates closer evaluation of the scoring procedure; it does not establish better biological activity.</p><a class="text-link" href="/science#intervention">Read the experiment and its limits <span aria-hidden="true">&rarr;</span></a></div>
+      <div class="earlier-grid">
+        <article>
+          <span class="earlier-num">10.5281/zenodo.23441786</span>
+          <h3>Design-loop audit</h3>
+          <p>Degrading the scoring model made the reported gain 2.4 times larger. Computational only (we operate no laboratory) and not peer reviewed; the evidence archive is deposited under this DOI.</p>
+          <a href="/papers/design-loops">The paper</a> &middot; <a href="https://doi.org/10.5281/zenodo.23441786">The DOI</a>
+        </article>
+        <article>
+          <span class="earlier-num">65.29%</span>
+          <h3>LRGB Peptides-func leakage</h3>
+          <p>Share of test rows in the shipped split with a training twin at Levenshtein ratio 0.80. A corrected split is released.</p>
+          <a href="/benchmark-leakage">The audit</a> &middot; <a href="/data/lrgb-corrected-v1/">The corrected split</a>
+        </article>
+        <article>
+          <span class="earlier-num">29.8% to 0.0000</span>
+          <h3>Guardrail uptime, not reproduced</h3>
+          <p>A guardrail hook was absent on 29.8% of 103,850 calls on one laptop. On clean public runners the median absence was 0.0000 at a 15 s budget in every cell up to 24 agents, so we dropped it as our thesis.</p>
+          <a href="/refusal-uptime">The laptop measurement</a> &middot; <a href="https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results">The reruns</a>
+        </article>
+      </div>
+      <p class="earlier-more"><a href="/science">More earlier work</a>: <a href="/refusal-uptime">Agents (guardrail uptime)</a> &middot; <a href="/audit">Split audit</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference answers</a> &middot; <a href="/data">Data</a></p>
     </div>
   </section>
 
@@ -249,8 +232,12 @@
         <tbody></tbody>
       </table>
 
-      <p class="leakfig-limit">A contamination rate is not a score inflation. Nothing was retrained
-        for these figures, so they do not say by how much any reported accuracy is overstated.
+      <p class="leakfig-limit">A contamination rate is not a score inflation. These rates were measured
+        without retraining, so on their own they do not say by how much any reported accuracy is
+        overstated. Where we did retrain, the figure belongs to its model: on LRGB Peptides-func the
+        count ECFP + LightGBM baseline of arXiv 2501.17901 scores <span class="num">+0.1773</span> macro AP
+        higher on the shipped split than on corrected splits (sd 0.0094;
+        <a href="/benchmark-leakage#peptides-func-retrained">details</a>).
         Two further splits were measured and deliberately excluded, each with its reason, in the
         <a href="/data/leakage-measurements.json">machine-readable record</a>.</p>
 
@@ -328,11 +315,19 @@
     </script>
   </section>
 
-  <section class="collaboration-section">
-    <div class="wrap collaboration-layout"><div><p class="eyebrow">Work with Silicyte</p><h2>Does your model improvement survive its own evaluation?</h2><p>A fixed-scope, ten-business-day retrospective evaluation on the data you already have. One endpoint, one pipeline, a reproduced metric and a corrected comparison. Fixed-fee pilot, $2,500, scoped on a free call first.</p></div><a class="btn" href="/evaluation">See the Evaluation Sprint <span aria-hidden="true">&rarr;</span></a></div>
+  <section class="collaboration-section" aria-labelledby="follow-title">
+    <div class="wrap collaboration-layout"><div><p class="eyebrow">Follow</p><h2 id="follow-title">Get the Ratchet result when it lands.</h2>
+      <p>It goes up here, in the repo and in the feed, whatever it shows, including a null.</p>
+      <ul class="follow-list">
+        <li><a href="https://github.com/braxtonmensah/ratchet">Watch braxtonmensah/ratchet on GitHub</a></li>
+        <li><a href="/feed.xml">Atom feed</a></li>
+        <li><a href="https://www.linkedin.com/company/silicyte/">Silicyte on LinkedIn</a></li>
+        <li><a href="mailto:hello@silicyte.com">hello@silicyte.com</a></li>
+      </ul></div>
+      <a class="btn" href="https://github.com/braxtonmensah/ratchet">Watch the repo <span aria-hidden="true">&nearr;</span></a></div>
   </section>
 </main>
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

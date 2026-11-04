@@ -4,16 +4,26 @@
 
 # Refusal uptime: did your agents' guardrails actually run?
 
+> On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8%
+> of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave
+> 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop.
 > Claude Code runs each pre-tool guardrail as a separate process with a timeout, and by default a
 > guardrail that times out lets the action through. The timeout is logged, but nothing reports it
-> as a share of the actions the guardrail should have checked. On one operator's fleet of Claude
-> Code agents, one guardrail was absent on 29.8% of the calls it existed to check.
+> as a share of the actions the guardrail should have checked.
 
 Canonical: https://silicyte.com/refusal-uptime
 
 Measured on one Windows laptop with 8 logical CPUs, 30 Sep to 21 Oct 2026: 3,844 sessions and
 261,254 tool calls. Every count was computed twice by independent methods. Where a number was
 forecast before the data was read, this page says so. Prepared with AI assistance; not peer reviewed.
+
+**Did not reproduce off this laptop (4 Nov 2026).** On clean public GitHub runners (Windows and Linux,
+4 vCPUs), synthetic load with replicas of the same guards gave 0.0000 absence at a 15 s budget, median of
+3 repeats, in every cell up to 24 agents, including with antivirus scanning and the Git Bash layer. The
+29.8% figure belongs to this one laptop, not to agent fleets in general. Silicyte's current work is a
+pre-registered self-improvement test (silicyte-0119,
+https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md); this page stays as earlier work. Runs and
+data: https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results
 
 ## The measurement
 

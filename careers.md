@@ -1,12 +1,14 @@
-# Silicyte expert bench: expert judgment, made checkable
+# Silicyte expert bench: expert judgment, made checkable (paused)
 
-**We are not recruiting yet.** We open a role only when a signed, funded project defines it.
+**Paused.** The expert bench is not recruiting, and no paid roles, offers or fees are open while Silicyte runs its
+pre-registered self-improvement test (silicyte-0119, https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md). Silicyte is one person, not incorporated,
+with $0 revenue and 0 customers.
 
 Silicyte builds AI evaluation tasks that can be checked: every task we ship comes with a key a program can score and a
-control that should fail. When a project needs experts, we draw on this bench.
+control that should fail. The bench was planned for projects that need experts.
 
-To be notified when a project in your field is signed, email hello@silicyte.com with your field in the subject line.
-We will not ask for a CV until a project exists.
+There is nothing to apply for now, and we will not ask for a CV. If the bench ever reopens, it will be announced on the
+Silicyte LinkedIn page: https://www.linkedin.com/company/silicyte/
 
 ## 01 Why checkable
 
@@ -20,10 +22,9 @@ grader, controls and reward-hack log, graded in public on GitHub.
 Biology work covers therapeutic and basic science only. We do not take projects that would make AI systems more capable
 of producing biological, chemical or other weapons.
 
-## 02 Three bench roles
+## 02 Three bench roles, as planned
 
-Each role is paid per accepted deliverable. The fee is set in a written offer before work begins; we price fees to the
-equivalent of about $100 to $150 an hour of expected effort.
+These roles are paused. None is open, and no terms or fees are on offer.
 
 - **Biology task author.** Graduate-level problems in protein and peptide science, microbiology, pharmacology and assay
   interpretation, each with an answer a program can check and a control version that should fail. For: a PhD or MS in
@@ -35,19 +36,16 @@ equivalent of about $100 to $150 an hour of expected effort.
 
 ## 03 How it works
 
-1. **Get notified.** Email hello@silicyte.com with your field in the subject line.
-2. **A project is signed.** When a funded project needs your field, we contact the people who fit it.
-3. **Written offer.** Scope, deliverables and the fixed fee per accepted deliverable, in writing, before any work.
-4. **Paid work.** Remote. We set no hours; you choose how and when to do the work.
+Nothing to do while the bench is paused. Silicyte's current work is a pre-registered test of whether AI
+self-improvement compounds, run by one person (https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md). The bench is not part of it.
 
 ## 04 Plain terms
 
-Silicyte is an early-stage, founder-led research venture. This page describes a bench of experts we contact per
-project; it is not a job opening, and we are not hiring today. We use AI tools in our own work and say so; we ask the
+Silicyte is a solo, founder-led research venture. This page describes a bench of experts as it was planned; it is not
+a job opening, and we are not hiring. We use AI tools in our own work and say so; we ask the
 same disclosure of anyone who works with us. If you work at a university, check your institution's outside-activity
 and intellectual property rules before taking on a project.
 
-- Pay: fixed fee per accepted deliverable, in writing before work starts
-- Engagement: independent contractor, remote, per project
-- Status: early-stage and bootstrapped; a working brand, not yet incorporated
+- Status: paused; no roles open
+- Stage: solo; a working brand, not incorporated; $0 revenue, 0 customers
 - Based in: South Jordan, Utah, United States

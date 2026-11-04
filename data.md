@@ -67,11 +67,11 @@ Those repeats are mostly different bacterial species rather than replicate assay
 | Baseline on these folds | MIC | HC50 |
 |---|---|---|
 | 36 physicochemical descriptors | 0.4502 | 0.4074 |
-| ESM2-35M frozen, mean-pooled | 0.4656 | — |
+| ESM2-35M frozen, mean-pooled | 0.4656 | n/a |
 | ESM2-650M frozen, mean-pooled | 0.4427 | 0.3502 |
-| Ankh-base frozen, mean-pooled (corrected Nov 3) | 0.3976 | — |
+| Ankh-base frozen, mean-pooled (corrected Nov 3) | 0.3976 | n/a |
 | **ESM2-650M fine-tuned, 3 seeds averaged** | **0.5356** | **0.5079** |
-| the same, on deliberately shuffled labels | -0.0228 | — |
+| the same, on deliberately shuffled labels | -0.0228 | n/a |
 
 Pooled out-of-fold Spearman, tie-corrected. Ridge predictions are averaged over a fixed penalty grid rather than selected on inner folds, because selecting it at this sample size cost us 0.038 on MIC before we caught it. These are historical recorded calculations; their full prediction provenance is not included in v1. A shuffled-label run is a control outcome, not proof of independence. See the [release corrections](/data/CORRECTIONS-2026-10-16.md).
 
@@ -92,7 +92,7 @@ An exploratory variance decomposition used 51,345 public GRAMPA measurements ove
 | S. aureus vs P. aeruginosa | 2,510 | +0.629 |
 | S. aureus vs C. albicans | 1,693 | +0.646 |
 | E. coli vs B. subtilis | 1,519 | +0.635 |
-| **all 491 pairs sharing 30+ peptides** | — | **median +0.596** |
+| **all 491 pairs sharing 30+ peptides** | n/a | **median +0.596** |
 
 The E. coli / S. aureus comparison includes 4,064 shared peptides and a recorded correlation of 0.644. Sample size alone does not separate organism effects from source, assay or selection effects.
 
@@ -102,7 +102,7 @@ Computed exactly as the 0.9387 pooled figure was, but within one organism at a t
 
 | Target | Peptides with repeat records | Split-half | Derived value, not a ceiling |
 |---|---|---|---|
-| pooled across organisms in this analysis | — | 0.7877 | 0.9387 |
+| pooled across organisms in this analysis | n/a | 0.7877 | 0.9387 |
 | E. coli only | 2,099 | +0.857 | **0.9608** |
 | S. aureus only | 2,100 | +0.851 | **0.9590** |
 | P. aeruginosa only | 1,035 | +0.833 | 0.9535 |

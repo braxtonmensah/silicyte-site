@@ -129,8 +129,9 @@
       "url": "https://silicyte.com/",
       "email": "hello@silicyte.com",
       "foundingDate": "2026-10",
-      "description": "Silicyte measures whether a computational molecule-design result is real. Every figure it publishes is computational; it operates no laboratory and claims no experimental result.",
-      "knowsAbout": ["Benchmark validity", "Data leakage", "Peptide design", "Protein binder design", "Reproducibility"]
+      "description": "Independent research venture running pre-registered, compute-matched tests of whether AI self-improvement compounds, with earlier work on agent guardrail uptime and peptide and protein model evaluation. Every figure it publishes is computational; it operates no laboratory and claims no experimental result.",
+      "sameAs": ["https://www.linkedin.com/company/silicyte/", "https://github.com/braxtonmensah"],
+      "knowsAbout": ["Recursive self-improvement evaluation", "Pre-registration", "Benchmark validity", "Data leakage", "Peptide design", "Protein binder design", "Reproducibility"]
     }
   ]
 }
@@ -155,15 +156,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
+      <a href="/ratchet">Ratchet</a>
       <a href="/science">Research</a>
       <a href="/papers" aria-current="page">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -597,6 +595,21 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
     </div></div>
   </section>
 
+  <section id="questions">
+    <div class="wrap"><div class="col">
+      <p class="kicker"><span class="n">04b</span> Questions</p>
+      <h2>Short answers, with the numbers above.</h2>
+      <h3>Why do two splits built by the same documented procedure leak 0% and 65%?</h3>
+      <p>Because the split method is not the variable, corpus redundancy is. FLIP conservation and FLIP secondary_structure both state 'Randomly split sequences into train/test with 95/5% probability' verbatim in their own READMEs, both are flagged green, and they measure 0.00% and 65.38% respectively. The PDB contains an enormous number of near-identical chains, which the secondary structure corpus draws on, and the conservation sequences do not. A random split is safe on a non-redundant corpus and badly unsafe on a redundant one, and there is no way to know which case applies without measuring it.</p>
+      <h3>Is a 65% contamination rate the same as a benchmark being overstated by 65 points?</h3>
+      <p>No. A contamination rate is not a score inflation. The rates were produced without retraining, so on their own they do not say by how much any reported accuracy is overstated. Where an inflation was measured, it is reported separately with the model named: on LRGB Peptides-func, the count-ECFP + LightGBM baseline of arXiv 2501.17901 scores 0.7460 macro AP on the shipped split and 0.5687 on corrected splits, a difference of +0.1773 (sd 0.0094). That figure belongs to that model and does not transfer to other models.</p>
+      <h3>What identity threshold produces a clean protein train/test split?</h3>
+      <p>In the splits measured here, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster at min-seq-id 0.2 and assigns whole clusters 80/20, retaining 0.29%. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter.</p>
+      <h3>Which measured splits came back clean, and why does that matter?</h3>
+      <p>Six rows returned at or near zero: AMP Scanner v2 negatives 0.00%, FLIP meltome human_cell 0.00%, FLIP scl mixed_hard 0.00%, FLIP conservation sampled 0.00%, FLIP meltome human 0.05%, and FLIP meltome mixed 0.29%. These are load-bearing. AMP Scanner v2 positives and negatives come from the same paper, the same tool and the same run, differing only in CD-HIT threshold, 90% against 40%, and return 16.71% and exactly 0.00%. A measurement that found contamination everywhere would be worthless as evidence.</p>
+    </div></div>
+  </section>
+
   <section class="flush">
     <div class="wrap"><div class="col">
       <p class="kicker"><span class="n">05</span> Your turn</p>
@@ -611,7 +624,7 @@ python verify_sweep.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="col
   </section>
 
 </main>
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

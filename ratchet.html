@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silicyte Ratchet (silicyte-0119) | Does a verified-helper library compound on ARC-AGI-1?</title>
+<meta name="description" content="Silicyte Ratchet (silicyte-0119): a pre-registered, compute-matched test of whether a growing library of verified program helpers beats five controls at equal tokens on 400 sealed ARC-AGI-1 tasks. Registered 2026-11-04 at commit cc5fb5b. Result pending.">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
+<link rel="canonical" href="https://silicyte.com/ratchet">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Silicyte Ratchet (silicyte-0119): does a verified-helper library compound on ARC-AGI-1?">
+<meta property="og:description" content="A growing library must beat a frozen library, a one-round library, verified exemplars, a matched sham library and extra sampling, at equal tokens, on 400 sealed ARC-AGI-1 tasks. Registered 2026-11-04. Result pending.">
+<meta property="og:url" content="https://silicyte.com/ratchet">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silicyte Ratchet (silicyte-0119): 400 sealed ARC-AGI-1 tasks, 6 arms plus 2 positive controls, registered prediction +2, result pending.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Silicyte Ratchet (silicyte-0119): does a verified-helper library compound on ARC-AGI-1?">
+<meta name="twitter:description" content="A growing library must beat five controls at equal tokens on 400 sealed ARC-AGI-1 tasks. Registered 2026-11-04 at commit cc5fb5b. Result pending.">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"ResearchProject","@id":"https://silicyte.com/ratchet#project","name":"Silicyte Ratchet (silicyte-0119)","alternateName":"silicyte-0119","url":"https://silicyte.com/ratchet","description":"Silicyte Ratchet (silicyte-0119) is a pre-registered test of whether a library of verified program helpers compounds on ARC-AGI-1. A growing library must beat five controls at equal total tokens on 400 sealed evaluation tasks. It was registered on 2026-11-04 at commit cc5fb5b, before any model call. The result is pending and will be published whatever it shows.","disambiguatingDescription":"Not related to arXiv 2605.22148, a paper also named Ratchet about retiring skills with an LLM judge.","foundingDate":"2026-11-04","parentOrganization":{"@id":"https://silicyte.com/#organization"},"founder":{"@id":"https://silicyte.com/company#braxton-mensah"},"sameAs":["https://github.com/braxtonmensah/ratchet"],"knowsAbout":["library learning","program synthesis","ARC-AGI","pre-registration","compute-matched evaluation","recursive self-improvement evaluation"]},
+{"@type":"ScholarlyArticle","@id":"https://silicyte.com/ratchet#prereg","headline":"PREREG ratchet_v1: does a verified-helper library compound on ARC at equal tokens?","url":"https://github.com/braxtonmensah/ratchet/blob/cc5fb5b/PREREG.md","datePublished":"2026-11-04","author":{"@id":"https://silicyte.com/company#braxton-mensah"},"publisher":{"@id":"https://silicyte.com/#organization"},"about":{"@id":"https://silicyte.com/ratchet#project"},"isBasedOn":[{"@type":"ScholarlyArticle","name":"Is This LLM Library Learning? Evaluation Must Account For Compute and Behaviour","sameAs":"https://doi.org/10.18653/v1/2026.eacl-long.163"}]},
+{"@type":"Organization","@id":"https://silicyte.com/#organization","name":"Silicyte","url":"https://silicyte.com/"},
+{"@type":"Person","@id":"https://silicyte.com/company#braxton-mensah","name":"Braxton Mensah","sameAs":["https://github.com/braxtonmensah"]},
+{"@type":"FAQPage","@id":"https://silicyte.com/ratchet#faq","mainEntity":[
+{"@type":"Question","name":"What is Silicyte Ratchet?","acceptedAnswer":{"@type":"Answer","text":"Silicyte Ratchet (silicyte-0119) is a pre-registered test of whether a library of verified program helpers compounds on ARC-AGI-1. A growing library must beat five controls at equal total tokens on 400 sealed evaluation tasks. It was registered on 2026-11-04 at commit cc5fb5b, before any model call."}},
+{"@type":"Question","name":"What counts as compounding?","acceptedAnswer":{"@type":"Answer","text":"The growing library (STOCK) must solve more sealed tasks than each of STATIC, ONE-SHOT, EXEMPLAR, SHAM and FLAT-TTC by an exact one-sided McNemar test at p < 0.05. It must also pass a reuse gate, a helper knockout and a contamination gate. Anything less is reported under a weaker registered label or as NULL."}},
+{"@type":"Question","name":"What did Silicyte predict?","acceptedAnswer":{"@type":"Answer","text":"STOCK minus STATIC net sealed solves of 400: +2, with an 80% band of [-8, +14]. The calibrated band from Amendment 0 is [-10.68, +17.216]. Our probability that the run reads COMPOUNDS is 0.15."}},
+{"@type":"Question","name":"Is this the same as the Ratchet paper on arXiv (2605.22148)?","acceptedAnswer":{"@type":"Answer","text":"No. arXiv 2605.22148 is an unrelated paper about how reliable an LLM judge must be to retire a skill. This project is Silicyte Ratchet, register id silicyte-0119."}},
+{"@type":"Question","name":"When is the result published?","acceptedAnswer":{"@type":"Answer","text":"The result is pending. It will be committed to the ratchet repository and added to the result log on this page whatever it shows, including a null or a VOID run."}},
+{"@type":"Question","name":"Can someone else rerun it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every frozen library, the token ledger, the scoring script and the perturbation seed will be released. Rescoring one frozen library on the 400 sealed tasks needs one GPU and the public ARC-AGI-1 data."}}
+]}
+]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=202610171600">
+<link rel="stylesheet" href="/assets/refine.css?v=202610211520">
+<link rel="alternate" type="text/markdown" href="/ratchet.md" title="Plain markdown mirror">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Silicyte updates">
+<style>
+  .ratchet-log td:first-child, .ratchet-log th:first-child { white-space: nowrap; }
+  .ratchet-faq h3 { margin-top: 26px; }
+  .ratchet-faq h3:first-of-type { margin-top: 0; }
+  .ratchet-prior li { margin-bottom: 12px; }
+  .ratchet-prior li b { color: var(--ink); }
+  .hash { font-family: var(--mono); font-size: 13px; word-break: break-all; }
+  @media (max-width: 640px) {
+    main table { min-width: 0; }
+    main td, main th { padding-left: 6px; padding-right: 6px; }  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brandmark" href="/" aria-label="Silicyte home">
+      <svg width="26" height="26" viewBox="0 0 48 48" role="img" aria-label="Silicyte mark">
+        <g fill="var(--ink)">
+          <circle cx="24" cy="6.5" r="2.6"/><circle cx="32.75" cy="8.85" r="2.6"/>
+          <circle cx="39.15" cy="15.25" r="2.6"/><circle cx="41.5" cy="24" r="2.6"/>
+          <circle cx="32.75" cy="39.15" r="2.6"/><circle cx="24" cy="41.5" r="2.6"/>
+          <circle cx="15.25" cy="39.15" r="2.6"/><circle cx="8.85" cy="32.75" r="2.6"/>
+          <circle cx="6.5" cy="24" r="2.6"/><circle cx="8.85" cy="15.25" r="2.6"/>
+          <circle cx="15.25" cy="8.85" r="2.6"/>
+        </g>
+        <circle cx="39.15" cy="32.75" r="3.5" fill="var(--brand)"/>
+      </svg>
+      <b>Silicyte</b>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/ratchet" aria-current="page">Ratchet</a>
+      <a href="/science">Research</a>
+      <a href="/papers">Papers</a>
+      <a href="/data">Data</a>
+      <a href="/company">About</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap page-intro">
+    <div class="col">
+      <p class="eyebrow">Silicyte Ratchet (silicyte-0119) &middot; Result: pending</p>
+      <h1>Does a library of verified program helpers compound on ARC-AGI-1?</h1>
+      <p class="lede" id="summary">Silicyte Ratchet (silicyte-0119) is a pre-registered test of whether a library of verified
+      program helpers compounds on ARC-AGI-1. A growing library must beat five controls at equal total tokens on 400 sealed
+      evaluation tasks. It was registered on 2026-11-04 at commit cc5fb5b, before any model call. The result is pending and
+      will be published whatever it shows.</p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">Read the pre-registration <span aria-hidden="true">&nearr;</span></a>
+        <a class="text-link" href="https://github.com/braxtonmensah/ratchet">Watch the repo <span aria-hidden="true">&nearr;</span></a>
+        <a class="text-link" href="/feed.xml">Follow the feed <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <p class="small muted" style="margin-top:14px">This is an evaluation, not a new method. It applies the compute-matched
+      protocol of Berlot-Attwell et al. to ARC program libraries. Prepared with AI assistance; not peer reviewed. Not related
+      to arXiv 2605.22148, a different paper also named Ratchet.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">01</span> The arms</p>
+        <h2>Six arms at equal total tokens, plus two planted controls.</h2>
+        <p>One growing library against five ways of getting the same gain without compounding. The planted controls prove
+        the harness can see a library at all; if they fail, the run is VOID, not NULL.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Arm</th><th scope="col">Role</th><th scope="col">Library during growth</th></tr></thead>
+          <tbody>
+            <tr><td><b>STOCK</b></td><td>treatment</td><td>grows after every round from helpers in demo-passing programs</td></tr>
+            <tr><td><b>STATIC</b></td><td>control</td><td>the round-1 library, frozen for the remaining rounds</td></tr>
+            <tr><td><b>ONE-SHOT</b></td><td>control</td><td>the same tokens spent in one round, then one library</td></tr>
+            <tr><td><b>EXEMPLAR</b></td><td>control</td><td>verified whole programs in context, no helper extraction</td></tr>
+            <tr><td><b>SHAM</b></td><td>control</td><td>size-, token- and genre-matched library of unverified code</td></tr>
+            <tr><td><b>FLAT-TTC</b></td><td>control</td><td>no library; the same tokens go to extra samples on each sealed task</td></tr>
+            <tr><td><b>PLANT-DRIP</b></td><td>positive control</td><td>Hodel arc-dsl primitives released in tranches</td></tr>
+            <tr><td><b>PLANT-L1</b></td><td>positive control</td><td>tranche 1 only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Every library arm has the same 6,000-token context cap. Sealed tasks
+      never contribute helpers to any library. Full definitions: <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md#4-arms">PREREG.md section 4</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">02</span> The seal and the budget</p>
+        <h2>400 sealed tasks the loop never reads.</h2>
+        <p>Growth runs on the 400 ARC-AGI-1 training tasks. Scoring runs once per frozen library on the 400 ARC-AGI-1
+        evaluation tasks (fchollet/ARC-AGI at commit <span class="hash">399030444e0ab0cc8b4e199870fb20b863846f34</span>), after every library in the
+        run is frozen and hash-committed. The sorted sealed id list has sha256</p>
+        <p class="hash">911bf838d8843606d5fc1ba0550a0c23670027bf8f6e32e4e4fbf93854957ddd</p>
+        <p>The proposer is Qwen3.6-35B-A3B with weights fixed for the whole run. Every arm logs prompt tokens, generated
+        tokens and sandbox executions, and FLAT-TTC receives STOCK&rsquo;s logged total tokens as extra samples, so no arm
+        wins by spending more. Selection never uses test outputs: among programs that pass every demo, the two most frequent
+        distinct test outputs are submitted.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">03</span> The decision rule</p>
+        <h2>All four gates, or it does not compound.</h2>
+        <p>A sealed task is solved if its pass@2 submission is correct in at least 2 of 3 scoring seeds. COMPOUNDS requires
+        all of:</p>
+        <ol>
+          <li>STOCK solves more sealed tasks than each of STATIC, ONE-SHOT, EXEMPLAR, SHAM and FLAT-TTC, each by an exact
+          one-sided McNemar test at p &lt; 0.05.</li>
+          <li>Reuse gate: on tasks STOCK solves and FLAT-TTC does not, at least 50% of winning programs call an accepted helper.</li>
+          <li>Knockout: deleting the called helpers, and separately inlining them as non-callable text, each removes at least
+          half of those solves.</li>
+          <li>Contamination gate: on a colour-permuted and rotated sealed copy, STOCK keeps at least half its net gain over FLAT-TTC.</li>
+        </ol>
+        <p>Other registered outcomes: LIBRARY HELPS, NOT COMPOUNDING; CONTEXT EFFECT; RETRIEVAL; NULL; and VOID if the planted
+        control fails. A null with a valid positive control means Silicyte publishes it and drops library compounding as its
+        thesis. Details: <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md#6-primary-metric-and-decision">PREREG.md section 6</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">04</span> The prediction</p>
+        <h2>We registered a small number, and a wide band.</h2>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Registered quantity</th><th scope="col" class="n">Value</th></tr></thead>
+          <tbody>
+            <tr><td>STOCK minus STATIC, net sealed solves of 400 (point)</td><td class="n">+2</td></tr>
+            <tr><td>80% band, registered</td><td class="n">[-8, +14]</td></tr>
+            <tr><td>Calibrated 80% band, Amendment 0 (fitted on 728 resolved predictions)</td><td class="n">[-10.68, +17.216]</td></tr>
+            <tr><td>P(COMPOUNDS), our estimate</td><td class="n">0.15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="col muted small" style="margin-top:14px">Every compute-matched re-evaluation of in-context library learning
+      we found before registering reads null, which is why the probability is low. <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md#8-prediction-registered">PREREG.md section 8</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">05</span> Result log</p>
+        <h2>Dated, append-only.</h2>
+      </div>
+      <div class="tbl-wrap">
+        <table class="ratchet-log">
+          <thead><tr><th scope="col">Date</th><th scope="col">Event</th></tr></thead>
+          <tbody>
+            <tr><td>2026-11-04</td><td>Registered as silicyte-0119 (16:46 ET). <a href="https://github.com/braxtonmensah/ratchet/commit/cc5fb5b">PREREG.md committed as cc5fb5b</a> (16:47 ET), before any model call. Result: pending.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col ratchet-faq">
+        <p class="kicker"><span class="n">06</span> Questions</p>
+        <h3>What is Silicyte Ratchet?</h3>
+        <p>Silicyte Ratchet (silicyte-0119) is a pre-registered test of whether a library of verified program helpers compounds on ARC-AGI-1. A growing library must beat five controls at equal total tokens on 400 sealed evaluation tasks. It was registered on 2026-11-04 at commit cc5fb5b, before any model call.</p>
+        <h3>What counts as compounding?</h3>
+        <p>The growing library (STOCK) must solve more sealed tasks than each of STATIC, ONE-SHOT, EXEMPLAR, SHAM and FLAT-TTC by an exact one-sided McNemar test at p &lt; 0.05. It must also pass a reuse gate, a helper knockout and a contamination gate. Anything less is reported under a weaker registered label or as NULL.</p>
+        <h3>What did Silicyte predict?</h3>
+        <p>STOCK minus STATIC net sealed solves of 400: +2, with an 80% band of [-8, +14]. The calibrated band from Amendment 0 is [-10.68, +17.216]. Our probability that the run reads COMPOUNDS is 0.15.</p>
+        <h3>Is this the same as the Ratchet paper on arXiv (2605.22148)?</h3>
+        <p>No. arXiv 2605.22148 is an unrelated paper about how reliable an LLM judge must be to retire a skill. This project is Silicyte Ratchet, register id silicyte-0119.</p>
+        <h3>When is the result published?</h3>
+        <p>The result is pending. It will be committed to the ratchet repository and added to the result log on this page whatever it shows, including a null or a VOID run.</p>
+        <h3>Can someone else rerun it?</h3>
+        <p>Yes. Every frozen library, the token ledger, the scoring script and the perturbation seed will be released. Rescoring one frozen library on the 400 sealed tasks needs one GPU and the public ARC-AGI-1 data.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">07</span> Prior art</p>
+        <h2>The systems and audits this test builds on.</h2>
+        <p>Each entry was opened at its source to confirm the title and identifier. One line each on how Ratchet differs.</p>
+        <ul class="ratchet-prior">
+          <li><b>Berlot-Attwell, Sesterhenn, Rudzicz and Si.</b> <a href="https://aclanthology.org/2026.eacl-long.163/">Is This LLM Library Learning? Evaluation Must Account For Compute and Behaviour</a>. EACL 2026, 2026.eacl-long.163. Ratchet adopts its equal-compute baseline and behavioural checks and applies them to ARC program libraries.</li>
+          <li><b>Berlot-Attwell, Rudzicz and Si.</b> <a href="https://arxiv.org/abs/2410.20274">Library Learning Doesn&rsquo;t: The Curious Case of the Single-Use &ldquo;Library&rdquo;</a>. arXiv 2410.20274 (MATH-AI workshop, NeurIPS 2024). It found function reuse extremely infrequent in two math systems; Ratchet makes reuse and a helper knockout pass conditions.</li>
+          <li><b>Berlot-Attwell, Rudzicz and Si.</b> <a href="https://arxiv.org/abs/2504.03048">LLM Library Learning Fails: A LEGO-Prover Case Study</a>. arXiv 2504.03048. A post-hoc audit of one system; Ratchet registers its reuse test before the run.</li>
+          <li><b>E. Pang.</b> <a href="https://github.com/epang080516/arc_agi">arc_agi</a> (GitHub). A DreamCoder-inspired ARC program-synthesis system with an expanding library of programs; Ratchet tests the expanding-library idea against a frozen library, a sham library and extra sampling at equal tokens.</li>
+          <li><b>Stengel-Eskin, Prasad and Bansal.</b> <a href="https://arxiv.org/abs/2401.16467">ReGAL: Refactoring Programs to Discover Generalizable Abstractions</a>. arXiv 2401.16467 (ICML 2024). It proposes an abstraction method; Ratchet fixes one extraction rule and scores it against compute-matched controls.</li>
+          <li><b>Wang, Fried and Neubig.</b> <a href="https://arxiv.org/abs/2401.12869">TroVE: Inducing Verifiable and Efficient Toolboxes for Solving Programmatic Tasks</a>. arXiv 2401.12869. A toolbox that grows and is trimmed; Ratchet&rsquo;s primary contrast is growing against frozen.</li>
+          <li><b>Pourcel, Colas and Oudeyer.</b> <a href="https://arxiv.org/abs/2507.14172">Self-Improving Language Models for Evolutionary Program Synthesis: A Case Study on ARC-AGI</a> (SOAR). arXiv 2507.14172. SOAR fine-tunes the model between iterations; Ratchet keeps weights fixed and changes only the in-context library.</li>
+          <li><b>Butt et al.</b> <a href="https://arxiv.org/abs/2402.04858">CodeIt: Self-Improving Language Models with Prioritized Hindsight Replay</a>. arXiv 2402.04858 (ICML 2024). Self-improvement on ARC through weight updates; Ratchet has none.</li>
+          <li><b>Ho et al.</b> <a href="https://arxiv.org/abs/2509.04439">ArcMemo: Abstract Reasoning Composition with Lifelong LLM Memory</a>. arXiv 2509.04439. Concept-level memory in natural language; Ratchet&rsquo;s memory is verified, callable Python, with a size-matched sham library as a control.</li>
+          <li><b>Ellis et al.</b> <a href="https://arxiv.org/abs/2006.08381">DreamCoder: Growing generalizable, interpretable knowledge with wake-sleep Bayesian program learning</a>. arXiv 2006.08381. Library growth with a trained neural guide; Ratchet uses a fixed LLM proposer and equal-token controls.</li>
+          <li><b>Grand et al.</b> <a href="https://arxiv.org/abs/2310.19791">LILO: Learning Interpretable Libraries by Compressing and Documenting Code</a>. arXiv 2310.19791 (ICLR 2024). LLM synthesis plus symbolic compression; Ratchet measures a library of this family against compute-matched controls rather than building a new one.</li>
+          <li><b>Xu, Yan, Chen and Kechadi.</b> <a href="https://arxiv.org/abs/2608.20290">Phantom Gains: Auditing Self-Improvement Against a Measured Null</a>. arXiv 2608.20290. It audits LoRA self-training against a frozen control; Ratchet&rsquo;s STATIC and SHAM arms play that role for an in-context library, with three scoring seeds and a determinism smoke.</li>
+          <li><b>Iscan.</b> <a href="https://arxiv.org/abs/2607.12962">Form, Not Content? A Preregistered, Placebo-Controlled Evaluation of Learned Error-Conditioned Self-Repair Through Prompts and Weights in Frozen Small Code Models</a>. arXiv 2607.12962. Placebos for self-repair evidence; Ratchet&rsquo;s SHAM arm is the placebo for library content.</li>
+          <li><b>Lehmann and Vahdati.</b> <a href="https://arxiv.org/abs/2610.30499">Can LLMs Improve Their Own Harness? A Controlled Study on ARC-AGI-3</a>. arXiv 2610.30499. Self-improvement of the harness on interactive games; Ratchet studies a helper library on static ARC-AGI-1 tasks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="col">
+        <p class="kicker"><span class="n">08</span> Follow</p>
+        <h2>Get the result when it lands.</h2>
+        <p><a href="https://github.com/braxtonmensah/ratchet">Watch the repo on GitHub</a> &middot;
+        <a href="/feed.xml">Atom feed</a> &middot;
+        <a href="https://www.linkedin.com/company/silicyte/">Silicyte on LinkedIn</a> &middot;
+        <a href="mailto:hello@silicyte.com">hello@silicyte.com</a></p>
+        <p class="small muted">Cite: Mensah, B. (2026). Silicyte Ratchet (silicyte-0119). github.com/braxtonmensah/ratchet, pre-registration commit cc5fb5b. See <a href="https://github.com/braxtonmensah/ratchet/blob/main/CITATION.cff">CITATION.cff</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<script>window.goatcounter={no_onload:false};</script>
+<script data-goatcounter="https://silicyte.goatcounter.com/count"
+        data-goatcounter-settings='{"allow_local":false}'
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

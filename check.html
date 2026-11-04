@@ -87,15 +87,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
+      <a href="/ratchet">Ratchet</a>
       <a href="/science">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -104,6 +101,7 @@
   <div class="wrap page-intro">
     <div class="col">
       <p class="eyebrow">The instrument</p>
+      <p class="notice" role="note" style="margin:0 0 18px;padding:12px 14px;border:1px solid var(--line-strong);border-radius:5px;font-size:15.5px"><b>Paid work paused.</b> Silicyte&rsquo;s paid audits are not on offer while it runs its pre-registered self-improvement test (<a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">silicyte-0119</a>), and nothing on this page is for sale. The four browser checks below still run, free and locally.</p>
       <h1>Four diagnostics for peptide evaluation tables.</h1>
       <p class="lede">Four checks for the defects that make a reported design gain look bigger than it is. Each one is a mistake we made first and found in our own pipeline: the standard antimicrobial peptide split leaked <span class="num">20.1%</span> of its held-out rows past a family-overlap test that passed <span class="num">826</span> of <span class="num">826</span>.</p>
       <p class="lede small">Drop a CSV below. <strong>Nothing is uploaded.</strong> Your selected file is processed locally in this browser. Public site assets and examples are fetched from external servers.</p>
@@ -197,8 +195,8 @@
   </section>
 
   <section class="flush"><div class="wrap"><div class="col">
-    <p class="kicker"><span class="n">03</span> Work with Silicyte</p><h2>Three ways to use this.</h2>
-    <p>The browser checks are free and stay free. The paid work is narrower than the tool and answers one question: does a specific reported improvement survive contact with its own controls. The method is published and anyone can run it. What is being bought is an independent signature on a particular claim, by someone with no stake in the answer.</p>
+    <p class="kicker"><span class="n">03</span> Using the checks</p><h2>Free in your browser. Paid audits paused.</h2>
+    <p>The browser checks are free and stay free. The method is published and anyone can run it. The paid result audits and diligence reads that used to be listed here are paused and not on offer.</p>
   </div><div class="price">
     <div class="tier">
       <span class="what">For anyone, no account</span>
@@ -210,25 +208,12 @@
       <a href="#checker">Run the diagnostics &rarr;</a>
     </div>
     <div class="tier">
-      <span class="what">For the team about to spend on a candidate list</span>
-      <h3>Result audit</h3>
-      <p class="num" style="font-size:15px;color:var(--ink-3)">From $7,500, fixed fee</p>
-      <p>One claimed improvement, taken apart before bench budget is committed against it. You get
-      the written finding, the scripts behind every number in it, a rebuilt split where the
-      original leaks, and an explicit list of what could not be checked and why. Scope and fee are
-      agreed in writing first, and if the claim survives the report says so and says it plainly.</p>
-      <a href="/company#contact">Discuss a result &rarr;</a>
-    </div>
-    <div class="tier">
-      <span class="what">For whoever is funding the next step</span>
-      <h3>Diligence read</h3>
-      <p class="num" style="font-size:15px;color:var(--ink-3)">From $15,000, fixed fee</p>
-      <p>An independent read of somebody else&rsquo;s reported model performance, before capital or
-      a partnership is committed against it. Written for a reader who is not a machine learning
-      specialist: what the number would have to mean to be worth what is being asked for it, what
-      we verified, and what the disclosed material did not let us verify. Five business days from
-      receipt of the data.</p>
-      <a href="/company#contact">Discuss a diligence read &rarr;</a>
+      <span class="what">Paused</span>
+      <h3>Result audits and diligence reads</h3>
+      <p class="num" style="font-size:15px;color:var(--ink-3)">Not on offer</p>
+      <p>Silicyte is a solo, unincorporated research venture with $0 revenue and 0 customers, and it
+      is not taking paid work while its current test runs.</p>
+      <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">Read the current test &nearr;</a>
     </div>
   </div></div><div class="col tool-scope"><h3>Limits, stated once</h3>
     <p>These four checks describe the table you supplied. They do not certify a model, establish
@@ -248,7 +233,7 @@
     <p><a href="/science">Read the methods and limitations</a>.</p></div></div></section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="/assets/check.js?v=202610162200"></script>
 <script>
@@ -316,8 +301,8 @@
   el("c-split").addEventListener("change", refreshHoldout);
 
   // ---------------------------------------------------------------- rendering
-  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "—" : Number(x).toFixed(d === undefined ? 4 : d); }
-  function pct(x) { return !isFinite(x) ? "—" : (100 * x).toFixed(1) + "%"; }
+  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "n/a" : Number(x).toFixed(d === undefined ? 4 : d); }
+  function pct(x) { return !isFinite(x) ? "n/a" : (100 * x).toFixed(1) + "%"; }
 
   function card(verdict, title, body, pairs) {
     var cls = verdict === true ? "pass" : verdict === false ? "fail" : "skip";
@@ -349,10 +334,10 @@
     // LEAK
     var L = res.leak;
     if (L.frac === undefined) {
-      out.appendChild(card(null, "LEAK — near-twins across the split", L.note));
+      out.appendChild(card(null, "LEAK: near-twins across the split", L.note));
     } else {
       out.appendChild(card(L.ok,
-        "LEAK — near-twins across the split",
+        "LEAK: near-twins across the split",
         L.note,
         [["checked test rows at or above threshold", pct(L.frac)],
          ["mean best identity", fmt(L.mean)],
@@ -369,15 +354,15 @@
       ["prediction standard deviation", fmt(F.spread)],
       ["descriptive sd·√(2/k)", fmt(F.floor)]];
     if (F.reported !== null && F.reported !== undefined) spreadPairs.push(["reported gain (not tested)", fmt(F.reported)]);
-    out.appendChild(card(null, "SPREAD — descriptive, not an uncertainty test", F.note, spreadPairs));
+    out.appendChild(card(null, "SPREAD: descriptive, not an uncertainty test", F.note, spreadPairs));
 
     // TIES
     var T = res.ties;
     if (T.ok === null) {
-      out.appendChild(card(null, "TIES — is the rank statistic corrected", T.note));
+      out.appendChild(card(null, "TIES: is the rank statistic corrected", T.note));
     } else {
       out.appendChild(card(T.ok,
-        "TIES — is the rank statistic corrected",
+        "TIES: is the rank statistic corrected",
         T.ok
           ? "Tie correction changes this correlation by less than 0.005. This is a comparison of two calculations, not validation of your model or evaluation procedure."
           : "Your target has repeated values, and an uncorrected ordinal rank shifts the correlation by the amount below. If any number you have published came out of argsort(argsort(x)), it needs recomputing.",
@@ -391,7 +376,7 @@
     // SPLIT
     var S = res.split;
     out.appendChild(card(S.ok,
-      "SPLIT — exact duplicates across the split",
+      "SPLIT: exact duplicates across the split",
       S.note || (S.ok
         ? "No molecule appears on both sides by exact string identity. This is the floor of the floor, and it is worth checking every time two sources are merged."
         : "Identical peptide strings appear on both sides of the supplied split. Investigate whether this overlap compromises your intended evaluation."),

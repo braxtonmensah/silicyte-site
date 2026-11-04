@@ -132,6 +132,7 @@ Allow: /
 # Machine-readable summaries for language models.
 #   /llms.txt       short index of the site and its headline measurements
 #   /llms-full.txt  extended research summary
+#   /feed.xml       Atom feed of dated updates (registrations and results)
 # These summaries are optional resources, not Google ranking directives.
 # ---------------------------------------------------------------------------
 

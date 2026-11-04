@@ -1,22 +1,13 @@
 /**
- * Split Audit UI: parse, run, render, sell.
+ * Split Audit UI: parse, run, render.
  *
- * The free tier is the leak rate and the top findings. That is deliberate: the number is what
- * gets someone to trust the tool, and it costs nothing to serve because the work happens on their
- * machine. The paid tier is the deliverable, the row-level findings and a corrected split.
- *
- * On the unlock. This is a static site with no backend, so the gate is an honesty gate: Stripe
- * sends the buyer back with ?paid=1 and the downloads appear. Anyone who reads the source can
- * skip it. That is a deliberate trade, not an oversight: a backend that verifies a session would
- * mean a server holding customer data, which contradicts the promise that sequences never leave
- * the browser. The audit is honest about what it is.
+ * The page shows the leak rate and the top findings, computed on the visitor's own machine.
+ * The paid tier (row-level findings and a corrected split) is paused while Silicyte runs its
+ * pre-registered self-improvement test (silicyte-0119), so there is no price, no payment link
+ * and no unlock path. The deliverable code below is kept but never reached (paid is false).
  */
 (function () {
   "use strict";
-
-  // Set STRIPE_LINK to the Payment Link URL. Until then the buy button explains itself rather
-  // than pretending to work.
-  var STRIPE_LINK = "";
 
   var A = window.SilicyteAudit;
   var fileEl = document.getElementById("file");
@@ -25,11 +16,8 @@
   var resEl = document.getElementById("results");
   var last = null, lastName = "";
 
-  var paid = /[?&]paid=1/.test(location.search) ||
-    (function () { try { return localStorage.getItem("silicyte_audit_paid") === "1"; } catch (e) { return false; } })();
-  if (/[?&]paid=1/.test(location.search)) {
-    try { localStorage.setItem("silicyte_audit_paid", "1"); } catch (e) {}
-  }
+  // Paid tier paused: no query-string or stored unlock.
+  var paid = false;
 
   document.getElementById("browse").addEventListener("click", function () { fileEl.click(); });
   fileEl.addEventListener("change", function () { if (fileEl.files[0]) load(fileEl.files[0]); });
@@ -166,21 +154,10 @@
           "a held-out claim at this threshold.</p>");
       }
     } else {
-      h.push("<h3>Get the rows and a corrected split</h3>");
-      h.push("<p>The rate above is yours free. For $99 you get every leaking row with its nearest training " +
-        "neighbour, a corrected split rebuilt so no cluster spans the two sides, and a written report with the " +
-        "method and the limits stated.</p>");
-      h.push("<ul>");
-      h.push("<li>Every leaking test row and its nearest training match, as CSV</li>");
-      h.push("<li>A corrected split, re-measured at 0.00% leakage before it is handed to you</li>");
-      h.push("<li>A report you can put in a supplementary section</li>");
-      h.push("</ul>");
-      if (STRIPE_LINK) {
-        h.push('<a class="btn" href="' + STRIPE_LINK + '">Unlock for $99 <span aria-hidden="true">&rarr;</span></a>');
-      } else {
-        h.push('<a class="btn" href="mailto:hello@silicyte.com?subject=Split%20Audit%20unlock%20(%2499)">Email to unlock for $99 <span aria-hidden="true">&rarr;</span></a>');
-      }
-      h.push('<p class="au-fine">Your file stays in this browser either way. Nothing was uploaded to produce the number above.</p>');
+      h.push("<h3>Row-level findings and a corrected split: paused</h3>");
+      h.push("<p>The rate above is computed in this browser. The paid tier is paused while Silicyte runs its " +
+        'pre-registered self-improvement test (<a href="/ratchet">silicyte-0119</a>); nothing is for sale.</p>');
+      h.push('<p class="au-fine">Your file stays in this browser. Nothing was uploaded to produce the number above.</p>');
     }
     h.push("</div>");
 

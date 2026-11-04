@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Refusal uptime: did your agents' guardrails actually run? | Silicyte</title>
-<meta name="description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
+<meta name="description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
 <link rel="canonical" href="https://silicyte.com/refusal-uptime">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta property="og:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
+<meta property="og:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <meta property="og:url" content="https://silicyte.com/refusal-uptime">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://silicyte.com/assets/hero/agents-social-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Did your agents' guardrails actually run? Guardrail absent on 29.8% of 261,254 calls, 53.1% with 11 or more agents at once; p95 guardrail time at 8 calls at once fell from 36.3 s to 2.5 s after the fix.">
+<meta property="og:image:alt" content="Did your agents' guardrails actually run? On one laptop, guardrail absent on 29.8% of the calls it existed to check (0.0000 on clean public runners up to 24 agents), 53.1% with 11 or more agents at once; p95 guardrail time at 8 calls at once fell from 36.3 s to 2.5 s after the fix.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://silicyte.com/assets/hero/agents-social-card.png">
 <meta name="twitter:title" content="Refusal uptime: did your agents' guardrails actually run?">
-<meta name="twitter:description" content="Measured on one operator's fleet of Claude Code agents: one guardrail was absent on 29.8% of the calls it existed to check, rising to 53.1% with 11 or more agents. The cause was guardrail start-up time; running them in one process cut p95 from 36.3 s to 2.5 s with identical decisions. Four numbers per guardrail and an open-source probe.">
+<meta name="twitter:description" content="On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop. On the laptop the cause was guardrail start-up time; one process cut p95 from 36.3 s to 2.5 s with identical decisions. Open-source probe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
       "name": "Refusal uptime: did your agents' guardrails actually run?",
       "headline": "Refusal uptime: did your agents' guardrails actually run?",
       "datePublished": "2026-10-21",
-      "dateModified": "2026-10-23",
+      "dateModified": "2026-11-04",
       "inLanguage": "en",
       "isAccessibleForFree": true,
       "author": {
@@ -52,7 +52,7 @@
         {"@type": "Thing", "name": "AI agent guardrails"},
         {"@type": "Thing", "name": "Refusal uptime"}
       ],
-      "abstract": "Measured on one operator's fleet of Claude Code agents on one Windows laptop, 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. One guardrail was absent on 30,929 of 103,850 calls it existed to check (29.8%). Absence rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. On 23 Oct 2026 the cause was measured as guardrail start-up time (five separate processes per call, p95 36.3 s with 8 calls at once against 10 to 15 s budgets); one dispatcher process returned the same decision on 145 of 145 replayed calls at p95 2.5 s. Prepared with AI assistance; not peer reviewed."
+      "abstract": "On one Windows laptop running one operator's Claude Code agents, one guardrail was absent on 29.8% of the 103,850 calls it existed to check; on clean public GitHub runners, synthetic load gave 0.0000 absence at a 15 s budget in every cell up to 24 agents (github.com/braxtonmensah/refusal-uptime, loadtest-results branch), so the effect belongs to that laptop and is not shown for agent fleets in general. The laptop measurement covered 3,844 sessions and 261,254 tool calls, 30 Sep to 21 Oct 2026. On the laptop, absence (30,929 of 103,850) rose with the number of agents running at once, from 0.2% with one to 53.1% with 11 or more. On 23 Oct 2026 the cause was measured as guardrail start-up time (five separate processes per call, p95 36.3 s with 8 calls at once against 10 to 15 s budgets); one dispatcher process returned the same decision on 145 of 145 replayed calls at p95 2.5 s. Prepared with AI assistance; not peer reviewed."
     },
     {
       "@type": "Organization",
@@ -84,15 +84,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science">Research</a>
+      <a href="/ratchet">Ratchet</a>
+      <a href="/science" aria-current="page">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime" aria-current="page">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -107,6 +104,7 @@
       3,844 sessions and 261,254 tool calls. Forecasts were written down before each measurement,
       and every count was computed twice by independent methods. Prepared with AI assistance; not
       peer reviewed.</p>
+      <p class="notice" role="note" style="margin:18px 0 0;padding:12px 14px;border:1px solid var(--line-strong);border-radius:5px;font-size:15.5px"><b>Did not reproduce off this laptop (4 Nov 2026).</b> On clean public GitHub runners (Windows and Linux, 4 vCPUs), synthetic load with replicas of the same guards gave <span class="num">0.0000</span> absence at a 15 s budget, median of 3 repeats, in every cell up to 24 agents, including with antivirus scanning and the Git Bash layer. The 29.8% figure belongs to this one laptop, not to agent fleets in general. Silicyte&rsquo;s current work is a <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">pre-registered self-improvement test</a> (silicyte-0119); this page stays as earlier work. Runs and data: <a href="https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results">loadtest-results</a>.</p>
     </div>
   </div>
 
@@ -433,7 +431,7 @@
   </section>
 
 </main>
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

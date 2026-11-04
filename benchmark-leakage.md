@@ -191,6 +191,26 @@ Limits worth stating plainly: ridge on *frozen* embeddings, not a fine-tuned enc
 
 I found this class of defect in my own work first, along with three others, and withdrew the claims that depended on them. That record is in [the paper](/papers/design-loops), including the register of what I retracted.
 
+04b Questions
+
+## Short answers, with the numbers above.
+
+### Why do two splits built by the same documented procedure leak 0% and 65%?
+
+Because the split method is not the variable, corpus redundancy is. FLIP conservation and FLIP secondary_structure both state 'Randomly split sequences into train/test with 95/5% probability' verbatim in their own READMEs, both are flagged green, and they measure 0.00% and 65.38% respectively. The PDB contains an enormous number of near-identical chains, which the secondary structure corpus draws on, and the conservation sequences do not. A random split is safe on a non-redundant corpus and badly unsafe on a redundant one, and there is no way to know which case applies without measuring it.
+
+### Is a 65% contamination rate the same as a benchmark being overstated by 65 points?
+
+No. A contamination rate is not a score inflation. The rates were produced without retraining, so on their own they do not say by how much any reported accuracy is overstated. Where an inflation was measured, it is reported separately with the model named: on LRGB Peptides-func, the count-ECFP + LightGBM baseline of arXiv 2501.17901 scores 0.7460 macro AP on the shipped split and 0.5687 on corrected splits, a difference of +0.1773 (sd 0.0094). That figure belongs to that model and does not transfer to other models.
+
+### What identity threshold produces a clean protein train/test split?
+
+In the splits measured here, 20% identity with whole-cluster assignment was clean and 30% identity was not. FLIP meltome clusters with mmseqs easy-cluster at min-seq-id 0.2 and assigns whole clusters 80/20, retaining 0.29%. PepBenchmark clusters at 30% identity after a k-mer step and retains 29.97% to 48.56%. Both cluster and then split, and they land two orders of magnitude apart, so the threshold and the unit assigned to the split both matter.
+
+### Which measured splits came back clean, and why does that matter?
+
+Six rows returned at or near zero: AMP Scanner v2 negatives 0.00%, FLIP meltome human_cell 0.00%, FLIP scl mixed_hard 0.00%, FLIP conservation sampled 0.00%, FLIP meltome human 0.05%, and FLIP meltome mixed 0.29%. These are load-bearing. AMP Scanner v2 positives and negatives come from the same paper, the same tool and the same run, differing only in CD-HIT threshold, 90% against 40%, and return 16.71% and exactly 0.00%. A measurement that found contamination everywhere would be worthless as evidence.
+
 05 Your turn
 
 ## Check your own evaluation table.

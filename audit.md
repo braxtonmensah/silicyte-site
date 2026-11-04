@@ -4,7 +4,7 @@
 
 # Split Audit: find train/test leakage in your own data
 
-> Upload a train/test split and find out how many test rows have a near-duplicate in training. Runs entirely in your browser; your sequences are never uploaded. The leak rate is free. The row-level findings and a corrected split are $99.
+> Upload a train/test split and find out how many test rows have a near-duplicate in training. Runs entirely in your browser; your sequences are never uploaded. The leak rate and the top findings are free. The paid tier is paused.
 
 Canonical: https://silicyte.com/audit
 

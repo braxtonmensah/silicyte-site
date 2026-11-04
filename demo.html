@@ -94,15 +94,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
-      <a href="/science">Research</a>
+      <a href="/ratchet">Ratchet</a>
+      <a href="/science" aria-current="page">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo" aria-current="page">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -203,7 +200,7 @@
   </section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="/assets/run.js?v=202610150010"></script>
 <script src="/assets/designer.js?v=202610142230"></script>
@@ -222,7 +219,7 @@
   ];
 
   // ---------------------------------------------------------------- helpers
-  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "—" : Number(x).toFixed(d); }
+  function fmt(x, d) { return (x === null || x === undefined || !isFinite(x)) ? "n/a" : Number(x).toFixed(d); }
   function uM(log10) { var v = Math.pow(10, log10);
     return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2); }
   function stage(id, state) {
@@ -347,7 +344,7 @@
       for (var k = 0; k < orgs.length; k++) if (v[k] !== null) measured.push(orgs[k] + " " + uM(v[k]));
       return '<tr><td class="id">' + b.r.toFixed(3) + '</td><td class="seq">' + DATA.sequences[b.i] +
              '</td><td>' + (measured.length ? measured.slice(0, 3).join(" &middot; ") +
-             (measured.length > 3 ? " &middot; +" + (measured.length - 3) + " more" : "") : "—") + '</td></tr>';
+             (measured.length > 3 ? " &middot; +" + (measured.length - 3) + " more" : "") : "n/a") + '</td></tr>';
     }).join("");
     el("nearwrap").innerHTML =
       '<table class="nearest"><thead><tr><th>Identity</th><th>Labelled peptide</th><th>Measured MIC, &micro;M</th></tr></thead><tbody>' +

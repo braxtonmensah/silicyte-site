@@ -2,31 +2,31 @@
      Generated for retrieval crawlers. The HTML page is canonical.
      Machine-readable measurements: https://silicyte.com/data/leakage-measurements.json -->
 
-# Model Evaluation Sprint
+# Model Evaluation Sprint (paused)
 
-> Does your reported model improvement survive a reproducible evaluation on your own experimental data? A fixed-scope, ten-business-day retrospective evaluation for peptide activity and toxicity models. Fixed-fee pilot, $2,500.
+> Paused: Silicyte's retrospective evaluation sprint for peptide activity and toxicity models is not on offer while Silicyte runs its pre-registered self-improvement test (silicyte-0119). The method stays public as a record; nothing here is for sale.
 
 Canonical: https://silicyte.com/evaluation
 
 ---
 [**Silicyte**](/)
 
-Model Evaluation Sprint
+Model Evaluation Sprint · paused
+
+**Paused.** This service is not on offer while Silicyte runs its pre-registered self-improvement test ([silicyte-0119](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)). No scoping calls, quotes or payments are being taken, and nothing on this page is for sale. The page stays up as a record of the method; the free browser checks still run at [/check](/check).
 
 # Does your model improvement
 survive its own evaluation?
 
 Before a reported gain decides your next experimental round, find out whether it holds up under a reproducible evaluation on the data you already have.
 
-A fixed-scope, ten-business-day retrospective review of one endpoint, one pipeline and one agreed data snapshot. You get a reproduction of your reported metric, a check of what crosses your split, a corrected comparison against a baseline you choose, and a short memo on which claims survive.
+As designed, a fixed-scope, ten-business-day retrospective review of one endpoint, one pipeline and one agreed data snapshot: a reproduction of your reported metric, a check of what crosses your split, a corrected comparison against a chosen baseline, and a short memo on which claims survive.
 
-Get a $99 Split Audit today ↓ [Scope the full sprint →](mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call)
+[Run the free browser checks →](/check) [Read the current test ↗](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)
 
 At a glance
 
-Fixed-fee pilot$2,500
-
-Turnaround10 business days from usable inputs
+StatusPaused, not on offer
 
 ScopeOne endpoint, one pipeline, one data snapshot
 
@@ -34,13 +34,13 @@ EndpointsPeptide activity and toxicity first
 
 MethodComputational only. No laboratory work.
 
-Scope and feasibility are confirmed on a free scoping call before any commitment. If the checks your question needs are not possible with the inputs available, we say so before you pay.
+No scoping calls, quotes or payments are being taken while the service is paused.
 
 Split Audit
 
-$99 same day
+Paused
 
-Send us your train and test split. Before the day is out you get a report on how many of your test rows have a near-duplicate in training, measured with the same instrument behind our audit of thirteen published benchmarks.
+The split audit measured how many test rows have a near-duplicate in training, with the same instrument behind our audit of thirteen published benchmarks. The paid report is not on offer.
 
 - Exact-duplicate rate and the share of test rows with a training sequence at Levenshtein ratio 0.80 or above
 
@@ -48,19 +48,19 @@ Send us your train and test split. Before the day is out you get a report on how
 
 - A plain-language verdict on whether your held-out score can be read as held out
 
-**Run it yourself, right now, in your browser.** The leak rate is free and your sequences never leave your machine: nothing is uploaded. The $99 unlocks the row-level findings and the corrected split.
+**Run it yourself, in your browser.** The overlap checks are free and your sequences never leave your machine: nothing is uploaded.
 
-[Run the audit →](/audit)
+[Run the free checks →](/check)
 
-Need more than the overlap number? The full sprint below reproduces your metric, reviews labels and selection, and re-scores against a fair baseline.
+The method below is kept as a record of what the sprint checked: reproduce the metric, review labels and selection, and re-score against a fair baseline.
 
 01 When teams use it
 
 ## A decision is coming, and one number is carrying it.
 
-The sprint is built for a specific moment: a team has to decide whether to adopt a model, trust a reported improvement, or use a selection procedure for its next experimental round, and it cannot resolve a specific evaluation concern internally in time.
+The sprint was built for a specific moment: a team has to decide whether to adopt a model, trust a reported improvement, or use a selection procedure for its next experimental round, and it cannot resolve a specific evaluation concern internally in time.
 
-Typical questions we take on:
+Typical questions it was designed for:
 
 - Our new model beats the old one on held-out data. Is the held-out set actually held out?
 
@@ -110,7 +110,7 @@ Reproducible scripts and configuration, a record of the inputs and versions used
 
 Sequence identifiers; experimental labels and assay conditions; prediction files; the original train, validation and test membership; evaluation code or configuration; and an account of how the model and candidates were selected.
 
-We confirm which checks are possible from these inputs before accepting payment. Prediction files alone cannot establish that a model's training or selection history was independent, so if that is the question, we will need more than predictions and we will tell you so up front.
+Which checks are possible depends on these inputs. Prediction files alone cannot establish that a model's training or selection history was independent, so if that is the question, predictions are not enough.
 
 04 Scope and honest limits
 
@@ -118,7 +118,7 @@ We confirm which checks are possible from these inputs before accepting payment.
 
 **Included:** one endpoint, one existing pipeline, one agreed data snapshot, at most two existing prediction sets and one agreed baseline.
 
-**Not included:** new model development, broad data cleanup, prospective laboratory work and open-ended infrastructure repair. Material extra work is quoted separately before it starts.
+**Not included:** new model development, broad data cleanup, prospective laboratory work and open-ended infrastructure repair.
 
 **What it cannot tell you:** this is a retrospective evaluation. It is not prospective validation, and we make no promise that a retrospective improvement will raise your future hit rate. Conclusions that depend on retraining require a reproducible training run and agreed compute; fixed prediction files cannot substitute for retraining on corrected splits.
 
@@ -160,12 +160,12 @@ A corrected LRGB Peptides-func row-index split, verified from its own public URL
 
 Where to run the work and who has access are agreed before it starts. We prefer execution in an environment you control when that is workable. Your data is not reused, published or used to train any model without your separate permission.
 
-We do not describe local execution as cryptographic zero-knowledge, and we do not claim an established enterprise security programme. Silicyte is an independent, founder-led venture and is not yet incorporated; engagements are contracted once scope is agreed.
+We do not describe local execution as cryptographic zero-knowledge, and we do not claim an established enterprise security programme. Silicyte is a solo, founder-led venture, not incorporated, with $0 revenue and 0 customers; no engagements are being taken while this service is paused.
 
-Start with one question
+Paused
 
-## Tell us the decision and the number behind it.
+## Follow the current test instead.
 
-Send the endpoint, roughly how your split was built, and the decision the result feeds. We will reply with whether the sprint fits and what it would need.
+Silicyte is running a pre-registered, compute-matched test of whether AI self-improvement compounds (silicyte-0119, 400 sealed ARC-AGI-1 tasks). The result will be published whatever it shows.
 
-[Request a scoping call →](mailto:hello@silicyte.com?subject=Evaluation%20Sprint%20scoping%20call)
+[Read the pre-registration ↗](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)

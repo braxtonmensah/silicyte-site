@@ -1,5 +1,8 @@
 # Silicyte evals: biology tasks a program can grade
 
+**Pilot paused.** The paid 10-task pilot is not on offer while Silicyte runs its pre-registered self-improvement
+test (silicyte-0119, https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md). No quotes or payments are being taken. The free 4-task sample below stays public.
+
 Silicyte builds evaluation tasks for AI systems in therapeutic and basic biology. Every task comes with a key a program
 scores, a deterministic grader, controls that must fail, and a log of attempts to fool the grader.
 
@@ -9,8 +12,8 @@ https://github.com/braxtonmensah/silicyte-bio-evals-sample. Read the graders, ru
 Checkable task data is not a new idea: established data vendors already sell verified tasks. The sample is here so you
 can judge our work by its controls and its reward-hack logs, not by our description of them.
 
-For AI labs and AI-for-science teams: a **10-task pilot**, ten tasks in your area of biology with private keys,
-graders, controls and hack logs. Price quoted within 48 hours. Therapeutic and basic science only.
+Status: the **10-task pilot** (ten tasks in one area of biology with private keys, graders, controls and hack logs)
+is paused and not on offer. Therapeutic and basic science only.
 
 ## 01 What a checkable task is
 
@@ -41,7 +44,7 @@ Every figure below is read from the CI run linked at the end of this section.
 
 In total, 19 of 19 controls fail and 45 of 49 reward-hack attempts are caught. The 4 that are not caught are the same
 attempt, once per task, listed on purpose: **copying the public key**. A public sample cannot hide its key, and two of
-the four use labels that are public in MaveDB and UniProt. Paid tasks keep keys private and can use unpublished data.
+the four use labels that are public in MaveDB and UniProt. A private task set would keep its keys private and could use unpublished data.
 
 What the near-miss controls show: in the GO task, keeping electronically inferred annotations moves the universe from
 16,846 genes to 17,478, and following "regulates" edges moves the tested-term count from 7,149 to 7,419. In the HER2
@@ -64,21 +67,16 @@ prediction tasks: on PTEN it reached Spearman 0.590, above every cheap baseline 
 peptide script crashed before writing an answer. One model, one shot, no execution: an agent that can run code and
 retry will do better. Full record: DIFFICULTY.md in the repository.
 
-## 04 The 10-task pilot
+## 04 The 10-task pilot (paused)
 
-1. **Tell us the area.** Email hello@silicyte.com with the biology you want tested, the model behaviour you care about,
-   and any data you want used.
-2. **Quote within 48 hours.** Scope, deliverables, delivery date and a fixed price, in writing.
-3. **Ten tasks.** Each with a prompt, private key, deterministic grader, controls that must fail, a reward-hack log
-   and per-file provenance, plus a CI workflow that checks all of it.
-4. **You check it.** Run the graders yourself. A task whose control passes or whose key fails its own grader is fixed
-   before the pilot is accepted.
+The pilot was ten tasks in one area of biology, each with a prompt, private key, deterministic grader, controls that
+must fail, a reward-hack log and per-file provenance, plus a CI workflow that checks all of it. It is paused while
+Silicyte runs its pre-registered self-improvement test; no quotes, orders or payments are being taken.
 
-- Price: quoted within 48 hours, fixed, in writing
 - Scope: therapeutic and basic biology: structure, variants, genomics, protein biochemistry, assays
 - Not offered: anything that would make AI systems more capable of producing biological, chemical or other weapons.
   Every task is screened first (DUAL_USE_SCREENING.md in the repository)
-- Status: early-stage and founder-led; a working brand, not yet incorporated
+- Status: paused. Solo and founder-led; a working brand, not incorporated; $0 revenue, 0 customers
 
 Contact: hello@silicyte.com
 

@@ -13,6 +13,8 @@ Canonical: https://silicyte.com/check
 
 The instrument
 
+**Paid work paused.** Silicyte's paid audits are not on offer while it runs its pre-registered self-improvement test ([silicyte-0119](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)), and nothing on this page is for sale. The four browser checks below still run, free and locally.
+
 # Four diagnostics for peptide evaluation tables.
 
 Four checks for the defects that make a reported design gain look bigger than it is. Each one is a mistake we made first and found in our own pipeline: the standard antimicrobial peptide split leaked 20.1% of its held-out rows past a family-overlap test that passed 826 of 826.
@@ -74,11 +76,11 @@ Every check below exists because it caught something in our own work first. The 
 
 **Sequence overlap can affect model comparisons.** Our historical evaluation recorded score inflation of up to 0.065 on the safety endpoint after a split defect. The size and direction of an overlap effect depend on the model and evaluation. Corrected splits and retraining are needed to assess the impact on a particular result.
 
-03 Work with Silicyte
+03 Using the checks
 
-## Three ways to use this.
+## Free in your browser. Paid audits paused.
 
-The browser checks are free and stay free. The paid work is narrower than the tool and answers one question: does a specific reported improvement survive contact with its own controls. The method is published and anyone can run it. What is being bought is an independent signature on a particular claim, by someone with no stake in the answer.
+The browser checks are free and stay free. The method is published and anyone can run it. The paid result audits and diligence reads that used to be listed here are paused and not on offer.
 
 For anyone, no account
 
@@ -90,25 +92,15 @@ Drop in an evaluation table and get sequence overlap, prediction spread, rank ti
 
 Run the diagnostics →
 
-For the team about to spend on a candidate list
+Paused
 
-### Result audit
+### Result audits and diligence reads
 
-From $7,500, fixed fee
+Not on offer
 
-One claimed improvement, taken apart before bench budget is committed against it. You get the written finding, the scripts behind every number in it, a rebuilt split where the original leaks, and an explicit list of what could not be checked and why. Scope and fee are agreed in writing first, and if the claim survives the report says so and says it plainly.
+Silicyte is a solo, unincorporated research venture with $0 revenue and 0 customers, and it is not taking paid work while its current test runs.
 
-[Discuss a result →](/company#contact)
-
-For whoever is funding the next step
-
-### Diligence read
-
-From $15,000, fixed fee
-
-An independent read of somebody else’s reported model performance, before capital or a partnership is committed against it. Written for a reader who is not a machine learning specialist: what the number would have to mean to be worth what is being asked for it, what we verified, and what the disclosed material did not let us verify. Five business days from receipt of the data.
-
-[Discuss a diligence read →](/company#contact)
+[Read the current test ↗](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md)
 
 ### Limits, stated once
 

@@ -3,13 +3,20 @@
 > Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually
 > compounds, and publishes the result either way, including nulls. Earlier work on agent guardrail
 > uptime and on computational molecule-design evaluation stays published here. Founded October
-> 2026. Independent and bootstrapped. Contact hello@silicyte.com.
+> 2026. Solo and unincorporated, with $0 revenue and 0 customers; paid services are paused.
+> Contact hello@silicyte.com.
 
-**Current focus**: recursive self-improvement, measured. First registered test (silicyte-0119, 4 Nov
-2026, before any model call): does a library of verified Python helpers that keeps growing solve more of
-400 sealed ARC-AGI-1 evaluation tasks than the same library frozen after round 1, the same tokens spent in
-one round, verified exemplars, a matched sham library, and plain extra sampling, all at equal total
-tokens? Pre-registration: https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md. Result pending.
+**Current focus**: recursive self-improvement, measured. The registered test is Silicyte Ratchet
+(silicyte-0119), registered 2026-11-04 16:46 ET, before any model call; pre-registration commit cc5fb5b
+(16:47 ET). Question: does a library of verified Python helpers that keeps growing solve more of 400
+sealed ARC-AGI-1 evaluation tasks than the same library frozen after round 1, the same tokens spent in one
+round, verified exemplars, a matched sham library, and plain extra sampling, all at equal total tokens?
+Arms: STOCK, STATIC, ONE-SHOT, EXEMPLAR, SHAM, FLAT-TTC, plus planted positive controls PLANT-DRIP and
+PLANT-L1. The sealed id list has sha256 911bf838d8843606d5fc1ba0550a0c23670027bf8f6e32e4e4fbf93854957ddd.
+Registered prediction: +2 of 400 (80% band [-8, +14]; calibrated band [-10.68, +17.216]),
+P(COMPOUNDS) 0.15. Result: pending. It will be published whatever it shows, including a null.
+Page: https://silicyte.com/ratchet. Pre-registration:
+https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md. Not arXiv 2605.22148.
 
 **Earlier work, with its correction**: on one laptop fleet a guardrail hook was absent on 29.8% of the
 103,850 calls it existed to check; on clean public runners the same load gave 0.0000 absence at a 15 s
@@ -51,18 +58,26 @@ not established.
 
 ## Pages
 
-- [Home](https://silicyte.com/): what Silicyte does, with the headline figures.
-- [Refusal uptime](https://silicyte.com/refusal-uptime): control integrity for AI agent
-  fleets. One guardrail was absent on 29.8% of the calls it existed to check; absence rose from
-  0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
+- [Home](https://silicyte.com/): what Silicyte does, the registered test, and earlier work.
+- [Ratchet](https://silicyte.com/ratchet): Silicyte Ratchet (silicyte-0119). The arms, the sealed
+  tasks and equal-token budget, the decision rule, the registered prediction, a dated result log, and
+  prior art. Result pending. [Markdown](https://silicyte.com/ratchet.md)
+- [Feed](https://silicyte.com/feed.xml): Atom feed of dated updates, including the Ratchet result.
+- [Deck](https://silicyte.com/deck): five slides on Ratchet, the retractions, and the founder and
+  stage. [PDF](https://silicyte.com/silicyte-deck.pdf)
+- [Refusal uptime](https://silicyte.com/refusal-uptime): earlier work, measured on one laptop. One
+  guardrail was absent on 29.8% of the 103,850 calls it existed to check there; on clean public runners the
+  same load gave 0.0000 at a 15 s budget in every cell up to 24 agents, so the effect belongs to that laptop.
+  On the laptop, absence rose from 0.2% with one agent running to 53.1% with 11 or more. Presence, coverage, independence and
   override, with the prediction that was wrong, the measured cause (process start-up), and the
   fix (absent on 0 of 2,211 calls at lighter load and 5 of 8,055 at 11 or more agents after it). Not peer reviewed.
 - [Benchmark leakage](https://silicyte.com/benchmark-leakage): measured train/test sequence
   overlap in six published peptide and protein machine-learning splits, with the two clean controls
-  that validate the instrument. The most-cited page.
+  that validate the instrument.
 - [Papers](https://silicyte.com/papers): publications, data releases and research notes.
 - [Degrading the scoring model made the reported gain 2.4 times larger](https://silicyte.com/papers/design-loops): the
-  paper. Intervention-based audit for in silico molecular design. 13 pages.
+  paper. Intervention-based audit for in silico molecular design. 14 pages. Evidence archive:
+  DOI 10.5281/zenodo.23441786.
   [PDF](https://silicyte.com/papers/Mensah_DesignLoops_preprint.pdf)
 - [Data](https://silicyte.com/data): corrected antimicrobial peptide MIC and HC50 evaluation
   folds, CC BY 4.0, with the leakage audit and baselines.
@@ -70,8 +85,8 @@ not established.
 - [Evaluate](https://silicyte.com/check) (no longer in the header; linked from page text): a free browser tool that runs four diagnostics on an
   evaluation table. No account, no upload; the file is processed locally in the browser.
 - [Science](https://silicyte.com/science): methods, controls and limitations.
-- [Company](https://silicyte.com/company): who Silicyte is, and an explicit ledger of claims
-  it has withdrawn.
+- [Company](https://silicyte.com/company): who Silicyte is, the stage facts ($0 revenue, 0
+  customers, unincorporated), and an explicit ledger of claims it has withdrawn.
 
 ## Code and evidence
 
@@ -111,19 +126,14 @@ https://github.com/braxtonmensah/peptides-func-split-rerun).
 - [Split Audit](https://silicyte.com/audit): upload a train/test split and get the exact
   fraction of test rows carrying a training sequence at Levenshtein ratio 0.80 or above. The
   comparison is complete, not sampled, and runs entirely in the visitor's browser, so sequences
-  are never uploaded. The leak rate is free. For $99 it also returns every leaking row with its
-  nearest training neighbour and a corrected split rebuilt by transitive single linkage, which is
-  re-measured at 0.00% leakage before it is handed over. A contamination rate is not a score
+  are never uploaded. The leak rate is free. Paid tiers are paused. A contamination rate is not a score
   inflation: no retraining is performed, so it does not say by how much any number is overstated.
 
-## Working with Silicyte
+## Paid work: paused
 
-- [Model Evaluation Sprint](https://silicyte.com/evaluation): a fixed-scope, ten-business-day
-  retrospective evaluation of whether a reported model improvement survives a reproducible
-  evaluation on the customer's own experimental data. One endpoint, one pipeline, one data snapshot.
-  Fixed-fee pilot, $2,500, scoped on a free call first. Peptide activity and toxicity endpoints
-  first. Computational only: it is not prospective laboratory validation and makes no promise about
-  future hit rates. Contact hello@silicyte.com.
+Silicyte sells nothing at present. The Model Evaluation Sprint (https://silicyte.com/evaluation), the paid
+tiers of the evaluation tool (https://silicyte.com/check), the evals pilot and the expert bench
+(https://silicyte.com/careers) are all marked paused, with prices removed. $0 revenue, 0 customers.
 
 - [Checkable biology evals](https://silicyte.com/evals): a free public sample of 4 biology tasks for evaluating AI
   systems (trastuzumab epitope on HER2 from PDB 1N8Z; PTEN variant abundance at 60 held-out positions; Gene Ontology
@@ -131,7 +141,7 @@ https://github.com/braxtonmensah/peptides-func-split-rerun).
   program scores, rebuilt from CC0 or CC BY 4.0 data on every CI run, a deterministic grader, controls that must fail
   (19 of 19 fail) and a reward-hack log (45 of 49 attempts caught; the 4 uncaught are copying the public key). In a
   blind one-shot test a Claude Opus 5.5 agent passed 2 of 4 (the two exact tasks) and failed the two prediction tasks.
-  Repository: https://github.com/braxtonmensah/silicyte-bio-evals-sample. A 10-task pilot is quoted within 48 hours.
+  Repository: https://github.com/braxtonmensah/silicyte-bio-evals-sample. The pilot is paused.
   Checkable task data is not new; established data vendors sell verified tasks too.
 
 ## Machine-readable measurements
@@ -149,6 +159,7 @@ the reason, so a reader cannot quote them as results by accident.
 Plain-markdown mirrors of every page sit alongside it at the same path with a `.md` extension, for
 retrieval without parsing navigation or inline SVG:
 
+- [/ratchet.md](https://silicyte.com/ratchet.md)
 - [/refusal-uptime.md](https://silicyte.com/refusal-uptime.md)
 - [/benchmark-leakage.md](https://silicyte.com/benchmark-leakage.md)
 - [/reference.md](https://silicyte.com/reference.md)
@@ -157,7 +168,8 @@ retrieval without parsing navigation or inline SVG:
 - [/evals.md](https://silicyte.com/evals.md)
 - [/index.md](https://silicyte.com/index.md), [/company.md](https://silicyte.com/company.md),
   [/papers.md](https://silicyte.com/papers.md), [/check.md](https://silicyte.com/check.md),
-  [/demo.md](https://silicyte.com/demo.md),
+  [/demo.md](https://silicyte.com/demo.md), [/careers.md](https://silicyte.com/careers.md),
+  [/evaluation.md](https://silicyte.com/evaluation.md), [/audit.md](https://silicyte.com/audit.md),
   [/papers/design-loops.md](https://silicyte.com/papers/design-loops.md)
 
 ## Optional
@@ -171,7 +183,4 @@ retrieval without parsing navigation or inline SVG:
 
 ## Careers
 
-Silicyte expert bench: biology task authors, verifier engineers and data integrity auditors who build
-checkable AI evaluation tasks (each with a program-checkable key and a control that should fail).
-Silicyte is not recruiting yet: a role opens only when a signed, funded project defines it, and pay is a
-fixed fee per accepted deliverable set in writing before work begins. See /careers.
+Silicyte is not recruiting. Paid work is paused, so no role or engagement is open. See /careers.

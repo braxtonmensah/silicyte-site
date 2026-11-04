@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checkable biology evals | Silicyte</title>
-<meta name="description" content="Biology tasks for evaluating AI systems that a program can grade: a key, a deterministic grader, controls that must fail, and a reward-hack log. A free 4-task sample is public and graded in GitHub Actions. 10-task pilot, quoted within 48 hours.">
+<title>Checkable biology evals (pilot paused) | Silicyte</title>
+<meta name="description" content="Biology tasks for evaluating AI systems that a program can grade: a key, a deterministic grader, controls that must fail, and a reward-hack log. A free 4-task sample is public and graded in GitHub Actions. The paid 10-task pilot is paused and not on offer.">
 <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
 <link rel="canonical" href="https://silicyte.com/evals">
 <meta property="og:site_name" content="Silicyte">
 <meta property="og:title" content="Biology eval tasks a program can grade">
-<meta property="og:description" content="A free 4-task sample: keys, deterministic graders, controls that must fail, reward-hack logs, graded in GitHub Actions. 10-task pilot, quoted within 48 hours.">
+<meta property="og:description" content="A free 4-task sample: keys, deterministic graders, controls that must fail, reward-hack logs, graded in GitHub Actions. The paid 10-task pilot is paused.">
 <meta property="og:url" content="https://silicyte.com/evals">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://silicyte.com/brand/silicyte-og.png">
@@ -54,15 +54,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
+      <a href="/ratchet">Ratchet</a>
       <a href="/science">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -70,11 +67,12 @@
 <main>
   <div class="wrap page-intro"><div class="col">
     <p class="eyebrow">Silicyte evals</p>
+    <p class="notice" role="note"><b>Pilot paused.</b> The paid 10-task pilot is not on offer while Silicyte runs its pre-registered self-improvement test (<a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">silicyte-0119</a>). No quotes or payments are being taken. The free 4-task sample below stays public.</p>
     <h1>Biology tasks<br>a program can grade.</h1>
     <p class="lede">Silicyte builds evaluation tasks for AI systems in therapeutic and basic biology. Every task comes with a key a program scores, a deterministic grader, controls that must fail, and a log of attempts to fool the grader.</p>
     <p>A free sample of <b>4 tasks</b> is public on GitHub and graded in GitHub Actions on every push: <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample">github.com/braxtonmensah/silicyte-bio-evals-sample</a>. Read the graders, run them, try to break them.</p>
     <p class="notice">Checkable task data is not a new idea: established data vendors already sell verified tasks. The sample is here so you can judge our work by its controls and its reward-hack logs, not by our description of them.</p>
-  </div><aside class="page-context"><p class="context-label">For AI labs and AI-for-science teams</p><h2>10-task pilot</h2><div><span>Ten tasks in your area of biology</span><span>Private keys, graders, controls, hack logs</span><span>Price quoted within 48 hours</span><span>Therapeutic and basic science only</span><a href="#pilot">How the pilot works &rarr;</a></div></aside>
+  </div><aside class="page-context"><p class="context-label">Status</p><h2>10-task pilot: paused</h2><div><span>Not on offer while silicyte-0119 runs</span><span>No quotes or payments taken</span><span>The free 4-task sample stays public</span><span>Therapeutic and basic science only</span><a href="#pilot">What the pilot was &rarr;</a></div></aside>
 </div>
 
   <section><div class="wrap"><div class="col">
@@ -122,7 +120,7 @@
     </table>
   </div>
   <div class="col">
-    <p>In total, 19 of 19 controls fail and 45 of 49 reward-hack attempts are caught. The 4 that are not caught are the same attempt, once per task, listed on purpose: <b>copying the public key</b>. A public sample cannot hide its key, and two of the four use labels that are public in MaveDB and UniProt. Paid tasks keep keys private and can use unpublished data.</p>
+    <p>In total, 19 of 19 controls fail and 45 of 49 reward-hack attempts are caught. The 4 that are not caught are the same attempt, once per task, listed on purpose: <b>copying the public key</b>. A public sample cannot hide its key, and two of the four use labels that are public in MaveDB and UniProt. A private task set would keep its keys private and could use unpublished data.</p>
     <p>What the near-miss controls show: in the GO task, keeping electronically inferred annotations moves the universe from 16,846 genes to 17,478, and following &ldquo;regulates&rdquo; edges moves the tested-term count from 7,149 to 7,419. In the HER2 task, selecting atoms by chain letter alone adds 3 water molecules that carry chain ID C. One convention error, one FAIL.</p>
     <p class="src">Source: CI run <a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/actions/runs/40433262658">40433262658</a>, files <code>tasks/*/key_meta.json</code> and <code>tasks/*/REWARD_HACK_LOG.md</code> in the repository.</p>
     <p>Break them yourself: the <a href="https://github.com/braxtonmensah/silicyte-grader-wargame">Grader Wargame</a> turns these graders into levels with one deliberate hole each, plus a final level that runs the GO grader on a key kept off the repository. You attack by pull request; CI verifies every claim without running your code and writes the <a href="https://braxtonmensah.github.io/silicyte-grader-wargame/">scoreboard</a>.</p>
@@ -136,20 +134,14 @@
   </div></div></section>
 
   <section id="pilot"><div class="wrap"><div class="col">
-    <p class="kicker"><span class="n">04</span> The 10-task pilot</p>
-    <h2>Ten tasks in your area, built the same way.</h2>
-    <ol class="steps">
-      <li><b>Tell us the area.</b> Email <a href="mailto:hello@silicyte.com?subject=10-task%20eval%20pilot">hello@silicyte.com</a> with the biology you want tested, the model behaviour you care about, and any data you want used.</li>
-      <li><b>Quote within 48 hours.</b> Scope, deliverables, delivery date and a fixed price, in writing.</li>
-      <li><b>Ten tasks.</b> Each with a prompt, private key, deterministic grader, controls that must fail, a reward-hack log and per-file provenance, plus a CI workflow that checks all of it.</li>
-      <li><b>You check it.</b> Run the graders yourself. A task whose control passes or whose key fails its own grader is fixed before the pilot is accepted.</li>
-    </ol>
+    <p class="kicker"><span class="n">04</span> The 10-task pilot (paused)</p>
+    <h2>Paused, and not on offer.</h2>
+    <p>The pilot was ten tasks in one area of biology, each with a prompt, private key, deterministic grader, controls that must fail, a reward-hack log and per-file provenance, plus a CI workflow that checks all of it. It is paused while Silicyte runs its <a href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md">pre-registered self-improvement test</a>; no quotes, orders or payments are being taken.</p>
   </div><dl class="facts">
-    <div><dt>Price</dt><dd>Quoted within 48 hours, fixed, in writing</dd></div>
     <div><dt>Scope</dt><dd>Therapeutic and basic biology: structure, variants, genomics, protein biochemistry, assays</dd></div>
     <div><dt>Not offered</dt><dd>Anything that would make AI systems more capable of producing biological, chemical or other weapons. Every task is screened first (<a href="https://github.com/braxtonmensah/silicyte-bio-evals-sample/blob/main/DUAL_USE_SCREENING.md">our screen</a>)</dd></div>
-    <div><dt>Status</dt><dd>Early-stage and founder-led; a working brand, not yet incorporated</dd></div>
-  </dl><div class="copyrow"><a id="email" href="mailto:hello@silicyte.com?subject=10-task%20eval%20pilot">hello@silicyte.com</a><button class="copybtn" id="copyEmail" type="button">Copy address</button></div></div></section>
+    <div><dt>Status</dt><dd>Paused. Solo and founder-led; a working brand, not incorporated; $0 revenue, 0 customers</dd></div>
+  </dl><div class="copyrow"><a id="email" href="mailto:hello@silicyte.com">hello@silicyte.com</a><button class="copybtn" id="copyEmail" type="button">Copy address</button></div></div></section>
 
   <section class="flush"><div class="wrap"><div class="col">
     <p class="kicker"><span class="n">05</span> Plain terms</p>
@@ -158,7 +150,7 @@
   </div></div></section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/evals">Evals</a> &middot; <a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 
 <script src="https://cdn.amplitude.com/script/a2152c0bf86f00cba4d943e2ffdef4c0.js"></script>
 <script>

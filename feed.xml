@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>Silicyte</title>
+  <subtitle>Pre-registered, compute-matched tests of whether AI self-improvement compounds, published whatever they show.</subtitle>
+  <id>https://silicyte.com/feed.xml</id>
+  <link rel="self" type="application/atom+xml" href="https://silicyte.com/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://silicyte.com/"/>
+  <updated>2026-11-04T16:51:33-05:00</updated>
+  <author>
+    <name>Braxton Mensah</name>
+    <email>hello@silicyte.com</email>
+    <uri>https://silicyte.com/company</uri>
+  </author>
+  <icon>https://silicyte.com/brand/favicon-64.png</icon>
+  <logo>https://silicyte.com/brand/silicyte-logo-512.png</logo>
+
+  <entry>
+    <title>Silicyte Ratchet (silicyte-0119) registered: does a verified-helper library compound on ARC-AGI-1?</title>
+    <id>https://silicyte.com/ratchet#2026-11-04-registered</id>
+    <link rel="alternate" type="text/html" href="https://silicyte.com/ratchet"/>
+    <link rel="related" type="text/html" href="https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md"/>
+    <published>2026-11-04T16:47:00-05:00</published>
+    <updated>2026-11-04T16:47:00-05:00</updated>
+    <category term="ratchet"/>
+    <category term="preregistration"/>
+    <summary type="text">Registered as silicyte-0119 at 16:46 ET on 2026-11-04 and committed as cc5fb5b at 16:47 ET, before any model call. A growing library of verified Python helpers (STOCK) must beat STATIC, ONE-SHOT, EXEMPLAR, SHAM and FLAT-TTC at equal total tokens on 400 sealed ARC-AGI-1 evaluation tasks, with PLANT-DRIP and PLANT-L1 as positive controls. Registered prediction: STOCK minus STATIC +2 of 400, 80% band [-8, +14], calibrated band [-10.68, +17.216], P(COMPOUNDS) 0.15. Result pending; it will be published whatever it shows.</summary>
+  </entry>
+
+  <entry>
+    <title>Restart: Silicyte now tests whether AI self-improvement compounds</title>
+    <id>https://silicyte.com/#2026-11-04-restart</id>
+    <link rel="alternate" type="text/html" href="https://silicyte.com/"/>
+    <link rel="related" type="text/html" href="https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results"/>
+    <published>2026-11-04T16:51:33-05:00</published>
+    <updated>2026-11-04T16:51:33-05:00</updated>
+    <category term="company"/>
+    <summary type="text">Silicyte now leads with one question: does AI self-improvement compound, measured by pre-registered, compute-matched tests on sealed data. Our earlier guardrail headline, a hook absent on 29.8% of 103,850 calls on one laptop, measured 0.0000 at a 15 s budget on clean public runners in every cell up to 24 agents. It belongs to that laptop, so it moves to earlier work, with every load-test result left public.</summary>
+  </entry>
+</feed>

@@ -113,15 +113,12 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="/">Home</a>
+      <a href="/ratchet">Ratchet</a>
       <a href="/science">Research</a>
       <a href="/papers">Papers</a>
-      <a href="/reference">Reference</a>
       <a href="/data" aria-current="page">Data</a>
-      <a href="/audit">Audit</a>
-      <a href="/refusal-uptime">Agents</a>
-      <a href="/demo">Demo</a>
       <a href="/company">About</a>
-      <a class="cta" href="/evaluation">Work with us</a>
+      <a class="cta" href="mailto:hello@silicyte.com">Contact</a>
     </nav>
   </div>
 </header>
@@ -237,11 +234,11 @@
           <thead><tr><th scope="col">Baseline on these folds</th><th scope="col">MIC</th><th scope="col">HC50</th></tr></thead>
           <tbody>
             <tr><td>36 physicochemical descriptors</td><td class="n">0.4502</td><td class="n">0.4074</td></tr>
-            <tr><td>ESM2-35M frozen, mean-pooled</td><td class="n">0.4656</td><td class="n">&mdash;</td></tr>
+            <tr><td>ESM2-35M frozen, mean-pooled</td><td class="n">0.4656</td><td class="n">n/a</td></tr>
             <tr><td>ESM2-650M frozen, mean-pooled</td><td class="n">0.4427</td><td class="n">0.3502</td></tr>
-            <tr><td>Ankh-base frozen, mean-pooled (corrected Nov 3)</td><td class="n">0.3976</td><td class="n">&mdash;</td></tr>
+            <tr><td>Ankh-base frozen, mean-pooled (corrected Nov 3)</td><td class="n">0.3976</td><td class="n">n/a</td></tr>
             <tr><td><b>ESM2-650M fine-tuned, 3 seeds averaged</b></td><td class="n"><b>0.5356</b></td><td class="n"><b>0.5079</b></td></tr>
-            <tr><td>the same, on deliberately shuffled labels</td><td class="n">-0.0228</td><td class="n">&mdash;</td></tr>
+            <tr><td>the same, on deliberately shuffled labels</td><td class="n">-0.0228</td><td class="n">n/a</td></tr>
           </tbody>
         </table>
       </div>
@@ -287,7 +284,7 @@
             <tr><td>S. aureus vs P. aeruginosa</td><td class="n">2,510</td><td class="n">+0.629</td></tr>
             <tr><td>S. aureus vs C. albicans</td><td class="n">1,693</td><td class="n">+0.646</td></tr>
             <tr><td>E. coli vs B. subtilis</td><td class="n">1,519</td><td class="n">+0.635</td></tr>
-            <tr><td><b>all 491 pairs sharing 30+ peptides</b></td><td class="n">&mdash;</td><td class="n"><b>median +0.596</b></td></tr>
+            <tr><td><b>all 491 pairs sharing 30+ peptides</b></td><td class="n">n/a</td><td class="n"><b>median +0.596</b></td></tr>
           </tbody>
         </table>
       </div>
@@ -306,7 +303,7 @@
         <table>
           <thead><tr><th scope="col">Target</th><th scope="col">Peptides with repeat records</th><th scope="col">Split-half</th><th scope="col">Derived value, not a ceiling</th></tr></thead>
           <tbody>
-            <tr><td>pooled across organisms in this analysis</td><td class="n">&mdash;</td><td class="n">0.7877</td><td class="n">0.9387</td></tr>
+            <tr><td>pooled across organisms in this analysis</td><td class="n">n/a</td><td class="n">0.7877</td><td class="n">0.9387</td></tr>
             <tr><td>E. coli only</td><td class="n">2,099</td><td class="n">+0.857</td><td class="n"><b>0.9608</b></td></tr>
             <tr><td>S. aureus only</td><td class="n">2,100</td><td class="n">+0.851</td><td class="n"><b>0.9590</b></td></tr>
             <tr><td>P. aeruginosa only</td><td class="n">1,035</td><td class="n">+0.833</td><td class="n">0.9535</td></tr>
@@ -352,7 +349,7 @@ prediction. https://silicyte.com/data</div>
   </section>
 </main>
 
-<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
+<footer><div class="wrap footer-row"><p>&copy; 2026 Silicyte &middot; South Jordan, Utah</p><p class="footer-earlier"><a href="/science">Earlier work</a>: <a href="/audit">Audit</a> &middot; <a href="/refusal-uptime">Agents</a> &middot; <a href="/demo">Demo</a> &middot; <a href="/reference">Reference</a></p><p><a href="/company">About &amp; research practices</a> &middot; <a href="/careers">Careers</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/feed.xml">Feed</a> &middot; <a href="mailto:hello@silicyte.com">Contact</a></p></div></footer>
 <script>window.goatcounter={no_onload:false};</script>
 <script data-goatcounter="https://silicyte.goatcounter.com/count"
         data-goatcounter-settings='{"allow_local":false}'

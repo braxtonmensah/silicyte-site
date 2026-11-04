@@ -4,8 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Silicyte deck</title>
-<meta name="description" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement actually compounds.">
+<meta name="description" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement actually compounds. Five slides on Silicyte Ratchet (silicyte-0119), the retractions, and the founder and stage. Result pending.">
 <link rel="canonical" href="https://silicyte.com/deck">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="/brand/silicyte-logo-300.png">
+<link rel="alternate" type="application/pdf" href="/silicyte-deck.pdf" title="Silicyte deck, PDF">
+<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Silicyte updates">
+<meta property="og:site_name" content="Silicyte">
+<meta property="og:title" content="Silicyte deck: does AI self-improvement actually compound?">
+<meta property="og:description" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement actually compounds. Five slides on Silicyte Ratchet (silicyte-0119), the retractions, and the founder and stage. Result pending.">
+<meta property="og:url" content="https://silicyte.com/deck">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Silicyte Ratchet (silicyte-0119): 400 sealed ARC-AGI-1 tasks, 6 arms plus 2 positive controls, registered prediction +2, result pending.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Silicyte deck: does AI self-improvement actually compound?">
+<meta name="twitter:description" content="Silicyte: pre-registered, compute-matched tests of whether AI self-improvement actually compounds. Five slides on Silicyte Ratchet (silicyte-0119), the retractions, and the founder and stage. Result pending.">
+<meta name="twitter:image" content="https://silicyte.com/assets/hero/ratchet-card.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Fira+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root { --ink:#0f1720; --muted:#4a5866; --brand:#2f6fd6; --bg:#ffffff; --rule:#d9dee4; }
   * { box-sizing:border-box; }
@@ -20,11 +41,16 @@
   .num { font:600 1em "Fira Mono", monospace; }
   table { border-collapse:collapse; font-size:16px; margin-top:6px; }
   td, th { border-bottom:1px solid var(--rule); padding:7px 14px 7px 0; text-align:left; vertical-align:top; }
+  .deckbar { max-width:1000px; margin:16px auto 0; padding:0 4px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font:500 14px/1.4 "Libre Franklin", Arial, sans-serif; }
+  .deckbar a { color:var(--ink); }
+  @media (max-width:700px) { .deckbar { margin:12px 16px 0; } }
+  @media print { .deckbar { display:none; } }
   @media (max-width:700px) { .slide { padding:28px 16px; margin:12px 16px; width:auto; } h1 { font-size:32px; } h2 { font-size:24px; } p, li { font-size:16px; } }
   @media print { body { background:#fff; } .slide { margin:0; border:0; border-radius:0; min-height:100vh; max-width:none; } @page { size: 11in 6.6in; margin:0.4in; } }
 </style>
 </head>
 <body>
+<nav class="deckbar" aria-label="Deck links"><a href="/">&larr; silicyte.com</a><span><a href="/ratchet">Ratchet</a> &middot; <a href="/silicyte-deck.pdf">Download the PDF</a></span></nav>
 <section class="slide">
   <p class="k">Silicyte</p>
   <h1>Does AI self-improvement actually compound?</h1>
@@ -40,13 +66,11 @@
     <li>AI systems now write the tools, prompts and code their next round runs on.</li>
     <li>Published library-learning gains largely disappeared once compute was matched and reuse was measured
     (Berlot-Attwell et al., arXiv 2410.20274 and 2504.03048).</li>
-    <li>In our own self-improving search, a selected gain of <span class="num">+0.0095</span> read <span class="num">+0.0014</span>
-    on a sealed lockbox.</li>
   </ul>
 </section>
 
 <section class="slide">
-  <p class="k">First study: Ratchet (silicyte-0119, registered 4 Nov 2026)</p>
+  <p class="k">The study: Silicyte Ratchet (silicyte-0119, registered 4 Nov 2026)</p>
   <h2>Does a growing library of verified helpers beat its look-alikes at equal tokens?</h2>
   <table>
     <tr><th>Arm</th><th>What it rules out</th></tr>
@@ -67,8 +91,6 @@
   <ul>
     <li>Our earlier headline, a guardrail hook absent on <span class="num">29.8%</span> of the calls it existed to check, came out
     <span class="num">0.0000</span> on clean public machines. We said so on the homepage.</li>
-    <li>A verifier-gated search beat flat sampling 20 to 15 of 24 hard ARC outputs; by the rule we registered first
-    (p = 0.0625) it is a null, and we report it as one.</li>
     <li>Paper: degrading a design loop's scorer made its reported gain 2.4x larger (t = <span class="num">-14.60</span>;
     DOI 10.5281/zenodo.23441786).</li>
   </ul>
@@ -78,11 +100,8 @@
   <p class="k">Founder and stage</p>
   <h2>Solo, technical, pre-revenue.</h2>
   <ul>
-    <li>Braxton Mensah, Indiana University undergraduate. Directs an AI-agent research fleet (9,700+ cluster jobs, about 7,424
-    GPU-hours as of 18 Oct 2026). Trained and served his own ARC Prize 2026 system; official results 4 Dec 2026.</li>
+    <li>Braxton Mensah, Indiana University undergraduate. Directs an AI-agent research fleet. Trained and served his own ARC Prize 2026 system; official results 4 Dec 2026.</li>
     <li>$0 revenue, 0 customers, unincorporated, no money raised.</li>
-    <li>Raising a pre-seed to run the test series behind Ratchet and to turn the sealed, compute-matched protocol into a service
-    labs use before they announce a self-improvement result.</li>
   </ul>
   <p class="muted">Design and implementation are AI-assisted; the founder sets the questions, the registered pass rules and the
   retractions. Not peer reviewed.</p>
