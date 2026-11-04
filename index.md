@@ -4,50 +4,34 @@
 
 # Silicyte
 
-> Silicyte measures control integrity for AI agent fleets: whether the guardrails on coding agents ran, covered every path and failed independently, and how often agents override them. Earlier research on peptide and protein model evaluation stays here.
+> Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually compounds, and publishes the result either way. First registered test: a verified-helper library on 400 sealed ARC-AGI-1 tasks (silicyte-0119). Earlier work on agent guardrail uptime and on peptide and protein model evaluation stays here.
 
 Canonical: https://silicyte.com/
 
 ---
 [**Silicyte**](/)
 
-Control integrity for AI agent fleets
+Recursive self-improvement, measured
 
-# Did your agents' guardrails actually run?
+# Does AI self-improvement actually compound?
 
-We measure whether the guardrails on AI agents ran, covered every path and failed independently, and how often agents override them. On one operator's fleet of Claude Code agents, a guardrail was absent on 29.8% of the calls it existed to check. We traced the cause and fixed it.
+AI systems now write the tools, prompts and code that their next round runs on. Most reported gains are chosen on the same tests they are reported on. Silicyte runs pre-registered, compute-matched tests of whether self-improvement compounds, seals the test set the loop never sees, and publishes the result either way.
 
-[Read the measurement →](/refusal-uptime) [Get the open-source probe ↗](https://github.com/braxtonmensah/refusal-uptime)
+[Read the first registered test →](https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md) [Watch the repo ↗](https://github.com/braxtonmensah/ratchet)
 
-Guardrail absent, 261,254 calls over 21 days [**29.8%**](/refusal-uptime)
+Sealed ARC-AGI-1 tasks the loop never reads (id list hashed before any run) **400**
 
-Absent with 11 or more agents at once [**53.1%**](/refusal-uptime)
+Arms at equal total tokens, plus two planted positive controls **6 + 2**
 
-Guardrail time, 8 calls at once, before and after the fix (p95) [**36.3 s → 2.5 s**](/refusal-uptime#cause-and-fix)
+Our registered prediction, growing library minus frozen library, sealed solves of 400 **+2**
 
-Absent after the fix, at 11 or more agents (was 53.1%) [**5 of 8,055**](/refusal-uptime#cause-and-fix)
+Our own earlier headline, laptop vs clean public runners (guard absence at a 15 s budget) **29.8% → 0.0000**
 
-One operator, one Windows laptop, 30 Sep to 23 Oct 2026. Every figure links to how it was measured, and the pass thresholds were registered before each read. Prepared with AI assistance; not peer reviewed.
+Registered 4 Nov 2026 as silicyte-0119, before any model call. Result pending; it will be published whatever it shows, including a null. The design applies the compute-matched protocol of Berlot-Attwell et al. to ARC program libraries; it is an evaluation, not a new method. Prepared with AI assistance; not peer reviewed.
 
-Time for a tool call's guardrails to finish, 95th percentile, one laptop, synthetic bursts:
+## Our own best number did not reproduce. We said so.
 
-| tool calls at once | five guardrail processes | one dispatcher process |
-|---|---|---|
-| 1 | 8.3 s | 0.9 s |
-| 4 | 24.5 s | 1.0 s |
-| 8 | 36.3 s | 2.5 s |
-
-The guardrails' timeout budget was 10 to 15 s. Same decisions on 145 of 145 replayed calls.
-
-Control integrity / Four numbers per guardrail
-
-## A guardrail that never refuses may simply never have run.
-
-To the agent, a guardrail that timed out and one that ran and allowed the action look the same. So we report four numbers for each guardrail. **Presence:** did it run (absent on 29.8% of its calls before the fix). **Coverage:** did it watch every path (20.5% of protected writes went through a path it never watched). **Independence:** did the guards fail separately (they failed together 99.86% of the time). **Override:** how often agents take the sanctioned way around it (81.6% of refusals).
-
-[Read the full measurement and its limits →](/refusal-uptime)
-
-Earlier work / Peptide design & model evaluation
+On one operator's laptop fleet of Claude Code agents, a guardrail hook was absent on 29.8% of the 103,850 calls it existed to check (53.1% with 11 or more agents at once), and a one-dispatcher fix brought that to 5 of 8,055. We then reran the load on clean public machines, with antivirus on and off and with the same shell layer: absence at the documented budget was 0.0000 in every cell up to 24 agents. The effect belongs to that laptop, not to agent fleets in general, so we stopped building a company on it. The probe and every load-test result stay public: [laptop measurement](/refusal-uptime), [clean-runner reruns](https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results).
 
 ## Molecular design.
 Controls included.

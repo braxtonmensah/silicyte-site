@@ -1,23 +1,20 @@
 # Silicyte
 
-> Silicyte measures control integrity for AI agent fleets: whether the guardrails on AI coding
-> agents ran, covered every path, failed independently, and how often agents override them. Its
-> earlier work, still published here, builds instruments that say whether a computational
-> molecule-design result survives its own controls. Every figure it publishes is computational; it
-> operates no laboratory and claims no experimental result. Founded October 2026. Independent and
-> bootstrapped. Contact hello@silicyte.com.
+> Silicyte runs pre-registered, compute-matched tests of whether AI self-improvement actually
+> compounds, and publishes the result either way, including nulls. Earlier work on agent guardrail
+> uptime and on computational molecule-design evaluation stays published here. Founded October
+> 2026. Independent and bootstrapped. Contact hello@silicyte.com.
 
-**Current focus**: control integrity for AI agent fleets. Measured on one operator's fleet of
-Claude Code agents on one Windows laptop (261,254 tool calls, 30 Sep to 21 Oct 2026): one guardrail
-was absent on 29.8% of the calls it existed to check, and absence rose from 0.2% with one agent
-running to 53.1% with 11 or more. Cause, measured 23 Oct 2026: each guardrail was a separate
-process, and at 8 tool calls at once their start-up took 36.3 s at the 95th percentile against
-10 to 15 s budgets. Running every guardrail in one dispatcher process cut that to 2.5 s with the
-same decision on 145 of 145 replayed calls, and on live traffic afterwards the guardrails were
-absent on 0 of 2,211 calls (Wilson 95% interval 0 to 0.17%; nine hours, 8 sessions; the 11-plus
-load did not recur). When heavy load returned (up to 48 agents, re-read 25 Oct 2026), they were
-absent on 5 of 8,055 shell calls at 11 or more agents against 53.1% before: about three orders of
-magnitude lower, not zero. Not peer reviewed. See /refusal-uptime#cause-and-fix.
+**Current focus**: recursive self-improvement, measured. First registered test (silicyte-0119, 4 Nov
+2026, before any model call): does a library of verified Python helpers that keeps growing solve more of
+400 sealed ARC-AGI-1 evaluation tasks than the same library frozen after round 1, the same tokens spent in
+one round, verified exemplars, a matched sham library, and plain extra sampling, all at equal total
+tokens? Pre-registration: https://github.com/braxtonmensah/ratchet/blob/main/PREREG.md. Result pending.
+
+**Earlier work, with its correction**: on one laptop fleet a guardrail hook was absent on 29.8% of the
+103,850 calls it existed to check; on clean public runners the same load gave 0.0000 absence at a 15 s
+budget in every cell up to 24 agents, so the effect belongs to that laptop. See /refusal-uptime and
+https://github.com/braxtonmensah/refusal-uptime/tree/loadtest-results.
 
 The earlier research's distinguishing claim follows.
 
