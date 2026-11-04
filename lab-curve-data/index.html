@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab curve data | Silicyte</title>
+<meta name="description" content="Scripts, derived daily and weekly series, guard counts, the independent audit and the pre-registration behind silicyte.com/lab-curve (silicyte-0120).">
+<link rel="canonical" href="https://silicyte.com/lab-curve-data/">
+<style>:root{--bg:#f6f3ee;--ink:#1d1b18;--mut:#5d5850}@media (prefers-color-scheme:dark){:root{--bg:#161513;--ink:#ece8e1;--mut:#a39d93}}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:0 auto}a{color:inherit}p.m{color:var(--mut)}li{margin:6px 0}</style>
+</head><body><main>
+<p><a href="/lab-curve">&larr; Back to the essay</a></p>
+<h1>Lab curve data (silicyte-0120)</h1>
+<p>Everything behind <a href="/lab-curve">the lab-curve essay</a>. The counts were computed with node from the pinned ledger snapshot
+(1,772 lines, sha256 <code>63b1a1a80fd2fabec8a5f65d41a24905cea95e1b667f5c85673ede5e10607c3f</code>). The raw snapshot stays private until the
+competitions in it close, because its rows describe live competition work; its hash is fixed here so these counts can be checked later.</p>
+<ul>
+<li><a href="/lab-curve-data/counts.js">counts.js</a></li>
+<li><a href="/lab-curve-data/counts_out.json">counts_out.json</a></li>
+<li><a href="/lab-curve-data/counts.md">counts.md</a></li>
+<li><a href="/lab-curve-data/artifacts.js">artifacts.js</a></li>
+<li><a href="/lab-curve-data/artifacts_gpuh_spread.js">artifacts_gpuh_spread.js</a></li>
+<li><a href="/lab-curve-data/artifacts_out.json">artifacts_out.json</a></li>
+<li><a href="/lab-curve-data/artifacts.md">artifacts.md</a></li>
+<li><a href="/lab-curve-data/guards.md">guards.md</a></li>
+<li><a href="/lab-curve-data/AUDIT.md">AUDIT.md</a></li>
+<li><a href="/lab-curve-data/PREREG_LABCURVE_V1.md">PREREG_LABCURVE_V1.md</a></li>
+</ul>
+<p class="m">Verdict: silicyte-0120 is scored VOID (instrument failure): the registered block bootstrap returns LINEAR for t^2, t^3 and 10% daily growth (see AUDIT.md).</p>
+</main></body></html>

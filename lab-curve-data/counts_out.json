@@ -1,0 +1,233 @@
+{
+ "parse": {
+  "rows": 1772,
+  "nan_lines_repaired": 1,
+  "unparsed": 0
+ },
+ "primary": {
+  "distinct_registered_ids": 1038,
+  "in_window": 1038,
+  "outside_window": 0,
+  "alpha": 1.0133,
+  "ci95": [
+   0.4942,
+   2.8718
+  ],
+  "boot_median": 1.1825,
+  "boot_finite": 2000,
+  "verdict": "LINEAR",
+  "daily": {
+   "10-01": 63,
+   "10-02": 0,
+   "10-03": 1,
+   "10-04": 16,
+   "10-05": 11,
+   "10-06": 13,
+   "10-07": 4,
+   "10-08": 1,
+   "10-09": 0,
+   "10-10": 1,
+   "10-11": 0,
+   "10-12": 0,
+   "10-13": 0,
+   "10-14": 0,
+   "10-15": 8,
+   "10-16": 2,
+   "10-17": 40,
+   "10-18": 68,
+   "10-19": 34,
+   "10-20": 6,
+   "10-21": 83,
+   "10-22": 63,
+   "10-23": 51,
+   "10-24": 29,
+   "10-25": 152,
+   "10-26": 141,
+   "10-27": 42,
+   "10-28": 86,
+   "10-29": 108,
+   "10-30": 7,
+   "10-31": 0,
+   "11-01": 2,
+   "11-02": 4,
+   "11-03": 0,
+   "11-04": 2
+  },
+  "cumulative_end": 1038
+ },
+ "sensitivity_excluding_backfill": {
+  "backfill_ids": 110,
+  "in_window": 928,
+  "alpha": 5.098,
+  "ci95": [
+   0.4375,
+   5.1916
+  ],
+  "verdict": "LINEAR"
+ },
+ "secondary": {
+  "resolved_ids": 781,
+  "withdrawn_unresolved_ids": 37,
+  "verdict_PFB_n": 548,
+  "pass": 157,
+  "fail": 291,
+  "between": 100,
+  "other_verdicts": {
+   "UNDECIDED_INCOMPLETE": 1
+  },
+  "pass_share": 0.2865,
+  "inside_band": "509/667",
+  "inside_band_share": 0.7631,
+  "inside_cal": "526/645",
+  "inside_cal_share": 0.8155,
+  "resolved_without_resolution_ts": 110,
+  "of_which_backfill": 110,
+  "lag_n": 671,
+  "median_days_reg_to_res": 0.0347,
+  "weeks": [
+   {
+    "week": "10-01..10-07",
+    "resolved": 0,
+    "verdict_n": 0,
+    "pass": 0,
+    "fail": 0,
+    "between": 0,
+    "inside_n": 0,
+    "inside_true": 0,
+    "cal_n": 0,
+    "cal_true": 0,
+    "pass_share": null,
+    "inside_share": null,
+    "inside_cal_share": null
+   },
+   {
+    "week": "10-08..10-14",
+    "resolved": 0,
+    "verdict_n": 0,
+    "pass": 0,
+    "fail": 0,
+    "between": 0,
+    "inside_n": 0,
+    "inside_true": 0,
+    "cal_n": 0,
+    "cal_true": 0,
+    "pass_share": null,
+    "inside_share": null,
+    "inside_cal_share": null
+   },
+   {
+    "week": "10-15..10-21",
+    "resolved": 156,
+    "verdict_n": 53,
+    "pass": 15,
+    "fail": 31,
+    "between": 7,
+    "inside_n": 153,
+    "inside_true": 117,
+    "cal_n": 137,
+    "cal_true": 107,
+    "pass_share": 0.283,
+    "inside_share": 0.7647,
+    "inside_cal_share": 0.781
+   },
+   {
+    "week": "10-22..10-28",
+    "resolved": 419,
+    "verdict_n": 401,
+    "pass": 116,
+    "fail": 210,
+    "between": 75,
+    "inside_n": 418,
+    "inside_true": 320,
+    "cal_n": 412,
+    "cal_true": 337,
+    "pass_share": 0.2893,
+    "inside_share": 0.7656,
+    "inside_cal_share": 0.818
+   },
+   {
+    "week": "10-29..11-04",
+    "resolved": 96,
+    "verdict_n": 94,
+    "pass": 26,
+    "fail": 50,
+    "between": 18,
+    "inside_n": 96,
+    "inside_true": 72,
+    "cal_n": 96,
+    "cal_true": 82,
+    "pass_share": 0.2766,
+    "inside_share": 0.75,
+    "inside_cal_share": 0.8542
+   }
+  ]
+ },
+ "by_lane": {
+  "arc": {
+   "registered": 458,
+   "registered_backfill": 110,
+   "resolved": 333,
+   "pass": 44,
+   "fail": 89,
+   "between": 41,
+   "withdrawn": 23,
+   "inside_true": 170,
+   "inside_n": 219
+  },
+  "knee": {
+   "registered": 3,
+   "registered_backfill": 0,
+   "resolved": 1,
+   "pass": 0,
+   "fail": 0,
+   "between": 0,
+   "withdrawn": 0,
+   "inside_true": 1,
+   "inside_n": 1
+  },
+  "sas": {
+   "registered": 14,
+   "registered_backfill": 0,
+   "resolved": 12,
+   "pass": 2,
+   "fail": 0,
+   "between": 0,
+   "withdrawn": 0,
+   "inside_true": 11,
+   "inside_n": 12
+  },
+  "tnfa": {
+   "registered": 36,
+   "registered_backfill": 0,
+   "resolved": 29,
+   "pass": 1,
+   "fail": 0,
+   "between": 0,
+   "withdrawn": 0,
+   "inside_true": 21,
+   "inside_n": 29
+  },
+  "vcc": {
+   "registered": 464,
+   "registered_backfill": 0,
+   "resolved": 355,
+   "pass": 95,
+   "fail": 182,
+   "between": 55,
+   "withdrawn": 11,
+   "inside_true": 267,
+   "inside_n": 355
+  },
+  "silicyte": {
+   "registered": 63,
+   "registered_backfill": 0,
+   "resolved": 51,
+   "pass": 15,
+   "fail": 20,
+   "between": 4,
+   "withdrawn": 3,
+   "inside_true": 39,
+   "inside_n": 51
+  }
+ }
+}
